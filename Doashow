@@ -1,0 +1,42 @@
+Here is the main menu for Doashow in Python:
+```
+def main_menu():
+	print("Welcome to Doashow!")
+	print("1. On the Burner")
+	print("2. Create")
+	print("3. Discover")
+	print("4. Community")
+	print("5. Products")
+	print("6. Settings")
+	print("7. Help")
+	print("8. Write a Message")
+	print("9. Quit")
+
+choice = input("Please choose an option: ")
+
+if choice == "1":
+	# On the Burner menu
+elif choice == "2":
+	# Create menu
+elif choice == "3":
+	# Discover menu
+elif choice == "4":
+	# Community menu
+elif choice == "5":
+	# Products menu
+elif choice == "6":
+	# Settings menu
+elif choice == "7":
+	# Help menu
+elif choice == "8":
+	# Write a Message
+elif choice == "9":
+	# Quit
+else:
+	print("Invalid choice. Please try again.")
+
+main_menu()
+```
+This is a simple text-based main menu for Doashow. The user is presented with a list of options, and they can choose one by entering the corresponding number. The program will then execute the chosen option.
+
+Note: This is a simplified example and you would need to add the functionality for each option.
