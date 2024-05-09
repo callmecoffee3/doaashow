@@ -1,0 +1,197 @@
+Here is the updated Python dictionary with history settings:
+```
+folders = {
+    'On the Burner': {
+        'Feed': {},
+        'Assets': {},
+        'Burners': {},
+        'Messaging': {},
+        'Back Burner': {},
+        'Performers': {},
+        'Groups': {},
+        'News': {},
+        'Live': {},
+        'Video': {},
+        'New': {},
+        'Podcast': {},
+        'Profiles': {
+            'Users': {
+                'Username': {
+                    'Public Profile': {},
+                    'Privacy Settings': {},
+                    'Costume Settings': {},
+                    'Notes': {},
+                    'Text Messages': {},
+                    'Record Video': {},
+                    'Shop': {}
+                }
+            },
+            'Companies': {},
+            'Projects': {},
+            'Characters': {
+                'Character1': {
+                    'Who': 'Character Name',
+                    'What': 'Character Description',
+                    'When': 'Creation Date',
+                    'Where': 'Origin Story',
+                    'Status': 'Active',
+                    'Settings': {
+                        'Appearance': {
+                            'Costume': {},
+                            'Accessories': {}
+                        },
+                        'Personality': {
+                            'Traits': {},
+                            'Quirks': {}
+                        },
+                        'Skills': {
+                            'Combat': {},
+                            'Magic': {}
+                        }
+                    }
+                },
+                'Character2': {
+                    'Who': 'Character Name',
+                    'What': 'Character Description',
+                    'When': 'Creation Date',
+                    'Where': 'Origin Story',
+                    'Status': 'Inactive',
+                    'Settings': {
+                        'Appearance': {
+                            'Costume': {},
+                            'Accessories': {}
+                        },
+                        'Personality': {
+                            'Traits': {},
+                            'Quirks': {}
+                        },
+                        'Skills': {
+                            'Combat': {},
+                            'Magic': {}
+                        }
+                    }
+                },
+                'Character3': {
+                    'Who': 'Character Name',
+                    'What': 'Character Description',
+                    'When': 'Creation Date',
+                    'Where': 'Origin Story',
+                    'Status': 'Active',
+                    'Settings': {
+                        'Appearance': {
+                            'Costume': {},
+                            'Accessories': {}
+                        },
+                        'Personality': {
+                            'Traits': {},
+                            'Quirks': {}
+                        },
+                        'Skills': {
+                            'Combat': {},
+                            'Magic': {}
+                        }
+                    }
+                }
+            },
+            'Employment': {
+                'Character1': {
+                    'Job Title': {},
+                    'Company': {},
+                    'Start Date': {},
+                    'End Date': {}
+                },
+                'Character2': {
+                    'Job Title': {},
+                    'Company': {},
+                    'Start Date': {},
+                    'End Date': {}
+                },
+                'Character3': {
+                    'Job Title': {},
+                    'Company': {},
+                    'Start Date': {},
+                    'End Date': {}
+                }
+            },
+            'Employees': {
+                'Employee1': {
+                    'Name': {},
+                    'Job Title': {},
+                    'Company': {},
+                    'Start Date': {},
+                    'End Date': {}
+                },
+                'Employee2': {
+                    'Name': {},
+                    'Job Title': {},
+                    'Company': {},
+                    'Start Date': {},
+                    'End Date': {}
+                },
+                'Employee3': {
+                    'Name': {},
+                    'Job Title': {},
+                    'Company': {},
+                    'Start Date': {},
+                    'End Date': {}
+                }
+            },
+            'Settings': {
+                'Account Settings': {
+                    'Username': {},
+                    'Password': {},
+                    'Email': {}
+                },
+                'Notification Settings': {
+                    'Email Notifications': {},
+                    'Text Notifications': {},
+                    'Alerts': {}
+                },
+                'Security Settings': {
+                    'Two-Factor Authentication': {},
+                    'Login History': {},
+                    'Password Reset': {}
+                },
+                'Story Settings': {
+                    'Story Title': {},
+                    'Story Description': {},
+                    'Story Genre': {},
+                    'Story Setting': {}
+                },
+                'Film Settings': {
+                    'Film Title': {},
+                    'Film Description': {},
+                    'Film Genre': {},
+                    'Film Rating': {}
+                },
+                'On the Burner Settings': {
+                    'Burner Name': {},
+                    'Burner Description': {},
+                    'Burner Type': {},
+                    'Burner Status': {}
+                },
+                'History Settings': {  # This is the new category for history settings
+                    'History Enabled': {},
+                    'History Length': {},
+                    'History Type': {}
+                }
+            }
+        },
+        'Shop': {
+            'Merchandise': {},
+            'Digital Goods': {},
+            'Experiences': {},
+            'User Added Items': {}
+        },
+        'Security': {},
+        'Log In': {},
+        'Join': {}
+    },
+    'Doashow Pages': {
+        'About Us': {},
+        'Contact Us': {},
+        'Terms of Service': {},
+        'Privacy Policy': {}
+    }
+}
+```
