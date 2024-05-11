@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Menu</title>
+</head>
+<body>
+    <h1>Main Menu Bar:</h1>
+    <ul>
+        <li>Menu</li>
+        <li>Games</li>
+        <li>Social</li>
+        <li>Create</li>
+        <li>Explore</li>
+        <li>Help</li>
+        <li>Settings</li>
+        <li>Profile</li>
+        <li>Shop</li>
+        <li>Community</li>
+        <li>Support</li>
+    </ul>
+
+    <h2>Top Menu Bar:</h2>
+    <ul>
+        <li>Home</li>
+        <li>Explore</li>
+        <li>Create</li>
+        <li>Notifications</li>
+        <li>Profile</li>
+        <li>Settings</li>
+        <li>Games</li>
+    </ul>
+
+    <h2>Menu Bar:</h2>
+    <ul>
+        <li>File</li>
+        <li>Edit</li>
+        <li>View</li>
+        <li>Help</li>
+        <li>Channel: MetaHub</li>
+    </ul>
+
+    <h2>Users Indicator Bar:</h2>
+    <p>Friends Online (2): JaneDoe | BobSmith</p>
+    <p>Friends Offline (1): AliceJohnson</p>
+    <p>Messages (2): Unread messages from MikeDavis, EmilyChen</p>
+    <p>Notifications (5): New notifications from DoaShow, Games, and more!</p>
+
+    <h2>User Bar:</h2>
+    <p>MattGrosso (Feed: 99+) | Level: 5 | XP: 250/500 | Reputation: 100</p>
+
+    <!-- Add more sections as needed -->
+
+    <h2>Current Time:</h2>
+    <p>Saturday, May 11, 2024, 4:46:00 PM EDT</p>
+
+    <h2>Story:</h2>
+    <p>'The Adventure Begins'</p>
+
+    <h2>Welcome:</h2>
+    <p>Welcome, MattGrosso (Feed: 99+)</p>
+
+    <!-- Add more content and sections as per your requirements -->
+
+</body>
+</html>
