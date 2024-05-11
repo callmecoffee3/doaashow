@@ -1,0 +1,54 @@
+Here is the Python code for the menu:
+```
+import tkinter as tk
+
+class MenuBar(tk.Frame):
+	def __init__(self, master=None):
+		super().__init__(master)
+		self.master = master
+		self.pack(fill="x", expand=True)
+		self.menu_bar = tk.Frame(self, bg="gray")
+		self.menu_bar.pack(fill="x", expand=True)
+		self.home_button = tk.Button(self.menu_bar, text="Home", command=self.home)
+		self.explore_button = tk.Button(self.menu_bar, text="Explore", command=self.explore)
+		self.create_button = tk.Button(self.menu_bar, text="Create", command=self.create)
+		self.notifications_button = tk.Button(self.menu_bar, text="Notifications", command=self.notifications)
+		self.profile_button = tk.Button(self.menu_bar, text="Profile", command=self.profile)
+		self.settings_button = tk.Button(self.menu_bar, text="Settings", command=self.settings)
+		self.games_button = tk.Button(self.menu_bar, text="Games", command=self.games)
+		self.home_button.pack(side="left")
+		self.explore_button.pack(side="left")
+		self.create_button.pack(side="left")
+		self.notifications_button.pack(side="left")
+		self.profile_button.pack(side="left")
+		self.settings_button.pack(side="left")
+		self.games_button.pack(side="left")
+
+	def home(self):
+		print("Home button clicked")
+
+	def explore(self):
+		print("Explore button clicked")
+
+	def create(self):
+		print("Create button clicked")
+
+	def notifications(self):
+		print("Notifications button clicked")
+
+	def profile(self):
+		print("Profile button clicked")
+
+	def settings(self):
+		print("Settings button clicked")
+
+	def games(self):
+		print("Games button clicked")
+
+root = (link unavailable)()
+menu_bar = MenuBar(root)
+root.mainloop()
+```
+This code creates a simple menu bar with buttons using Tkinter. Each button prints a message to the console when clicked.
+
+Note: This code is a simplified example and doesn't include the entire menu system. Let me know if you'd like me to expand on this code!
