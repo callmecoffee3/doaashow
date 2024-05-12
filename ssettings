@@ -1,0 +1,31 @@
+basic_settings = {
+    "account": {
+        "username": "your_username",
+        "password": "your_password",
+        "login_logout": "Login"
+    },
+    "app_theme": {
+        "theme": "Light Mode",
+        "options": ["Light Mode", "Dark Mode", "System Default"]
+    },
+    "notifications": {
+        "enabled": True,
+        "types": ["Updates", "Messages", "Mentions", "Likes"]
+    },
+    "data_storage": {
+        "cache": True,
+        "data": True,
+        "manage_storage": False
+    },
+    "language": {
+        "selected": "English",
+        "options": ["English", "Spanish", "French", "etc."]
+    },
+    "help_feedback": {
+        "faqs": True,
+        "contact_support": True,
+        "rate_app": True
+    }
+}
+
+This dictionary stores the basic settings as key-value pairs, with nested dictionaries for each category (account, app theme, notifications, etc.). The values are either strings, booleans, or lists of strings, depending on the setting.
