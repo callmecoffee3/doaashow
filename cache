@@ -1,0 +1,28 @@
+Here is an example of how you can display the cache in Python code:
+cache = {
+    "username": "JaneDoe",
+    "feed": 99,
+    "wallet": 100,
+    "follower_feed": 10,
+    "post_indicator": 4,
+    "friend_indicator": 3,
+    "message_indicator": 2,
+    "notification_indicator": 5
+}
+
+print("Cache:")
+for key, value in cache.items():
+    print(f"{key}: {value}")
+
+This code creates a dictionary called cache that stores various values, such as the username, feed, wallet, and indicators. Then, it uses a for loop to iterate over the items in the cache dictionary and print each key-value pair.
+
+When you run this code, it will output:
+Cache:
+username: JaneDoe
+feed: 99
+wallet: 100
+follower_feed: 10
+post_indicator: 4
+friend_indicator: 3
+message_indicator: 2
+notification_indicator: 5
