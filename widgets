@@ -1,0 +1,60 @@
+Here is an example of some common widgets in Python using Tkinter:
+
+import tkinter as tk
+
+class MenuBar(tk.Frame):
+def init(self, master=None):
+super().init(master)
+self.master = master
+self.pack(fill="x", expand=True)
+self.menu_bar = tk.Frame(self, bg="gray")
+self.menu_bar.pack(fill="x", expand=True)
+
+Button widget
+self.file_button = tk.Button(self.menu_bar, text="File", command=self.file_menu)
+self.file_button.pack(side="left")
+
+Label widget
+self.label = tk.Label(self, text="This is a label")
+self.label.pack()
+
+Entry widget (text input field)
+self.entry = tk.Entry(self)
+self.entry.pack()
+
+Text widget (multiline text field)
+self.text = tk.Text(self)
+self.text.pack()
+
+Checkbutton widget
+self.checkbutton = tk.Checkbutton(self, text="Check me")
+self.checkbutton.pack()
+
+Radiobutton widgets
+self.radiobutton1 = tk.Radiobutton(self, text="Option 1", value=1)
+self.radiobutton2 = tk.Radiobutton(self, text="Option 2", value=2)
+self.radiobutton1.pack()
+self.radiobutton2.pack()
+
+Listbox widget
+self.listbox = tk.Listbox(self)
+self.listbox.pack()
+
+Spinbox widget (number input field)
+self.spinbox = tk.Spinbox(self, from_=0, to=10)
+self.spinbox.pack()
+
+Scale widget (slider)
+self.scale = tk.Scale(self, from_=0, to=10)
+self.scale.pack()
+
+Menu widget (dropdown menu)
+self.menu = tk.Menu(self)
+self.menu.add_command(label="File", command=self.file_menu)
+self.master.config(menu=self.menu)
+
+root = (link unavailable)()
+menu_bar = MenuBar(root)
+root.mainloop()
+
+This code creates a window with various widgets, including buttons, labels, text fields, checkbuttons, radiobuttons, listboxes, spinboxes, scales, and a menu. You can interact with these widgets to see how they behave.
