@@ -1,0 +1,31 @@
+Here is an example of how the basic notifications for Doashow.apk could be represented in Python code using a dictionary:
+notifications = {
+"updates": {
+"enabled": True,
+"alert": "New update available!",
+"sound": "default_sound"
+},
+"messages": {
+"enabled": True,
+"alert": "New message from {username}!",
+"sound": "message_sound"
+},
+"mentions": {
+"enabled": True,
+"alert": "{username} mentioned you in a post!",
+"sound": "mention_sound"
+},
+"likes": {
+"enabled": False,
+"alert": "{username} liked your post!",
+"sound": "like_sound"
+}
+}
+
+This dictionary stores the basic notifications as key-value pairs, with each notification type (updates, messages, mentions, likes) having its own dictionary with the following keys:
+
+- enabled (boolean): Whether the notification is enabled or disabled
+- alert (string): The text to display in the notification
+- sound (string): The sound to play when the notification is triggered
+
+Note that the {username} placeholder in the alert strings would be replaced with the actual username of the person who triggered the notification.
