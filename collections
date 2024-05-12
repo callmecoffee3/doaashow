@@ -1,0 +1,59 @@
+Here is an example of how you might gather collections (such as posts) from users that the current user is following, using Python:
+# Define a simple database of users and their posts
+database = {
+	'JohnDoe': [
+		{'content': 'Hello, world!', 'likes': 10, 'comments': 5, 'shares': 2},
+		{'content': 'This is my second post.', 'likes': 5, 'comments': 2, 'shares': 1}
+	],
+	'JaneSmith': [
+		{'content': 'Check out my new video!', 'likes': 20, 'comments': 10, 'shares': 5}
+	],
+	'BobJohnson': [
+		{'content': 'I just posted a new photo!', 'likes': 15, 'comments': 8, 'shares': 3}
+	]
+}
+
+# Define a simple user class
+class User:
+	def __init__(self, username):
+		self.username = username
+		self.following = []
+
+	def follow(self, username):
+		self.following.append(username)
+
+	def get_followers_stream(self):
+		followers_stream = []
+		for followed_user in self.following:
+			followers_stream.extend(database[followed_user])
+		return followers_stream
+
+# Create a user and have them follow some other users
+current_user = User('Alice')
+current_user.follow('JohnDoe')
+current_user.follow('JaneSmith')
+
+# Get the followers' stream
+followers_stream = current_user.get_followers_stream()
+
+# Print the followers' stream
+for post in followers_stream:
+	print(post)
+
+# Gather collections (such as posts) from users that the current user is following
+def gather_collections(username, collection_type):
+	collections = []
+	for followed_user in database[username].following:
+		collections.extend(database[followed_user][collection_type])
+	return collections
+
+# Get the posts from the users that the current user is following
+posts = gather_collections(current_user.username, 'posts')
+
+# Print the posts
+for post in posts:
+	print(post)
+
+This code defines a simple database of users and their posts, a simple user class, and then creates a user and has them follow some other users. It then defines a function to gather collections (such as posts) from users that the current user is following, and uses this function to get the posts from the users that the current user is following.
+
+Note: This is a very basic example and doesn't include any error handling or security measures that you would need in a real-world application.
