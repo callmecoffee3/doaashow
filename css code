@@ -1,0 +1,78 @@
+Here is an example of the CSS code for the updated menu:
+
+/* Style the username and info bar */
+.username-info-bar {
+background-color: #333;
+color: #fff;
+padding: 10px;
+border-radius: 5px;
+}
+
+/* Style the top menu bar */
+.top-menu-bar {
+background-color: #444;
+color: #fff;
+padding: 10px;
+border-radius: 5px;
+}
+
+/* Style the menu items */
+.menu-item {
+display: inline-block;
+margin-right: 20px;
+color: #fff;
+text-decoration: none;
+}
+
+/* Style the menu item hover state */
+.menu-item:hover {
+background-color: #555;
+color: #fff;
+}
+
+/* Style the indicator bar */
+.indicator-bar {
+background-color: #333;
+color: #fff;
+padding: 10px;
+border-radius: 5px;
+}
+
+/* Style the friends bar */
+.friends-bar {
+background-color: #444;
+color: #fff;
+padding: 10px;
+border-radius: 5px;
+}
+
+/* Style the shortcut bar */
+.shortcut-bar {
+background-color: #333;
+color: #fff;
+padding: 10px;
+border-radius: 5px;
+}
+
+/* Style the main menu */
+.main-menu {
+list-style: none;
+padding: 0;
+margin: 0;
+}
+
+/* Style the main menu items */
+.main-menu-item {
+padding: 10px;
+border-bottom: 1px solid #333;
+}
+
+/* Style the main menu item hover state */
+.main-menu-item:hover {
+background-color: #444;
+color: #fff;
+}
+
+Note that this is just one example, and you may need to modify the CSS to fit your specific HTML structure and design requirements. Additionally, you may want to use a CSS framework or preprocessor like Bootstrap or Sass to streamline your CSS development.
+
+Also, please note that this is a long code snippet, you might need to adjust it to fit your specific use case.
