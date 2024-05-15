@@ -1,0 +1,41 @@
+Here's an example of how you could use `input` and `print` to create a simple menu-driven program:
+```
+print("Top Menu Bar:")
+print("Home | Explore | Create | Notifications | Profile | Settings | Games")
+print("Menu Bar:")
+print("File | Edit | View | Help | Channel: MetaHub")
+print("Indicator Bar:")
+print("Wallet: 100 coins | Follower Feed: 10 | Post Indicator: 4 | Friend Indicator: 3 | Message Indicator: 2 | Notification Indicator (Lite): 5")
+print("JohnDoe • JohnDoe (Feed: 99+)")
+print("Current Time: Saturday, May 11, 2024, 10:45:01 a.m. EDT")
+print("Story: 'The Adventure Begins'")
+print("Welcome, JohnDoe (Feed: 99+)")
+print("Please select an option by typing the corresponding number:")
+print("1. On the Burner - Latest updates and news - Check here for new content!")
+print("2. Create - Write a new post or create content - Share your thoughts and ideas!")
+print("3. Discover - Explore latest posts and content - Find something new and interesting!")
+print("4. DoaShow - Develop a new TV show concept - Share your ideas with industry professionals!")
+print("5. Notifications - Check your notifications - See what's new!")
+print("6. Profile - View your profile - Edit your information!")
+print("7. Settings - Configure your settings - Customize your experience!")
+print("8. Help - Display help and instructions - Get assistance when needed!")
+print("9. Games - Play games and have fun! (New)")
+print("10. Print out main menu - Display the main menu again")
+print("Type 'menu' to return to the main menu at any time.")
+print("Shortcuts:")
+print("- 'back' to Go back to the previous menu")
+print("- 'exit' to Quit the program")
+print("- 'help' to Display help and instructions")
+print("- 'print out main menu' to Display the main menu again")
+
+choice = input("Enter your choice: ")
+
+if choice == "1":
+	print("You selected option 1!")
+elif choice == "2":
+	print("You selected option 2!")
+# ... and so on ...
+else:
+	print("Invalid choice. Please try again!")
+```
+This program displays the menu using `print` statements, then prompts the user to enter their choice using the `input` function. It then uses an `if`/`elif`/`else` statement to handle the user's choice and display a response.
