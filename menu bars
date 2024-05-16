@@ -1,0 +1,14 @@
+Here is the Python code to display the menu:
+```
+print("Top Menu Bar:")
+print("Home | Explore | Create | Notifications | Profile | Settings | Games\n")
+
+print("Menu Bar:")
+print("File | Edit | View | Help | Channel: MetaHub\n")
+
+print("Indicator Bar:")
+print("Wallet: 100 coins | Follower Feed: 10 | Post Indicator: 4 | Friend Indicator: 3 | Message Indicator: 2 | Notification Indicator (Lite): 5\n")
+```
+This code will print out the three bars with the corresponding options.
+
+Let me know if you have any other questions!
