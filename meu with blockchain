@@ -1,0 +1,52 @@
+Here is the Python code to display the menu:
+```
+print("Top Menu Bar:")
+print("Home | Explore | Create | Notifications | Profile | Settings | Games\n")
+
+print("Menu Bar:")
+print("File | Edit | View | Help | Channel: MetaHub\n")
+
+print("Indicator Bar:")
+print("Wallet: 100 coins | Follower Feed: 10 | Post Indicator: 4 | Friend Indicator: 3 | Message Indicator: 2 | Notification Indicator (Lite): 5\n")
+
+print("[ Profile Picture: A photo of JohnDoe ]")
+
+print("JohnDoe • JohnDoe (Feed: 99+)")
+
+print("Profile:")
+print("Name: John Doe")
+print("Date of Birth: February 12, 1990")
+print("Location: New York, USA")
+print("Bio: Hi, I'm John Doe! I'm a content creator and a TV show enthusiast. I love sharing my thoughts and ideas with the community.")
+
+print("Current Time: Saturday, May 20, 2023, 10:45:01 a.m. EDT")
+
+print("Story: 'The Adventure Begins'")
+
+print("Welcome, JohnDoe (Feed: 99+)")
+
+print("Please select an option by typing the corresponding number:")
+
+print("1. On the Burner - Latest updates and news - Check here for new content!")
+
+print("2. Create - Write a new post or create content - Share your thoughts and ideas!")
+
+print("3. Discover - Explore latest posts and content - Find something new and interesting!")
+
+print("4. DoaShow - Develop a new TV show concept - Share your ideas with industry professionals!")
+
+print("5. Notifications - Check your notifications - See what's new!")
+
+print("6. Profile - View your profile - Edit your information!")
+
+print("7. Settings - Configure your settings - Customize your experience!")
+
+print("8. Help - Display help and instructions - Get assistance when needed!")
+
+print("9. Games - Play games and have fun! (New)")
+
+print("10. Ad Blockchain - Explore blockchain-based advertising solutions - Learn more!")
+
+print("11. Print out main menu - Display the main menu again")
+```
+This code will print out the menu with all the options. Let me know if you have any other questions!
