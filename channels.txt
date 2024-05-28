@@ -1,0 +1,187 @@
+ Volume in drive F is doashow
+ Volume Serial Number is ECB8-149A
+
+ Directory of f:\channels
+
+05/27/2024  09:32 PM    <DIR>          .
+05/27/2024  09:32 PM    <DIR>          ..
+05/27/2024  09:32 PM    <DIR>          COMMUINTY
+05/27/2024  09:15 PM    <DIR>          DOASHOW TV
+05/27/2024  09:12 PM    <DIR>          FEED-STREEM
+05/27/2024  09:15 PM    <DIR>          GAMMING
+05/27/2024  09:14 PM    <DIR>          LIBRARY
+05/27/2024  09:09 PM    <DIR>          MESSAGES
+05/27/2024  09:16 PM    <DIR>          MORE
+05/27/2024  09:13 PM    <DIR>          MOVIES &T V
+05/27/2024  09:15 PM    <DIR>          MUSIC
+05/27/2024  09:14 PM    <DIR>          SEARCH
+05/27/2024  09:09 PM    <DIR>          SETTINGS
+05/27/2024  09:12 PM    <DIR>          SHOPPING
+05/27/2024  09:32 PM    <DIR>          SHORTS
+05/27/2024  09:14 PM    <DIR>          SUBSCRITIONS
+05/27/2024  09:09 PM    <DIR>          YOUR-CHANNEL
+               0 File(s)              0 bytes
+
+ Directory of f:\channels\COMMUINTY
+
+05/27/2024  09:32 PM    <DIR>          .
+05/27/2024  09:32 PM    <DIR>          ..
+05/27/2024  09:32 PM    <DIR>          Feed
+05/27/2024  09:32 PM    <DIR>          post
+05/27/2024  09:32 PM    <DIR>          YOUR
+               0 File(s)              0 bytes
+
+ Directory of f:\channels\COMMUINTY\Feed
+
+05/27/2024  09:32 PM    <DIR>          .
+05/27/2024  09:32 PM    <DIR>          ..
+               0 File(s)              0 bytes
+
+ Directory of f:\channels\COMMUINTY\post
+
+05/27/2024  09:32 PM    <DIR>          .
+05/27/2024  09:32 PM    <DIR>          ..
+               0 File(s)              0 bytes
+
+ Directory of f:\channels\COMMUINTY\YOUR
+
+05/27/2024  09:32 PM    <DIR>          .
+05/27/2024  09:32 PM    <DIR>          ..
+               0 File(s)              0 bytes
+
+ Directory of f:\channels\DOASHOW TV
+
+05/27/2024  09:15 PM    <DIR>          .
+05/27/2024  09:15 PM    <DIR>          ..
+               0 File(s)              0 bytes
+
+ Directory of f:\channels\FEED-STREEM
+
+05/27/2024  09:12 PM    <DIR>          .
+05/27/2024  09:12 PM    <DIR>          ..
+05/27/2024  09:08 PM    <DIR>          MAIN-FEED
+05/27/2024  09:10 PM    <DIR>          RECCOMENED-FEED
+05/27/2024  09:10 PM    <DIR>          VIDEO
+               0 File(s)              0 bytes
+
+ Directory of f:\channels\FEED-STREEM\MAIN-FEED
+
+05/27/2024  09:08 PM    <DIR>          .
+05/27/2024  09:08 PM    <DIR>          ..
+               0 File(s)              0 bytes
+
+ Directory of f:\channels\FEED-STREEM\RECCOMENED-FEED
+
+05/27/2024  09:10 PM    <DIR>          .
+05/27/2024  09:10 PM    <DIR>          ..
+               0 File(s)              0 bytes
+
+ Directory of f:\channels\FEED-STREEM\VIDEO
+
+05/27/2024  09:10 PM    <DIR>          .
+05/27/2024  09:10 PM    <DIR>          ..
+               0 File(s)              0 bytes
+
+ Directory of f:\channels\GAMMING
+
+05/27/2024  09:15 PM    <DIR>          .
+05/27/2024  09:15 PM    <DIR>          ..
+               0 File(s)              0 bytes
+
+ Directory of f:\channels\LIBRARY
+
+05/27/2024  09:14 PM    <DIR>          .
+05/27/2024  09:14 PM    <DIR>          ..
+               0 File(s)              0 bytes
+
+ Directory of f:\channels\MESSAGES
+
+05/27/2024  09:09 PM    <DIR>          .
+05/27/2024  09:09 PM    <DIR>          ..
+               0 File(s)              0 bytes
+
+ Directory of f:\channels\MORE
+
+05/27/2024  09:16 PM    <DIR>          .
+05/27/2024  09:16 PM    <DIR>          ..
+05/27/2024  09:15 PM    <DIR>          LIVE
+05/27/2024  09:15 PM    <DIR>          NEWS
+05/27/2024  09:16 PM    <DIR>          PODCAST
+05/27/2024  09:16 PM    <DIR>          SPORTS
+               0 File(s)              0 bytes
+
+ Directory of f:\channels\MORE\LIVE
+
+05/27/2024  09:15 PM    <DIR>          .
+05/27/2024  09:15 PM    <DIR>          ..
+               0 File(s)              0 bytes
+
+ Directory of f:\channels\MORE\NEWS
+
+05/27/2024  09:15 PM    <DIR>          .
+05/27/2024  09:15 PM    <DIR>          ..
+               0 File(s)              0 bytes
+
+ Directory of f:\channels\MORE\PODCAST
+
+05/27/2024  09:16 PM    <DIR>          .
+05/27/2024  09:16 PM    <DIR>          ..
+               0 File(s)              0 bytes
+
+ Directory of f:\channels\MORE\SPORTS
+
+05/27/2024  09:16 PM    <DIR>          .
+05/27/2024  09:16 PM    <DIR>          ..
+               0 File(s)              0 bytes
+
+ Directory of f:\channels\MOVIES &T V
+
+05/27/2024  09:13 PM    <DIR>          .
+05/27/2024  09:13 PM    <DIR>          ..
+               0 File(s)              0 bytes
+
+ Directory of f:\channels\MUSIC
+
+05/27/2024  09:15 PM    <DIR>          .
+05/27/2024  09:15 PM    <DIR>          ..
+               0 File(s)              0 bytes
+
+ Directory of f:\channels\SEARCH
+
+05/27/2024  09:14 PM    <DIR>          .
+05/27/2024  09:14 PM    <DIR>          ..
+               0 File(s)              0 bytes
+
+ Directory of f:\channels\SETTINGS
+
+05/27/2024  09:09 PM    <DIR>          .
+05/27/2024  09:09 PM    <DIR>          ..
+               0 File(s)              0 bytes
+
+ Directory of f:\channels\SHOPPING
+
+05/27/2024  09:12 PM    <DIR>          .
+05/27/2024  09:12 PM    <DIR>          ..
+               0 File(s)              0 bytes
+
+ Directory of f:\channels\SHORTS
+
+05/27/2024  09:32 PM    <DIR>          .
+05/27/2024  09:32 PM    <DIR>          ..
+               0 File(s)              0 bytes
+
+ Directory of f:\channels\SUBSCRITIONS
+
+05/27/2024  09:14 PM    <DIR>          .
+05/27/2024  09:14 PM    <DIR>          ..
+               0 File(s)              0 bytes
+
+ Directory of f:\channels\YOUR-CHANNEL
+
+05/27/2024  09:09 PM    <DIR>          .
+05/27/2024  09:09 PM    <DIR>          ..
+               0 File(s)              0 bytes
+
+     Total Files Listed:
+               0 File(s)              0 bytes
+              77 Dir(s)  726,819,364,864 bytes free
