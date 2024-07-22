@@ -1,5 +1,4 @@
 
-```
 @echo off
 
 :main_menu
@@ -17,7 +16,8 @@ echo 9. TV
 echo 10. Radio
 echo 11. Podcast
 echo 12. List
-echo 13. Quit
+echo 13. Business 
+echo 14. Quit
 set /p choice=Enter your choice: 
 
 if %choice%==0 goto :user_menu
@@ -28,8 +28,23 @@ if %choice%==9 goto :tv_menu
 if %choice%==10 goto :radio_menu
 if %choice%==11 goto :podcast_menu
 if %choice%==12 goto :list_menu
-if %choice%==13 goto :quit
+if %choice%==13 goto :business_menu
+if %choice%==14 goto :quit
 if %choice%==6 goto :main_menu
+
+:business_menu
+cls
+echo 1. business
+echo 2. users
+echo 3. discover
+echo 4. add business
+echo 5. org
+echo 6. type
+echo 7. sell
+echo 8. buy 
+echo 9. trade
+echo . Back to Main Menu
+set /p choice=Enter your choice: 
 
 :comumnity_menu
 cls
