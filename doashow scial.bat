@@ -1,4 +1,4 @@
-
+```
 @echo off
 
 :main_menu
@@ -16,8 +16,10 @@ echo 9. TV
 echo 10. Radio
 echo 11. Podcast
 echo 12. List
-echo 13. Business 
-echo 14. Quit
+echo 13. Business
+echo 14. Pages
+echo 15. Groups 
+echo 16. Quit
 set /p choice=Enter your choice: 
 
 if %choice%==0 goto :user_menu
@@ -29,37 +31,38 @@ if %choice%==10 goto :radio_menu
 if %choice%==11 goto :podcast_menu
 if %choice%==12 goto :list_menu
 if %choice%==13 goto :business_menu
-if %choice%==14 goto :quit
+if %choice%== 16 goto :quit
 if %choice%==6 goto :main_menu
+if %choice%==14 goto :pages_menu
+if %choice%==15 goto :groups_menu
 
-:message_menu
+:groups_menu
 cls
-echo 1. create
-echo 2. post
-echo 3. discover
-echo 4. video
-echo 5. radio
-echo 6. podcast
-echo 7. pics
-echo 8. message
-echo 9. list
-echo 10. feed
-echo . Back to Main Menu
-set /p choice=Enter your choice:
-
-:help_menu
-cls
-echo 1. business
+echo 1. groups
 echo 2. users
 echo 3. discover
-echo 4. video
-echo 5. radio
-echo 6. podcast
-echo 7. pics
-echo 8. message
-echo 9. list
+echo 4. add groups
+echo 5. org
+echo 6. type
+echo 7. sell
+echo 8. buy 
+echo 9. trade
 echo . Back to Main Menu
-set /p choice=Enter your choice:
+set /p choice=Enter your choice: 
+
+:pages_menu
+cls
+echo 1. pages
+echo 2. users
+echo 3. discover
+echo 4. add pages
+echo 5. org
+echo 6. type
+echo 7. sell
+echo 8. buy 
+echo 9. trade
+echo . Back to Main Menu
+set /p choice=Enter your choice: 
 
 :business_menu
 cls
