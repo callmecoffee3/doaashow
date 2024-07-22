@@ -1,4 +1,4 @@
-Here is the code written as a batch file:
+Here is the updated batch file with the "view list" option:
 
 ```
 @echo off
@@ -17,6 +17,7 @@ echo remove [item number] from Select Shopping
 echo save
 echo load
 echo list
+echo view
 
 set /p input=C:\Shopping>_
 
@@ -26,6 +27,7 @@ if /i "%input%"=="remove" goto :remove
 if /i "%input%"=="save" goto :save
 if /i "%input%"=="load" goto :load
 if /i "%input%"=="list" goto :list
+if /i "%input%"=="view" goto :view
 
 :myShoppingList
 cls
@@ -66,8 +68,21 @@ echo 5. Bananas
 echo 6. Oranges
 echo 7. Spinach
 goto :main
+
+:view
+cls
+echo **View Select Shopping List:**
+echo 1. Milk
+echo 2. Bread
+echo 3. Apples
+echo 4. Carrots
+echo 5. Bananas
+echo 6. Oranges
+echo 7. Spinach
+pause
+goto :main
 ```
 
-Save this code in a file with a `.bat` extension (e.g., `shopping.bat`) and run it in the command prompt.
+Now, when you type `view` in the command prompt, it will display the Select Shopping List.
 
-Note: This batch file uses basic commands and does not store the shopping list data persistently. It is a simple demonstration of how the command prompt interface can be implemented using a batch file.
+Note: I added the `view` option and the corresponding label `:view` to display the list. The `pause` command is used to pause the execution and allow the user to see the list before returning to the main menu.
