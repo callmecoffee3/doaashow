@@ -32,6 +32,35 @@ if %choice%==13 goto :business_menu
 if %choice%==14 goto :quit
 if %choice%==6 goto :main_menu
 
+:message_menu
+cls
+echo 1. create
+echo 2. post
+echo 3. discover
+echo 4. video
+echo 5. radio
+echo 6. podcast
+echo 7. pics
+echo 8. message
+echo 9. list
+echo 10. feed
+echo . Back to Main Menu
+set /p choice=Enter your choice:
+
+:help_menu
+cls
+echo 1. business
+echo 2. users
+echo 3. discover
+echo 4. video
+echo 5. radio
+echo 6. podcast
+echo 7. pics
+echo 8. message
+echo 9. list
+echo . Back to Main Menu
+set /p choice=Enter your choice:
+
 :business_menu
 cls
 echo 1. business
