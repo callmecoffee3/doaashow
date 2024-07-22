@@ -31,6 +31,15 @@ if %choice%==12 goto :list_menu
 if %choice%==13 goto :quit
 if %choice%==6 goto :main_menu
 
+:comumnity_menu
+cls
+echo 1. communities
+echo 2. users
+echo 3. discover 
+echo 4. add communites
+echo 5. Back to Main Menu
+set /p choice=Enter your choice: 
+
 :User_menu
 cls
 echo 1. main user
@@ -39,6 +48,7 @@ echo 3. Search for users
 echo 4. add user
 echo 5. Back to Main Menu
 set /p choice=Enter your choice: 
+
 :list_menu
 cls
 echo 1. shopping
