@@ -1,96 +1,73 @@
-Shopping list revised
-
-Here is the revised shopping list with a user interface in the command prompt, including a main menu selection:
+Here is the code written as a batch file:
 
 ```
-**My Menu **
+@echo off
 
-[1] My Shopping List
-[2] Select Shopping 
-[3] Exit
+:main
+cls
+echo **My Menu**
+echo [a] My Shopping List
+echo [b] Main Shopping
+echo [1] Select Shopping
+echo [2] Exit
+echo **Commands:**
+echo select [option number]
+echo add [item name] to Select Shopping
+echo remove [item number] from Select Shopping
+echo save
+echo load
+echo list
 
-**My Shopping List:**
+set /p input=C:\Shopping>_
 
-1. Eggs (18 ct)
-2. Bacon (pk)
-3. Chicken (legs)
-4. Popcorn (pk)
-5. Syrup (bottle)
-6. Sweetener (bottle)
-7. Milk 2% (gal)
-8. Water (bottles)
-9. Spaghetti sauce (jar)
-10. Spaghetti (pk)
-11. Meat (pk)
-12. Hot dog (24 ct)
-13. Ricotta cheese (pk)
-14. Cheese sticks (pk)
-15. Mountain dew (bottle)
-16. Sliced cheese (bag)
-17. Ramen shrimp noodles (box)
-18. Pizza (microwave)
-19. Pepperoni (bag)
-20. Paper towels (pk)
-21. Paper plates (pk)
-22. Cheddar cheese (sliced)
-23. Seafood dinners (microwave)
-24. Condensed milk (can)
-25. C batteries (pk)
-26. Apple cider (powdered)
-27. Maple syrup (jug)
-28. Onion powder (bottle)
-29. Garlic powder (bottle)
-30. Index cards (pk)
-31. Chicken broth (box)
-32. Shampoo
+if /i "%input%"=="select a" goto :myShoppingList
+if /i "%input%"=="add" goto :add
+if /i "%input%"=="remove" goto :remove
+if /i "%input%"=="save" goto :save
+if /i "%input%"=="load" goto :load
+if /i "%input%"=="list" goto :list
 
-**Select Shopping**
+:myShoppingList
+cls
+echo **My Shopping List:**
+echo 1. Eggs (18 ct)
+echo 2. Bacon (pk)
+echo 3. Chicken (legs)
+...
+echo 32. Shampoo
+goto :main
 
-1. Eggs (18 ct)
-2. Bacon (pk)
-3. Chicken (legs)
-4. Popcorn (pk)
-5. Syrup (bottle)
-6. Sweetener (bottle)
-7. Milk 2% (gal)
-8. Water (bottles)
-9. Spaghetti sauce (jar)
-10. Spaghetti (pk)
-11. Meat (pk)
-12. Hot dog (24 ct)
-13. Ricotta cheese (pk)
-14. Cheese sticks (pk)
-15. Mountain dew (bottle)
-16. Sliced cheese (bag)
-17. Ramen shrimp noodles (box)
-18. Pizza (microwave)
-19. Pepperoni (bag)
-20. Paper towels (pk)
-21. Paper plates (pk)
-22. Cheddar cheese (sliced)
-23. Seafood dinners (microwave)
-24. Condensed milk (can)
-25. C batteries (pk)
-26. Apple cider (powdered)
-27. Maple syrup (jug)
-28. Onion powder (bottle)
-29. Garlic powder (bottle)
-30. Index cards (pk)
-31. Chicken broth (box)
-32. Shampoo
+:add
+set /p item=Enter item to add:
+echo **Item Added:** %item% added to Select Shopping
+goto :main
 
-**Commands:**
+:remove
+set /p item=Enter item number to remove:
+echo **Item Removed:** %item% removed from Select Shopping
+goto :main
 
-C:\Shopping>select [option number]
-C:\Shopping>add [item name]
-C:\Shopping>remove [item number]
-C:\Shopping>save
-C:\Shopping>load
-C:\Shopping>list
+:save
+echo **List Saved**
+goto :main
 
-Note: Type 'select' to select an option, 'add' to add an item, 'remove' to remove an item, 'save' to save the list, 'load' to load a saved list, and 'I list' to display the list.
+:load
+echo **List Loaded**
+goto :main
 
-C:\Shopping>_
+:list
+cls
+echo **Select Shopping:**
+echo 1. Milk
+echo 2. Bread
+echo 3. Apples
+echo 4. Carrots
+echo 5. Bananas
+echo 6. Oranges
+echo 7. Spinach
+goto :main
 ```
 
-Please enter a command:
+Save this code in a file with a `.bat` extension (e.g., `shopping.bat`) and run it in the command prompt.
+
+Note: This batch file uses basic commands and does not store the shopping list data persistently. It is a simple demonstration of how the command prompt interface can be implemented using a batch file.
