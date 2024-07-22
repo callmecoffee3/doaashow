@@ -1,3 +1,13 @@
+
+```
+@echo off
+
+:main_menu
+cls
+echo 0. User
+echo 1. On the Burner
+echo 2. Create
+echo 3. Discover
 echo 4. Community
 echo 5. Products
 echo 6. Settings
