@@ -1,59 +1,63 @@
-Here is the revised shopping list with a user interface in the command prompt, including a main menu selection:
-
+Here is the batch file code for the shopping list menu:
 ```
-**Main Menu**
+@echo off
 
-[1] My Shopping List
-[2] Select Lists
-[3] Exit
+:main
+cls
+echo **My Menu**
+echo [1] My Shopping List
+echo [2] Select Shopping
+echo [3] Exit
+echo **My Shopping List:**
+echo 1. Eggs (18 ct)
+echo 2. Bacon (pk)
+...
+echo 32. Shampoo
+echo **Commands:**
+echo select [option number]
+echo add [item name]
+echo remove [item number]
+echo save
+echo load
+echo list
+set /p input=C:\Shopping>_
 
-**My Shopping List:**
+if /i "%input%"=="select" goto :select
+if /i "%input%"=="add" goto :add
+if /i "%input%"=="remove" goto :remove
+if /i "%input%"=="save" goto :save
+if /i "%input%"=="load" goto :load
+if /i "%input%"=="list" goto :list
 
-1. Eggs (18 ct)
-2. Bacon (pk)
-3. Chicken (legs)
-4. Popcorn (pk)
-5. Syrup (bottle)
-6. Sweetener (bottle)
-7. Milk 2% (gal)
-8. Water (bottles)
-9. Spaghetti sauce (jar)
-10. Spaghetti (pk)
-11. Meat (pk)
-12. Hot dog (24 ct)
-13. Ricotta cheese (pk)
-14. Cheese sticks (pk)
-15. Mountain dew (bottle)
-16. Sliced cheese (bag)
-17. Ramen shrimp noodles (box)
-18. Pizza (microwave)
-19. Pepperoni (bag)
-20. Paper towels (pk)
-21. Paper plates (pk)
-22. Cheddar cheese (sliced)
-23. Seafood dinners (microwave)
-24. Condensed milk (can)
-25. C batteries (pk)
-26. Apple cider (powdered)
-27. Maple syrup (jug)
-28. Onion powder (bottle)
-29. Garlic powder (bottle)
-30. Index cards (pk)
-31. Chicken broth (box)
-32. Shampoo
+:select
+set /p option=Enter option number:
+goto :main
 
-**Commands:**
+:add
+set /p item=Enter item name:
+echo %item% added to shopping list
+goto :main
 
-C:\Shopping>select [option number]
-C:\Shopping>add [item name]
-C:\Shopping>remove [item number]
-C:\Shopping>save
-C:\Shopping>load
-C:\Shopping>list
+:remove
+set /p item=Enter item number:
+echo %item% removed from shopping list
+goto :main
 
-Note: Type 'select' to select an option, 'add' to add an item, 'remove' to remove an item, 'save' to save the list, 'load' to load a saved list, and 'list' to display the list.
+:save
+echo **List Saved**
+goto :main
 
-C:\Shopping>_
+:load
+echo **List Loaded**
+goto :main
+
+:list
+echo **Shopping List:**
+echo 1. Eggs (18 ct)
+...
+echo 32. Shampoo
+goto :main
 ```
+Save this code in a file with a `.bat` extension (e.g., `shopping.bat`) and run it in the command prompt.
 
-Please enter a command:
+Note: This code is a basic template, and you will need to add more functionality to make the shopping list fully functional.
