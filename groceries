@@ -1,0 +1,91 @@
+Here is a simulation of a groceries list as a batch file with the added functionality:
+
+@echo off
+
+:: Load last list
+load_last_list
+
+:: Main Menu
+:list
+cls
+echo Groceries List Simulator
+echo --------------------------------
+echo Current List:
+type list.txt
+echo --------------------------------
+echo 1. Add Item
+echo 2. Remove Item
+echo 3. Save Current List
+echo 4. Load Last List
+echo 5. Delete Current List
+echo 6. View Last List Details
+echo 7. Find Item in Last List
+echo 8. Create Custom List
+echo 9. Print List
+echo 10. Quit
+set /p choice=Enter your choice:
+
+if %choice%==1 goto add_item
+if %choice%==2 goto remove_item
+if %choice%==3 goto save_current_list
+if %choice%==4 goto load_last_list
+if %choice%==5 goto delete_current_list
+if %choice%==6 goto view_last_list_details
+if %choice%==7 goto find_item_in_last_list
+if %choice%==8 goto create_custom_list
+if %choice%==9 goto print_list
+if %choice%==10 goto quit
+
+:: Create Custom List
+:create_custom_list
+set /p list_name=Enter list name:
+echo > %list_name%.txt
+goto list
+
+:: Add Item to Custom List
+:add_item_to_custom_list
+set /p item=Enter item to add:
+echo %item% >> %list_name%.txt
+goto list
+
+:: Save Custom List
+:save_custom_list
+copy /y %list_name%.txt custom_lists%list_name%.txt > nul
+goto list
+
+
+:: Add Item
+:add_item
+set /p item=Enter item to add:
+echo %item% >> list.txt
+goto list
+
+:: Remove Item
+:remove_item
+set /p item=Enter item to remove:
+type list.txt | find /v "%item%" > temp.txt
+move /y temp.txt list.txt
+goto list
+
+:: Save Current List
+:save_current_list
+copy /y list.txt last_list.txt > nul
+goto list
+
+:: Load Last List
+:load_last_list
+if exist last_list.txt copy /y last_list.txt list.txt > nul
+goto list
+
+:: Delete Current List
+:delete_current_list
+del /q list.txt
+goto list
+
+:: View Last List Details
+:view_last_list_details
+cls
+echo Last List Details
+echo -------------------
+
+Note that this simulation includes the ability to create a custom list, add items to it, and save it. The custom lists are saved in a directory called "custom_lists".
