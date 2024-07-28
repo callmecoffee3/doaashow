@@ -1,0 +1,18 @@
+Here is a batch script that creates folders named from "%(+)%a" to "%(+)%z" and "%(+)%0" to "%(+)%9":
+@echo off
+
+:: Create folders with letters
+for %%i in (a b c d e f g h i j k l m n o p q r s t u v w x y z) do (
+mkdir %(+)%%i
+)
+
+:: Create folders with numbers
+for %%j in (0 1 2 3 4 5 6 7 8 9) do (
+mkdir %(+)%%j
+)
+
+This script uses two separate loops to create folders with letters and numbers. You can adjust the ranges or add more characters as needed.
+
+Save this script as a batch file (e.g., create_folders.bat) and run it in the desired directory. It will create 36 folders named from "%(+)%a" to "%(+)%z" and "%(+)%0" to "%(+)%9".
+
+Note: If you want to include more characters, such as symbols or uppercase letters, add them to the respective loop. For example, to include uppercase letters, add (A B C ... Z) to the first loop.
