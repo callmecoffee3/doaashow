@@ -1,0 +1,876 @@
+ Volume in drive F is doashow
+ Volume Serial Number is ECB8-149A
+
+ Directory of F:\DOASHOW\portable-c-drive\$RECYCLE.BIN\-PATHS
+
+04/28/2024  09:59 PM    <DIR>          Phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\-PATHS 
+
+04/28/2024  09:59 PM    <DIR>          Phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\-PATHS \-PATHS
+
+04/28/2024  09:59 PM    <DIR>          Phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@ cORE\( )Business\-( ) business-SECTION (basic) (door)\-( )MENU-MAIN BUSINESS (landing)\-( )2 Settings\@burner (landings)\content\burner\content\experiment files\experiment 2
+
+09/29/2023  01:43 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@ cORE\( )Business\-( ) business-SECTION (basic) (door)\-( )MENU-MAIN BUSINESS (landing)\-( )6 Global\-( )6 Business\Users\contacts
+
+11/22/2023  08:48 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@ cORE\( )Business\-( ) business-SECTION (basic) (door)\-( )MENU-MAIN BUSINESS (landing)\-( )7 Shop
+
+12/14/2023  08:06 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@ cORE\( )Business\-( ) business-SECTION (basic) (door)\-(0)MENU-SIDEBARS (bars) (splashes) (side-tool-bars)(links)\-01.SOCIAL (splashes)\-00. PAGES\SCOCIAL\FILM
+
+11/09/2023  01:05 PM    <DIR>          PHONE
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@ cORE\( )Business\-( ) business-SECTION (basic) (door)\-(0)MENU-SIDEBARS (bars) (splashes) (side-tool-bars)(links)\-01.SOCIAL (splashes)\-01. POST\-00. PAGES\SCOCIAL\FILM
+
+11/09/2023  01:05 PM    <DIR>          PHONE
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@ cORE\( )Business\-( ) business-SECTION (basic) (door)\-(@)MENU-SETTING ISSUES (burner) (splashes) (settings)\@burner (landings)\content\burner\content\experiment files\experiment 2
+
+09/29/2023  01:43 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@ cORE\( )Main-Menu\-#01. Work Station (STUDIOS) (landing)\- Do A Show (writers) (parcel)\(-)the marketplace (inner)\(-) (nav) menu\-(-) marketplace\Docs\Characters
+
+10/27/2021  12:03 AM    <DIR>          Phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@ cORE\( )Main-Menu\-#01. Work Station (STUDIOS) (landing)\- Do A Show (writers) (parcel)\(-)the marketplace (inner)\(-) (nav) menu\-(-) marketplace\Docs\The New
+
+10/10/2023  09:52 PM    <DIR>          Phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@ cORE\( )Main-Menu\-#01. Work Station (STUDIOS) (landing)\- Do A Show (writers) (parcel)\(-)the marketplace (inner)\(-) (nav) menu\-(-) marketplace\domain\Characters
+
+10/28/2021  07:18 PM    <DIR>          Phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@ cORE\( )Main-Menu\-#01. Work Station (STUDIOS) (landing)\- Do A Show (writers) (parcel)\(-)the marketplace (inner)\(-) Domains + things\archive (1)(1)\Characters
+
+11/10/2021  06:17 PM    <DIR>          Phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@ cORE\( )Main-Menu\-#01. Work Station (STUDIOS) (landing)\- Do A Show (writers) (parcel)\(-)the marketplace (inner)\(-) Domains + things\Characters
+
+10/28/2021  07:18 PM    <DIR>          Phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@ cORE\( )Personal\-( ) personal-SECTION (basic) (door)\-( )2 Settings\@burner (landings)\content\burner\content\experiment files\experiment 2
+
+09/29/2023  01:43 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@ cORE\( )Personal\-( ) personal-SECTION (basic) (door)\-( )6 Global\-( )6 Business\Users\contacts
+
+11/22/2023  08:48 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@ cORE\( )Personal\-( ) personal-SECTION (basic) (door)\-( )6 Personals\Users\contacts
+
+11/22/2023  08:48 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@ cORE\( )Personal\-( ) personal-SECTION (basic) (door)\-( )8 Account-Type\-( )2 Setting (Business)\@burner (landings)\content\burner\content\experiment files\experiment 2
+
+09/29/2023  01:43 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@ cORE\( )Section-Menu\-( ) business-SECTION (basic) (door)\-( )MENU-MAIN BUSINESS (landing)\-( )2 Settings\@burner (landings)\content\burner\content\experiment files\experiment 2
+
+09/29/2023  01:43 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@ cORE\( )Section-Menu\-( ) business-SECTION (basic) (door)\-( )MENU-MAIN BUSINESS (landing)\-( )6 Global\-( )6 Business\Users\contacts
+
+11/22/2023  08:48 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@ cORE\( )Section-Menu\-( ) business-SECTION (basic) (door)\-( )MENU-MAIN BUSINESS (landing)\-( )7 Shop
+
+12/14/2023  08:06 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@ cORE\( )Section-Menu\-( ) business-SECTION (basic) (door)\-(0)MENU-SIDEBARS (bars) (splashes) (side-tool-bars)(links)\-01.SOCIAL (splashes)\-00. PAGES\SCOCIAL\FILM
+
+11/09/2023  01:05 PM    <DIR>          PHONE
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@ cORE\( )Section-Menu\-( ) business-SECTION (basic) (door)\-(0)MENU-SIDEBARS (bars) (splashes) (side-tool-bars)(links)\-01.SOCIAL (splashes)\-01. POST\-00. PAGES\SCOCIAL\FILM
+
+11/09/2023  01:05 PM    <DIR>          PHONE
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@ cORE\( )Section-Menu\-( ) business-SECTION (basic) (door)\-(@)MENU-SETTING ISSUES (burner) (splashes) (settings)\@burner (landings)\content\burner\content\experiment files\experiment 2
+
+09/29/2023  01:43 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@ cORE\( )Section-Menu\-( ) personal-SECTION (basic) (door)\-( )2 Settings\@burner (landings)\content\burner\content\experiment files\experiment 2
+
+09/29/2023  01:43 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@ cORE\( )Section-Menu\-( ) personal-SECTION (basic) (door)\-( )6 Global\-( )6 Business\Users\contacts
+
+11/22/2023  08:48 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@ cORE\( )Section-Menu\-( ) personal-SECTION (basic) (door)\-( )6 Personals\Users\contacts
+
+11/22/2023  08:48 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@ cORE\( )Section-Menu\-( ) personal-SECTION (basic) (door)\-( )8 Account-Type\-( )2 Setting (Business)\@burner (landings)\content\burner\content\experiment files\experiment 2
+
+09/29/2023  01:43 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\door\do a show\patch\pages\Pg 1\- this drive\START MENU\8 internet
+
+08/24/2023  08:19 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\guest\do a show (a)  (work 1) \$COMPANY\$BACKLOT\$STUFF\$CHANNELSTUFF
+
+07/13/2023  09:35 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\guest\do a show (b)  (work 2)\do a show (burner)\-showstuff\-Studio_Show?? (directors)\-show (the production)
+
+09/03/2022  06:38 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\guest\do a show (b)  (work 2)\do a show (burner)\-showstuff\-Studio_Show?? (producers)\-show (the production)
+
+09/03/2022  06:38 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\guest\do a show (b)  (work 2)\do a show (burner)\-showstuff\-Studio_Show?? check list (producers & directors & writers)\-show (the production)
+
+09/03/2022  06:38 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\patch\pages\Pg 1\- this drive\START MENU\1 giftsa\menu\devices\productsa
+
+08/24/2023  05:43 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\patch\pages\Pg 1\- this drive\START MENU\8 internet
+
+08/24/2023  08:19 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\patch\pages\Pg 2\new menu\0 core (burners)\do a show (b)  (work 2)\do a show (burner)\-showstuff\-Studio_Show?? (directors)\-show (the production)
+
+09/07/2023  09:29 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\patch\pages\Pg 2\new menu\0 core (burners)\do a show (b)  (work 2)\do a show (burner)\-showstuff\-Studio_Show?? (producers)\-show (the production)
+
+09/07/2023  09:29 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\patch (feed)\DO-A-SHOW (feed)\- this drive\start menu\$GIFTSA (menu) (feed)\$MENU\$DEVICES\$PRODUCTSa
+
+07/19/2023  10:46 PM    <DIR>          PHONE
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\patch (feed)\DO-A-SHOW (feed)\- this drive\start menu\2 BOOKMARKS (feed)\-Studio_Show (Money)\A _ million\1
+
+11/14/2022  05:34 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\patch (feed)\DO-A-SHOW (feed)\- this drive\start menu\2 BOOKMARKS (feed)\-Studio_Show (Money)\A _ million\1\- a run
+
+09/22/2022  05:17 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\patch (feed)\DO-A-SHOW (feed)\- this drive\start menu\2 BOOKMARKS (feed)\-Studio_Show (Money)\A _ million\10
+
+11/14/2022  05:34 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\patch (feed)\DO-A-SHOW (feed)\- this drive\start menu\2 BOOKMARKS (feed)\-Studio_Show (Money)\A _ million\10\- a run
+
+09/22/2022  05:17 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\patch (feed)\DO-A-SHOW (feed)\- this drive\start menu\2 BOOKMARKS (feed)\-Studio_Show (Money)\A _ million\100_
+
+11/14/2022  05:34 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\patch (feed)\DO-A-SHOW (feed)\- this drive\start menu\2 BOOKMARKS (feed)\-Studio_Show (Money)\A _ million\100_\- a run
+
+09/22/2022  05:17 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\patch (feed)\DO-A-SHOW (feed)\- this drive\start menu\2 BOOKMARKS (feed)\-Studio_Show (Money)\B_ billion\10_
+
+11/14/2022  05:34 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\patch (feed)\DO-A-SHOW (feed)\- this drive\start menu\2 BOOKMARKS (feed)\-Studio_Show (Money)\B_ billion\10_\- a run
+
+09/22/2022  05:17 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\patch (feed)\DO-A-SHOW (feed)\- this drive\start menu\2 BOOKMARKS (feed)\-Studio_Show?? (producers)\-show (the production)
+
+09/03/2022  06:38 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\patch (feed)\DO-A-SHOW (feed)\- this drive\start menu\2 BOOKMARKS (feed)\-Studio_Show?? (w+ d+ p+)\-show (the production)
+
+09/03/2022  06:38 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\patch (feed)\DO-A-SHOW (feed)\- this drive\start menu\2 BOOKMARKS (feed)\-Studio_Show?? check list (producers & directors & writers)\-show (the production)
+
+09/03/2022  06:38 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\patch (feed)\DO-A-SHOW (feed)\- this drive\start menu\4 COMPUTER (feed)\Start\work-feed\do a show (a)  (work 1) \$COMPANY\$BACKLOT\$STUFF\$CHANNELSTUFF
+
+07/13/2023  09:35 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\patch (feed)\DO-A-SHOW (feed)\- this drive\start menu\4 COMPUTER (feed)\Start\work-feed\do a show (d) (office)\- Do A Show (writers)
+
+09/06/2022  09:45 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\patch (feed)\DO-A-SHOW (feed)\- this drive\start menu\4 COMPUTER (feed)\Start\work-feed\do a show (d) (office)\1 @do a show burnners\-burner10\Help Desk
+
+01/04/2022  01:11 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\patch (feed)\DO-A-SHOW (feed)\- this drive\start menu\4 COMPUTER (feed)\Start\work-feed\do a show (d) (office)\1 @do a show burnners\-burner4\Designs_
+
+02/07/2022  11:27 AM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\patch (feed)\DO-A-SHOW (feed)\- this drive\start menu\4 COMPUTER (feed)\Start\work-feed\do a show (d) (office)\2 -Channel & Show
+
+09/09/2022  09:56 AM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\patch (feed)\DO-A-SHOW (feed)\- this drive\start menu\4 COMPUTER (feed)\Start\work-feed\do a show (d) (office)\2 -Channel & Show\- Channels
+
+09/06/2022  09:45 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\patch (feed)\DO-A-SHOW (feed)\- this drive\start menu\4 COMPUTER (feed)\Start\work-feed\do a show (d) (office)\3 -The reporters desk
+
+09/09/2022  09:56 AM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\patch (feed)\DO-A-SHOW (feed)\- this drive\start menu\4 COMPUTER (feed)\Start\work-feed\do a show (d) (office)\4 -The spaces\-show (the production)
+
+09/03/2022  06:38 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\patch (feed)\DO-A-SHOW (feed)\- this drive\start menu\4 COMPUTER (feed)\Start\work-feed\do a show (d) (office)\5 -Work Station\- Do A Show (social)
+
+08/29/2022  08:23 AM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\patch (feed)\DO-A-SHOW (feed)\- this drive\start menu\4 COMPUTER (feed)\Start\work-feed\do a show (d) (office)\5 -Work Station\- Do A Show (writers)
+
+09/06/2022  09:45 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\patch (feed)\DO-A-SHOW (feed)\- this drive\start menu\4 COMPUTER (feed)\Start\work-feed\do a show (d) (office)\Notes\producer looking
+
+09/06/2022  09:45 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\patch (feed)\DO-A-SHOW (feed)\- this drive\start menu\4 COMPUTER (feed)\Start\work-feed\do a show (d) (office)\Notes\web
+
+10/24/2022  06:36 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\patch (feed)\DO-A-SHOW (feed)\- this drive\start menu\4 COMPUTER (feed)\Start\work-feed\do a show (d) (office)\Notes\web\websites
+
+10/14/2022  07:13 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\patch (feed)\DO-A-SHOW (feed)\- this drive\start menu\5 DRIVE (feed)\Do A Show Drive (a)\Start\Users\callmecoffee9\- Do A Show (writers)
+
+09/06/2022  09:45 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\patch (feed)\DO-A-SHOW (feed)\- this drive\start menu\5 DRIVE (feed)\Do A Show Drive (a)\Start\Users\callmecoffee9\1 @do a show burnners\-burner4\Designs_
+
+02/07/2022  11:27 AM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\patch (feed)\DO-A-SHOW (feed)\- this drive\start menu\5 DRIVE (feed)\Do A Show Drive (a)\Start\Users\callmecoffee9\2 -Channel & Show
+
+09/09/2022  09:56 AM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\patch (feed)\DO-A-SHOW (feed)\- this drive\start menu\5 DRIVE (feed)\Do A Show Drive (a)\Start\Users\callmecoffee9\2 -Channel & Show\- Channels
+
+09/06/2022  09:45 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\patch (feed)\DO-A-SHOW (feed)\- this drive\start menu\5 DRIVE (feed)\Do A Show Drive (a)\Start\Users\callmecoffee9\3 -The reporters desk
+
+09/09/2022  09:56 AM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\patch (feed)\DO-A-SHOW (feed)\- this drive\start menu\5 DRIVE (feed)\Do A Show Drive (a)\Start\Users\callmecoffee9\4 -The spaces\-show (the production)
+
+09/03/2022  06:38 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\patch (feed)\DO-A-SHOW (feed)\- this drive\start menu\5 DRIVE (feed)\Do A Show Drive (a)\Start\Users\callmecoffee9\5 -Work Station\- Do A Show (social)
+
+08/29/2022  08:23 AM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\patch (feed)\DO-A-SHOW (feed)\- this drive\start menu\5 DRIVE (feed)\Do A Show Drive (a)\Start\Users\callmecoffee9\5 -Work Station\- Do A Show (writers)
+
+09/06/2022  09:45 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\patch (feed)\DO-A-SHOW (feed)\- this drive\start menu\5 DRIVE (feed)\Do A Show Drive (a)\Start\Users\callmecoffee9\Notes\producer looking
+
+09/06/2022  09:45 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\patch (feed)\DO-A-SHOW (feed)\- this drive\start menu\5 DRIVE (feed)\Do A Show Drive (a)\Start\Users\callmecoffee9\Notes\web
+
+10/24/2022  06:36 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\patch (feed)\DO-A-SHOW (feed)\- this drive\start menu\5 DRIVE (feed)\Do A Show Drive (a)\Start\Users\callmecoffee9\Notes\web\websites
+
+10/14/2022  07:13 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\patch (feed)\DO-A-SHOW (feed)\- this drive\start menu\5 DRIVE (feed)\Do A Show Drive (a)\Start\Users\guest\- Do A Show (writers)
+
+09/06/2022  09:45 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\patch (feed)\DO-A-SHOW (feed)\- this drive\start menu\5 DRIVE (feed)\Do A Show Drive (a)\Start\Users\guest\1 @do a show burnners\-burner10\Help Desk
+
+01/04/2022  01:11 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\patch (feed)\DO-A-SHOW (feed)\- this drive\start menu\5 DRIVE (feed)\Do A Show Drive (a)\Start\Users\guest\1 @do a show burnners\-burner4\Designs_
+
+02/07/2022  11:27 AM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\patch (feed)\DO-A-SHOW (feed)\- this drive\start menu\5 DRIVE (feed)\Do A Show Drive (d)\-this drive (0browse)\-00. Character\Character (anyone)
+
+12/28/2022  06:22 AM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\patch (feed)\DO-A-SHOW (feed)\- this drive\start menu\5 DRIVE (feed)\Do A Show Drive (d)\-this drive (0browse)\-00. Character\Character (writer)
+
+12/28/2022  07:22 AM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\patch (feed)\DO-A-SHOW (feed)\- this drive\start menu\5 DRIVE (feed)\Do A Show Drive (d)\-this drive (0browse)\-00. Guide\GUIDE\-Usefull\-Channel & Show
+
+09/09/2022  08:56 AM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\patch (feed)\DO-A-SHOW (feed)\- this drive\start menu\5 DRIVE (feed)\Do A Show Drive (d)\-this drive (0browse)\-00. Guide\GUIDE\-Usefull\-Character
+
+12/28/2022  06:22 AM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\patch (feed)\DO-A-SHOW (feed)\- this drive\start menu\5 DRIVE (feed)\Do A Show Drive (d)\-this drive (0browse)\-00. Guide\GUIDE (directory)\-Character
+
+12/28/2022  07:22 AM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\patch (feed)\DO-A-SHOW (feed)\- this drive\start menu\5 DRIVE (feed)\Do A Show Drive (d)\-this drive (0browse)\-00. Guide\GUIDE (directory)\-Notes\web
+
+10/24/2022  06:36 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\patch (feed)\DO-A-SHOW (feed)\- this drive\start menu\5 DRIVE (feed)\Do A Show Drive (d)\-this drive (0browse)\-00. Guide\GUIDE (directory)\Notes\web
+
+10/24/2022  06:36 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\patch (feed)\DO-A-SHOW (feed)\- this drive\start menu\5 DRIVE (feed)\Do A Show Drive (d)\-this drive (0browse)\-00. Reporters\The reporters desk (anyone)
+
+09/09/2022  09:56 AM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\patch (feed)\DO-A-SHOW (feed)\- this drive\start menu\5 DRIVE (feed)\Do A Show Drive (d)\-this drive (0browse)\-00. Spaces\spaces\-09. The spaces (actors)
+
+09/06/2022  09:45 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\patch (feed)\DO-A-SHOW (feed)\- this drive\start menu\5 DRIVE (feed)\Do A Show Drive (d)\-this drive (0browse)\-00. Spaces\The spaces (actors)
+
+09/06/2022  09:45 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\patch (feed)\DO-A-SHOW (feed)\- this drive\start menu\5 DRIVE (feed)\Do A Show Drive (d)\-this drive (0browse)\-00. Spaces\The spaces (anyone)
+
+09/06/2022  09:45 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@doashow\patch (feed)\DO-A-SHOW (feed)\- this drive\start menu\8 INTERNET (feed)
+
+08/24/2023  08:59 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@MENU\@LITE.DOASHOW\-Do A Show (drive)\-this drive (browse)\( ) menu\( ) doashow\@burner\content\burner\content\experiment files\experiment 2
+
+09/29/2023  12:43 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@MENU\@LITE.DOASHOW\-Do A Show (drive)\-this drive (browse)\( ) menu\( ) doashow\@patch\pages\Pg 1\- this drive\START MENU\1 giftsa\menu\devices\productsa
+
+08/24/2023  05:43 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@MENU\@LITE.DOASHOW\-Do A Show (drive)\-this drive (browse)\( ) menu\( ) doashow\@patch\pages\Pg 1\- this drive\START MENU\8 internet
+
+08/24/2023  08:19 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@MENU\@LITE.DOASHOW\-Do A Show (drive)\-this drive (browse)\( ) menu\( ) doashow\@patch\pages\Pg 2\- This Drive_\our products\-00.  -cORE\A\V_.01 USB storage ??
+
+11/27/2022  06:42 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@MENU\@LITE.DOASHOW\-Do A Show Drive (drive)\-this drive (browse)\@burner\content\burner\content\experiment files\experiment 2
+
+09/29/2023  12:43 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@MENU\@LITE.DOASHOW\-Do A Show Drive (drive)\-this drive (browse)\@patch\pages\Pg 1\- this drive\START MENU\1 giftsa\menu\devices\productsa
+
+08/24/2023  05:43 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@MENU\@LITE.DOASHOW\-Do A Show Drive (drive)\-this drive (browse)\@patch\pages\Pg 1\- this drive\START MENU\8 internet
+
+08/24/2023  08:19 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@MENU\@LITE.DOASHOW\-Do A Show Drive (drive)\-this drive (browse)\@patch\pages\Pg 2\- This Drive_\our products\-00.  -cORE\A\AB\AB_scenes ?\show (show-casting)
+
+02/15/2023  11:35 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@MENU\@LITE.DOASHOW\-Do A Show Drive (drive)\-this drive (browse)\@patch\pages\Pg 2\- This Drive_\our products\-00.  -cORE\A\A_\A_1money\A _ million ??\1
+
+11/14/2022  05:34 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@MENU\@LITE.DOASHOW\-Do A Show Drive (drive)\-this drive (browse)\@patch\pages\Pg 2\- This Drive_\our products\-00.  -cORE\A\A_\A_1money\A _ million ??\1\- a run
+
+09/22/2022  05:17 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@MENU\@LITE.DOASHOW\-Do A Show Drive (drive)\-this drive (browse)\@patch\pages\Pg 2\- This Drive_\our products\-00.  -cORE\A\A_.01-money ??\A _ million\(+) game\1
+
+11/14/2022  04:34 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@MENU\@LITE.DOASHOW\-Do A Show Drive (drive)\-this drive (browse)\@patch\pages\Pg 2\- This Drive_\our products\-00.  -cORE\A\A_.01-money ??\A _ million\1StarM
+
+11/14/2022  04:34 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@MENU\@LITE.DOASHOW\-Do A Show Drive (drive)\-this drive (browse)\@patch\pages\Pg 2\- This Drive_\our products\-00.  -cORE\A\A_.01-money ??\A _ million\2
+
+11/14/2022  04:34 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@MENU\@LITE.DOASHOW\-Do A Show Drive (drive)\-this drive (browse)\@patch\pages\Pg 2\- This Drive_\our products\-00.  -cORE\A\A_.01-money ??\A _ million\3
+
+11/14/2022  04:34 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@MENU\@LITE.DOASHOW\-Do A Show Drive (drive)\-this drive (browse)\@patch\pages\Pg 2\- This Drive_\our products\-00.  -cORE\A\A_.01-money ??\A _ million\4
+
+11/14/2022  04:34 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@MENU\@LITE.DOASHOW\-Do A Show Drive (drive)\-this drive (browse)\@patch\pages\Pg 2\- This Drive_\our products\-00.  -cORE\A\A_.01-money ??\A _ million\5
+
+11/14/2022  04:34 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@MENU\@LITE.DOASHOW\-Do A Show Drive (drive)\-this drive (browse)\@patch\pages\Pg 2\- This Drive_\our products\-00.  -cORE\A\A_.01-money ??\A _ million ??\game\1
+
+11/14/2022  05:34 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\-@ DOASHOW\( ) MENU\@MENU\@LITE.DOASHOW\-Do A Show Drive (drive)\-this drive (browse)\@patch\pages\Pg 2\- This Drive_\our products\-00.  -cORE\A\A_.01-money ??\A _ million ??\game\10
+
+03/10/2023  08:32 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\@burner\content\burner 0\content\experiment files\experiment 2
+
+09/29/2023  12:43 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\@patch\pages\Pg 1\- this drive\START MENU\1 giftsa\menu\devices\productsa
+
+08/24/2023  05:43 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\CLIPBOARDS\-(TOOLS) CLIPBOARDS\-@Burners\@patch\pages\Pg 1\- this drive\START MENU\8 internet
+
+08/24/2023  08:19 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\(+) MAIN DRAW\-#01. Work Station (STUDIOS) (landing)\- Do A Show (writers) (parcel)\(-)the marketplace (inner)\(-) (nav) menu\-(-) marketplace\Docs\Characters
+
+10/27/2021  12:03 AM    <DIR>          Phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\(+) MAIN DRAW\-#01. Work Station (STUDIOS) (landing)\- Do A Show (writers) (parcel)\(-)the marketplace (inner)\(-) (nav) menu\-(-) marketplace\Docs\Desktop\Do A Show Production Movie Company LLC
+
+10/10/2023  09:47 PM    <DIR>          Phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\(+) MAIN DRAW\-#01. Work Station (STUDIOS) (landing)\- Do A Show (writers) (parcel)\(-)the marketplace (inner)\(-) (nav) menu\-(-) marketplace\Docs\Do A Show Production Movie Company LLC - Copy
+
+10/10/2023  09:48 PM    <DIR>          Phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\(+) MAIN DRAW\-#01. Work Station (STUDIOS) (landing)\- Do A Show (writers) (parcel)\(-)the marketplace (inner)\(-) (nav) menu\-(-) marketplace\Docs\The New
+
+10/10/2023  09:52 PM    <DIR>          Phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\(+) MAIN DRAW\-#01. Work Station (STUDIOS) (landing)\- Do A Show (writers) (parcel)\(-)the marketplace (inner)\(-) (nav) menu\-(-) marketplace\Docs\The New\Do A Show Production Movie Company LLC - Copy
+
+10/10/2023  09:51 PM    <DIR>          Phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\(+) MAIN DRAW\-#01. Work Station (STUDIOS) (landing)\- Do A Show (writers) (parcel)\(-)the marketplace (inner)\(-) (nav) menu\-(-) marketplace\domain\Characters
+
+10/28/2021  07:18 PM    <DIR>          Phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\(+) MAIN DRAW\-#01. Work Station (STUDIOS) (landing)\- Do A Show (writers) (parcel)\(-)the marketplace (inner)\(-) Domains + things\archive (1)(1)\Characters
+
+11/10/2021  06:17 PM    <DIR>          Phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\(+) MAIN DRAW\-#01. Work Station (STUDIOS) (landing)\- Do A Show (writers) (parcel)\(-)the marketplace (inner)\(-) Domains + things\Characters
+
+10/28/2021  07:18 PM    <DIR>          Phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\-0 start\( )Business\-( ) business-SECTION (basic) (door)\-( )MENU-MAIN BUSINESS (landing)\-( )2 Settings\@burner (landings)\content\burner\content\experiment files\experiment 2
+
+04/18/2024  01:48 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\-0 start\( )Business\-( ) business-SECTION (basic) (door)\-( )MENU-MAIN BUSINESS (landing)\-( )6 Global\-( )6 Business\Users\contacts
+
+11/22/2023  08:48 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\-0 start\( )Business\-( ) business-SECTION (basic) (door)\-( )MENU-MAIN BUSINESS (landing)\-( )7 Shop
+
+12/14/2023  08:06 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\-0 start\( )Business\-( ) business-SECTION (basic) (door)\-(-)MENU-HELP (legals) (splashes) (HELP)(zombie)\HELP sEARCH TERMS\@burner (landings)\content\burner\content\experiment files\experiment 2
+
+09/29/2023  01:43 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\-0 start\( )Business\-( ) business-SECTION (basic) (door)\-(0)MENU-SIDEBARS (bars) (splashes) (side-tool-bars)(links)\-01.SOCIAL (splashes)\-00. PAGES\SCOCIAL\FILM
+
+11/09/2023  01:05 PM    <DIR>          PHONE
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\-0 start\( )Business\-( ) business-SECTION (basic) (door)\-(0)MENU-SIDEBARS (bars) (splashes) (side-tool-bars)(links)\-01.SOCIAL (splashes)\-01. POST\-00. PAGES\SCOCIAL\FILM
+
+11/09/2023  01:05 PM    <DIR>          PHONE
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\-0 start\( )Business\-( ) business-SECTION (basic) (door)\-(@)MENU-SETTING ISSUES (burner) (splashes) (settings)\@burner (landings)\content\burner\content\experiment files\experiment 2
+
+04/18/2024  01:51 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\-0 start\( )Personal\-( ) personal-SECTION (basic) (door)\-( )2 Settings\@burner (landings)\content\burner\content\experiment files\experiment 2
+
+04/18/2024  01:52 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\-0 start\( )Personal\-( ) personal-SECTION (basic) (door)\-( )3 Studios\-#01. Work Station (STUDIOS) (landing)\- Do A Show (writers) (parcel)\(-)the marketplace (inner)\(-) Domains + things\Characters
+
+10/28/2021  07:18 PM    <DIR>          Phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\-0 start\( )Personal\-( ) personal-SECTION (basic) (door)\-( )6 Global\-( )6 Business\Users\contacts
+
+11/22/2023  08:48 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\-0 start\( )Personal\-( ) personal-SECTION (basic) (door)\-( )6 Personals\Users\contacts
+
+11/22/2023  08:48 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\-0 start\( )Personal\-( ) personal-SECTION (basic) (door)\-( )8 Account-Type\-( )2 Setting (Business)\@burner (landings)\content\burner\content\experiment files\experiment 2
+
+04/18/2024  01:53 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\-0 start\( )Section-Menu\-( ) business-SECTION (basic) (door)\-( )MENU-MAIN BUSINESS (landing)\-( )2 Settings\@burner (landings)\content\burner\content\experiment files\experiment 2
+
+04/18/2024  01:54 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\-0 start\( )Section-Menu\-( ) business-SECTION (basic) (door)\-( )MENU-MAIN BUSINESS (landing)\-( )6 Global\-( )6 Business\Users\contacts
+
+11/22/2023  08:48 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\-0 start\( )Section-Menu\-( ) business-SECTION (basic) (door)\-( )MENU-MAIN BUSINESS (landing)\-( )7 Shop
+
+12/14/2023  08:06 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\-0 start\( )Section-Menu\-( ) business-SECTION (basic) (door)\-(-)MENU-HELP (legals) (splashes) (HELP)(zombie)\HELP sEARCH TERMS\@burner (landings)\content\burner\content\experiment files\experiment 2
+
+09/29/2023  01:43 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\-0 start\( )Section-Menu\-( ) business-SECTION (basic) (door)\-(0)MENU-SIDEBARS (bars) (splashes) (side-tool-bars)(links)\-01.SOCIAL (splashes)\-00. PAGES\SCOCIAL\FILM
+
+11/09/2023  01:05 PM    <DIR>          PHONE
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\-0 start\( )Section-Menu\-( ) business-SECTION (basic) (door)\-(0)MENU-SIDEBARS (bars) (splashes) (side-tool-bars)(links)\-01.SOCIAL (splashes)\-01. POST\-00. PAGES\SCOCIAL\FILM
+
+11/09/2023  01:05 PM    <DIR>          PHONE
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\-0 start\( )Section-Menu\-( ) business-SECTION (basic) (door)\-(@)MENU-SETTING ISSUES (burner) (splashes) (settings)\@burner (landings)\content\burner\content\experiment files\experiment 2
+
+04/18/2024  01:56 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\-0 start\( )Section-Menu\-( ) personal-SECTION (basic) (door)\-( )2 Settings\@burner (landings)\content\burner\content\experiment files\experiment 2
+
+04/18/2024  01:57 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\-0 start\( )Section-Menu\-( ) personal-SECTION (basic) (door)\-( )6 Global\-( )6 Business\Users\contacts
+
+11/22/2023  08:48 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\-0 start\( )Section-Menu\-( ) personal-SECTION (basic) (door)\-( )6 Personals\Users\contacts
+
+11/22/2023  08:48 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\-0 start\( )Section-Menu\-( ) personal-SECTION (basic) (door)\-( )8 Account-Type\-( )2 Setting (Business)\@burner (landings)\content\burner\content\experiment files\experiment 2
+
+04/18/2024  01:58 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\-C (OPERATIONS)\-My Drive (doashow) browser\-OPERATING SYSTEM (DOASHOW)\-(DOASHOW) MAIN-PORTALWAYS\-( ) Menu Portalway\-(DOASHOW) MAIN (PORTALWAY-FOR PASSES)\START MENU-COMPANY (land)\8 internet
+
+08/24/2023  09:19 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\-C (OPERATIONS)\-My Drive (doashow) browser\-OPERATING SYSTEM (DOASHOW)\-(DOASHOW) MAIN-PORTALWAYS\-( ) Menu Portalway\-(DOASHOW) MAIN (PORTALWAY-FOR-CLIENT)\START MENU (land)\1 giftsa\menu\devices\productsa
+
+08/24/2023  06:43 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\-C (OPERATIONS)\-My Drive (doashow) browser\-OPERATING SYSTEM (DOASHOW)\-(DOASHOW) MAIN-PORTALWAYS\-( ) Menu Portalway\-(DOASHOW) MAIN (PORTALWAY-FOR-CLIENT)\START MENU (land)\8 internet
+
+08/24/2023  09:19 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\-C (OPERATIONS)\-My Drive (doashow) browser\-OPERATING SYSTEM (DOASHOW)\-(DOASHOW) MAIN-PORTALWAYS\-( ) Menu Portalway\-(DOASHOW) MAIN (PORTALWAY-FOR-COMPANY)\START MENU-COMPANY (land)\8 internet
+
+08/24/2023  09:19 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\-C (OPERATIONS)\-My Drive (doashow) browser\-OPERATING SYSTEM (DOASHOW)\-(DOASHOW) MAIN-PORTALWAYS\-( ) Menu Portalway\-(DOASHOW) MAIN (PORTALWAY-FOR-SUBSCRIBERS)\START MENU (land)\8 internet
+
+08/24/2023  09:19 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\-C (OPERATIONS)\-My Drive (doashow) browser\-OPERATING SYSTEM (DOASHOW)\-(DOASHOW) MAIN-PORTALWAYS\-( ) Menu Portalway\-(DOASHOW) MAIN (PORTALWAY-FOR-USER)\-(main) BUSINESS-USER\-( )6 Personals\Users\contacts
+
+11/22/2023  08:48 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\-C (OPERATIONS)\-My Drive (doashow) browser\-OPERATING SYSTEM (DOASHOW)\-(DOASHOW) MAIN-PORTALWAYS\-( ) Menu Portalway\-(DOASHOW) MAIN (PORTALWAY-FOR-USER)\-(main) PERSONAL-USER\-( )6 Personals\Users\contacts
+
+11/22/2023  08:48 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\-C (OPERATIONS)\-My Drive (doashow) browser\-OPERATING SYSTEM (DOASHOW)\-(DOASHOW) MAIN-PORTALWAYS\-( ) Menu Portalway\-(DOASHOW) MAIN (PORTALWAY-FOR-USER)\START MENU -USER (land)\1 giftsa\menu\devices\productsa
+
+08/24/2023  06:43 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\-C (OPERATIONS)\-My Drive (doashow) browser\-OPERATING SYSTEM (DOASHOW)\-(DOASHOW) MAIN-PORTALWAYS\-( ) Menu Portalway\-(DOASHOW) MAIN (PORTALWAY-FOR-USER)\START MENU -USER (land)\8 internet
+
+08/24/2023  09:19 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\-C (OPERATIONS)\-My Drive (doashow) browser\-OPERATING SYSTEM (DOASHOW)\-(DOASHOW) MAIN-PORTALWAYS\-(DOASHOW) MAIN (PORTALWAY-FOR-CLIENT)\-(main) BUSINESS-CLIENT\-( )6 Global\-( )6 Business\Users\contacts
+
+11/22/2023  08:48 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\-C (OPERATIONS)\-My Drive (doashow) browser\-OPERATING SYSTEM (DOASHOW)\-(DOASHOW) MAIN-PORTALWAYS\-(DOASHOW) MAIN (PORTALWAY-FOR-CLIENT)\-(main) BUSINESS-CLIENT\-( )6 Personals\Users\contacts
+
+11/22/2023  08:48 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\-C (OPERATIONS)\-My Drive (doashow) browser\-OPERATING SYSTEM (DOASHOW)\-(DOASHOW) MAIN-PORTALWAYS\-(DOASHOW) MAIN (PORTALWAY-FOR-CLIENT)\-(main) PERSONAL-CLIENT\-( )6 Global\-( )6 Business\Users\contacts
+
+11/22/2023  08:48 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\-C (OPERATIONS)\-My Drive (doashow) browser\-OPERATING SYSTEM (DOASHOW)\-(DOASHOW) MAIN-PORTALWAYS\-(DOASHOW) MAIN (PORTALWAY-FOR-CLIENT)\-(main) PERSONAL-CLIENT\-( )6 Personals\Users\contacts
+
+11/22/2023  08:48 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\-C (OPERATIONS)\-My Drive (doashow) browser\-OPERATING SYSTEM (DOASHOW)\-(DOASHOW) MAIN-PORTALWAYS\-(DOASHOW) MAIN (PORTALWAY-FOR-CLIENT)\START MENU (land)\1 giftsa\menu\devices\productsa
+
+08/24/2023  06:43 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\-C (OPERATIONS)\-My Drive (doashow) browser\-OPERATING SYSTEM (DOASHOW)\-(DOASHOW) MAIN-PORTALWAYS\-(DOASHOW) MAIN (PORTALWAY-FOR-CLIENT)\START MENU (land)\8 internet
+
+08/24/2023  09:19 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\-C (OPERATIONS)\-My Drive (doashow) browser\-OPERATING SYSTEM (DOASHOW)\-(DOASHOW) MAIN-PORTALWAYS\-(DOASHOW) MAIN (PORTALWAY-FOR-COMPANY)\-(main) BUSINESS-COMPANY\-( )6 Global\-( )6 Business\Users\contacts
+
+11/22/2023  08:48 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\-C (OPERATIONS)\-My Drive (doashow) browser\-OPERATING SYSTEM (DOASHOW)\-(DOASHOW) MAIN-PORTALWAYS\-(DOASHOW) MAIN (PORTALWAY-FOR-COMPANY)\-(main) BUSINESS-COMPANY\-( )6 Personals\Users\contacts
+
+11/22/2023  08:48 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\-C (OPERATIONS)\-My Drive (doashow) browser\-OPERATING SYSTEM (DOASHOW)\-(DOASHOW) MAIN-PORTALWAYS\-(DOASHOW) MAIN (PORTALWAY-FOR-COMPANY)\START MENU-COMPANY (land)\1 giftsa\menu\devices\productsa
+
+08/24/2023  06:43 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\-C (OPERATIONS)\-My Drive (doashow) browser\-OPERATING SYSTEM (DOASHOW)\-(DOASHOW) MAIN-PORTALWAYS\-(DOASHOW) MAIN (PORTALWAY-FOR-COMPANY)\START MENU-COMPANY (land)\8 internet
+
+08/24/2023  09:19 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\-C (OPERATIONS)\-My Drive (doashow) browser\-OPERATING SYSTEM (DOASHOW)\-(DOASHOW) MAIN-PORTALWAYS\-(DOASHOW) MAIN (PORTALWAY-FOR-SUBSCRIBERS)\-(main) BUSINESS-SUBSCRIBERS\-( )6 Personals\Users\contacts
+
+11/22/2023  08:48 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\-C (OPERATIONS)\-My Drive (doashow) browser\-OPERATING SYSTEM (DOASHOW)\-(DOASHOW) MAIN-PORTALWAYS\-(DOASHOW) MAIN (PORTALWAY-FOR-SUBSCRIBERS)\START MENU (land)\1 giftsa\menu\devices\productsa
+
+08/24/2023  06:43 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\-C (OPERATIONS)\-My Drive (doashow) browser\-OPERATING SYSTEM (DOASHOW)\-(DOASHOW) MAIN-PORTALWAYS\-(DOASHOW) MAIN (PORTALWAY-FOR-SUBSCRIBERS)\START MENU (land)\8 internet
+
+08/24/2023  09:19 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\-C (OPERATIONS)\-My Drive (doashow) browser\-OPERATING SYSTEM (DOASHOW)\-(DOASHOW) MAIN-PORTALWAYS\-(DOASHOW) MAIN (PORTALWAY-FOR-USER)\-(main) BUSINESS-USER\-( )6 Global\-( )6 Business\Users\contacts
+
+11/22/2023  08:48 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\-C (OPERATIONS)\-My Drive (doashow) browser\-OPERATING SYSTEM (DOASHOW)\-(DOASHOW) MAIN-PORTALWAYS\-(DOASHOW) MAIN (PORTALWAY-FOR-USER)\-(main) BUSINESS-USER\-( )6 Personals\Users\contacts
+
+11/22/2023  08:48 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\-C (OPERATIONS)\-My Drive (doashow) browser\-OPERATING SYSTEM (DOASHOW)\-(DOASHOW) MAIN-PORTALWAYS\-(DOASHOW) MAIN (PORTALWAY-FOR-USER)\-(main) PERSONAL-USER\-( )6 Global\-( )6 Business\Users\contacts
+
+11/22/2023  08:48 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\-C (OPERATIONS)\-My Drive (doashow) browser\-OPERATING SYSTEM (DOASHOW)\-(DOASHOW) MAIN-PORTALWAYS\-(DOASHOW) MAIN (PORTALWAY-FOR-USER)\-(main) PERSONAL-USER\-( )6 Personals\Users\contacts
+
+11/22/2023  08:48 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\-C (OPERATIONS)\-My Drive (doashow) browser\-OPERATING SYSTEM (DOASHOW)\-(DOASHOW) MAIN-PORTALWAYS\-(DOASHOW) MAIN (PORTALWAY-FOR-USER)\START MENU -USER (land)\1 giftsa\menu\devices\productsa
+
+08/24/2023  06:43 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\-C (OPERATIONS)\-My Drive (doashow) browser\-OPERATING SYSTEM (DOASHOW)\-(DOASHOW) MAIN-PORTALWAYS\-(DOASHOW) MAIN (PORTALWAY-FOR-USER)\START MENU -USER (land)\8 internet
+
+08/24/2023  09:19 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\-C (OPERATIONS)\-My Drive (doashow) browser\-OPERATING SYSTEM (DOASHOW)\-(DOASHOW) MAIN-PORTALWAYS\-(DOASHOW) START MENU -MAIN  (land)\1 giftsa\menu\devices\productsa
+
+08/24/2023  06:43 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\-C (OPERATIONS)\-My Drive (doashow) browser\-OPERATING SYSTEM (DOASHOW)\-(DOASHOW) MAIN-PORTALWAYS\-(DOASHOW) START MENU -MAIN  (land)\8 internet
+
+08/24/2023  09:19 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\-C (OPERATIONS)\-My Drive (doashow) browser\-OPERATING SYSTEM (DOASHOW)\-MAIN-BUILDING (PORTALWAY-FOR-COMPANY)\-FRONTDOORS\-USER\-SIDEDOOR\-00. Do A Show\-this drive (browse) (mAIN HALL0)\-06. CHANNELS
+
+09/06/2022  08:45 PM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\private-cloud\-C (OPERATIONS)\-My Drive (doashow) browser\Doashow -( main portalways)\-( ) Menu \-Hiddenfolders\Oven\@\@system-my-writers\-( ) menu\Content\-burner4\Designs_
+
+02/07/2022  11:27 AM    <DIR>          phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\stuff\MENUWritters
+
+04/22/2024  06:21 PM    <DIR>          Phone
+               0 File(s)              0 bytes
+
+ Directory of F:\DOASHOW\portable-c-drive\Writers-Cornerstuff\stuff\MENU Writters
+
+04/22/2024  06:21 PM    <DIR>          Phone
+               0 File(s)              0 bytes
+
+     Total Files Listed:
+               0 File(s)              0 bytes
+             174 Dir(s)  727,388,299,264 bytes free
