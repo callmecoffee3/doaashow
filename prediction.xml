@@ -1,0 +1,32 @@
+<batch-file>
+<commands>
+<!-- Insert data into tables here -->
+<command>sqlite3 predictions.db "INSERT INTO Tokens (Text, Dataset_ID) VALUES ('Being around a hillside', 1), ('Being around a body of water', 1), ('Being outside', 1), ('Being inside', 1), ('Being on the internet', 1), ('Male', 1), ('Caucasian or non-Hispanic White', 1), ('Non-denominational', 1), ('Values individual freedom and autonomy', 1), ('Prioritizes personal comfort and happiness', 1);"</command>
+<command>sqlite3 predictions.db "INSERT INTO Tokens (Text, Dataset_ID) VALUES ('Hanging out with friends', 2), ('Me time', 2), ('Shopping for stuff to buy', 2), ('Hosting parties', 2), ('Going to restaurants', 2), ('Talking about yourself', 2);"</command>
+<command>sqlite3 predictions.db "INSERT INTO Tokens (Text, Dataset_ID) VALUES ('Picking up girls', 3), ('Going to events', 3), ('Going to venues', 3), ('Parties', 3), ('Starting a business', 3), ('Investing', 3), ('Making connections', 3);"</command>
+<command>sqlite3 predictions.db "INSERT INTO Tokens (Text, Dataset_ID) VALUES ('Having money', 4), ('Having credit', 4), ('Having a job', 4), ('Dating', 4), ('Going on outings', 4), ('Having children', 4);"</command>
+<command>echo Saving database to file...</command>
+<command>sqlite3 predictions.db ".backup main predictions.db"</command>
+<command>echo Menu:</command>
+<command>echo 1. View List 1 (Usual/80-100%)</command>
+<command>echo 2. View List 2 (Rarely/15-80%)</command>
+<command>echo 3. View List 3 (Extremely Rare/1%)</command>
+<command>echo 4. View List 4 (Never/0%)</command>
+<command>echo 5. Exit</command>
+<command>set /p selection=Enter your selection:</command>
+<choices>
+<choice value="1">View List 1 (Usual/80-100%)</choice>
+<choice value="2">View List 2 (Rarely/15-80%)</choice>
+<choice value="3">View List 3 (Extremely Rare/1%)</choice>
+<choice value="4">View List 4 (Never/0%)</choice>
+<choice value="5">Exit</choice>
+</choices>
+<actions>
+<action choice="1">sqlite3 predictions.db "SELECT * FROM Tokens WHERE Dataset_ID=1;"</action>
+<action choice="2">sqlite3 predictions.db "SELECT * FROM Tokens WHERE Dataset_ID=2;"</action>
+<action choice="3">sqlite3 predictions.db "SELECT * FROM Tokens WHERE Dataset_ID=3;"</action>
+<action choice="4">sqlite3 predictions.db "SELECT * FROM Tokens WHERE Dataset_ID=4;"</action>
+<action choice="5">exit</action>
+</actions>
+</commands>
+</batch-file>
