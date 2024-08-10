@@ -7,7 +7,7 @@ echo %NAME%
 cls
 echo bible study class Menu
 echo %class%
-ECHO%teacher%
+ECHO %teacher%
 set p/ add_user:
 cls
 echo Bible Study Class
@@ -37,6 +37,7 @@ cls
 echo Remember, Bible study is more important than arrivals. Let's focus on growing in faith!
 cls
 echo BIBLE STUDY CLASS MENU
+echo LETS WELCOME THE STUDENTS AND TEACHERS
 echo %USERNAME%
 echo %NAME%
 
@@ -84,8 +85,8 @@ if %choice%==16 goto make_clipboard
 if %choice%==17 goto display_clipboard
 if %choice%==18 goto add_subfolder
 if %choice%==19 goto add_user
-if %choice%==20 goto display user
-if %choice%==21 goto bible study class
+if %choice%==20 goto display_user
+if %choice%==21 goto bible_study_class
 if %choice%==22 exit
 
 :: Ask user for input
@@ -140,7 +141,7 @@ echo No users will be displayed.
 :: Pause to see the output
 pause
 
-
+:: options selections 
 :add_user
 cls
 set /p username=Enter username:
@@ -259,7 +260,7 @@ set /p folder_name=Enter new folder name:
 mkdir BIBLESTUDYCLASS\%dir_name%\%folder_name%
 goto menu
 
-:bible study class
+:bible_study_class
 cls
 set /p username=Enter username:
 set /p password=Enter password:
@@ -280,6 +281,16 @@ echo Ammount: %ammount% >> %FOLDER%\ username.txt
 echo Student: %username% >> %folder%/ username.txt
 echo Teacher: %username% >> %folder%/ username.txt
 echo Class: %class% >> BIBLESTUDYCLASS/CLASS/class.txt
+pause
+goto menu
+
+:display_user
+cls
+echo display_user
+for /r   BIBLESTUDYCLASS %%i in (*.txt) do (
+type "%%i"
+echo -----------------------------------
+)
 pause
 goto menu
 
