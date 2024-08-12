@@ -1,6 +1,107 @@
-Here's an updated version of the script with the added features:
+Here is the updated code:
+
+
 @echo off
 setlocal enabledelayedexpansion
+
+
+:: Set Game Title
+:set_title
+cls
+echo Enter a title for your game:
+set /p game_title=
+title %game_title%
+
+
+:: Initialize variables
+set name_character=
+set age=
+set occupation=
+set skills=
+set location=
+set time=
+set weather=
+set scenario=
+set objective=
+set obstacles=
+set rewards=
+set phone_number=
+set call_recipient=
+set call_message=
+
+
+:: Start game
+:start_game
+cls
+echo Welcome to %game_title%!
+pause
+call :display_options
+
+
+:: Display options
+:display_options
+cls
+echo Welcome, %name_character%!
+echo 1. Character
+echo 2. Scene
+echo 3. Scenario
+echo 4. Acts
+echo 5. Save Game
+echo 6. Load Game
+echo 7. Make Phone Call
+echo 8. Exit
+set /p option=Enter your choice (1-8):
+if %option%==1 goto character
+if %option%==2 goto scene
+if %option%==3 goto call
+if %option%==4 goto acts
+if %option%==5 goto save_game
+if %option%==6 goto load_game
+if %option%==7 goto make_call
+if %option%==8 exit /b
+else echo Invalid option. Please try again. & goto display_options
+
+
+:: Save Game
+:save_game
+cls
+echo Saving game...
+echo %game_title%> savedgame.txt
+echo %name_character%>> savedgame.txt
+echo %age%>> savedgame.txt
+echo %occupation%>> savedgame.txt
+echo %skills%>> savedgame.txt
+echo %location%>> savedgame.txt
+echo %time%>> savedgame.txt
+echo %weather%>> savedgame.txt
+echo %scenario%>> savedgame.txt
+echo %objective%>> savedgame.txt
+echo %obstacles%>> savedgame.txt
+echo %rewards%>> savedgame.txt
+echo Game saved!
+pause
+call :display_options
+
+
+:: Load Game
+:load_game
+cls
+echo Loading game...
+if exist savedgame.txt (
+set /p game_title=<savedgame.txt
+set /p name_character=<savedgame.txt
+set /p age=<savedgame.txt
+set /p occupation=<savedgame.txt
+set /p skills=<savedgame.txt
+set /p location=<savedgame.txt
+echo %time%=< savedgame.txt
+echo %weather%< savedgame.txt
+echo %scenario%< savedgame.txt
+echo %objective< savedgame.txt
+echo %obstacles%< savedgame.txt
+echo %rewards%< savedgame.txt
+echo Load saved!
+pause
 
 
 :: Initialize variables
@@ -67,6 +168,7 @@ call :display_options
 :: Display options
 :display_options
 cls
+echo ---------------------------------------------
 echo Welcome, %name_character%!
 echo ---------------------------------------------
 echo 1. Start Game
@@ -102,11 +204,13 @@ echo Age: %age%
 echo Occupation: %occupation%
 echo Skills: %skills%
 echo ---------------------------------------------
-set /p name_character=Enter new name (press enter to skip):
+set /p name_character=Enter new name (press enter to skip): 
 set /p age=Enter new age (press enter to skip):
 set /p occupation=Enter new occupation (press enter to skip):
 set /p skills=Enter new skills (press enter to skip):
+set /p character information
 goto display_options
+
 
 :: Scene
 :scene
@@ -133,11 +237,13 @@ echo Scenario: %scenario%
 echo Objective: %objective%
 echo Obstacles: %obstacles%
 echo Rewards: %rewards%
+echo Items: %Items%
 echo ---------------------------------------------
 set /p scenario=Enter new scenario (press enter to skip):
 set /p objective=Enter new objective (press enter to skip):
 set /p obstacles=Enter new obstacles (press enter to skip):
 set /p rewards=Enter new rewards (press enter to skip):
+set /p items=Enter new scenario (press enter to skip):
 goto display_options
 
 ::Start Game
@@ -214,6 +320,7 @@ set /p scenario=<savedemogame.txt
 set /p objective=<savedemogame.txt
 set /p obstacles=<savedemogame.txt
 set /p rewards=<savedemogame.txt
+set /p items=<savedemogame.txt
 echo Game loaded!
 ) else (
 echo No saved game found!
@@ -236,6 +343,7 @@ echo %scenario%>> savedemogame.txt
 echo %objective%>> savedemogame.txt
 echo %obstacles%>> savedemogame.txt
 echo %rewards%>> savedemogame.txt
+echo %items%>> savedemogame.txt
 echo Game saved!
 pause
 goto display_options
