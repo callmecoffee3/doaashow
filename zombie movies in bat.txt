@@ -1,0 +1,150 @@
+zombie movies in bat
+@echo off
+title Zombie Movies
+
+:main
+cls
+echo Zombie Movies
+echo.
+echo 1. Old Classics
+echo 2. Modern Zombie Films
+echo 3. Western Zombie Movies
+echo 4. Eastern/Asian Zombie Movies
+echo 5. Southern Zombie Movies
+echo 6. Northern/European Zombie Movies
+echo 7. Cheap/low-budget Zombie Movies
+echo 8. Shoot-em-up/Action Zombie Movies
+echo 9. Simulated/VR Zombie Experiences
+echo 10. Zombie Comedy Movies
+echo 11. Zombie Haunting/Supernatural Movies
+echo 12. Zombie News/Found Footage Movies
+echo 13. Exit
+
+choice /c 12345678910111213 /n /m "Enter your choice: "
+
+if %errorlevel% == 1 goto old_classics
+if %errorlevel% == 2 goto modern_zombie_films
+if %errorlevel% == 3 goto western_zombie_movies
+if %errorlevel% == 4 goto eastern_zombie_movies
+if %errorlevel% == 5 goto southern_zombie_movies
+if %errorlevel% == 6 goto northern_zombie_movies
+if %errorlevel% == 7 goto cheap_zombie_movies
+if %errorlevel% == 8 goto shoot_em_up_zombie_movies
+if %errorlevel% == 9 goto simulated_vr_zombie_experiences
+if %errorlevel% == 10 goto zombie_comedy_movies
+if %errorlevel% == 11 goto zombie_haunting_supernatural_movies
+if %errorlevel% == 12 goto zombie_news_found_footage_movies
+if %errorlevel% == 13 exit
+
+
+:old_classics
+cls
+echo Old Classics
+echo.
+echo 1. White Zombie (1932)
+echo 2. Night of the Living Dead (1968)
+echo 3. Dawn of the Dead (1978)
+echo 4. The Last Man on Earth (1964)
+pause
+goto main
+
+
+:modern_zombie_films
+cls
+echo Modern Zombie Films
+echo.
+echo 1. 28 Days Later (2002)
+echo 2. Shaun of the Dead (2004)
+echo 3. Zombieland (2009)
+echo 4. World War Z (2013)
+pause
+goto main
+
+
+:western_zombie_movies
+cls
+echo Western Zombie Movies
+echo.
+echo 1. The Quick and the Dead (1989)
+echo 2. Dead West (2016)
+echo 3. The Dead and the Damned (2011)
+echo 4. Cowboys vs. Zombies (2014)
+pause
+goto main
+
+
+:eastern_zombie_movies
+cls
+echo Eastern/Asian Zombie Movies
+echo.
+echo 1. Versus (2000, Japan)
+echo 2. Bio Zombie (1998, Hong Kong)
+echo 3. Seoul Station (2016, South Korea)
+echo 4. One Cut of the Dead (2017, Japan)
+pause
+goto main
+
+
+:southern_zombie_movies
+cls
+echo Southern Zombie Movies
+echo.
+echo 1. The Bay (2012)
+echo 2. Zombie Apocalypse (2011)
+echo 3. Swamp Zombies (2011)
+echo 4. Zombie Town (2007)
+pause
+goto main
+
+
+:northern_zombie_movies
+cls
+echo Northern/European Zombie Movies
+echo.
+echo 1. 28 Weeks Later (2007, UK)
+echo 2. Dead Snow (2009, Norway)
+echo 3. Rare Exports: A Christmas Tale (2010, Finland)
+echo 4. The Girl with All the Gifts (2016, UK)
+pause
+goto main
+
+
+:cheap_zombie_movies
+cls
+echo Cheap/low-budget Zombie Movies
+echo.
+echo 1. Zombie Lake (1981)
+echo 2. Zombie Holocaust (1980)
+echo 3. The Zombie Dead (2007)
+echo 4. Zombie Farm (2007)
+pause
+goto main
+
+
+:shoot_em_up_zombie_movies
+cls
+echo Shoot-em-up/Action Zombie Movies
+echo.
+echo 1. Resident Evil (2002)
+echo 2. Zombie Apocalypse (2011)
+echo 3. Zombie Massacre (2010)
+echo 4. Left 4 Dead (in development)
+pause
+goto main
+
+
+:simulated_vr_zombie_experiences
+cls
+echo Simulated/VR Zombie Experiences
+echo.
+echo 1. Resident Evil 7: Biohazard (VR, 2017)
+echo 2. Arizona Sunshine (VR, 2016)
+echo 3. The Walking Dead: Our World (VR, 2018)
+echo 4. Zombie VR (2017)
+pause
+goto main
+
+
+:zombie_comedy_movies
+cls
+echo Zombie Comedy Movies
