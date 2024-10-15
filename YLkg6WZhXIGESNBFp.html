@@ -1,0 +1,369 @@
+<html><head><base href="https://3dscanner.mattgrosso.com/">
+<title>3D Scanner by Matt Grosso</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #0a0a1a;
+    color: #e0e0e0;
+    overflow: hidden;
+  }
+  #container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+  #banner {
+    background-color: #16213e;
+    padding: 15px;
+    text-align: center;
+    position: relative;
+  }
+  #banner h1 {
+    margin: 0;
+    font-size: 2.5em;
+    color: #00ff9d;
+    text-shadow: 0 0 10px #00ff9d, 0 0 20px #00ff9d, 0 0 30px #00ff9d;
+    transform: perspective(500px) rotateX(20deg);
+  }
+  #content {
+    display: flex;
+    flex: 1;
+  }
+  #videoContainer {
+    flex: 3;
+    position: relative;
+  }
+  #video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  #canvas3d {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  #menu {
+    flex: 1;
+    padding: 20px;
+    background-color: #0f3460;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+  .button {
+    background-color: #16213e;
+    color: #00ff9d;
+    border: none;
+    padding: 15px 25px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: all 0.3s;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 255, 157, 0.3);
+  }
+  .button:hover {
+    background-color: #1f3a5f;
+    box-shadow: 0 0 20px rgba(0, 255, 157, 0.5);
+  }
+  #logo {
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  #audioControls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+  }
+  #volumeSlider {
+    width: 100px;
+  }
+</style>
+</head>
+<body>
+<div id="container">
+  <div id="banner">
+    <svg id="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+      <defs>
+        <radialGradient id="logoGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+          <stop offset="0%" style="stop-color:#00ff9d;stop-opacity:1" />
+          <stop offset="100%" style="stop-color:#16213e;stop-opacity:1" />
+        </radialGradient>
+      </defs>
+      <path d="M50 10 L90 90 L10 90 Z" fill="url(#logoGradient)"/>
+      <circle cx="50" cy="50" r="20" fill="#16213e"/>
+      <text x="50" y="55" font-family="Arial" font-size="20" fill="#00ff9d" text-anchor="middle">3D</text>
+    </svg>
+    <h1>3D Scanner by Matt Grosso</h1>
+  </div>
+  <div id="content">
+    <div id="videoContainer">
+      <video id="video" autoplay playsinline></video>
+      <canvas id="canvas3d"></canvas>
+    </div>
+    <div id="menu">
+      <button id="captureBtn" class="button">Start Video Capture</button>
+      <button id="recordBtn" class="button">Start Recording</button>
+      <button id="playbackBtn" class="button">Playback Video</button>
+      <button id="save3dBtn" class="button">Save 3D Image</button>
+      <button id="printBtn" class="button">Send to 3D Printer</button>
+      <button id="downloadBtn" class="button">Download 3D Image</button>
+      <button id="vrBtn" class="button">Toggle VR Effect</button>
+      <div id="audioControls">
+        <button id="muteBtn" class="button">Mute Microphone</button>
+        <input type="range" id="volumeSlider" min="0" max="1" step="0.1" value="1">
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+let video, canvas3d, renderer, scene, camera, lidarData;
+let isRecording = false;
+let recordedFrames = [];
+let isVRMode = false;
+const fakePoints = [];
+let audioContext, microphone, gainNode;
+let isMuted = false;
+
+// Sound effects
+const sound = {
+  startup: new Howl({ src: ['startup.mp3'] }),
+  scan: new Howl({ src: ['scan.mp3'], loop: true }),
+  capture: new Howl({ src: ['capture.mp3'] }),
+  save: new Howl({ src: ['save.mp3'] })
+};
+
+function init() {
+  video = document.getElementById('video');
+  canvas3d = document.getElementById('canvas3d');
+  
+  // Set up Three.js scene
+  scene = new THREE.Scene();
+  camera = new THREE.PerspectiveCamera(75, canvas3d.clientWidth / canvas3d.clientHeight, 0.1, 1000);
+  renderer = new THREE.WebGLRenderer({ canvas: canvas3d, alpha: true });
+  renderer.setSize(canvas3d.clientWidth, canvas3d.clientHeight);
+  
+  camera.position.z = 2;
+  
+  // Create fake LiDAR points for demonstration
+  for (let i = 0; i < 5000; i++) {
+    fakePoints.push({
+      x: (Math.random() - 0.5) * 2,
+      y: (Math.random() - 0.5) * 2,
+      z: (Math.random() - 0.5) * 2
+    });
+  }
+  
+  // Set up buttons
+  document.getElementById('captureBtn').addEventListener('click', toggleCapture);
+  document.getElementById('recordBtn').addEventListener('click', toggleRecording);
+  document.getElementById('playbackBtn').addEventListener('click', playback);
+  document.getElementById('save3dBtn').addEventListener('click', save3dImage);
+  document.getElementById('printBtn').addEventListener('click', sendToPrinter);
+  document.getElementById('downloadBtn').addEventListener('click', download3dImage);
+  document.getElementById('vrBtn').addEventListener('click', toggleVREffect);
+  document.getElementById('muteBtn').addEventListener('click', toggleMute);
+  document.getElementById('volumeSlider').addEventListener('input', adjustVolume);
+  
+  // Start animation loop
+  animate();
+  
+  // Play startup sound
+  sound.startup.play();
+}
+
+function toggleCapture() {
+  if (video.srcObject) {
+    stopCapture();
+  } else {
+    startCapture();
+  }
+}
+
+async function startCapture() {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+    video.srcObject = stream;
+    document.getElementById('captureBtn').textContent = 'Stop Video Capture';
+    sound.scan.play();
+
+    // Set up audio context for microphone control
+    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    microphone = audioContext.createMediaStreamSource(stream);
+    gainNode = audioContext.createGain();
+    microphone.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+  } catch (err) {
+    console.error("Error accessing camera and microphone:", err);
+    alert("Failed to access camera and microphone. Please ensure you've granted the necessary permissions.");
+  }
+}
+
+function stopCapture() {
+  const stream = video.srcObject;
+  const tracks = stream.getTracks();
+  tracks.forEach(track => track.stop());
+  video.srcObject = null;
+  document.getElementById('captureBtn').textContent = 'Start Video Capture';
+  sound.scan.stop();
+
+  // Clean up audio context
+  if (audioContext) {
+    audioContext.close();
+    audioContext = null;
+    microphone = null;
+    gainNode = null;
+  }
+}
+
+function toggleRecording() {
+  if (isRecording) {
+    stopRecording();
+  } else {
+    startRecording();
+  }
+}
+
+function startRecording() {
+  isRecording = true;
+  recordedFrames = [];
+  document.getElementById('recordBtn').textContent = 'Stop Recording';
+  sound.capture.play();
+}
+
+function stopRecording() {
+  isRecording = false;
+  document.getElementById('recordBtn').textContent = 'Start Recording';
+  sound.capture.stop();
+}
+
+function playback() {
+  if (recordedFrames.length === 0) {
+    alert("No recorded data available for playback.");
+    return;
+  }
+  
+  let frameIndex = 0;
+  const playbackInterval = setInterval(() => {
+    if (frameIndex >= recordedFrames.length) {
+      clearInterval(playbackInterval);
+      return;
+    }
+    updateScene(recordedFrames[frameIndex]);
+    frameIndex++;
+  }, 33); // Assuming 30 FPS
+}
+
+function save3dImage() {
+  // In a real application, this would save the 3D data
+  console.log("Saving 3D image...");
+  sound.save.play();
+  alert("3D image saved successfully!");
+}
+
+function sendToPrinter() {
+  // In a real application, this would send data to a 3D printer
+  console.log("Sending to 3D printer...");
+  alert("3D model sent to printer!");
+}
+
+function download3dImage() {
+  // In a real application, this would generate and download a 3D file
+  const blob = new Blob(["Fake 3D data"], { type: "application/octet-stream" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "3d_scan.glb";
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function toggleVREffect() {
+  isVRMode = !isVRMode;
+  if (isVRMode) {
+    camera.position.z = 0;
+    document.getElementById('vrBtn').textContent = 'Disable VR Effect';
+  } else {
+    camera.position.z = 2;
+    document.getElementById('vrBtn').textContent = 'Enable VR Effect';
+  }
+}
+
+function toggleMute() {
+  if (gainNode) {
+    isMuted = !isMuted;
+    gainNode.gain.setValueAtTime(isMuted ? 0 : 1, audioContext.currentTime);
+    document.getElementById('muteBtn').textContent = isMuted ? 'Unmute Microphone' : 'Mute Microphone';
+  }
+}
+
+function adjustVolume(event) {
+  if (gainNode) {
+    const volume = parseFloat(event.target.value);
+    gainNode.gain.setValueAtTime(volume, audioContext.currentTime);
+  }
+}
+
+function animate() {
+  requestAnimationFrame(animate);
+  
+  // Simulate LiDAR data collection
+  lidarData = fakePoints.map(point => ({
+    x: point.x + (Math.random() - 0.5) * 0.01,
+    y: point.y + (Math.random() - 0.5) * 0.01,
+    z: point.z + (Math.random() - 0.5) * 0.01
+  }));
+  
+  updateScene(lidarData);
+  
+  if (isRecording) {
+    recordedFrames.push(JSON.parse(JSON.stringify(lidarData)));
+  }
+  
+  renderer.render(scene, camera);
+}
+
+function updateScene(points) {
+  // Clear existing points
+  while(scene.children.length > 0) { 
+    scene.remove(scene.children[0]); 
+  }
+  
+  // Add new points
+  const geometry = new THREE.BufferGeometry();
+  const positions = new Float32Array(points.length * 3);
+  
+  for (let i = 0; i < points.length; i++) {
+    positions[i * 3] = points[i].x;
+    positions[i * 3 + 1] = points[i].y;
+    positions[i * 3 + 2] = points[i].z;
+  }
+  
+  geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  const material = new THREE.PointsMaterial({ color: 0x00ff9d, size: 0.01 });
+  const pointCloud = new THREE.Points(geometry, material);
+  scene.add(pointCloud);
+}
+
+window.addEventListener('load', init);
+window.addEventListener('resize', () => {
+  camera.aspect = canvas3d.clientWidth / canvas3d.clientHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(canvas3d.clientWidth, canvas3d.clientHeight);
+});
+</script>
+</body>
+</html>

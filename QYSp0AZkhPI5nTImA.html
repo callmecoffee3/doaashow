@@ -1,0 +1,195 @@
+<html><head><base href="https://batched.simulator.com/" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BatchCraft: Simulated Batch Processing</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #000;
+        color: #fff;
+    }
+    .container {
+        display: flex;
+        height: 100vh;
+    }
+    .main-hub {
+        width: 200px;
+        background-color: #111;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+    }
+    .logo {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .logo img {
+        width: 100px;
+        height: 100px;
+    }
+    .logo h1 {
+        margin: 10px 0;
+        font-size: 24px;
+    }
+    .tagline {
+        font-style: italic;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+    .main-hub button {
+        background-color: #0066cc;
+        color: white;
+        border: none;
+        padding: 10px;
+        margin: 5px 0;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    .main-hub button:hover {
+        background-color: #0052a3;
+    }
+    .simulator {
+        flex-grow: 1;
+        display: flex;
+        padding: 20px;
+    }
+    .center-panel {
+        flex-grow: 1;
+        margin-right: 20px;
+    }
+    .right-panel {
+        width: 300px;
+    }
+    textarea {
+        width: 100%;
+        height: 300px;
+        background-color: #222;
+        color: #fff;
+        border: 1px solid #444;
+        padding: 10px;
+        font-family: 'Courier New', Courier, monospace;
+    }
+    .simulator button {
+        background-color: #0066cc;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        margin: 10px 0;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    .simulator button:hover {
+        background-color: #0052a3;
+    }
+    #output {
+        background-color: #222;
+        border: 1px solid #444;
+        padding: 10px;
+        height: 200px;
+        overflow-y: auto;
+    }
+    .fullscreen-btn {
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        z-index: 1000;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="main-hub">
+        <div class="logo">
+            <img src="logo.svg" alt="BatchCraft logo: stylized gears forming a 'B'" width="100" height="100">
+            <h1>BatchCraft</h1>
+        </div>
+        <p class="tagline">Craft, Simulate, Perfect</p>
+        <button id="saveBtn">Save</button>
+        <button id="loadBtn">Load</button>
+        <button id="redoBtn">Redo</button>
+        <button id="undoBtn">Undo</button>
+        <button id="renameBtn">Rename</button>
+        <button id="copyBtn">Copy</button>
+        <button id="pasteBtn">Paste</button>
+        <div id="clock"></div>
+    </div>
+    <div class="simulator">
+        <div class="center-panel">
+            <textarea id="batchCode" placeholder="Enter your batch code here..."></textarea>
+            <button id="runBatch">Run Batch</button>
+            <div id="output"></div>
+        </div>
+        <div class="right-panel">
+            <button id="addBatchProgram">Add Batch Program</button>
+            <div id="batchList"></div>
+        </div>
+    </div>
+</div>
+<button class="fullscreen-btn" id="fullscreenBtn">Full Screen</button>
+
+<script>
+    // Clock functionality
+    function updateClock() {
+        const now = new Date();
+        document.getElementById('clock').textContent = now.toLocaleTimeString();
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Simulate batch processing
+    document.getElementById('runBatch').addEventListener('click', function() {
+        const batchCode = document.getElementById('batchCode').value;
+        const output = document.getElementById('output');
+        output.innerHTML += `<p>Executing batch at ${new Date().toLocaleTimeString()}...</p>`;
+        output.innerHTML += `<p>Batch code: ${batchCode}</p>`;
+        output.innerHTML += `<p>Execution complete.</p>`;
+        output.scrollTop = output.scrollHeight;
+    });
+
+    // Add batch program
+    document.getElementById('addBatchProgram').addEventListener('click', function() {
+        const batchList = document.getElementById('batchList');
+        const newBatch = document.createElement('div');
+        newBatch.textContent = `Batch Program ${batchList.children.length + 1}`;
+        newBatch.style.cursor = 'pointer';
+        newBatch.addEventListener('click', function() {
+            document.getElementById('batchCode').value += `\n// Batch Program ${batchList.children.length}\n`;
+        });
+        batchList.appendChild(newBatch);
+    });
+
+    // Fullscreen functionality
+    document.getElementById('fullscreenBtn').addEventListener('click', function() {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen();
+        } else {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            }
+        }
+    });
+
+    // Clipboard operations
+    document.getElementById('copyBtn').addEventListener('click', function() {
+        const batchCode = document.getElementById('batchCode');
+        batchCode.select();
+        document.execCommand('copy');
+    });
+
+    document.getElementById('pasteBtn').addEventListener('click', function() {
+        navigator.clipboard.readText().then(text => {
+            document.getElementById('batchCode').value += text;
+        });
+    });
+
+    // Placeholder functions for other buttons
+    ['saveBtn', 'loadBtn', 'redoBtn', 'undoBtn', 'renameBtn'].forEach(id => {
+        document.getElementById(id).addEventListener('click', function() {
+            alert(`${this.textContent} functionality would be implemented here.`);
+        });
+    });
+</script>
+</body>
+</html>

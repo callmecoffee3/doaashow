@@ -1,0 +1,607 @@
+<html><head><base href="https://mattsinteractiveweb.com/">
+<title>Matt Grosso's Interactive Web Hub</title>
+<link rel="icon" href="mgs_logo.ico" type="image/x-icon">
+<style>
+:root {
+  --primary-color: #0066cc;
+  --secondary-color: #cc0000;
+  --background-color: #f0f0f0;
+  --text-color: #333;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+header {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 10px 0;
+  text-align: center;
+}
+
+.logo {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+h1 {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0;
+}
+
+nav {
+  background-color: #333;
+  padding: 10px 0;
+}
+
+nav ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+}
+
+nav ul li {
+  display: inline-block;
+  margin: 0 10px;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+}
+
+.search-bar {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.search-bar input[type="text"] {
+  width: 70%;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.search-bar button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.main-hub {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.hub-item {
+  flex: 1 1 200px;
+  margin: 10px;
+  padding: 10px;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.columns {
+  display: flex;
+  justify-content: space-between;
+}
+
+.column {
+  flex: 1;
+  margin: 0 10px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.tools-section {
+  background-color: #e6e6e6;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.collapsible {
+  background-color: #777;
+  color: white;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+}
+
+.active, .collapsible:hover {
+  background-color: #555;
+}
+
+.content {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+  background-color: #f1f1f1;
+}
+
+.website-generator {
+  background-color: white;
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.dashboard {
+  background-color: white;
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.user-info {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.user-info img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.editable {
+  border: 1px dashed #ccc;
+  padding: 5px;
+  margin: 5px 0;
+}
+
+.editable:hover {
+  background-color: #f0f0f0;
+  cursor: pointer;
+}
+
+.hidden-buttons {
+  display: none;
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">
+    <img src="mgs_logo.svg" alt="MGS Logo" width="50" height="50">
+  </div>
+  <h1>Matt Grosso's Site</h1>
+</header>
+
+<div class="container">
+  <div class="search-bar">
+    <input type="text" placeholder="Search websites...">
+    <button>Search</button>
+  </div>
+
+  <nav>
+    <ul>
+      <li><a href="#all">All</a></li>
+      <li><a href="#images">Images</a></li>
+      <li><a href="#video">Video</a></li>
+      <li><a href="#audio">Audio</a></li>
+      <li><a href="#shopping">Shopping</a></li>
+      <li><a href="#ai">AI</a></li>
+      <li><a href="#history">History</a></li>
+      <li><a href="#settings">Settings</a></li>
+    </ul>
+  </nav>
+
+  <div class="tools-section">
+    <button class="collapsible">Tools</button>
+    <div class="content">
+      <a href="#sound">Sound</a>
+      <a href="#pictures">Pictures</a>
+      <a href="#post">Post</a>
+      <a href="#users">Users</a>
+      <a href="#parents">Parents</a>
+      <a href="#kids">Kids</a>
+      <a href="#single">Single</a>
+      <a href="#writers-corner">Writers Corner</a>
+      <a href="#marketplace">Marketplace</a>
+      <a href="#video">Video</a>
+      <a href="#trends">Trends</a>
+      <a href="#discover">Discover</a>
+      <a href="#content">Content</a>
+      <a href="#media">Media</a>
+      <a href="#messenger">Messenger</a>
+    </div>
+  </div>
+
+  <div class="main-hub">
+    <div class="hub-item">
+      <h2>Pages</h2>
+      <p>Total Pages: <span id="page-count">20</span></p>
+      <button onclick="addPage()">Add Page</button>
+      <button onclick="editPage()">Edit Page</button>
+      <button onclick="removePage()">Remove Page</button>
+      <button onclick="deletePage()">Delete Page</button>
+    </div>
+    <div class="hub-item">
+      <h2>Clock</h2>
+      <div id="clock"></div>
+    </div>
+    <div class="hub-item">
+      <h2>Website Info</h2>
+      <p>Name: <span id="website-name" class="editable" onclick="editContent(this)">Matt's Interactive Web</span></p>
+      <button onclick="renameSite()">Rename</button>
+    </div>
+    <div class="hub-item">
+      <h2>Logo</h2>
+      <img src="mgs_logo.svg" alt="MGS Logo" width="50" height="50" class="editable" onclick="editLogo()">
+    </div>
+  </div>
+
+  <div class="columns">
+    <div class="column" id="left-column">
+      <h2>AI Assistants</h2>
+      <button onclick="startVoiceChat()">Voice Chat</button>
+      <button onclick="startPhoneCall()">Phone Call</button>
+      <button onclick="startVideoCall()">Video Call</button>
+    </div>
+    <div class="column" id="center-column">
+      <div class="user-info">
+        <img src="user_avatar.jpg" alt="User Avatar" width="100" height="100">
+        <h2 id="username" class="editable" onclick="editContent(this)">Username</h2>
+        <p id="user-bio" class="editable" onclick="editContent(this)">User Bio</p>
+      </div>
+      <div id="current-date-time"></div>
+      <div class="dashboard">
+        <h2>Personal Dashboard</h2>
+        <div class="user-info">
+          <img src="user_avatar.jpg" alt="User Avatar" width="100" height="100" class="editable" onclick="editUserPhoto()">
+          <h2 id="username" class="editable" onclick="editContent(this)">Username</h2>
+          <p id="user-bio" class="editable" onclick="editContent(this)">User Bio</p>
+        </div>
+        <div id="current-date-time"></div>
+        <div id="website-stats"></div>
+        <div id="online-users"></div>
+        <div id="user-posts"></div>
+        <div id="user-calendar"></div>
+        <div id="user-feed"></div>
+        <button onclick="openSettings()">Change Profile Settings</button>
+        <div id="notes" class="editable" onclick="editContent(this)">Add notes here...</div>
+      </div>
+    </div>
+    <div class="column" id="right-column">
+      <h2>Communication</h2>
+      <button onclick="startWalkieTalkie()">Walkie Talkie</button>
+      <button onclick="openRooms()">Rooms</button>
+      <button onclick="openChannels()">Channels</button>
+      <button onclick="openAIAssistant()">AI Assistant</button>
+    </div>
+  </div>
+
+  <div class="website-generator">
+    <h2>Website Generator</h2>
+    <div id="website-preview"></div>
+    <button onclick="previewWebsite()">Preview Website</button>
+    <button onclick="generateWebsite()">Generate Website</button>
+    <button onclick="deployWebsite()">Deploy Website</button>
+    <h3>Customization</h3>
+    <button onclick="changeFont()">Change Font</button>
+    <button onclick="changeColors()">Change Colors</button>
+    <button onclick="changeTheme()">Change Theme</button>
+    <button onclick="addCustomTheme()">Add Custom Theme</button>
+    <button onclick="addImage()">Add Image</button>
+    <button onclick="addVideo()">Add Video</button>
+    <button onclick="addAudio()">Add Audio</button>
+    <button onclick="changeBackground()">Change Background</button>
+    <button onclick="editWebsite()">Edit Website</button>
+    <button onclick="changeSettings()">Change Settings</button>
+  </div>
+
+  <div class="background-settings">
+    <h2>Background Settings</h2>
+    <button onclick="changeBackgroundTheme()">Change Background Theme</button>
+    <button onclick="changeColor1()">Change Color 1</button>
+    <button onclick="changeColor2()">Change Color 2</button>
+    <button onclick="changeBackgroundImage()">Change Background Image</button>
+    <button onclick="changeBackgroundVideo()">Change Background Video</button>
+    <button onclick="changeBackgroundAudio()">Change Background Audio</button>
+  </div>
+
+  <div class="website-stats">
+    <h2>Website Statistics</h2>
+    <div id="indicator-bar"></div>
+    <div id="online-users"></div>
+    <div id="user-posts"></div>
+    <div id="user-videos"></div>
+    <div id="user-pictures"></div>
+    <div id="user-calendar"></div>
+  </div>
+
+  <div class="hidden-buttons" style="display: none;">
+    <button onclick="showAll()">All</button>
+    <button onclick="showImages()">Images</button>
+    <button onclick="showPhoto()">Photo</button>
+    <button onclick="showVideo()">Video</button>
+    <button onclick="showAudio()">Audio</button>
+    <button onclick="showShopping()">Shopping</button>
+    <button onclick="showAI()">AI</button>
+    <button onclick="showWebsiteStats()">Website Stats</button>
+    <button onclick="showUsers()">Users</button>
+    <button onclick="showFamily()">Family</button>
+    <button onclick="showFriends()">Friends</button>
+    <button onclick="showWorker()">Worker</button>
+    <button onclick="showGroups()">Groups</button>
+    <button onclick="showPages()">Pages</button>
+    <button onclick="showMessages()">Messages</button>
+    <button onclick="showIndicator()">Indicator</button>
+    <button onclick="showVisits()">Visits</button>
+    <button onclick="showProfiles()">Profiles</button>
+    <button onclick="showOnline()">Online</button>
+  </div>
+</div>
+
+<footer>
+  <nav>
+    <ul>
+      <li><a href="#all">All</a></li>
+      <li><a href="#images">Images</a></li>
+      <li><a href="#photo">Photo</a></li>
+      <li><a href="#video">Video</a></li>
+      <li><a href="#audio">Audio</a></li>
+      <li><a href="#shopping">Shopping</a></li>
+      <li><a href="#ai">AI</a></li>
+      <li><a href="#website-stats">Website Stats</a></li>
+      <li><a href="#users">Users</a></li>
+      <li><a href="#family">Family</a></li>
+      <li><a href="#friends">Friends</a></li>
+      <li><a href="#worker">Worker</a></li>
+      <li><a href="#groups">Groups</a></li>
+      <li><a href="#pages">Pages</a></li>
+      <li><a href="#messages">Messages</a></li>
+      <li><a href="#indicator">Indicator</a></li>
+      <li><a href="#visits">Visits</a></li>
+      <li><a href="#profiles">Profiles</a></li>
+      <li><a href="#online">Online</a></li>
+    </ul>
+  </nav>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', (event) => {
+  updateDateTime();
+  setInterval(updateDateTime, 1000);
+  updateClock();
+  setInterval(updateClock, 1000);
+  
+  var coll = document.getElementsByClassName("collapsible");
+  var i;
+
+  for (i = 0; i < coll.length; i++) {
+    coll[i].addEventListener("click", function() {
+      this.classList.toggle("active");
+      var content = this.nextElementSibling;
+      if (content.style.display === "block") {
+        content.style.display = "none";
+      } else {
+        content.style.display = "block";
+      }
+    });
+  }
+});
+
+function updateDateTime() {
+  var now = new Date();
+  var dateTimeString = now.toLocaleString();
+  document.getElementById('current-date-time').textContent = dateTimeString;
+}
+
+function updateClock() {
+  const now = new Date();
+  document.getElementById('clock').textContent = now.toLocaleTimeString();
+}
+
+function addPage() {
+  let pageCount = parseInt(document.getElementById('page-count').textContent);
+  document.getElementById('page-count').textContent = pageCount + 1;
+}
+
+function editPage() {
+  alert('Editing page...');
+}
+
+function removePage() {
+  let pageCount = parseInt(document.getElementById('page-count').textContent);
+  if (pageCount > 0) {
+    document.getElementById('page-count').textContent = pageCount - 1;
+  }
+}
+
+function deletePage() {
+  alert('Deleting page...');
+}
+
+function renameSite() {
+  let newName = prompt('Enter new website name:');
+  if (newName) {
+    document.getElementById('website-name').textContent = newName;
+  }
+}
+
+function startVoiceChat() {
+  alert('Starting voice chat...');
+}
+
+function startPhoneCall() {
+  alert('Starting phone call...');
+}
+
+function startVideoCall() {
+  alert('Starting video call...');
+}
+
+function startWalkieTalkie() {
+  alert('Starting walkie talkie...');
+}
+
+function openRooms() {
+  alert('Opening rooms...');
+}
+
+function openChannels() {
+  alert('Opening channels...');
+}
+
+function openAIAssistant() {
+  alert('Opening AI assistant...');
+}
+
+function previewWebsite() {
+  alert('Previewing website...');
+}
+
+function generateWebsite() {
+  alert('Generating website...');
+}
+
+function deployWebsite() {
+  alert('Deploying website...');
+}
+
+function changeFont() {
+  alert('Changing font...');
+}
+
+function changeColors() {
+  alert('Changing colors...');
+}
+
+function changeTheme() {
+  alert('Changing theme...');
+}
+
+function addCustomTheme() {
+  alert('Adding custom theme...');
+}
+
+function addImage() {
+  alert('Adding image...');
+}
+
+function addVideo() {
+  alert('Adding video...');
+}
+
+function addAudio() {
+  alert('Adding audio...');
+}
+
+function changeBackground() {
+  alert('Changing background...');
+}
+
+function changeBackgroundTheme() {
+  alert('Changing background theme...');
+}
+
+function changeColor1() {
+  alert('Changing color 1...');
+}
+
+function changeColor2() {
+  alert('Changing color 2...');
+}
+
+function changeBackgroundImage() {
+  alert('Changing background image...');
+}
+
+function changeBackgroundVideo() {
+  alert('Changing background video...');
+}
+
+function changeBackgroundAudio() {
+  alert('Changing background audio...');
+}
+
+function openSettings() {
+  alert('Opening profile settings...');
+}
+
+function editContent(element) {
+  let oldText = element.textContent;
+  let newText = prompt('Edit content:', oldText);
+  if (newText !== null) {
+    element.textContent = newText;
+  }
+}
+
+function editLogo() {
+  alert('Editing logo...');
+}
+
+function editUserPhoto() {
+  alert('Editing user photo...');
+}
+
+// Request permissions
+navigator.mediaDevices.getUserMedia({ audio: true, video: true })
+  .then(function(stream) {
+    console.log('Permissions granted for audio and video');
+  })
+  .catch(function(err) {
+    console.log('Error requesting permissions: ' + err);
+  });
+
+// Add functions for hidden buttons
+function showAll() { /* ... */ }
+function showImages() { /* ... */ }
+function showPhoto() { /* ... */ }
+function showVideo() { /* ... */ }
+function showAudio() { /* ... */ }
+function showShopping() { /* ... */ }
+function showAI() { /* ... */ }
+function showWebsiteStats() { /* ... */ }
+function showUsers() { /* ... */ }
+function showFamily() { /* ... */ }
+function showFriends() { /* ... */ }
+function showWorker() { /* ... */ }
+function showGroups() { /* ... */ }
+function showPages() { /* ... */ }
+function showMessages() { /* ... */ }
+function showIndicator() { /* ... */ }
+function showVisits() { /* ... */ }
+function showProfiles() { /* ... */ }
+function showOnline() { /* ... */ }
+</script>
+</body>
+</html>

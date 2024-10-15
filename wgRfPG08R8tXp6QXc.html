@@ -1,0 +1,270 @@
+<html><head><base href="https://3dscanner.example.com">
+<title>3D Scanner with 3D Video Display, Dynamic Lighting, and Sound</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #1a1a2e;
+    color: #e0e0e0;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .scanner-container {
+    background-color: #16213e;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0,255,255,0.1);
+    padding: 20px;
+    text-align: center;
+    max-width: 800px;
+    width: 100%;
+  }
+  #cameraFeed {
+    display: none;
+  }
+  #threejsContainer {
+    width: 100%;
+    height: 480px;
+    background-color: #000;
+    margin: 20px auto;
+    position: relative;
+    overflow: hidden;
+  }
+  .controls {
+    margin-top: 20px;
+  }
+  button {
+    background-color: #0f3460;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+  button:hover {
+    background-color: #16213e;
+  }
+  button:disabled {
+    background-color: #535c68;
+    cursor: not-allowed;
+  }
+  .stability-meter {
+    width: 100%;
+    max-width: 300px;
+    height: 20px;
+    background-color: #e94560;
+    margin: 20px auto;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .stability-fill {
+    width: 0%;
+    height: 100%;
+    background-color: #0f3460;
+    transition: width 0.3s ease;
+  }
+  .file-list {
+    margin-top: 20px;
+    text-align: left;
+  }
+  #stabilityValue {
+    font-weight: bold;
+  }
+  .light-controls {
+    margin-top: 20px;
+  }
+  .light-controls label {
+    margin-right: 10px;
+  }
+</style>
+</head>
+<body>
+  <div class="scanner-container">
+    <h1>3D Scanner with Dynamic Lighting and Sound</h1>
+    <div id="threejsContainer"></div>
+    <video id="cameraFeed" autoplay playsinline></video>
+    <div class="stability-meter">
+      <div class="stability-fill"></div>
+    </div>
+    <p>Stability: <span id="stabilityValue">0%</span></p>
+    <div class="controls">
+      <button id="startScanBtn" onclick="toggleScan()">Start Scan</button>
+      <button id="captureBtn" onclick="capture3DModel()" disabled>Capture 3D Model</button>
+    </div>
+    <div class="light-controls">
+      <label for="lightColor">Light Color:</label>
+      <input type="color" id="lightColor" value="#ffffff" onchange="updateLightColor()">
+      <label for="lightIntensity">Light Intensity:</label>
+      <input type="range" id="lightIntensity" min="0" max="2" step="0.1" value="1" onchange="updateLightIntensity()">
+    </div>
+    <div class="file-list">
+      <h3>Captured 3D Models:</h3>
+      <ul id="capturedModels"></ul>
+    </div>
+  </div>
+
+  <script>
+    let scanning = false;
+    let stability = 0;
+    let modelCount = 0;
+    let videoStream;
+    const cameraFeed = document.getElementById('cameraFeed');
+    const startScanBtn = document.getElementById('startScanBtn');
+    const captureBtn = document.getElementById('captureBtn');
+    const stabilityFill = document.querySelector('.stability-fill');
+    const stabilityValue = document.getElementById('stabilityValue');
+
+    // Three.js variables
+    let scene, camera, renderer, cube, pointLight;
+
+    // Sound effects
+    const scanSound = new Howl({
+      src: ['https://example.com/assets/scan_sound.mp3'],
+      loop: true,
+      volume: 0.5
+    });
+
+    const captureSound = new Howl({
+      src: ['https://example.com/assets/capture_sound.mp3']
+    });
+
+    async function setupCamera() {
+      try {
+        videoStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+        cameraFeed.srcObject = videoStream;
+        startScanBtn.disabled = false;
+        init3DScene();
+      } catch (error) {
+        console.error('Error accessing camera:', error);
+        alert('Unable to access the camera. Please make sure you have given permission and try again.');
+      }
+    }
+
+    function init3DScene() {
+      scene = new THREE.Scene();
+      camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
+      renderer = new THREE.WebGLRenderer({ antialias: true });
+      renderer.setSize(640, 480);
+      document.getElementById('threejsContainer').appendChild(renderer.domElement);
+
+      const geometry = new THREE.BoxGeometry();
+      const material = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
+      cube = new THREE.Mesh(geometry, material);
+      scene.add(cube);
+
+      pointLight = new THREE.PointLight(0xffffff, 1);
+      pointLight.position.set(5, 5, 5);
+      scene.add(pointLight);
+
+      const ambientLight = new THREE.AmbientLight(0x404040);
+      scene.add(ambientLight);
+
+      camera.position.z = 5;
+
+      animate();
+    }
+
+    function animate() {
+      requestAnimationFrame(animate);
+      if (scanning) {
+        cube.rotation.x += 0.01;
+        cube.rotation.y += 0.01;
+      }
+      renderer.render(scene, camera);
+    }
+
+    function toggleScan() {
+      scanning = !scanning;
+      if (scanning) {
+        startScanBtn.textContent = 'Stop Scan';
+        captureBtn.disabled = false;
+        startStabilityTracking();
+        scanSound.play();
+      } else {
+        startScanBtn.textContent = 'Start Scan';
+        captureBtn.disabled = true;
+        stability = 0;
+        updateStabilityMeter();
+        scanSound.stop();
+      }
+    }
+
+    function startStabilityTracking() {
+      let lastImageData = null;
+      const context = document.createElement('canvas').getContext('2d');
+      
+      function checkStability() {
+        if (!scanning) return;
+
+        context.drawImage(cameraFeed, 0, 0, 100, 75);
+        const imageData = context.getImageData(0, 0, 100, 75);
+        
+        if (lastImageData) {
+          let diff = 0;
+          for (let i = 0; i < imageData.data.length; i += 4) {
+            diff += Math.abs(imageData.data[i] - lastImageData.data[i]);
+          }
+          stability = Math.max(0, Math.min(100, 100 - diff / 1000));
+        }
+        
+        lastImageData = imageData;
+        updateStabilityMeter();
+        setTimeout(checkStability, 100);
+      }
+
+      checkStability();
+    }
+
+    function updateStabilityMeter() {
+      stabilityFill.style.width = `${stability}%`;
+      stabilityValue.textContent = `${Math.round(stability)}%`;
+    }
+
+    function capture3DModel() {
+      if (stability < 70) {
+        alert('Image not stable enough. Please try to keep the camera steady.');
+        return;
+      }
+
+      captureSound.play();
+
+      modelCount++;
+      const fileName = `3d_model_${modelCount}.glb`;
+      const fileList = document.getElementById('capturedModels');
+      const listItem = document.createElement('li');
+      listItem.textContent = fileName;
+      fileList.appendChild(listItem);
+
+      // Simulate file saving with a link
+      const link = document.createElement('a');
+      link.href = `/downloads/${fileName}`;
+      link.textContent = ' (Download)';
+      listItem.appendChild(link);
+
+      // Simulate 3D capture process
+      alert('3D model captured successfully!');
+    }
+
+    function updateLightColor() {
+      const color = document.getElementById('lightColor').value;
+      pointLight.color.setHex(color.replace('#', '0x'));
+    }
+
+    function updateLightIntensity() {
+      const intensity = document.getElementById('lightIntensity').value;
+      pointLight.intensity = parseFloat(intensity);
+    }
+
+    // Initialize camera on page load
+    window.addEventListener('load', setupCamera);
+  </script>
+</body></html>

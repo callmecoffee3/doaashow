@@ -1,0 +1,255 @@
+<html><head><base href="https://ar-effect-maker.com/">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AR Effect Maker Studio</title>
+<style>
+  :root {
+    --primary-color: #1a1a1a;
+    --secondary-color: #2a2a2a;
+    --text-color: #ffffff;
+    --accent-color: #4a90e2;
+  }
+
+  body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .container {
+    display: flex;
+    height: 100vh;
+  }
+
+  .sidebar {
+    width: 250px;
+    background-color: var(--secondary-color);
+    overflow-y: auto;
+    transition: width 0.3s ease;
+  }
+
+  .sidebar.collapsed {
+    width: 60px;
+  }
+
+  .main-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .top-menu {
+    background-color: var(--secondary-color);
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    font-size: 1.5em;
+    font-weight: bold;
+  }
+
+  .logo svg {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+  }
+
+  .options {
+    display: flex;
+    gap: 10px;
+  }
+
+  .viewer {
+    flex-grow: 1;
+    background-color: #333;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .controls {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+  }
+
+  button {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 3px;
+  }
+
+  .sidebar-content {
+    padding: 10px;
+  }
+
+  .sidebar-section {
+    margin-bottom: 20px;
+  }
+
+  .sidebar-section h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+  }
+
+  .sidebar-item {
+    padding: 5px 0;
+    cursor: pointer;
+  }
+
+  .sidebar-item:hover {
+    color: var(--accent-color);
+  }
+
+  .right-sidebar {
+    width: 250px;
+    background-color: var(--secondary-color);
+    overflow-y: auto;
+    transition: width 0.3s ease;
+  }
+
+  .right-sidebar.collapsed {
+    width: 60px;
+  }
+
+  /* Add more styles as needed */
+</style>
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar" id="leftSidebar">
+      <div class="sidebar-content">
+        <div class="sidebar-section">
+          <h3>3D Elements</h3>
+          <div class="sidebar-item">3D Face (Human)</div>
+          <div class="sidebar-item">3D Face (Animal)</div>
+          <div class="sidebar-item">3D Figure (Human)</div>
+          <div class="sidebar-item">3D Figure (Animal)</div>
+          <div class="sidebar-item">360° Position</div>
+        </div>
+        <div class="sidebar-section">
+          <h3>Props & Objects</h3>
+          <div class="sidebar-item">Studio Stage Props</div>
+          <div class="sidebar-item">3D Objects</div>
+        </div>
+        <div class="sidebar-section">
+          <h3>Text & Editing</h3>
+          <div class="sidebar-item">Add Text</div>
+          <div class="sidebar-item">Edit</div>
+          <div class="sidebar-item">Delete</div>
+        </div>
+        <div class="sidebar-section">
+          <h3>VR Elements</h3>
+          <div class="sidebar-item">VR Props</div>
+          <div class="sidebar-item">VR Environments</div>
+        </div>
+      </div>
+    </div>
+    <div class="main-content">
+      <div class="top-menu">
+        <div class="logo">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z" fill="currentColor"/>
+          </svg>
+          AR Effect Maker Studio
+        </div>
+        <div class="options">
+          <button>Settings</button>
+          <button>Full Screen</button>
+        </div>
+      </div>
+      <div class="viewer" id="effectViewer">
+        <!-- 3D viewer content will be added here -->
+        <div class="controls">
+          <button>Play</button>
+          <button>Pause</button>
+          <button>Reset</button>
+        </div>
+      </div>
+    </div>
+    <div class="right-sidebar" id="rightSidebar">
+      <div class="sidebar-content">
+        <div class="sidebar-section">
+          <h3>Add-ons</h3>
+          <div class="sidebar-item">Decorations</div>
+          <div class="sidebar-item">Pictures</div>
+          <div class="sidebar-item">Videos</div>
+          <div class="sidebar-item">Sounds</div>
+        </div>
+        <div class="sidebar-section">
+          <h3>Effects</h3>
+          <div class="sidebar-item">3D Effects</div>
+          <div class="sidebar-item">Animations</div>
+          <div class="sidebar-item">Filters</div>
+        </div>
+        <div class="sidebar-section">
+          <h3>Projects</h3>
+          <div class="sidebar-item">New Project</div>
+          <div class="sidebar-item">Open Project</div>
+          <div class="sidebar-item">Save Project</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    // Initialize Three.js scene
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.getElementById('effectViewer').appendChild(renderer.domElement);
+
+    // Add a simple cube to the scene
+    const geometry = new THREE.BoxGeometry();
+    const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+    const cube = new THREE.Mesh(geometry, material);
+    scene.add(cube);
+
+    camera.position.z = 5;
+
+    // Animation loop
+    function animate() {
+      requestAnimationFrame(animate);
+      cube.rotation.x += 0.01;
+      cube.rotation.y += 0.01;
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    // Sidebar collapse functionality
+    function toggleSidebar(sidebarId) {
+      const sidebar = document.getElementById(sidebarId);
+      sidebar.classList.toggle('collapsed');
+    }
+
+    // Event listeners for sidebar toggles
+    document.getElementById('leftSidebar').addEventListener('dblclick', () => toggleSidebar('leftSidebar'));
+    document.getElementById('rightSidebar').addEventListener('dblclick', () => toggleSidebar('rightSidebar'));
+
+    // Resize handler
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    // Add more JavaScript for interactivity and AR functionality
+  </script>
+</body></html>

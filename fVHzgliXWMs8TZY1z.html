@@ -1,0 +1,350 @@
+<html><head><base href="https://websimcreationengine.com/mattgrosso/">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Matt Grosso Site</title>
+<style>
+  :root {
+    --primary-color: #0000FF;
+    --secondary-color: #FF0000;
+    --background-color: #F0F0F0;
+    --text-color: #333333;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color);
+    color: var(--text-color);
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  header {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+  }
+  
+  .logo {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 10px;
+  }
+  
+  h1 {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0;
+  }
+  
+  .search-bar {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  .search-bar input {
+    width: 70%;
+    padding: 10px;
+    font-size: 16px;
+  }
+  
+  .search-bar button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .menu-items {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+  }
+  
+  .menu-items a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: var(--text-color);
+  }
+  
+  .main-content {
+    display: flex;
+    margin-top: 20px;
+  }
+  
+  .left-column, .right-column {
+    flex: 1;
+    padding: 20px;
+    background-color: white;
+    margin: 0 10px;
+  }
+  
+  .center-column {
+    flex: 2;
+    padding: 20px;
+    background-color: white;
+    margin: 0 10px;
+  }
+  
+  .tools-section {
+    background-color: #e0e0e0;
+    padding: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .collapsible {
+    background-color: #777;
+    color: white;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+  }
+  
+  .active, .collapsible:hover {
+    background-color: #555;
+  }
+  
+  .content {
+    padding: 0 18px;
+    display: none;
+    overflow: hidden;
+    background-color: #f1f1f1;
+  }
+  
+  .dashboard {
+    background-color: #f9f9f9;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .bottom-buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 20px;
+  }
+  
+  .bottom-buttons button {
+    margin: 5px;
+    padding: 10px 20px;
+    font-size: 14px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img src="mgs_logo.svg" alt="MGS Logo" width="50" height="50">
+    </div>
+    <h1>Matt Grosso Site</h1>
+  </header>
+
+  <div class="container">
+    <div class="search-bar">
+      <input type="text" placeholder="Search...">
+      <button>Search</button>
+    </div>
+
+    <div class="menu-items">
+      <a href="?page=all">All</a>
+      <a href="?page=images">Images</a>
+      <a href="?page=video">Video</a>
+      <a href="?page=audio">Audio</a>
+      <a href="?page=shopping">Shopping</a>
+      <a href="?page=ai">AI</a>
+    </div>
+
+    <div class="tools-section">
+      <button class="collapsible">Tools</button>
+      <div class="content">
+        <a href="?tool=sound">Sound</a>
+        <a href="?tool=pictures">Pictures</a>
+        <a href="?tool=post">Post</a>
+        <a href="?tool=users">Users</a>
+        <a href="?tool=parents">Parents</a>
+        <a href="?tool=kids">Kids</a>
+        <a href="?tool=single">Single</a>
+        <a href="?tool=writers-corner">Writers Corner</a>
+        <a href="?tool=marketplace">Marketplace</a>
+        <a href="?tool=video">Video</a>
+        <a href="?tool=trends">Trends</a>
+        <a href="?tool=discover">Discover</a>
+        <a href="?tool=content">Content</a>
+        <a href="?tool=media">Media</a>
+        <a href="?tool=messenger">Messenger</a>
+      </div>
+    </div>
+
+    <div class="main-content">
+      <div class="left-column">
+        <h2>AI Stuff</h2>
+        <button onclick="startVoiceChat()">Start Voice Chat</button>
+        <button onclick="startPhoneCall()">Start Phone Call</button>
+        <button onclick="startVideoCall()">Start Video Call</button>
+      </div>
+
+      <div class="center-column">
+        <div class="dashboard">
+          <h2>Personal Dashboard</h2>
+          <div id="current-date"></div>
+          <div id="current-time"></div>
+          <div id="personal-bio">
+            <h3>Bio</h3>
+            <p>Welcome to my personal space! I'm passionate about technology and creativity.</p>
+          </div>
+          <button onclick="openProfileSettings()">Profile Settings</button>
+        </div>
+
+        <div id="notes">
+          <h3>Notes</h3>
+          <textarea rows="4" cols="50"></textarea>
+        </div>
+
+        <div id="website-preview">
+          <h3>Website Preview</h3>
+          <iframe src="preview.html" width="100%" height="300"></iframe>
+          <button onclick="editWebsite()">Edit Website</button>
+          <button onclick="generateWebsite()">Generate Website</button>
+          <button onclick="deployWebsite()">Deploy Website</button>
+        </div>
+      </div>
+
+      <div class="right-column">
+        <h2>Communication</h2>
+        <button onclick="openWalkieTalkie()">Walkie Talkie</button>
+        <button onclick="openRooms()">Rooms</button>
+        <button onclick="openChannels()">Channels</button>
+        <button onclick="openAIAssistant()">AI Assistant</button>
+      </div>
+    </div>
+
+    <div class="bottom-buttons">
+      <button onclick="goToPage('all')">All</button>
+      <button onclick="goToPage('images')">Images</button>
+      <button onclick="goToPage('photo')">Photo</button>
+      <button onclick="goToPage('video')">Video</button>
+      <button onclick="goToPage('audio')">Audio</button>
+      <button onclick="goToPage('shopping')">Shopping</button>
+      <button onclick="goToPage('ai')">AI</button>
+      <button onclick="goToPage('website-stats')">Website Stats</button>
+      <button onclick="goToPage('users')">Users</button>
+      <button onclick="goToPage('family')">Family</button>
+      <button onclick="goToPage('friends')">Friends</button>
+      <button onclick="goToPage('worker')">Worker</button>
+      <button onclick="goToPage('groups')">Groups</button>
+      <button onclick="goToPage('pages')">Pages</button>
+      <button onclick="goToPage('messages')">Messages</button>
+      <button onclick="goToPage('indicator')">Indicator</button>
+      <button onclick="goToPage('visits')">Visits</button>
+      <button onclick="goToPage('profiles')">Profiles</button>
+      <button onclick="goToPage('online')">Online</button>
+    </div>
+  </div>
+
+  <script>
+    // Collapsible Tools Section
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+
+    for (i = 0; i < coll.length; i++) {
+      coll[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var content = this.nextElementSibling;
+        if (content.style.display === "block") {
+          content.style.display = "none";
+        } else {
+          content.style.display = "block";
+        }
+      });
+    }
+
+    // Current Date and Time
+    function updateDateTime() {
+      var now = new Date();
+      document.getElementById("current-date").textContent = "Date: " + now.toLocaleDateString();
+      document.getElementById("current-time").textContent = "Time: " + now.toLocaleTimeString();
+    }
+    updateDateTime();
+    setInterval(updateDateTime, 1000);
+
+    // Placeholder functions for buttons
+    function startVoiceChat() {
+      alert("Starting voice chat...");
+    }
+
+    function startPhoneCall() {
+      alert("Starting phone call...");
+    }
+
+    function startVideoCall() {
+      alert("Starting video call...");
+    }
+
+    function openProfileSettings() {
+      alert("Opening profile settings...");
+    }
+
+    function editWebsite() {
+      alert("Opening website editor...");
+    }
+
+    function generateWebsite() {
+      alert("Generating website...");
+    }
+
+    function deployWebsite() {
+      alert("Deploying website...");
+    }
+
+    function openWalkieTalkie() {
+      alert("Opening walkie talkie...");
+    }
+
+    function openRooms() {
+      alert("Opening rooms...");
+    }
+
+    function openChannels() {
+      alert("Opening channels...");
+    }
+
+    function openAIAssistant() {
+      alert("Opening AI assistant...");
+    }
+
+    function goToPage(page) {
+      alert("Navigating to " + page + " page...");
+    }
+
+    // Request permissions
+    function requestPermissions() {
+      navigator.mediaDevices.getUserMedia({ audio: true, video: true })
+        .then(function(stream) {
+          console.log("Permissions granted");
+        })
+        .catch(function(err) {
+          console.log("Permissions denied: ", err);
+        });
+    }
+
+    // Call requestPermissions when needed, e.g., when starting a call
+    // requestPermissions();
+  </script>
+</body>
+</html>

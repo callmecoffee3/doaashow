@@ -1,0 +1,418 @@
+//haunted series
+/segestions for web or tv
+/story telling board  
+:website name
+:full screen option
+:logo
+:name (click name then go back to home)
+:dark theme
+:right coloumn
+:search & button
+:quick serch terms
+:quick seacrh bar
+:display search results
+:add on / extention
+:time & date display
+:user notes (& save button, delete note option)
+:add chat bot
+:put save notes under user notes and display
+:add {below} as tool bar(display search results)
+:add {below} as commands (links)
+:add (buttons) as quick access
+:multiple scelect buttons
+:clickable search & goto
+:generate story based on multiple clicks (in ai chat bot)
+:make story as a user pick game
+:display generated story as smart ai (clickable)
+:display clickabls in ai chat bot
+:let users pick style of story (display style of stories)
+:scrollable bottem menu commands
+:hideable bottem
+:different story categoies
+:different story options
+:let user add story commands
+:(display search results)
+:build story using bottem buttons, links
+:display tips
+.================================================
+:display chat bot start
+:"hi how would you like this story top start?"
+:"act 1"
+:"act2"
+:"act3"
+:"act 4"
+:"character devlopment"
+:"got a new project?"
+:"24 hour show"
+:respond to(clickable)
+.=================================================
+:{below}, scrollable, hieable 
+:(create as clickable buttons) 
+:(use for search results)
+:(dispaly as search results)
+:(also display in ai chat bot)
+:(display as clickable links on bottem)
+:make coloumns and rows 
+:hashtag begins the coloumn, 
+.==================================================
+#section
+#chapter
+#act
+#page
+#help
+#shorts
+#reals
+#effects
+#stories
+.================================================
+#places
+.local
+.sate
+.radio
+.theater
+.movie
+.podcast
+.house
+.buildings
+.forest
+.fields
+.waters
+.businesses
+.trails
+.paths
+.inside
+.outside
+.parks
+.resturants
+.schools
+.asylim
+.prison
+.jail
+.=========================================
+#others
+.day
+.morning
+.noon
+.night
+.investigation
+.paranormal
+.zombies
+.conspriacy
+.science
+.creature
+.treamment
+.medical
+.trials
+.medicine
+.test
+.labs
+.wepons
+.props
+.blood
+.makeup
+.limbs
+.============================================
+#activites
+.haunted
+.ghost
+.invetigate
+.camping
+.alone
+.guest
+.games
+.investigate
+.midnight
+.realestate
+.24 hour
+.chalanges
+.ouji
+.pranks
+.stories
+.cooking
+.tour
+.travel
+.skits
+.comady
+.finds
+.found
+.lost
+.digging
+.night time
+.day time
+.mid day
+.space
+.on earth
+.contry
+.city
+.rv
+.van
+.car
+.quiz
+.questions
+.comments
+.study
+.subject
+.copters
+.jets
+.humvey
+.tanks
+.cars
+.=======================================================
+#people
+.child
+.mom
+.dad
+.sibling
+.parent
+.single
+.seperated
+.together
+.brother
+.sister
+.dead
+.living
+.murder
+.murdered
+.crimes
+.fedral
+.tryalis
+.owner
+.renter
+.girlfirend
+.boyfirend
+.friends
+.family
+.workers
+.betrayal
+.killers
+.killed
+.survived
+.stalkers
+.cult
+.org
+.family
+.friends
+.kids
+.parents
+.singles
+.remains
+.buried
+.police
+.cops
+.military
+.navy
+.marine
+.air force
+.space force
+.coast gaurd
+.armed forces
+.army
+.doctors
+.scientiest
+.recon
+.teeacher
+.student
+.===========================================
+#area
+.western
+.northern
+.southern
+.eastrn
+.space
+.planet
+.sea
+.sky
+.=========================================
+#things
+::furniture
+::inside
+::chair
+::chairs
+::table
+::tables
+::sofas
+::arm chair
+::beds
+::dressers
+::cabinets
+::outside
+::sets
+::patio sets
+::benches
+::hammocks
+.==============================================
+#apliances
+::radio
+::tv
+::set
+::theater
+::microwave
+::internet
+::refrigerator
+::freezer
+::computer
+::tv set
+::radio set
+.==============================================
+#cloths
+::type
+::small
+::med
+::large
+::xlarge
+::male
+::female
+::child
+::teens
+::mothers
+::shirts
+::shorts
+::sneakers
+.=================================================
+#electronics
+.radio
+.tv
+.watch
+.speakers
+.=================================================
+#toys
+:boards
+:digital
+:online
+:dolls
+:items
+.===================
+#gadgets
+:eletric
+:watches
+:toys
+:wrings
+:wrist bands
+:pen
+:pencil
+:phone
+:car
+:boat
+.===================
+#tools
+:lux
+:drills
+:saw
+:electic
+:screw driver
+.=====================
+#more
+:acts
+:scenes
+:parts
+:actors
+:holidays
+.=======================
+#news
+:articals
+:archive
+;action
+:live
+:recorded
+:paper
+:magizne
+:sports
+:world
+:events
+:technology
+:money
+:crimes
+:fiction
+:non-fiction
+:internet
+:storms
+:weather
+:sports
+.=========================
+#sports
+:vollyball
+:scocor
+:hunting
+:baseball
+:basketball
+:fishing
+.==========================
+#category
+:action
+:adventure
+:animation
+:fantasy
+:drama
+:skits
+:horror
+:comady
+:sitcom
+:mystery
+:romance
+:science fiction
+:thriller
+:western
+.====================================
+#type film
+:short film
+:feature film
+:documentary film
+:independant film
+:experimental film
+:hollywood film
+:foreign film
+:clasic film
+:silent film
+:3d film
+.================================
+#style
+:noir
+:neo-noir
+:surrealist
+:expressionist
+:reailst
+:art house
+:cult film
+:b-film
+:epic 
+.=======================
+#format
+:black and white
+:color
+:widescreen
+:3d
+:imax 
+:virtuarl reality
+:dvd
+:blu-ray
+:streaming
+:theatrical release
+.======================
+(chocies for story out come)
+(display in ai generator)
+#choices
+:pick up
+:put down
+:drive
+:start
+:stop
+:slow
+:fast
+:quick
+:goto
+:run
+:walk
+:left
+:right 
+:center
+:back
+:shoot
+:kick
+:jump
+:talk
+==========================
+::in bottom row
+#quck links
+:make as quick buttons on the bottem; clickable (as well)
+:center
+:let users scelet more then one
