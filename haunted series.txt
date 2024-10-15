@@ -6,6 +6,7 @@
 :logo
 :name (click name then go back to home)
 :dark theme
+:on github.com/callmecoffee3 - doaashow
 :right coloumn
 :search & button
 :quick serch terms
