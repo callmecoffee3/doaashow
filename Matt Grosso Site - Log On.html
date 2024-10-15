@@ -1,0 +1,143 @@
+<html><head><base href="https://mattgrossosite.com/logon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Matt Grosso Site - Log On</title>
+<style>
+:root {
+  --primary-color: #0066cc;
+  --secondary-color: #ff3333;
+  --bg-color: #f0f0f0;
+  --text-color: #333;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+h1 {
+  text-align: center;
+  color: var(--primary-color);
+  margin-bottom: 2rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-bottom: 0.5rem;
+}
+
+input {
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+button:hover {
+  background-color: #0055aa;
+}
+
+.options {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.options a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.options a:hover {
+  text-decoration: underline;
+}
+
+.logo {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.logo svg {
+  width: 60px;
+  height: 60px;
+}
+
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="logo">
+    <svg viewBox="0 0 100 100" width="60" height="60">
+      <circle cx="50" cy="50" r="45" fill="#0066cc" />
+      <text x="50" y="65" font-size="40" text-anchor="middle" fill="white">MG</text>
+    </svg>
+  </div>
+  <h1>Log On to Matt Grosso Site</h1>
+  <form id="login-form">
+    <label for="username">Username or Email</label>
+    <input type="text" id="username" name="username" required>
+    
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" required>
+    
+    <button type="submit">Log On</button>
+  </form>
+  <div class="options">
+    <a href="/forgot-password">Forgot Password?</a>
+    <a href="/signup">Sign Up</a>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', (event) => {
+  const form = document.getElementById('login-form');
+  
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    
+    // Here you would typically send this data to your server for authentication
+    console.log('Login attempt:', { username, password });
+    
+    // For this example, we'll just show an alert
+    alert(`Login attempt for user: ${username}`);
+    
+    // Redirect to the main page after login (in a real app, do this after successful authentication)
+    window.location.href = 'https://mattgrossosite.com/';
+  });
+});
+</script>
+</body>
+</html>

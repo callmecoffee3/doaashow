@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Voice Recorder</title>
+</head>
+<body>
+  <button id="record-button">Record</button>
+  <button id="stop-button">Stop</button>
+  <button id="play-button">Play</button>
+  <audio id="audio-player"></audio>
+</body>
+</html>
+onst recordButton = document.getElementById('record-button');
+const stopButton = document.getElementById('stop-button');
+const playButton = document.getElementById('play-button');   
+
+const audioPlayer = document.getElementById('audio-player');   
+
+
+let mediaRecorder;
+let isRecording = false;
+
+navigator.mediaDevices.getUserMedia({ audio: true })
+  .then(stream => {
+    const chunks = [];
+    mediaRecorder = new MediaRecorder(stream);
+
+    recordButton.addEventListener('click', () => {
+      if (!isRecording) {
+        mediaRecorder.start();
+        isRecording = true;
+        recordButton.textContent = 'Recording...';
+      }
+    });
+
+    stopButton.addEventListener('click', () => {
+      if (isRecording) {
+        mediaRecorder.stop();
+        isRecording = false;
+        recordButton.textContent = 'Record';
+      }
+    });
+
+    mediaRecorder.ondataavailable = (event) => {
+      chunks.push(event.data);
+    };
+
+    mediaRecorder.onstop = () => {
+      const blob = new Blob(chunks, { type: 'audio/ogg; codecs=opus'   
+ });
+      const audioUrl = URL.createObjectURL(blob);
+      audioPlayer.src = audioUrl;
+    };
+  })
+  .catch(err   
+ => {
+    console.error('Error accessing microphone:', err);
+  });

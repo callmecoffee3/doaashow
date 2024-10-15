@@ -1,0 +1,377 @@
+<html><head><base href="mattgrossosite.com/">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Matt Grosso Site - Homepage</title>
+<style>
+:root {
+  --primary-color: #0066cc;
+  --secondary-color: #ff3333;
+  --bg-color: #f0f0f0;
+  --text-color: #333;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+header {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 1rem 0;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo {
+  width: 50px;
+  height: 50px;
+  margin-right: 1rem;
+}
+
+h1 {
+  margin: 0;
+}
+
+nav {
+  background-color: #f8f8f8;
+  padding: 0.5rem 0;
+}
+
+.tools-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.5rem;
+}
+
+.tool-item {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 0.5rem;
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--text-color);
+}
+
+.collapsible {
+  background-color: #eee;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+}
+
+.active, .collapsible:hover {
+  background-color: #ccc;
+}
+
+.content {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+  background-color: #f1f1f1;
+}
+
+.search-container {
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0;
+}
+
+.search-bar {
+  width: 50%;
+  padding: 0.5rem;
+  font-size: 1rem;
+}
+
+.search-button {
+  padding: 0.5rem 1rem;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.search-options {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.column {
+  flex: 1;
+  padding: 1rem;
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin: 0 0.5rem;
+}
+
+.auth-buttons {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
+.auth-buttons a {
+  margin-left: 1rem;
+  color: white;
+  text-decoration: none;
+}
+
+.indicator-bar {
+  background-color: #e0e0e0;
+  padding: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pages-section {
+  margin-top: 1rem;
+}
+
+.pages-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.page-item {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 0.5rem;
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--text-color);
+}
+
+</style>
+</head>
+<body>
+<header>
+  <div class="container">
+    <div class="logo-container">
+      <svg class="logo" viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="45" fill="#FFFFFF" />
+        <text x="50" y="65" font-size="40" text-anchor="middle" fill="#0066cc">MGS</text>
+      </svg>
+      <h1>Matt Grosso Site</h1>
+    </div>
+    <div class="auth-buttons">
+      <a href="/logon">Log On</a>
+      <a href="/signup">Sign Up</a>
+    </div>
+  </div>
+</header>
+
+
+<main class="container">
+  <div class="search-container">
+    <input type="text" class="search-bar" placeholder="Search websites...">
+    <button class="search-button">Search</button>
+  </div>
+  <div class="search-options">
+    <a href="#.html">All</a>
+    <a href="#.html">Images</a>
+    <a href="#.html">Video</a>
+    <a href="#.html">Audio</a>
+    <a href="#">Shopping</a>
+    <a href="#".html>AI</a>
+  </div>
+  
+  <div class="indicator-bar">
+    <span id="current-date-time"></span>
+    <span>Users Online: 1,234</span>
+    <span>New Posts: 56</span>
+  </div>
+  
+  <div style="display: flex; margin-top: 2rem;">
+    <div class="column">
+      <h2>Phone Chat & Call</h2>
+      <div id="phone-chat">
+        <div id="chat-messages"></div>
+        <input type="text" id="user-input" placeholder="Chat User...">
+        <button onclick="sendMessage()">Send</button>
+      </div>
+      <h3>Communication</h3>
+      <button onclick="startVoiceChat()">Start Voice Chat</button>
+      <button onclick="startPhoneCall()">Start Phone Call</button>
+      <button onclick="startVideoCall()">Start Video Call</button>
+    </div>
+    
+    <div class="column" style="flex: 2;">
+      <h2>Dashboard</h2>
+      <div id="user-profile">
+        <img src="https://via.placeholder.com/100" alt="User profile picture" style="border-radius: 50%;">
+        <h3>Welcome, User!</h3>
+        <p>Edit your bio here...</p>
+      </div>
+      <div id="personal-dashboard">
+        <h3>Quick Stats</h3>
+        <p>Website Visits: 1,567</p>
+        <p>New Messages: 3</p>
+        <p>Tasks Due: 2</p>
+      </div>
+      <div id="notes">
+        <h3>Notes</h3>
+        <textarea rows="4" cols="50" placeholder="Write your notes here..."></textarea>
+      </div>
+    </div>
+    
+    <div class="column">
+      <h2>Communication</h2>
+      <div id="walkie-talkie">
+        <h3>Walkie Talkie</h3>
+        <button onclick="toggleWalkieTalkie()">Toggle Walkie Talkie</button>
+      </div>
+      <div id="rooms">
+        <h3>Rooms</h3>
+        <ul>
+          <li>General Chat</li>
+          <li>Tech Talk</li>
+          <li>Creative Corner</li>
+        </ul>
+      </div>
+      <div id="channels">
+        <h3>Channels</h3>
+        <ul>
+          <li>Announcements</li>
+          <li>Questions & Answers</li>
+          <li>Random</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+<nav>
+  <div class="container">
+    <button class="collapsible">Tools</button>
+    <div class="content tools-section">
+      <a href="#.html" class="tool-item">Website</a>
+      <a href="#.html" class="tool-item">Sound</a>
+      <a href="#.html" class="tool-item">Pictures</a>
+      <a href="#.html" class="tool-item">Post</a>
+      <a href="#.html" class="tool-item">Users</a>
+      <a href="#.html" class="tool-item">Parents</a>
+      <a href="#.html" class="tool-item">Kids</a>
+      <a href=".html" class="tool-item">Single</a>
+      <a href=".html" class="tool-item">Writers Corner</a>
+      <a href=".html" class="tool-item">Marketplace</a>
+      <a href="#.html" class="tool-item">Video</a>
+      <a href="#.html" class="tool-item">Trends</a>
+      <a href="#.html" class="tool-item">Discover</a>
+      <a href="#.html" class="tool-item">Content</a>
+      <a href="#.html" class="tool-item">Media</a>
+      <a href="#.html" class="tool-item">Messenger</a>
+    </div>
+  </div>
+</nav>    
+  <div class="pages-section">
+    <h2>Pages</h2>
+    <div class="pages-container">
+      <a href="#" class="page-item">All</a>
+      <a href="#" class="page-item">Images</a>
+      <a href="#" class="page-item">Photos</a>
+      <a href="#" class="page-item">Videos</a>
+      <a href="#" class="page-item">Audio</a>
+      <a href="#" class="page-item">Shopping</a>
+      <a href="#" class="page-item">AI</a>
+      <a href="#" class="page-item">Website Stats</a>
+      <a href="#" class="page-item">Users</a>
+      <a href="#" class="page-item">Family</a>
+      <a href="#" class="page-item">Friends</a>
+      <a href="#.html class="page-item">Worker</a>
+      <a href="#.html class="page-item">Groups</a>
+      <a href="#.html" class="page-item">Messages</a>
+      <a href="#.html" class="page-item">Visits</a>
+      <a href="#.html" class="page-item">Profiles</a>
+    </div>
+  </div>
+</main>
+
+<script>
+function updateDateTime() {
+  const now = new Date();
+  document.getElementById('current-date-time').textContent = now.toLocaleString();
+}
+
+setInterval(updateDateTime, 1000);
+
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+}
+
+function sendMessage() {
+  var userInput = document.getElementById("user-input").value;
+  var chatMessages = document.getElementById("chat-messages");
+  chatMessages.innerHTML += "<p><strong>You:</strong> " + userInput + "</p>";
+  // Here you would typically send the message to a backend AI service
+  // and display the response. For now, we'll just echo the user's message.
+  chatMessages.innerHTML += "<p><strong>AI:</strong> You said: " + userInput + "</p>";
+  document.getElementById("user-input").value = "";
+}
+
+function startVoiceChat() {
+  alert("Starting voice chat...");
+  // Implement voice chat functionality
+}
+
+function startPhoneCall() {
+  alert("Starting phone call...");
+  // Implement phone call functionality
+}
+
+function startVideoCall() {
+  alert("Starting video call...");
+  // Implement video call functionality
+}
+
+function toggleWalkieTalkie() {
+  alert("Toggling Walkie Talkie...");
+  // Implement walkie talkie functionality
+}
+
+// Request permissions
+navigator.mediaDevices.getUserMedia({ audio: true, video: true })
+  .then(function(stream) {
+    console.log('Got permissions for audio and video');
+  })
+  .catch(function(err) {
+    console.log('Error getting permissions: ' + err);
+  });
+
+</script>
+</body>
+</html>

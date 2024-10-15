@@ -1,0 +1,1303 @@
+<html><head><base href="mattgrossosite.com">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Matt Grosso Site - &</title>
+<style>
+<head> background-color; black   
+<body>
+  
+:root {
+  --primary-color: black
+  --secondary-color: #ff3333;
+  --bg-color: balck;
+  --text-color: #333;
+}
+
+.body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.header {
+  background-color: black var(--primary-color);
+  color: white;
+  padding: 1rem 0;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo {
+  width: 50px;
+  height: 50px;
+  margin-right: 1rem;
+}
+
+h1 {
+  margin: 0;
+}
+
+nav {
+  background-color: #f8f8f8;
+  padding: 0.5rem 0;
+}
+
+.tools-section {
+  display: flex;
+  align-items: center;  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.5rem;
+}
+
+.tool-item {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 0.5rem;
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--text-color);
+}
+
+.collapsible {
+  background-color: #eee;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: center;
+  align-items: center;  outline: none;
+  font-size: 15px;
+}
+
+.active, .collapsible:hover {
+  background-color: #ccc;
+}
+
+.content {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+  background-color: #f1f1f1;
+}
+
+.search-container {
+  align-items: center;  display: flex;
+  justify-content: center;
+  margin: 1rem 0;
+}
+
+.search-bar {
+  width: 50%;
+  padding: 0.5rem;
+  font-size: 1rem 1;
+}
+
+.search-button {
+  padding: 0.5rem 1rem;
+  background-color: var(--primary-color);
+  color: blue;
+  border: none;
+  cursor: pointer;
+}
+
+.search-options {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.column {
+  flex: 1;
+  padding: 1rem;
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin: 0 0.5rem;
+}
+
+.auth-buttons {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
+.auth-buttons a {
+  margin-left: 1rem;
+  color: white;
+  text-decoration: none;
+}
+
+.indicator-bar {
+  background-color: #e0e0e0;
+  padding: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pages-section {
+  margin-top: 1rem;
+}
+
+.pages-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.page-item {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 0.5rem;
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--text-color);
+
+
+.search-results {
+  margin: 20px;
+}
+
+.search-results h2 {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.search-results ul {
+  list-style: none;
+  padding: 0;
+}
+
+.search-results li {
+  margin-bottom: 15px;
+}
+
+.search-results a {
+  color: blue;
+  text-decoration: none;
+}
+}
+.Optional_CSS_for_styling 
+    .search-container {
+      display: flex;
+      align-items: center;
+    }
+    .search-bar {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      width: 200px;
+    }
+    .search-button {
+      padding: 10px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+<body>
+  <div id="drop-area">
+    <p>Drop files here to upload.</p>
+  </div>
+  <ul id="file-list"></ul>
+
+  <script src="script.js"></script>
+</body><body background-color: red; /> 
+    onst dropArea = document.getElementById('drop-area');
+const fileList = document.getElementById('file-list');
+
+dropArea.addEventListener('dragover', preventDefaults);
+dropArea.addEventListener('drop', handleDrop);
+
+function preventDefaults(e) {
+  e.preventDefault();
+}
+
+function handleDrop(e) {
+  const files = e.dataTransfer.files;
+  for (const file of files) {
+    const li = document.createElement('li');
+    li.textContent = file.name;
+    fileList.appendChild(li);
+  }
+}   }
+  </style>
+</head>
+<body>
+    <head>
+<div class="container">
+  <div class="logo">
+    <svg viewBox="0 0 100 100" width="60" height="60">
+      <circle cx="50" cy="50" r="45" fill="gold" />
+      <text x="50" y="65" font-size="40" text-anchor="middle" fill="white">MGS</text>
+    </svg>
+  </div><br><br><head><center>
+  <h1>Matt Grosso Site</h1><br><br>
+  <form id="login-form">
+    <label for="username">Username or Email</label>
+    <input type="text" id="username" name="username" ><br><br>
+    <label for="password">password</label> 
+    <input type="text" id="password" name="password" ><br><br>
+        <style>
+    /* Optional CSS for styling */
+    .login-button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }<br><br>
+</style>
+</head>
+ <br><br>
+      
+<body>   
+
+  <button type="button" class="login-button">Login/Sign-On</button>
+</body>
+</html>      
+      <br>
+      <a href="#" class=logon">Log On</a>-Logon-</a>   
+    <a href="#" class=signup">Sign Up</a>-Signup-</a></li>
+    </div></div></header>
+        <div> </svg> <center><img src="https://www.facebook.com/photo.php?fbid=2378805812467031&set=pb.100010129065459.-2207520000&type=3  " alt="a picture of me">  </a></div></head></center>
+<nav><br><br>
+  <div class="container">
+        
+      <button class="collapsible">Tools</button> 
+      <input type="range" min="0" max="100" value="50" id="slider"> 
+      .slider {
+  width: 300px;
+  height: 10px;
+  background-color: #ccc;
+  border-radius: 5px;
+}
+
+.slider-thumb {
+  width: 20px;
+  height: 20px;
+  background-color: #333;
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+}   
+      <div class="content tools-section">
+      <a href="#" class="tool-item">Website</a>
+      <a href="#" class="tool-item">Sound</a>
+      <a href="#" class="tool-item">Pictures</a>
+      <a href="#" class="tool-item">Post</a>
+      <a href="#" class="tool-item">Users</a>
+      <a href="#" class="tool-item">Parents</a>
+      <a href="#" class="tool-item">Kids</a>
+      <a href="#" class="tool-item">Single</a>
+      <a href="#" class="tool-item">Writers Corner</a>
+      <a href="#" class="tool-item">Marketplace</a>
+      <a href="#" class="tool-item">Video</a>
+      <a href="#" class="tool-item">Trends</a>
+      <a href="#" class="tool-item">Discover</a>
+      <a href="#" class="tool-item">Content</a>
+      <a href="#" class="tool-item">Media</a>
+      <a href="#" class="tool-item">Messenger</a>
+    </div>
+  </div>
+</nav>
+<body>
+  <div class="search-container">   
+
+    <input type="text" class="search-bar" placeholder="Search...">
+    <button type="button" class="search-button">Search</button>   
+
+  </div>
+<div>
+    .search-bar 
+    // JavaScript to handle the search functionality (optional)
+    const searchBar = document.querySelector('.search-bar');
+    const searchButton = document.querySelector('.search-button');
+
+    searchButton.addEventListener('click',   
+ () => {
+      const   
+ searchTerm = searchBar.value;
+      // Replace 'https://your-search-engine.com/search' with your actual search engine URL
+      window.location.href = `https://your-search-engine.com/search?q=${searchTerm}`;
+<center>  });
+<div class="search-results">
+  <h2>Search Results</h2>
+  <ul>
+    <li>
+      <h3><a href="https://example.com">Title of Search Result 1</a></h3>
+      <p>Description of the search result.</p>
+    <li>
+      <h3><a href="https://another-example.com">Title of Search Result 2</a></h3>
+      <p>Description of the search result.</p>
+    </li></center>
+  </ul>
+</div>
+</style>
+</head>
+<body>
+<header> 
+<div>
+      </svg> <a img src="https://www.facebook.com/photo.php?fbid=2378805812467031&set=pb.100010129065459.-2207520000&type=3  " alt="a picture of me">  </a>
+  </div>
+    <div></div>
+    <div></div>         
+  <div class="search-options">
+    <a href="#">All</a>
+    <a href="#">Images</a>
+    <a href="#">Video</a>
+    <a href="#">Audio</a>
+    <a href="#">Shopping</a>
+    <a href="#">AI</a>
+  </div>
+ /div> 
+  <div class="indicator-bar">
+    <span id="current-date-time"></span>
+    <span>Users Online: 1,234</span>
+    <span>New Posts: 56</span>
+  </div>
+  
+  <div style="display: flex; margin-top: 2rem;">
+    <div class="column">
+      <h2>AI Assistant</h2>
+      <div id="ai-chat">
+        <div id="chat-messages"></div>
+        <input type="text" id="user-input" placeholder="Ask AI...">
+        <button onclick="sendMessage()">Send</button>
+      </div>
+      <h3>Communication</h3>
+      <button onclick="startVoiceChat()">Start Voice Chat</button>
+      <button onclick="startPhoneCall()">Start Phone Call</button>
+      <button onclick="startVideoCall()">Start Video Call</button>
+    </div>
+    
+    <div class="column" style="flex: 2;">
+      <h2>Dashboard</h2>
+      <div id="user-profile">
+        <img src="https://via.placeholder.com/100" alt="User profile picture" style="border-radius: 50%;">
+        <h3>Welcome, User!</h3>
+        <p>Edit your bio here...</p>
+      </div>
+      <div id="personal-dashboard">
+        <h3>Quick Stats</h3>
+        <p>Website Visits: 1,567</p>
+        <p>New Messages: 3</p>
+        <p>Tasks Due: 2</p>
+      </div>
+      
+  <h3>Notes</h3>
+  <textarea rows="4" cols="50" placeholder="Write your notes here..."></textarea>
+  <button>Save Notes</button>
+</div>    </div>
+    
+    <div class="column">
+      <h2>Communication</h2>
+      <div id="walkie-talkie">
+        <h3>Walkie Talkie</h3>
+        <button onclick="toggleWalkieTalkie()">Toggle Walkie Talkie</button>
+      </div>
+      <div id="rooms">
+        <h3>Rooms</h3>
+        <ul>
+          <li>General Chat</li>
+          <li>Tech Talk</li>
+          <li>Creative Corner</li>
+        </ul>
+      </div>
+      <div id="channels">
+        <h3>Channels</h3>
+        <ul>
+          <li>Announcements</li>
+          <li>Questions & Answers</li>
+          <li>Random</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+  <div class="pages-section">
+    <h2>Pages</h2>
+    <div class="pages-container">
+      <a href="#" class="page-item">All</a>
+      <a href="#" class="page-item">Images</a>
+      <a href="#" class="page-item">Photos</a>
+      <a href="#" class="page-item">Videos</a>
+      <a href="#" class="page-item">Audio</a>
+      <a href="#" class="page-item">Shopping</a>
+      <a href="#" class="page-item">AI</a>
+      <a href="#" class="page-item">Website Stats</a>
+      <a href="#" class="page-item">Users</a>
+      <a href="#" class="page-item">Family</a>
+      <a href="#" class="page-item">Friends</a>
+      <a href="#" class="page-item">Worker</a>
+      <a href="#" class="page-item">Groups</a>
+      <a href="#" class="page-item">Messages</a>
+      <a href="#" class="page-item">Visits</a>
+      <a href="#" class="page-item">Profiles</a>
+    </div>
+  </div>
+</main>
+    </header></body>
+    <head>
+
+<script>
+function updateDateTime() {
+  const now = new Date();
+  document.getElementById('current-date-time').textContent = now.toLocaleString();
+}
+
+setInterval(updateDateTime, 1000);
+
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+}
+
+function sendMessage() {
+  var userInput = document.getElementById("user-input").value;
+  var chatMessages = document.getElementById("chat-messages");
+  chatMessages.innerHTML += "<p><strong>You:</strong> " + userInput + "</p>";
+  // Here you would typically send the message to a backend AI service
+  // and display the response. For now, we'll just echo the user's message.
+  chatMessages.innerHTML += "<p><strong>AI:</strong> You said: " + userInput + "</p>";
+  document.getElementById("user-input").value = "";
+}
+
+function startVoiceChat() {
+  alert("Starting voice chat...");
+  // Implement voice chat functionality
+}
+
+function startPhoneCall() {
+  alert("Starting phone call...");
+  // Implement phone call functionality
+}
+
+function startVideoCall() {
+  alert("Starting video call...");
+  // Implement video call functionality
+}
+
+function toggleWalkieTalkie() {
+  alert("Toggling Walkie Talkie...");
+  // Implement walkie talkie functionality
+}
+
+// Request permissions
+navigator.mediaDevices.getUserMedia({ audio: true, video: true })
+  .then(function(stream) {
+    console.log('Got permissions for audio and video');
+  })
+  .catch(function(err) {
+    console.log('Error getting permissions: ' + err);
+  });
+<html><head><base href="video-walkie-talkie/">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Video Walkie-Talkie</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+  }
+  .container {
+    text-align: center;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  #localVideo, #remoteVideo {
+    width: 320px;
+    height: 240px;
+    background-color: #333;
+    margin: 10px 0;
+  }
+  .controls {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+  button:hover {
+    background-color: #45a049;
+  }
+  button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+  .muted {
+    background-color: #f44336;
+  }
+  .muted:hover {
+    background-color: #d32f2f;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Video Walkie-Talkie</h1>
+  <video id="localVideo" autoplay muted></video>
+  <video id="remoteVideo" autoplay></video>
+  <div class="controls">
+    <button id="startButton">Start</button>
+    <button id="muteAudioButton">Mute Audio</button>
+    <button id="muteVideoButton">Mute Video</button>
+    <button id="recordButton">Start Recording</button>
+  </div>
+</div>
+
+<script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+<script>
+let localStream;
+let peerConnection;
+let mediaRecorder;
+let recordedChunks = [];
+
+const localVideo = document.getElementById('localVideo');
+const remoteVideo = document.getElementById('remoteVideo');
+const startButton = document.getElementById('startButton');
+const muteAudioButton = document.getElementById('muteAudioButton');
+const muteVideoButton = document.getElementById('muteVideoButton');
+const recordButton = document.getElementById('recordButton');
+
+startButton.addEventListener('click', startCall);
+muteAudioButton.addEventListener('click', toggleAudio);
+muteVideoButton.addEventListener('click', toggleVideo);
+recordButton.addEventListener('click', toggleRecording);
+
+async function startCall() {
+  try {
+    localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+    localVideo.srcObject = localStream;
+    startButton.disabled = true;
+    setupPeerConnection();
+  } catch (error) {
+    console.error('Error accessing media devices:', error);
+  }
+}
+
+function setupPeerConnection() {
+  peerConnection = new RTCPeerConnection();
+
+  localStream.getTracks().forEach(track => {
+    peerConnection.addTrack(track, localStream);
+  });
+
+  peerConnection.ontrack = event => {
+    remoteVideo.srcObject = event.streams[0];
+  };
+
+  peerConnection.onicecandidate = event => {
+    if (event.candidate) {
+      // In a real application, you would send this candidate to the other peer
+      console.log('New ICE candidate:', event.candidate);
+    }
+  };
+
+  createAndSendOffer();
+}
+
+async function createAndSendOffer() {
+  try {
+    const offer = await peerConnection.createOffer();
+    await peerConnection.setLocalDescription(offer);
+    // In a real application, you would send this offer to the other peer
+    console.log('Offer created:', offer);
+    // Simulating answer from the other peer
+    setTimeout(simulateAnswer, 1000);
+  } catch (error) {
+    console.error('Error creating offer:', error);
+  }
+}
+
+async function simulateAnswer() {
+  try {
+    const answer = await peerConnection.createAnswer();
+    await peerConnection.setRemoteDescription(answer);
+    console.log('Answer simulated:', answer);
+  } catch (error) {
+    console.error('Error simulating answer:', error);
+  }
+}
+
+function toggleAudio() {
+  const audioTrack = localStream.getAudioTracks()[0];
+  audioTrack.enabled = !audioTrack.enabled;
+  muteAudioButton.textContent = audioTrack.enabled ? 'Mute Audio' : 'Unmute Audio';
+  muteAudioButton.classList.toggle('muted');
+}
+
+function toggleVideo() {
+  const videoTrack = localStream.getVideoTracks()[0];
+  videoTrack.enabled = !videoTrack.enabled;
+  muteVideoButton.textContent = videoTrack.enabled ? 'Mute Video' : 'Unmute Video';
+  muteVideoButton.classList.toggle('muted');
+}
+
+function toggleRecording() {
+  if (mediaRecorder && mediaRecorder.state === 'recording') {
+    mediaRecorder.stop();
+    recordButton.textContent = 'Start Recording';
+    recordButton.classList.remove('muted');
+  } else {
+    startRecording();
+    recordButton.textContent = 'Stop Recording';
+    recordButton.classList.add('muted');
+  }
+}
+
+function startRecording() {
+  recordedChunks = [];
+  const stream = localVideo.srcObject;
+  mediaRecorder = new MediaRecorder(stream);
+
+  mediaRecorder.ondataavailable = (event) => {
+    if (event.data.size > 0) {
+      recordedChunks.push(event.data);
+    }
+  };
+
+  mediaRecorder.onstop = () => {
+    const blob = new Blob(recordedChunks, { type: 'video/webm' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.style.display = 'none';
+    a.href = url;
+    a.download = 'walkie-talkie-recording.webm';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => {
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    }, 100);
+  };
+
+  mediaRecorder.start();
+}<div>
+<html><head><base href="video-walkie-talkie/">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Video Walkie-Talkie</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+  }
+  .container {
+    text-align: center;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  #localVideo, #remoteVideo {
+    width: 320px;
+    height: 240px;
+    background-color: #333;
+    margin: 10px 0;
+  }
+  .controls {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+  button:hover {
+    background-color: #45a049;
+  }
+  button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+  .muted {
+    background-color: #f44336;
+  }
+  .muted:hover {
+    background-color: #d32f2f;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Video Walkie-Talkie</h1>
+  <video id="localVideo" autoplay muted></video>
+  <video id="remoteVideo" autoplay></video>
+  <div class="controls">
+    <button id="startButton">Start</button>
+    <button id="muteAudioButton">Mute Audio</button>
+    <button id="muteVideoButton">Mute Video</button>
+    <button id="recordButton">Start Recording</button>
+  </div>
+</div>
+
+<script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+<script>
+let localStream;
+let peerConnection;
+let mediaRecorder;
+let recordedChunks = [];
+
+const localVideo = document.getElementById('localVideo');
+const remoteVideo = document.getElementById('remoteVideo');
+const startButton = document.getElementById('startButton');
+const muteAudioButton = document.getElementById('muteAudioButton');
+const muteVideoButton = document.getElementById('muteVideoButton');
+const recordButton = document.getElementById('recordButton');
+
+startButton.addEventListener('click', startCall);
+muteAudioButton.addEventListener('click', toggleAudio);
+muteVideoButton.addEventListener('click', toggleVideo);
+recordButton.addEventListener('click', toggleRecording);
+
+async function startCall() {
+  try {
+    localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+    localVideo.srcObject = localStream;
+    startButton.disabled = true;
+    setupPeerConnection();
+  } catch (error) {
+    console.error('Error accessing media devices:', error);
+  }
+}
+
+function setupPeerConnection() {
+  peerConnection = new RTCPeerConnection();
+
+  localStream.getTracks().forEach(track => {
+    peerConnection.addTrack(track, localStream);
+  });
+
+  peerConnection.ontrack = event => {
+    remoteVideo.srcObject = event.streams[0];
+  };
+
+  peerConnection.onicecandidate = event => {
+    if (event.candidate) {
+      // In a real application, you would send this candidate to the other peer
+      console.log('New ICE candidate:', event.candidate);
+    }
+  };
+
+  createAndSendOffer();
+}
+
+async function createAndSendOffer() {
+  try {
+    const offer = await peerConnection.createOffer();
+    await peerConnection.setLocalDescription(offer);
+    // In a real application, you would send this offer to the other peer
+    console.log('Offer created:', offer);
+    // Simulating answer from the other peer
+    setTimeout(simulateAnswer, 1000);
+  } catch (error) {
+    console.error('Error creating offer:', error);
+  }
+}
+
+async function simulateAnswer() {
+  try {
+    const answer = await peerConnection.createAnswer();
+    await peerConnection.setRemoteDescription(answer);
+    console.log('Answer simulated:', answer);
+  } catch (error) {
+    console.error('Error simulating answer:', error);
+  }
+}
+
+function toggleAudio() {
+  const audioTrack = localStream.getAudioTracks()[0];
+  audioTrack.enabled = !audioTrack.enabled;
+  muteAudioButton.textContent = audioTrack.enabled ? 'Mute Audio' : 'Unmute Audio';
+  muteAudioButton.classList.toggle('muted');
+}
+
+function toggleVideo() {
+  const videoTrack = localStream.getVideoTracks()[0];
+  videoTrack.enabled = !videoTrack.enabled;
+  muteVideoButton.textContent = videoTrack.enabled ? 'Mute Video' : 'Unmute Video';
+  muteVideoButton.classList.toggle('muted');
+}
+
+function toggleRecording() {
+  if (mediaRecorder && mediaRecorder.state === 'recording') {
+    mediaRecorder.stop();
+    recordButton.textContent = 'Start Recording';
+    recordButton.classList.remove('muted');
+  } else {
+    startRecording();
+    recordButton.textContent = 'Stop Recording';
+    recordButton.classList.add('muted');
+  }
+}
+
+function startRecording() {
+  recordedChunks = [];
+  const stream = localVideo.srcObject;
+  mediaRecorder = new MediaRecorder(stream);
+
+  mediaRecorder.ondataavailable = (event) => {
+    if (event.data.size > 0) {
+      recordedChunks.push(event.data);
+    }
+  };
+
+  mediaRecorder.onstop = () => {
+    const blob = new Blob(recordedChunks, { type: 'video/webm' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.style.display = 'none';
+    a.href = url;
+    a.download = 'walkie-talkie-recording.webm';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => {
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    }, 100);
+  };
+
+  mediaRecorder.start();
+}<html><head><base href="video-walkie-talkie/">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Video Walkie-Talkie</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+  }
+  .container {
+    text-align: center;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  #localVideo, #remoteVideo {
+    width: 320px;
+    height: 240px;
+    background-color: #333;
+    margin: 10px 0;
+  }
+  .controls {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+  button:hover {
+    background-color: #45a049;
+  }
+  button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+  .muted {
+    background-color: #f44336;
+  }
+  .muted:hover {
+    background-color: #d32f2f;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Video Walkie-Talkie</h1>
+  <video id="localVideo" autoplay muted></video>
+  <video id="remoteVideo" autoplay></video>
+  <div class="controls">
+    <button id="startButton">Start</button>
+    <button id="muteAudioButton">Mute Audio</button>
+    <button id="muteVideoButton">Mute Video</button>
+    <button id="recordButton">Start Recording</button>
+  </div>
+</div>
+
+<script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+<script>
+let localStream;
+let peerConnection;
+let mediaRecorder;
+let recordedChunks = [];
+
+const localVideo = document.getElementById('localVideo');
+const remoteVideo = document.getElementById('remoteVideo');
+const startButton = document.getElementById('startButton');
+const muteAudioButton = document.getElementById('muteAudioButton');
+const muteVideoButton = document.getElementById('muteVideoButton');
+const recordButton = document.getElementById('recordButton');
+
+startButton.addEventListener('click', startCall);
+muteAudioButton.addEventListener('click', toggleAudio);
+muteVideoButton.addEventListener('click', toggleVideo);
+recordButton.addEventListener('click', toggleRecording);
+
+async function startCall() {
+  try {
+    localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+    localVideo.srcObject = localStream;
+    startButton.disabled = true;
+    setupPeerConnection();
+  } catch (error) {
+    console.error('Error accessing media devices:', error);
+  }
+}
+
+function setupPeerConnection() {
+  peerConnection = new RTCPeerConnection();
+
+  localStream.getTracks().forEach(track => {
+    peerConnection.addTrack(track, localStream);
+  });
+
+  peerConnection.ontrack = event => {
+    remoteVideo.srcObject = event.streams[0];
+  };
+
+  peerConnection.onicecandidate = event => {
+    if (event.candidate) {
+      // In a real application, you would send this candidate to the other peer
+      console.log('New ICE candidate:', event.candidate);
+    }
+  };
+
+  createAndSendOffer();
+}
+
+async function createAndSendOffer() {
+  try {
+    const offer = await peerConnection.createOffer();
+    await peerConnection.setLocalDescription(offer);
+    // In a real application, you would send this offer to the other peer
+    console.log('Offer created:', offer);
+    // Simulating answer from the other peer
+    setTimeout(simulateAnswer, 1000);
+  } catch (error) {
+    console.error('Error creating offer:', error);
+  }
+}
+
+async function simulateAnswer() {
+  try {
+    const answer = await peerConnection.createAnswer();
+    await peerConnection.setRemoteDescription(answer);
+    console.log('Answer simulated:', answer);
+  } catch (error) {
+    console.error('Error simulating answer:', error);
+  }
+}
+
+function toggleAudio() {
+  const audioTrack = localStream.getAudioTracks()[0];
+  audioTrack.enabled = !audioTrack.enabled;
+  muteAudioButton.textContent = audioTrack.enabled ? 'Mute Audio' : 'Unmute Audio';
+  muteAudioButton.classList.toggle('muted');
+}
+
+function toggleVideo() {
+  const videoTrack = localStream.getVideoTracks()[0];
+  videoTrack.enabled = !videoTrack.enabled;
+  muteVideoButton.textContent = videoTrack.enabled ? 'Mute Video' : 'Unmute Video';
+  muteVideoButton.classList.toggle('muted');
+}
+
+function toggleRecording() {
+  if (mediaRecorder && mediaRecorder.state === 'recording') {
+    mediaRecorder.stop();
+    recordButton.textContent = 'Start Recording';
+    recordButton.classList.remove('muted');
+  } else {
+    startRecording();
+    recordButton.textContent = 'Stop Recording';
+    recordButton.classList.add('muted');
+  }
+}
+
+function startRecording() {
+  recordedChunks = [];
+  const stream = localVideo.srcObject;
+  mediaRecorder = new MediaRecorder(stream);
+
+  mediaRecorder.ondataavailable = (event) => {
+    if (event.data.size > 0) {
+      recordedChunks.push(event.data);
+    }
+  };
+
+  mediaRecorder.onstop = () => {
+    const blob = new Blob(recordedChunks, { type: 'video/webm' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.style.display = 'none';
+    a.href = url;
+    a.download = 'walkie-talkie-recording.webm';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => {
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    }, 100);
+  };
+
+  mediaRecorder.start();
+}<html><head><base href="https://websim.io/screen-share-app/">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ScreenCast - Share Your Screen or Cast to a Website</title>
+<style>
+  .body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f0f0f0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .container {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    max-width: 800px;
+    width: 100%;
+  }
+  h1 {
+    color: #333;
+    text-align: center;
+  }
+  .video-container {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background-color: #000;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  #sharedScreen {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  .controls {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+  }
+  .btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+  .btn:hover {
+    background-color: #45a049;
+  }
+  .btn:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+  #urlInput {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  #status {
+    text-align: center;
+    margin-top: 10px;
+    font-weight: bold;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1>ScreenCast</h1>
+    <div class="video-container">
+      <video id="sharedScreen" autoplay></video>
+    </div>
+    <div class="controls">
+      <button id="screenShareBtn" class="btn">Share Screen</button>
+      <button id="stopShareBtn" class="btn" disabled>Stop Sharing</button>
+    </div>
+    <input type="text" id="urlInput" placeholder="Enter website URL to cast (e.g., https://example.com)">
+    <button id="castBtn" class="btn">Cast Website</button>
+    <div id="status"></div>
+  </div>
+
+<script>
+const sharedScreen = document.getElementById('sharedScreen');
+const screenShareBtn = document.getElementById('screenShareBtn');
+const stopShareBtn = document.getElementById('stopShareBtn');
+const urlInput = document.getElementById('urlInput');
+const castBtn = document.getElementById('castBtn');
+const status = document.getElementById('status');
+
+let mediaStream = null;
+
+screenShareBtn.addEventListener('click', async () => {
+  try {
+    mediaStream = await navigator.mediaDevices.getDisplayMedia({
+      video: { cursor: "always" },
+      audio: true
+    });
+    sharedScreen.srcObject = mediaStream;
+    screenShareBtn.disabled = true;
+    stopShareBtn.disabled = false;
+    status.textContent = "Screen sharing active";
+
+    mediaStream.getVideoTracks()[0].onended = () => {
+      stopSharing();
+    };
+  } catch (err) {
+    console.error("Error sharing screen:", err);
+    status.textContent = "Error sharing screen: " + err.message;
+  }
+});
+
+stopShareBtn.addEventListener('click', stopSharing);
+
+function stopSharing() {
+  if (mediaStream) {
+    mediaStream.getTracks().forEach(track => track.stop());
+  }
+  sharedScreen.srcObject = null;
+  screenShareBtn.disabled = false;
+  stopShareBtn.disabled = true;
+  status.textContent = "Screen sharing stopped";
+}
+
+castBtn.addEventListener('click', () => {
+  const url = urlInput.value.trim();
+  if (url) {
+    if (url.startsWith('http://') || url.startsWith('https://')) {
+      castWebsite(url);
+    } else {
+      castWebsite('https://' + url);
+    }
+  } else {
+    status.textContent = "Please enter a valid URL";
+  }
+});
+
+function castWebsite(url) {
+  // In a real application, this would involve communicating with a casting device or service.
+  // For this simulation, we'll embed the website in an iframe within our video container.
+  sharedScreen.style.display = 'none';
+  const iframe = document.createElement('iframe');
+  iframe.src = url;
+  iframe.style.width = '100%';
+  iframe.style.height = '100%';
+  iframe.style.border = 'none';
+  document.querySelector('.video-container').appendChild(iframe);
+  status.textContent = `Casting ${url}`;
+
+  // Add a button to stop casting
+  const stopCastBtn = document.createElement('button');
+  stopCastBtn.textContent = 'Stop Casting';
+  stopCastBtn.className = 'btn';
+  stopCastBtn.style.marginTop = '10px';
+  stopCastBtn.onclick = () => {
+    iframe.remove();
+    sharedScreen.style.display = 'block';
+    stopCastBtn.remove();
+    status.textContent = 'Casting stopped';
+  };
+  document.querySelector('.controls').appendChild(stopCastBtn);
+}
+
+// Handle errors
+sharedScreen.addEventListener('error', (e) => {
+  console.error('Video error:', e);
+  status.textContent = "Error playing video: " + e.message;
+});
+</script>
+</body></html></script>
+</body></html></script>
+</body></html>
+</script>
+</body></html>
+</script>
+</body>
+</html>
