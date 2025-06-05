@@ -1,3 +1,11 @@
+echo "# doaashow" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/callmecoffee3/doaashow.git
+git push -u origin main
+
 # doaashow
 
 this is for entertainment pourposes 
