@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulated ChromeOS</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #333;
+            font-family: 'Roboto', 'Segoe UI', 'Arial', sans-serif;
+        }
+        canvas {
+            display: block;
+            cursor: default;
+        }
+        /* Hidden input for the terminal */
+        #hidden-input {
+            position: absolute;
+            left: -9999px;
+            top: -9999px;
+            opacity: 0;
+        }
+        /* Textarea for the Notes app */
+        .notes-textarea {
+            position: absolute;
+            border: none;
+            outline: none;
+            resize: none;
+            margin: 0;
+            padding: 10px;
+            box-sizing: border-box;
+            background-color: #ffffff;
+            color: #202124;
+            font-family: 'Roboto', sans-serif;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="screen"></canvas>
+<input type="text" id="hidden-input" autocomplete="off" />
+<!-- Textarea elements for Notes will be added here dynamically -->
+
+<script>
+// --- SETUP ---
+const canvas = document.getElementById('screen');
+const ctx = canvas.getContext('2d');
+const hiddenInput = document.getElementById('hidden-input');
+
+let W, H;
+function resizeCanvas() {
+    W = window.innerWidth;
+    H = window.innerHeight;
+    canvas.width = W;
+    canvas.height = H;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+// --- ASSETS & CONFIG ---
+const SHELF_HEIGHT = 50;
+const TOP_BAR_HEIGHT = 28; // NEW
+const COLORS = {
+    wallpaper: '#4a90e2',
+    topBar: 'rgba(0, 0, 0, 0.2)', // NEW
+    shelf: 'rgba(255, 255, 255, 0.2)',
+    windowHeader: '#f1f3f4',
+    windowBody: '#ffffff',
+    textDark: '#202124',
+    textLight: '#ffffff',
+    closeButton: '#ea4335',
+    closeButtonHover: '#c5221f',
+    iconHighlight: 'rgba(255, 255, 255, 0.2)', // NEW
+};
+
+// --- STATE MANAGEMENT ---
+let mouse = { x: 0, y: 0, down: false };
+let windows = [];
+let activeWindow = null;
+let draggingWindow = null;
+let dragOffset = { x: 0, y: 0 };
+let nextWindowId = 0;
+let zIndexCounter = 10;
+let lastClick = { target: null, time: 0 }; // NEW: For double-click detection
+let selectedIcon = null; // NEW: For desktop icon selection
+
+// --- MOCK FILE SYSTEM ---
+const fileSystem = {
+    '/': {
+        'home': {
+            'README.md': "Welcome to ChromeOS Terminal!\n\nType 'help' to see a list of commands.",
+            'projects': {'ai-sim.js': "// AI Simulation Project"},
+            'documents': {
+                'changelog.txt': `VERSION 1.2
+- ADDED: Top bar with system label.
+- ADDED: Desktop icons! Double-click to launch apps. Single-click to select.
+- ADDED: Attribution credit to the bottom bar, as requested.
+- UI: Desktop icons now represent the primary way to launch apps.
+
+VERSION 1.1
+- Added the Notes application to view and edit this changelog.
+- Implemented a more advanced windowing system that can overlay real HTML elements (like this textarea) on top of the canvas for rich interaction.
+- The state of this file is now persistent for the session.
+
+VERSION 1.0
+- Initial release of the simulated OS.
+- Features: Draggable windows, functional shelf, clock.
+- Apps: Terminal, Browser (placeholder), Files.
+`
+            }
+        }
+    }
+};
+let currentDir = fileSystem['/']['home'];
+let currentPath = '/home';
+
+// --- ICONS & APPS ---
+const shelfIcons = [
+    // Shelf icons can be a subset of main apps or different ones
+    { name: 'Browser', x: 10, y: H - SHELF_HEIGHT + 5, w: 40, h: 40, action: openBrowser },
+];
+
+const desktopIcons = [ // NEW
+    { name: 'Terminal', x: 30, y: TOP_BAR_HEIGHT + 30, w: 60, h: 70, action: openTerminal },
+    { name: 'Notes', x: 30, y: TOP_BAR_HEIGHT + 110, w: 60, h: 70, action: openNotes },
+    { name: 'Files', x: 30, y: TOP_BAR_HEIGHT + 190, w: 60, h: 70, action: openFiles },
+];
+
+function getIconPath(name) {
+    const paths = {
+        'Terminal': "M7 2h10v2h-10v-2zm-2 4v12h14v-12h-14zm12 10h-10v-8h10v8z M10 10l-2 2 2 2v-4z M14 10v4l2-2-2-2z",
+        'Browser': "M12 2c-5.52 0-10 4.48-10 10s4.48 10 10 10 10-4.48 10-10-4.48-10-10-10zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2v-6zm0 8h2v2h-2v-2z",
+        'Files': "M10 4h-6c-1.1 0-1.99.9-1.99 2l-.01 12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-10c0-1.1-.9-2-2-2h-8l-2-2z",
+        'Notes': "M14 2h-10c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-14l-4-4zm-2 14h-6v-2h6v2zm2-4h-8v-2h8v2zm-2-6h-2v4h2v-4z"
+    };
+    return new Path2D(paths[name]);
+}
+
+// --- APP LOGIC (Functions like createWindow, openTerminal, etc. are mostly unchanged) ---
+
+function createWindow(title, contentGenerator, props = {}) {
+    const newWindow = {
+        id: nextWindowId++,
+        x: props.x || Math.random() * (W - 400) + 100,
+        y: props.y || Math.random() * (H - 500) + 50,
+        w: props.w || 500, h: props.h || 300, title: title, zIndex: ++zIndexCounter,
+        content: contentGenerator, onClose: props.onClose, state: props.state || {},
+        closeButton: { x: 0, y: 0, w: 18, h: 18 }
+    };
+    windows.push(newWindow);
+    setActiveWindow(newWindow);
+    return newWindow;
+}
+
+function setActiveWindow(win) {
+    if (activeWindow && activeWindow.state.textareaElement) activeWindow.state.textareaElement.style.display = 'none';
+    activeWindow = win;
+    if (!win) { hiddenInput.blur(); return; }
+    win.zIndex = ++zIndexCounter;
+    if (win.title === 'Terminal') { hiddenInput.focus(); hiddenInput.value = win.state.currentLine; }
+    else { hiddenInput.blur(); }
+    if (win.state.textareaElement) {
+        win.state.textareaElement.style.display = 'block';
+        win.state.textareaElement.style.zIndex = win.zIndex;
+        win.state.textareaElement.focus();
+    }
+}
+
+// App opening functions
+function openTerminal() {
+    if (windows.some(w => w.title === 'Terminal')) return;
+    const initialState = { history: ["Welcome to the simulated terminal.", "Type 'help' for commands."], currentLine: "", commandHistory: [], historyIndex: -1, cursorBlink: true };
+    const terminalWindow = createWindow('Terminal', drawTerminalContent, { state: initialState, w: 600, h: 400 });
+    setInterval(() => { if (activeWindow === terminalWindow) terminalWindow.state.cursorBlink = !terminalWindow.state.cursorBlink; }, 500);
+}
+function openBrowser() { if (windows.some(w => w.title === 'Browser')) return; createWindow('Browser', drawBrowserContent, {w: 700, h: 500}); }
+function openFiles() { if (windows.some(w => w.title === 'Files')) return; createWindow('Files', drawFilesContent, {w: 400, h: 350}); }
+function openNotes() {
+    if (windows.some(w => w.title === 'Notes - changelog.txt')) return;
+    const textarea = document.createElement('textarea');
+    textarea.className = 'notes-textarea';
+    textarea.value = fileSystem['/'].home.documents['changelog.txt'];
+    document.body.appendChild(textarea);
+    const initialState = { textareaElement: textarea, saveButton: { x: 0, y: 0, w: 70, h: 25 }, statusMessage: '', statusTimeout: null };
+    const onClose = (win) => { document.body.removeChild(win.state.textareaElement); if (win.state.statusTimeout) clearTimeout(win.state.statusTimeout); };
+    createWindow('Notes - changelog.txt', drawNotesContent, { state: initialState, w: 550, h: 450, onClose });
+}
+
+// Terminal command processing (Unchanged)
+function processTerminalCommand(winState, command) { /* ... same as before ... */ winState.history.push(`> ${command}`); winState.commandHistory.unshift(command); winState.historyIndex = -1; const parts = command.trim().split(' '); const cmd = parts[0]; const arg = parts[1]; switch (cmd) { case 'help': winState.history.push("Commands: help, ls, cat [file], cd [dir], clear, echo [text]"); break; case 'ls': winState.history.push(Object.keys(currentDir).join('   ') || '(empty)'); break; case 'cat': if (arg && typeof currentDir[arg] === 'string') winState.history.push(...currentDir[arg].split('\n')); else if (arg && typeof currentDir[arg] === 'object') winState.history.push(`Error: '${arg}' is a directory.`); else winState.history.push(`Error: File not found '${arg}'`); break; case 'cd': if (!arg || arg === '.') break; if (arg === '..') { if (currentPath !== '/') { const pathParts = currentPath.split('/').filter(p => p); pathParts.pop(); currentPath = '/' + pathParts.join('/'); let newDir = fileSystem['/']; pathParts.forEach(p => newDir = newDir[p]); currentDir = newDir; } } else if (currentDir[arg] && typeof currentDir[arg] === 'object') { currentDir = currentDir[arg]; currentPath = (currentPath === '/' ? '' : currentPath) + '/' + arg; } else { winState.history.push(`Error: Directory not found '${arg}'`); } break; case 'clear': winState.history = []; break; case 'echo': winState.history.push(parts.slice(1).join(' ')); break; case '': break; default: winState.history.push(`Command not found: ${cmd}`); break; } if (winState.history.length > 100) winState.history.splice(0, winState.history.length - 100); }
+
+
+// --- DRAWING FUNCTIONS ---
+
+function draw() {
+    ctx.clearRect(0, 0, W, H);
+    // 1. Draw background
+    ctx.fillStyle = COLORS.wallpaper;
+    ctx.fillRect(0, 0, W, H);
+
+    // 2. Draw UI layers in order
+    drawTopBar();
+    drawDesktopIcons();
+    windows.sort((a, b) => a.zIndex - b.zIndex).forEach(drawWindow);
+    drawShelf();
+    
+    requestAnimationFrame(draw);
+}
+
+function drawTopBar() { // NEW
+    ctx.fillStyle = COLORS.topBar;
+    ctx.fillRect(0, 0, W, TOP_BAR_HEIGHT);
+
+    ctx.fillStyle = COLORS.textLight;
+    ctx.font = '14px Roboto, sans-serif';
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'middle';
+    ctx.fillText("Simulated OS v1.2", 10, TOP_BAR_HEIGHT / 2);
+}
+
+function drawDesktopIcons() { // NEW
+    desktopIcons.forEach(icon => {
+        // Draw selection highlight
+        if (selectedIcon === icon) {
+            ctx.fillStyle = COLORS.iconHighlight;
+            ctx.fillRect(icon.x, icon.y, icon.w, icon.h);
+        }
+
+        // Draw icon
+        ctx.fillStyle = 'white';
+        const path = getIconPath(icon.name);
+        ctx.save();
+        ctx.translate(icon.x + (icon.w - 40) / 2, icon.y + 5); // Center the 40x40 icon
+        ctx.fill(path);
+        ctx.restore();
+        
+        // Draw text label
+        ctx.fillStyle = COLORS.textLight;
+        ctx.font = '13px Roboto';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'top';
+        ctx.fillText(icon.name, icon.x + icon.w / 2, icon.y + 50);
+    });
+}
+
+// Unchanged drawing functions for windows and their content
+function drawWindow(win) { /* ... same as before ... */ const headerHeight = 30; ctx.shadowColor = 'rgba(0,0,0,0.4)'; ctx.shadowBlur = 15; ctx.shadowOffsetX = 0; ctx.shadowOffsetY = 5; ctx.fillStyle = COLORS.windowBody; ctx.fillRect(win.x, win.y, win.w, win.h); ctx.shadowColor = 'transparent'; ctx.fillStyle = (activeWindow === win) ? COLORS.windowHeader : '#e8eaed'; ctx.fillRect(win.x, win.y, win.w, headerHeight); ctx.fillStyle = COLORS.textDark; ctx.font = '14px Roboto, sans-serif'; ctx.textAlign = 'left'; ctx.textBaseline = 'middle'; ctx.fillText(win.title, win.x + 10, win.y + headerHeight / 2); win.closeButton.x = win.x + win.w - 24; win.closeButton.y = win.y + 6; const isHoveringClose = isPointInRect(mouse.x, mouse.y, win.closeButton); ctx.fillStyle = isHoveringClose ? COLORS.closeButtonHover : COLORS.closeButton; ctx.beginPath(); ctx.arc(win.closeButton.x + 9, win.closeButton.y + 9, 9, 0, 2 * Math.PI); ctx.fill(); ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(win.closeButton.x + 5, win.closeButton.y + 5); ctx.lineTo(win.closeButton.x + 13, win.closeButton.y + 13); ctx.moveTo(win.closeButton.x + 13, win.closeButton.y + 5); ctx.lineTo(win.closeButton.x + 5, win.closeButton.y + 13); ctx.stroke(); const contentBounds = { x: win.x, y: win.y + headerHeight, w: win.w, h: win.h - headerHeight }; ctx.save(); ctx.beginPath(); ctx.rect(contentBounds.x, contentBounds.y, contentBounds.w, contentBounds.h); ctx.clip(); win.content(win, contentBounds); ctx.restore(); }
+function drawTerminalContent(win, bounds) { /* ... same as before ... */ const { history, currentLine, cursorBlink } = win.state; const lineHeight = 20; const padding = 10; ctx.fillStyle = '#1e1e1e'; ctx.fillRect(bounds.x, bounds.y, bounds.w, bounds.h); ctx.fillStyle = '#dcdcdc'; ctx.font = '16px "Fira Code", "Courier New", monospace'; ctx.textAlign = 'left'; ctx.textBaseline = 'top'; const startY = bounds.y + bounds.h - padding - lineHeight * 2; for (let i = history.length - 1; i >= 0 && (startY - (history.length - 1 - i) * lineHeight > bounds.y); i--) { ctx.fillText(history[i], bounds.x + padding, startY - (history.length - 1 - i) * lineHeight); } const fullLine = `> ${currentLine}`; ctx.fillStyle = '#a2d2ff'; ctx.fillText(fullLine, bounds.x + padding, startY + lineHeight); if (cursorBlink && activeWindow === win) { const cursorX = bounds.x + padding + ctx.measureText(fullLine).width; ctx.fillStyle = '#ffffff'; ctx.fillRect(cursorX, startY + lineHeight + 2, 2, lineHeight - 4); } }
+function drawBrowserContent(win, bounds) { /* ... same as before ... */ ctx.fillStyle = COLORS.textDark; ctx.font = 'bold 24px sans-serif'; ctx.textAlign = 'center'; ctx.fillText("Simulated Browser", bounds.x + bounds.w / 2, bounds.y + 50); ctx.font = '16px sans-serif'; ctx.fillText("This is a placeholder application.", bounds.x + bounds.w / 2, bounds.y + 100); }
+function drawFilesContent(win, bounds) { /* ... same as before ... */ const padding = 15; const lineHeight = 25; ctx.fillStyle = COLORS.textDark; ctx.font = '14px sans-serif'; ctx.textAlign = 'left'; ctx.textBaseline = 'top'; ctx.fillText(`Current Path: ${currentPath}`, bounds.x + padding, bounds.y + padding); ctx.strokeStyle = '#e0e0e0'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(bounds.x, bounds.y + 45); ctx.lineTo(bounds.x + bounds.w, bounds.y + 45); ctx.stroke(); let currentY = bounds.y + 60; for (const [name, content] of Object.entries(currentDir)) { ctx.fillText(`${typeof content === 'object' ? "📁" : "📄"} ${name}`, bounds.x + padding, currentY); currentY += lineHeight; } }
+function drawNotesContent(win, bounds) { /* ... same as before ... */ const { textareaElement, saveButton, statusMessage } = win.state; const padding = 10; textareaElement.style.left = `${bounds.x}px`; textareaElement.style.top = `${bounds.y}px`; textareaElement.style.width = `${bounds.w}px`; textareaElement.style.height = `${bounds.h - 45}px`; textareaElement.style.zIndex = win.zIndex; textareaElement.style.display = (activeWindow === win) ? 'block' : 'none'; const buttonAreaY = bounds.y + bounds.h - 45; ctx.fillStyle = '#f1f3f4'; ctx.fillRect(bounds.x, buttonAreaY, bounds.w, 45); saveButton.x = bounds.x + bounds.w - saveButton.w - padding; saveButton.y = buttonAreaY + padding; const isHoveringSave = isPointInRect(mouse.x, mouse.y, saveButton); ctx.fillStyle = isHoveringSave ? '#d0d0d0' : '#e0e0e0'; ctx.fillRect(saveButton.x, saveButton.y, saveButton.w, saveButton.h); ctx.fillStyle = COLORS.textDark; ctx.font = '14px Roboto'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText('Save', saveButton.x + saveButton.w / 2, saveButton.y + saveButton.h / 2); if (statusMessage) { ctx.fillStyle = '#34a853'; ctx.textAlign = 'left'; ctx.fillText(statusMessage, bounds.x + padding, saveButton.y + saveButton.h / 2); } }
+
+
+function drawShelf() { // UPDATED
+    const y = H - SHELF_HEIGHT;
+    ctx.fillStyle = COLORS.shelf; ctx.fillRect(0, y, W, SHELF_HEIGHT);
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.3)'; ctx.fillRect(0, y, W, 1);
+    
+    // Left-side shelf icons
+    shelfIcons.forEach(icon => {
+        ctx.fillStyle = 'white'; const path = getIconPath(icon.name);
+        ctx.save(); ctx.translate(icon.x, icon.y); ctx.fill(path); ctx.restore();
+    });
+
+    // Center attribution text
+    ctx.fillStyle = COLORS.textLight;
+    ctx.font = '12px Roboto';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText("Made by Your AI Assistant | Inspired by Matt Grosso", W / 2, H - SHELF_HEIGHT / 2);
+
+    // Right-side clock
+    const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    ctx.font = '14px Roboto';
+    ctx.textAlign = 'right';
+    ctx.fillText(time, W - 15, H - SHELF_HEIGHT / 2);
+}
+
+// --- EVENT HANDLERS ---
+function isPointInRect(px, py, rect) { return px > rect.x && px < rect.x + rect.w && py > rect.y && py < rect.y + rect.h; }
+
+canvas.addEventListener('mousedown', e => { // UPDATED Mousedown logic
+    mouse.down = true;
+    let handled = false;
+    const reversedWindows = [...windows].sort((a, b) => b.zIndex - a.zIndex);
+
+    // 1. Check for window interaction (top-most first)
+    for (const win of reversedWindows) {
+        if (isPointInRect(mouse.x, mouse.y, win)) {
+            setActiveWindow(win);
+            if (isPointInRect(mouse.x, mouse.y, win.closeButton)) {
+                if (win.onClose) win.onClose(win);
+                windows = windows.filter(w => w.id !== win.id);
+                if (activeWindow === win) setActiveWindow(null);
+                handled = true; break;
+            }
+            if (win.title.startsWith('Notes') && isPointInRect(mouse.x, mouse.y, win.state.saveButton)) {
+                fileSystem['/'].home.documents['changelog.txt'] = win.state.textareaElement.value;
+                win.state.statusMessage = 'Saved!';
+                if (win.state.statusTimeout) clearTimeout(win.state.statusTimeout);
+                win.state.statusTimeout = setTimeout(() => { win.state.statusMessage = ''; }, 2000);
+                handled = true; break;
+            }
+            if (mouse.y < win.y + 30) {
+                draggingWindow = win;
+                dragOffset.x = mouse.x - win.x; dragOffset.y = mouse.y - win.y;
+                handled = true; break;
+            }
+            handled = true; break;
+        }
+    }
+
+    // 2. If no window was clicked, check for desktop icons
+    if (!handled) {
+        for (const icon of desktopIcons) {
+            if (isPointInRect(mouse.x, mouse.y, icon)) {
+                const now = Date.now();
+                // Double-click detection
+                if (lastClick.target === icon && now - lastClick.time < 400) {
+                    icon.action();
+                    lastClick = { target: null, time: 0 }; // Reset
+                    selectedIcon = null;
+                } else { // Single-click
+                    selectedIcon = icon;
+                    lastClick = { target: icon, time: now };
+                }
+                handled = true;
+                break;
+            }
+        }
+    }
+    
+    // 3. If nothing else, check shelf icons
+    if (!handled) {
+        shelfIcons.forEach(icon => {
+            if (isPointInRect(mouse.x, mouse.y, icon)) {
+                icon.action();
+                handled = true;
+            }
+        });
+    }
+
+    // 4. If click was on the wallpaper, clear selections
+    if (!handled) {
+        setActiveWindow(null);
+        selectedIcon = null;
+        lastClick = { target: null, time: 0 };
+    }
+});
+
+// Unchanged event handlers
+canvas.addEventListener('mouseup', () => { mouse.down = false; draggingWindow = null; });
+canvas.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; if (draggingWindow && mouse.down) { draggingWindow.x = mouse.x - dragOffset.x; draggingWindow.y = mouse.y - dragOffset.y; }});
+hiddenInput.addEventListener('input', () => { if (activeWindow && activeWindow.title === 'Terminal') activeWindow.state.currentLine = hiddenInput.value; });
+window.addEventListener('keydown', e => { if (activeWindow && activeWindow.title === 'Terminal') { const state = activeWindow.state; if (e.key === 'Enter') { e.preventDefault(); processTerminalCommand(state, state.currentLine); state.currentLine = ""; hiddenInput.value = ""; } else if (e.key === 'ArrowUp') { e.preventDefault(); if (state.historyIndex < state.commandHistory.length - 1) { state.historyIndex++; state.currentLine = state.commandHistory[state.historyIndex]; hiddenInput.value = state.currentLine; } } else if (e.key === 'ArrowDown') { e.preventDefault(); if (state.historyIndex > 0) { state.historyIndex--; state.currentLine = state.commandHistory[state.historyIndex]; hiddenInput.value = state.currentLine; } else { state.historyIndex = -1; state.currentLine = ""; hiddenInput.value = ""; } } }});
+
+// --- INITIALIZATION ---
+draw();
+console.log("Simulated ChromeOS v1.2 initialized. Welcome!");
+</script>
+
+</body>
+</html>
