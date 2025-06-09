@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>the fam terminal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles to enhance the terminal look and feel */
+        body {
+            font-family: 'Inter', sans-serif; /* Using Inter font as per instructions */
+            background-color: #1a202c; /* Dark background for terminal feel */
+            color: #e2e8f0; /* Light text color */
+        }
+        .terminal-container {
+            max-width: 90vw; /* Fluid width */
+            width: 900px; /* Max width for larger screens */
+            min-height: 600px; /* Minimum height to accommodate batch file input */
+            background-color: #2d3748; /* Slightly lighter dark background for terminal */
+            border-radius: 0.75rem; /* Rounded corners */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08); /* Subtle shadow */
+            display: flex;
+            flex-direction: column;
+            overflow: hidden; /* Hide scrollbars if content overflows initially */
+        }
+        .terminal-output {
+            flex-grow: 1; /* Allows output area to take available space */
+            overflow-y: auto; /* Scroll for overflow */
+            word-wrap: break-word; /* Ensure long lines break */
+            white-space: pre-wrap; /* Preserve whitespace and wrap text */
+            font-family: 'Courier New', monospace; /* Monospaced font for output */
+            line-height: 1.5;
+            padding: 1rem;
+            color: #a0aec0; /* Lighter grey for output text */
+            border-bottom: 1px solid #4a5568; /* Separator line */
+        }
+        .terminal-input-area {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background-color: #232a36; /* Darker background for input area */
+            border-bottom-left-radius: 0.75rem;
+            border-bottom-right-radius: 0.75rem;
+        }
+        .terminal-prompt {
+            color: #68d391; /* Green color for prompt */
+            font-weight: bold;
+            margin-right: 0.5rem;
+            font-family: 'Courier New', monospace;
+        }
+        .terminal-input {
+            flex-grow: 1; /* Input field takes most space */
+            background-color: transparent; /* Transparent background */
+            border: none; /* No border */
+            outline: none; /* No outline on focus */
+            color: #edf2f7; /* White text for input */
+            font-family: 'Courier New', monospace;
+            padding: 0.5rem 0;
+        }
+        .terminal-input:focus {
+            box-shadow: none; /* No shadow on focus */
+        }
+        .execute-button {
+            background-color: #4299e1; /* Blue button */
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem; /* Slightly rounded button */
+            transition: background-color 0.2s ease-in-out;
+            margin-left: 1rem;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .execute-button:hover {
+            background-color: #3182ce; /* Darker blue on hover */
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+    <div class="terminal-container flex flex-col rounded-xl overflow-hidden shadow-lg">
+        <div class="terminal-output" id="terminal-output"></div>
+        <div class="terminal-input-area">
+            <span class="terminal-prompt">$</span>
+            <input type="text" id="command" class="terminal-input" placeholder="Enter command...">
+            <button id="run" class="execute-button">Run</button>
+        </div>
+    </div>
+
+    <script>
+        const terminalOutput = document.getElementById("terminal-output");
+        const commandInput = document.getElementById("command");
+        const runButton = document.getElementById("run");
+        const fileSystem = {};
+        let currentUser = null;
+        const users = {};
+        let families = {};
+
+        // ... (rest of the code remains the same)
+
+        function runCommand(command) {
+            const args = command.split(" ");
+            const cmd = args[0].toLowerCase();
+
+            switch (cmd) {
+                // ... (other commands)
+
+                case "read":
+                    if (args[1] === "message") {
+                        readMessage(args[2]);
+                    }
+                    break;
+
+                case "profile":
+                    if (args[1] === "view") {
+                        viewProfile(args[2]);
+                    } else if (args[1] === "edit") {
+                        editProfile();
+                    }
+                    break;
+
+                // ... (other commands)
+            }
+        }
+
+        function readMessage(messageId) {
+            if (currentUser) {
+                if (users[currentUser].messages) {
+                    const message = users[currentUser].messages.find(msg => msg.id === messageId);
+                    if (message) {
+                        appendOutput(`Message from ${message.sender}: ${message.text}`);
+                    } else {
+                        appendOutput("Message not found.");
+                    }
+                } else {
+                    appendOutput("You have no messages.");
+                }
+            } else {
+                appendOutput("You must be logged in to read messages.");
+            }
+        }
+
+        function viewProfile(username) {
+            if (users[username]) {
+                const user = users[username];
+                appendOutput(`Username: ${username}`);
+                appendOutput(`Bio: ${user.bio || "No bio available."}`);
+                appendOutput(`Following: ${user.following ? user.following.length : 0} users`);
+            } else {
+                appendOutput("User not found.");
+            }
+        }
+
+        function editProfile() {
+            if (currentUser) {
+                appendOutput("Enter your new bio:");
+                const bio = prompt();
+                users[currentUser].bio = bio;
+                appendOutput("Profile updated.");
+            } else {
+                appendOutput("You must be logged in to edit your profile.");
+            }
+        }
+
+        // ... (rest of the code remains the same)
+    </script>
+</body>
+</html>

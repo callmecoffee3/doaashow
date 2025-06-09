@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Batch File Terminal - TheFam</title>
+    <style>
+        body {
+            font-family: monospace;
+            background-color: #1a202c;
+            color: #e2e8f0;
+        }
+        .terminal {
+            width: 800px;
+            height: 600px;
+            padding: 10px;
+            border: 1px solid #4a5568;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="terminal" id="terminal"></div>
+    <input type="text" id="command" placeholder="Enter command" />
+    <button id="run">Run</button>
+
+    <script>
+        const terminal = document.getElementById("terminal");
+        const commandInput = document.getElementById("command");
+        const runButton = document.getElementById("run");
+        const fileSystem = {};
+        let currentUser = null;
+        const users = {};
+
+        function appendOutput(output) {
+            terminal.innerText += output + "\n";
+            terminal.scrollTop = terminal.scrollHeight;
+        }
+
+        function runCommand(command) {
+            const args = command.split(" ");
+            const cmd = args[0].toLowerCase();
+
+            switch (cmd) {
+                case "mkdir":
+                    mkdir(args[1]);
+                    break;
+                case "ls":
+                    ls();
+                    break;
+                case "run":
+                    runBatchFile(args[1]);
+                    break;
+                case "help":
+                    showHelpMenu();
+                    break;
+                case "signup":
+                    signup(args[1], args[2]);
+                    break;
+                case "login":
+                    login(args[1], args[2]);
+                    break;
+                case "logout":
+                    logout();
+                    break;
+                case "deleteuser":
+                    deleteUser(args[1]);
+                    break;
+                case "thefam":
+                    if (currentUser) {
+                        runBatchFile("thefam.bat");
+                    } else {
+                        appendOutput("You must be logged in to access this feature.");
+                    }
+                    break;
+                case "users":
+                    if (currentUser) {
+                        runBatchFile("users.bat");
+                    } else {
+                        appendOutput("You must be logged in to access this feature.");
+                    }
+                    break;
+                case "clear":
+                    terminal.innerText = "";
+                    appendOutput("Screen cleared.");
+                    break;
+                default:
+                    appendOutput(`Unknown command: ${command}`);
+            }
+        }
+
+        function mkdir(dirName) {
+            if (!fileSystem[dirName]) {
+                fileSystem[dirName] = {};
+                appendOutput(`Directory ${dirName} created.`);
+            } else {
+                appendOutput(`Directory ${dirName} already exists.`);
+            }
+        }
+
+        function ls() {
+            appendOutput("Files and directories:");
+            for (const file in fileSystem) {
+                appendOutput(file);
+            }
+        }
+
+        function runBatchFile(batchFileName) {
+            const batchFiles = {
+                "thefam.bat": `@echo off
+echo Welcome to TheFam, ${currentUser}!`,
+                "users.bat": `@echo off
+echo Users:
+for (const user in users) {
+    echo ${user};
+}`,
+            };
+
+            if (batchFiles[batchFileName]) {
+                const batchFileContent = batchFiles[batchFileName];
+                const lines = batchFileContent.split("\n");
+                lines.forEach((line) => {
+                    if (line.startsWith("echo")) {
+                        appendOutput(line.replace("echo", "").trim());
+                    }
+                });
+            } else {
+                appendOutput(`Batch file ${batchFileName} not found.`);
+            }
+        }
+
+        function signup(username, password) {
+            if (!users[username]) {
+                users[username] = password;
+                appendOutput(`User ${username} created.`);
+            } else {
+                appendOutput(`Username ${username} already exists.`);
+            }
+        }
+
+        function login(username, password) {
+            if (users[username] && users[username] === password) {
+                currentUser = username;
+                appendOutput(`Welcome, ${username}!`);
+            } else {
+                appendOutput("Invalid username or password.");
+            }
+        }
+
+        function logout() {
+            currentUser = null;
+            appendOutput("You have been logged out.");
+        }
+
+        function deleteUser(username) {
+            if (currentUser && users[username]) {
+                if (currentUser === username || confirm(`Are you sure you want to delete user ${username}?`)) {
+                    delete users[username];
+                    appendOutput(`User ${username} deleted.`);
+                    if (currentUser === username) {
+                        currentUser = null;
+                    }
+                }
+            } else {
+                appendOutput("You must be logged in to delete a user, or the user does not exist.");
+            }
+        }
+
+        function showHelpMenu() {
+            appendOutput("Available commands:");
+            appendOutput("  mkdir <dirName>  - Create a new directory");
+            appendOutput("  ls              - List files and directories");
+            appendOutput("  run <batchFile> - Run a batch file");
+            appendOutput("  help           - Show this help menu");
+            appendOutput("  signup <username> <password> - Create a new user");
+            appendOutput("  login <username> <password> - Log in to an existing user");
+            appendOutput("  logout         - Log out of the current user");
+            appendOutput("  deleteuser <username> - Delete a user from the network");
+            appendOutput("  thefam         - Run TheFam batch file");
+            appendOutput("  users          - Run Users batch file");
+            appendOutput("  clear          - Clear the screen");
+        }
+
+        runButton.addEventListener("click", () => {
+            const command = commandInput.value.trim();
+            runCommand(command);
+            commandInput.value = "";
+        });
+
+        appendOutput("Welcome to Batch File Terminal - TheFam!");
+        appendOutput("Type 'help' for a list of available commands.");
+    </script>
+</body>
+</html>

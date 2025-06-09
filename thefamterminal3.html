@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Batch File Terminal - TheFam</title>
+    <style>
+        body {
+            font-family: monospace;
+            background-color: #1a202c;
+            color: #e2e8f0;
+        }
+        .terminal {
+            width: 800px;
+            height: 600px;
+            padding: 10px;
+            border: 1px solid #4a5568;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="terminal" id="terminal"></div>
+    <input type="text" id="command" placeholder="Enter command" />
+    <button id="run">Run</button>
+
+    <script>
+        const terminal = document.getElementById("terminal");
+        const commandInput = document.getElementById("command");
+        const runButton = document.getElementById("run");
+        const fileSystem = {};
+
+        function appendOutput(output) {
+            terminal.innerText += output + "\n";
+            terminal.scrollTop = terminal.scrollHeight;
+        }
+
+        function runCommand(command) {
+            const args = command.split(" ");
+            const cmd = args[0].toLowerCase();
+
+            switch (cmd) {
+                case "mkdir":
+                    mkdir(args[1]);
+                    break;
+                case "ls":
+                    ls();
+                    break;
+                case "run":
+                    runBatchFile(args[1]);
+                    break;
+                case "help":
+                    showHelpMenu();
+                    break;
+                case "thefam":
+                    runBatchFile("thefam.bat");
+                    break;
+                case "users":
+                    runBatchFile("users.bat");
+                    break;
+                case "post":
+                    runBatchFile("post.bat");
+                    break;
+                case "marketplace":
+                    runBatchFile("marketplace.bat");
+                    break;
+                case "friends":
+                    runBatchFile("friends.bat");
+                    break;
+                case "family":
+                    runBatchFile("family.bat");
+                    break;
+                case "follows":
+                    runBatchFile("follows.bat");
+                    break;
+                case "follow":
+                    runBatchFile("follow.bat");
+                    break;
+                case "messages":
+                    runBatchFile("messages.bat");
+                    break;
+                case "chat":
+                    runBatchFile("chat.bat");
+                    break;
+                case "groups":
+                    runBatchFile("groups.bat");
+                    break;
+                case "clubs":
+                    runBatchFile("clubs.bat");
+                    break;
+                case "trends":
+                    runBatchFile("trends.bat");
+                    break;
+                case "public":
+                    runBatchFile("public.bat");
+                    break;
+                case "private":
+                    runBatchFile("private.bat");
+                    break;
+                case "feed":
+                    runBatchFile("feed.bat");
+                    break;
+                default:
+                    appendOutput(`Unknown command: ${command}`);
+            }
+        }
+
+        function mkdir(dirName) {
+            if (!fileSystem[dirName]) {
+                fileSystem[dirName] = {};
+                appendOutput(`Directory ${dirName} created.`);
+            } else {
+                appendOutput(`Directory ${dirName} already exists.`);
+            }
+        }
+
+        function ls() {
+            appendOutput("Files and directories:");
+            for (const file in fileSystem) {
+                appendOutput(file);
+            }
+        }
+
+        function runBatchFile(batchFileName) {
+            // Add batch file contents here
+            const batchFiles = {
+                "thefam.bat": `@echo off
+echo Welcome to TheFam!`,
+                "users.bat", `@echo off
+echo Users:
+echo JohnDoe
+echo JaneDoe`,
+                "post.bat": `@echo off
+echo Post something:
+set /p post=Enter your post: 
+echo You posted: %post%`,
+                "post.bat": `@echo off
+echo Marketplace:
+echo Buy and sell items here.`,
+                "marketplace.bat": `@echo off
+echo Friends:
+echo JohnDoe is your friend.`,
+                "friends.bat": `@echo off
+echo Family:
+echo JaneDoe is your family member.`,
+                "family.bat": `@echo off
+echo Follows:
+echo You follow JohnDoe.`,
+                "following.bat": `@echo off
+echo Follow someone:
+set /p follow=Enter username: 
+echo You are now following %follow%.`,
+                "follow.bat": `@echo off
+echo Messages:
+echo You have a message from JohnDoe.`,
+                "messages.bat": `@echo off
+echo Chat:
+echo You are chatting with JohnDoe.`,
+                "chat.bat": `@echo off
+echo Groups:
+echo You are a member of Group1.`,
+                "groups.bat": `@echo off
+echo Clubs:
+echo You are a member of Club1.`,
+                "clubs.bat": `@echo off
+echo Trends:
+echo #Trend1 is trending.`,
+                "trends.bat": `@echo off
+echo Public:
+echo This is a public post.`,
+                "public.bat": `@echo off
+echo Private:
+echo This is a private message.`,
+                "private.bat": `@echo off
+echo Feed:
+echo You have a new post from JohnDoe.
+echo You have a new message from JaneDoe.`,
+            "feed.bat": @echo off
+        };
+
+            if (batchFiles[batchFileName]) {
+                const batchFileContent = batchFiles[batchFileName];
+                const lines = batchFileContent.split("\n");
+                lines.forEach((line) => {
+                    if (line.startsWith("echo")) {
+                        appendOutput(line.replace("echo", "").trim());
+                    } else if (line.startsWith("set /p")) {
+                        const prompt = line.replace("set /p", "").split("=")[0].trim();
+                        const input = prompt("Enter " + prompt + ": ");
+                        appendOutput(`You entered: ${input}`);
+                    }
+                });
+            } else {
+                appendOutput(`Batch file ${batchFileName} not found.`);
+            }
+        }
+
+        function showHelpMenu() {
+            appendOutput("Available commands:");
+            appendOutput("  mkdir <dirName>  - Create a new directory");
+            appendOutput("  ls              - List files and directories");
+            appendOutput("  run <batchFile> - Run a batch file");
+            appendOutput("  help           - Show this help menu");
+            appendOutput("  thefam         - Run TheFam batch file");
+            appendOutput("  users          - Run Users batch file");
+            appendOutput("  post           - Run Post batch file");
+            appendOutput("  marketplace    - Run Marketplace batch file");
+            appendOutput("  friends        - Run Friends batch file");
+            appendOutput("  family         - Run Family batch file");
+            appendOutput("  follows        - Run Follows batch file");
+            appendOutput("  follow         - Run Follow batch file");
+            appendOutput("  messages       - Run Messages batch file");
+            appendOutput("  chat           - Run Chat batch file");
+            appendOutput("  groups         - Run Groups batch file");
+            appendOutput("  clubs          - Run Clubs batch file");
+            appendOutput("  trends         - Run Trends batch file");
+            appendOutput("  public         - Run Public batch file");
+            appendOutput("  private        - Run Private batch file");
+            appendOutput("  feed           - Run Feed batch file");
+        }
+
+        runButton.addEventListener("click", () => {
+            const command = commandInput.value.trim();
+            runCommand(command);
+            commandInput.value = "";
+        });
+
+        appendOutput("Welcome to Batch File Terminal - TheFam!");
+        appendOutput("Type 'help' for a list of available commands.");
+
+        // Create directories
+        mkdir("thefam");
+        mkdir("users");
+        mkdir("post");
+        mkdir("marketplace");
+        mkdir("friends");
+        mkdir("family");
+        mkdir("follows");
+        mkdir("messages");
+        mkdir("chat");
+        mkdir("groups");
+        mkdir("clubs");
+        mkdir("trends");
+        mkdir("public");
+        mkdir("private");
+        
+// Run thefam.bat on startup
+runBatchFile("thefam.bat") : @echo off;
+    </script>
+</body>
+</html>

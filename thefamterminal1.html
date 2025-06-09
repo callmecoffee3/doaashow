@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Batch File Terminal - TheFam</title>
+    <style>
+        body {
+            font-family: monospace;
+            background-color: #1a202c;
+            color: #e2e8f0;
+        }
+        .terminal {
+            width: 800px;
+            height: 600px;
+            padding: 10px;
+            border: 1px solid #4a5568;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="terminal" id="terminal"></div>
+    <input type="text" id="command" placeholder="Enter command" />
+    <button id="run">Run</button>
+
+    <script>
+        const terminal = document.getElementById("terminal");
+        const commandInput = document.getElementById("command");
+        const runButton = document.getElementById("run");
+        const fileSystem = {};
+
+        function appendOutput(output) {
+            terminal.innerText += output + "\n";
+            terminal.scrollTop = terminal.scrollHeight;
+        }
+
+        function runCommand(command) {
+            const args = command.split(" ");
+            const cmd = args[0].toLowerCase();
+
+            switch (cmd) {
+                case "mkdir":
+                    mkdir(args[1]);
+                    break;
+                case "ls":
+                    ls();
+                    break;
+                case "run":
+                    runBatchFile(args[1]);
+                    break;
+                case "help":
+                    showHelpMenu();
+                    break;
+                case "hello":
+                    appendOutput("Hello World!");
+                    break;
+                default:
+                    appendOutput(`Unknown command: ${command}`);
+            }
+        }
+
+        function mkdir(dirName) {
+            if (!fileSystem[dirName]) {
+                fileSystem[dirName] = {};
+                appendOutput(`Directory ${dirName} created.`);
+            } else {
+                appendOutput(`Directory ${dirName} already exists.`);
+            }
+        }
+
+        function ls() {
+            appendOutput("Files and directories:");
+            for (const file in fileSystem) {
+                appendOutput(file);
+            }
+        }
+
+        function runBatchFile(batchFileName) {
+            // Add batch file contents here
+            const batchFiles = {
+                "hello.bat": `@echo off
+echo Hello World!`,
+                "users.bat": `@echo off
+echo Users:
+echo JohnDoe
+echo JaneDoe`,
+                "thefam.bat": `@echo off
+echo Welcome to TheFam!`,
+            };
+
+            if (batchFiles[batchFileName]) {
+                const batchFileContent = batchFiles[batchFileName];
+                const lines = batchFileContent.split("\n");
+                lines.forEach((line) => {
+                    if (line.startsWith("echo")) {
+                        appendOutput(line.replace("echo", "").trim());
+                    }
+                });
+            } else {
+                appendOutput(`Batch file ${batchFileName} not found.`);
+            }
+        }
+
+        function showHelpMenu() {
+            appendOutput("Available commands:");
+            appendOutput("  mkdir <dirName>  - Create a new directory");
+            appendOutput("  ls              - List files and directories");
+            appendOutput("  run <batchFile> - Run a batch file");
+            appendOutput("  hello          - Say hello");
+            appendOutput("  help           - Show this help menu");
+        }
+
+        runButton.addEventListener("click", () => {
+            const command = commandInput.value.trim();
+            runCommand(command);
+            commandInput.value = "";
+        });
+
+        appendOutput("Welcome to Batch File Terminal - TheFam!");
+        appendOutput("Type 'help' for a list of available commands.");
+    </script>
+</body>
+</html>

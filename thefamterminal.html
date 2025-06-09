@@ -1,0 +1,1727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Terminal Simulator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles to enhance the terminal look and feel */
+        body {
+            font-family: 'Inter', sans-serif; /* Using Inter font as per instructions */
+            background-color: #1a202c; /* Dark background for terminal feel */
+            color: #e2e8f0; /* Light text color */
+        }
+        .terminal-container {
+            max-width: 90vw; /* Fluid width */
+            width: 900px; /* Max width for larger screens */
+            min-height: 600px; /* Minimum height to accommodate batch file input */
+            background-color: #2d3748; /* Slightly lighter dark background for terminal */
+            border-radius: 0.75rem; /* Rounded corners */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08); /* Subtle shadow */
+            display: flex;
+            flex-direction: column;
+            overflow: hidden; /* Hide scrollbars if content overflows initially */
+        }
+        .terminal-output {
+            flex-grow: 1; /* Allows output area to take available space */
+            overflow-y: auto; /* Scroll for overflow */
+            word-wrap: break-word; /* Ensure long lines break */
+            white-space: pre-wrap; /* Preserve whitespace and wrap text */
+            font-family: 'Courier New', monospace; /* Monospaced font for output */
+            line-height: 1.5;
+            padding: 1rem;
+            color: #a0aec0; /* Lighter grey for output text */
+            border-bottom: 1px solid #4a5568; /* Separator line */
+        }
+        .terminal-input-area {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background-color: #232a36; /* Darker background for input area */
+            border-bottom-left-radius: 0.75rem;
+            border-bottom-right-radius: 0.75rem;
+        }
+        .terminal-prompt {
+            color: #68d391; /* Green color for prompt */
+            font-weight: bold;
+            margin-right: 0.5rem;
+            font-family: 'Courier New', monospace;
+        }
+        .terminal-input {
+            flex-grow: 1; /* Input field takes most space */
+            background-color: transparent; /* Transparent background */
+            border: none; /* No border */
+            outline: none; /* No outline on focus */
+            color: #edf2f7; /* White text for input */
+            font-family: 'Courier New', monospace;
+            padding: 0.5rem 0;
+        }
+        .terminal-input:focus {
+            box-shadow: none; /* No shadow on focus */
+        }
+        .execute-button {
+            background-color: #4299e1; /* Blue button */
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem; /* Slightly rounded button */
+            transition: background-color 0.2s ease-in-out;
+            margin-left: 1rem;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .execute-button:hover {
+            background-color: #3182ce; /* Darker blue on hover */
+        }
+        .batch-file-editor {
+            background-color: #1f2937; /* Darker grey for batch file editor */
+            padding: 1rem;
+            border-top-left-radius: 0.75rem;
+            border-top-right-radius: 0.75rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            border-bottom: 1px solid #4a5568;
+        }
+        .batch-file-editor textarea {
+            width: 100%;
+            height: 150px;
+            background-color: #374151;
+            color: #f3f4f6;
+            border: 1px solid #4b5563;
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            font-family: 'Courier New', monospace;
+            resize: vertical;
+        }
+        .batch-file-list {
+            max-height: 100px;
+            overflow-y: auto;
+            background-color: #374151;
+            border: 1px solid #4b5563;
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            color: #f3f4f6;
+            font-family: 'Courier New', monospace;
+            margin-top: 0.5rem;
+        }
+        @media (max-width: 768px) {
+            .terminal-container {
+                max-width: 95vw;
+                border-radius: 0; /* Remove rounded corners on small screens for full width */
+                min-height: 70vh; /* Make it taller on mobile */
+            }
+            .batch-file-editor {
+                border-radius: 0;
+            }
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+    <div class="terminal-container flex flex-col rounded-xl overflow-hidden shadow-lg">
+        <div class="batch-file-editor">
+            <label for="batchFileName" class="text-white text-sm font-semibold">Batch File Name (e.g., user_dashboard.bat):</label>
+            <input type="text" id="batchFileName" class="w-full bg-gray-700 text-white rounded-md p-2 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="my_script.bat">
+            <label for="batchFileContent" class="text-white text-sm font-semibold">Paste Batch File Content Here:</label>
+            <textarea id="batchFileContent" placeholder="@echo off
+setlocal
+
+:StartDashboard
+cls
+echo.
+echo =========================================
+echo    FamSocialNetwork - User Dashboard
+echo =========================================
+echo.
+
+set &#34;username_input=&#34;
+set /p &#34;username_input=Enter Username (or type &#39;new&#39; to create / &#39;feed&#39; for network / &#39;discover&#39; users): &#34;
+
+if /i &#34;%username_input%&#34;==&#34;new&#34; (
+    echo.
+    echo Launching profile creation...
+    set &#34;called_from_dashboard=true&#34;
+    call create_profile.bat
+    set &#34;called_from_dashboard=&#34;
+    goto :StartDashboard
+)
+
+if /i &#34;%username_input%&#34;==&#34;feed&#34; (
+    echo.
+    echo Loading network feed...
+    set &#34;called_from_dashboard=true&#34;
+    call main_feed.bat
+    set &#34;called_from_dashboard=&#34;
+    goto :StartDashboard
+)
+
+if /i &#34;%username_input%&#34;==&#34;discover&#34; (
+    echo.
+    echo Discovering users...
+    set &#34;called_from_dashboard=true&#34;
+    call user_discover.bat
+    set &#34;called_from_dashboard=&#34;
+    goto :StartDashboard
+)
+
+
+set &#34;user_dir=FamSocialNetwork\%username_input%&#34;
+
+if not exist &#34;%user_dir%&#34; (
+    echo.
+    echo Error: Profile for &#34;%username_input%&#34; not found.
+    echo Please try again, or type &#39;new&#39; to create, &#39;feed&#39; for network posts, or &#39;discover&#39; to see all users.
+    echo.
+    pause
+    goto :StartDashboard
+)
+
+:DashboardMenu
+cls
+echo.
+echo =========================================
+echo    Dashboard for: %username_input%
+echo =========================================
+echo.
+echo What would you like to do?
+echo    1. View / Edit Profile
+echo    2. Create a New Profile
+echo    3. View Network Feed (Posts &amp; All Profiles)
+echo    4. Discover Users on Network
+echo    5. Post to Network Feed
+echo    6. Manage Relationships (Follow/Friends)
+echo    7. View Friend Feed
+echo    8. View Follow Feed
+echo    9. Manage Communities (Create/Join/Post)
+echo    10. View Clubs Feed
+echo    11. View Groups Feed
+echo    12. View Pages Feed
+echo    13. View Marketplace Feed
+echo    14. List Item for Sale
+echo    15. View Join &amp; Signup Log
+echo    16. Send Message
+echo    17. View Messages
+echo    18. View Video Feed
+echo    19. View Radio Feed
+echo    20. View TV Feed
+echo    21. View Communities Feed
+echo    22. Exit Dashboard
+echo.
+set /p &#34;choice=Enter your choice (1-22): &#34;
+
+if &#34;%choice%&#34;==&#34;1&#34; (
+    echo.
+    echo Loading %username_input%&#39;s profile...
+    set &#34;called_from_dashboard=true&#34;
+    call view_profile.bat &#34;%username_input%&#34;
+    set &#34;called_from_dashboard=&#34;
+    goto :DashboardMenu
+) else if &#34;%choice%&#34;==&#34;2&#34; (
+    echo.
+    echo Launching profile creation...
+    set &#34;called_from_dashboard=true&#34;
+    call create_profile.bat
+    set &#34;called_from_dashboard=&#34;
+    goto :DashboardMenu
+) else if &#34;%choice%&#34;==&#34;3&#34; (
+    echo.
+    echo Loading network feed...
+    set &#34;called_from_dashboard=true&#34;
+    call main_feed.bat
+    set &#34;called_from_dashboard=&#34;
+    goto :DashboardMenu
+) else if &#34;%choice%&#34;==&#34;4&#34; (
+    echo.
+    echo Discovering users...
+    set &#34;called_from_dashboard=true&#34;
+    call user_discover.bat
+    set &#34;called_from_dashboard=&#34;
+    goto :DashboardMenu
+) else if &#34;%choice%&#34;==&#34;5&#34; (
+    echo.
+    echo --- Create a New Post ---
+    set /p &#34;post_message=Enter your post (max 200 chars, no special characters like &lt; &gt; |): &#34;
+    if not exist &#34;FamSocialNetwork\\posts.txt&#34; (
+        echo. &gt; FamSocialNetwork\\posts.txt
+    )
+    rem Simplified date/time for web sim
+    echo [SIM_DATE SIM_TIME] %username_input%: %post_message%&gt;&gt; FamSocialNetwork\\posts.txt
+    echo.
+    echo Your post has been added to the network feed!
+    pause
+    goto :DashboardMenu
+) else if &#34;%choice%&#34;==&#34;6&#34; (
+    echo.
+    echo Managing relationships...
+    set &#34;called_from_dashboard=true&#34;
+    call manage_relationships.bat &#34;%username_input%&#34;
+    set &#34;called_from_dashboard=&#34;
+    goto :DashboardMenu
+) else if &#34;%choice%&#34;==&#34;7&#34; (
+    echo.
+    echo Loading friend feed...
+    set &#34;called_from_dashboard=true&#34;
+    call friend_feed.bat &#34;%username_input%&#34;
+    set &#34;called_from_dashboard=&#34;
+    goto :DashboardMenu
+) else if &#34;%choice%&#34;==&#34;8&#34; (
+    echo.
+    echo Loading follow feed...
+    set &#34;called_from_dashboard=true&#34;
+    call follow_feed.bat &#34;%username_input%&#34;
+    set &#34;called_from_dashboard=&#34;
+    goto :DashboardMenu
+) else if &#34;%choice%&#34;==&#34;9&#34; (
+    echo.
+    echo Managing communities...
+    set &#34;called_from_dashboard=true&#34;
+    call manage_communities.bat &#34;%username_input%&#34;
+    set &#34;called_from_dashboard=&#34;
+    goto :DashboardMenu
+) else if &#34;%choice%&#34;==&#34;10&#34; (
+    echo.
+    echo Loading clubs feed...
+    set &#34;called_from_dashboard=true&#34;
+    call clubs_feed.bat &#34;%username_input%&#34;
+    set &#34;called_from_dashboard=&#34;
+    goto :DashboardMenu
+) else if &#34;%choice%&#34;==&#34;11&#34; (
+    echo.
+    echo Loading groups feed...
+    set &#34;called_from_dashboard=true&#34;
+    call groups_feed.bat &#34;%username_input%&#34;
+    set &#34;called_from_dashboard=&#34;
+    goto :DashboardMenu
+) else if &#34;%choice%&#34;==&#34;12&#34; (
+    echo.
+    echo Loading pages feed...
+    set &#34;called_from_dashboard=true&#34;
+    call pages_feed.bat &#34;%username_input%&#34;
+    set &#34;called_from_dashboard=&#34;
+    goto :DashboardMenu
+) else if &#34;%choice%&#34;==&#34;13&#34; (
+    echo.
+    echo Loading marketplace feed...
+    set &#34;called_from_dashboard=true&#34;
+    call marketplace_feed.bat
+    set &#34;called_from_dashboard=&#34;
+    goto :DashboardMenu
+) else if &#34;%choice%&#34;==&#34;14&#34; (
+    echo.
+    echo --- List Item for Sale ---
+    set /p &#34;item_name=Enter item name: &#34;
+    set /p &#34;item_price=Enter price: &#34;
+    set /p &#34;item_desc=Enter short description: &#34;
+    if not exist &#34;FamSocialNetwork\\marketplace_posts.txt&#34; (
+        echo. &gt; FamSocialNetwork\\marketplace_posts.txt
+    )
+    rem Simplified date/time for web sim
+    echo [SIM_DATE SIM_TIME] LISTING by %username_input%: %item_name% - Price: %item_price% - Desc: %item_desc%&gt;&gt; FamSocialNetwork\\marketplace_posts.txt
+    echo.
+    echo Your item has been listed!
+    pause
+    goto :DashboardMenu
+) else if &#34;%choice%&#34;==&#34;15&#34; (
+    echo.
+    echo Loading join and signup log...
+    set &#34;called_from_dashboard=true&#34;
+    call signup_join_feed.bat
+    set &#34;called_from_dashboard=&#34;
+    goto :DashboardMenu
+) else if &#34;%choice%&#34;==&#34;16&#34; (
+    echo.
+    echo Sending a message...
+    set &#34;called_from_dashboard=true&#34;
+    call send_message.bat &#34;%username_input%&#34;
+    set &#34;called_from_dashboard=&#34;
+    goto :DashboardMenu
+) else if &#34;%choice%&#34;==&#34;17&#34; (
+    echo.
+    echo Viewing messages...
+    set &#34;called_from_dashboard=true&#34;
+    call view_messages.bat &#34;%username_input%&#34;
+    set &#34;called_from_dashboard=&#34;
+    goto :DashboardMenu
+) else if &#34;%choice%&#34;==&#34;18&#34; (
+    echo.
+    echo Loading video feed...
+    set &#34;called_from_dashboard=true&#34;
+    call video_feed.bat
+    set &#34;called_from_dashboard=&#34;
+    goto :DashboardMenu
+) else if &#34;%choice%&#34;==&#34;19&#34; (
+    echo.
+    echo Loading radio feed...
+    set &#34;called_from_dashboard=true&#34;
+    call radio_feed.bat
+    set &#34;called_from_dashboard=&#34;
+    goto :DashboardMenu
+) else if &#34;%choice%&#34;==&#34;20&#34; (
+    echo.
+    echo Loading TV feed...
+    set &#34;called_from_dashboard=true&#34;
+    call tv_feed.bat
+    set &#34;called_from_dashboard=&#34;
+    goto :DashboardMenu
+) else if &#34;%choice%&#34;==&#34;21&#34; (
+    echo.
+    echo Loading communities feed...
+    set &#34;called_from_dashboard=true&#34;
+    call communities_feed.bat
+    set &#34;called_from_dashboard=&#34;
+    goto :DashboardMenu
+) else if &#34;%choice%&#34;==&#34;22&#34; (
+    echo.
+    echo Exiting FamSocialNetwork. Goodbye!
+    goto :eof
+) else (
+    echo.
+    echo Invalid choice. Please enter 1-22.
+    pause
+    goto :DashboardMenu
+)
+
+endlocal`.replace(/&#34;/g, '"').replace(/&gt;/g, '>').replace(/&lt;/g, '<').replace(/&amp;/g, '&'),
+                "create_profile.bat": `@echo off
+setlocal
+
+:: Create main directory for social network if it doesn&#39;t exist
+if not exist &#34;FamSocialNetwork&#34; mkdir FamSocialNetwork
+
+echo.
+echo ====================================
+echo    FamSocialNetwork - New Profile
+echo ====================================
+echo.
+
+:: Set profile information
+set /p name=&#34;Enter a unique name for the profile: &#34;
+
+:: Basic validation for name
+if &#34;%name%&#34;==&#34;&#34; (
+    echo Error: Name cannot be empty.
+    pause
+    goto :eof
+)
+
+:: Check if profile already exists
+if exist &#34;FamSocialNetwork\%name%&#34; (
+    echo.
+    echo A profile for &#34;%name%&#34; already exists.
+    echo Please choose a different name or view the existing profile.
+    echo.
+    pause
+    goto :eof
+)
+
+
+set /p date=&#34;Enter current date (e.g.,YYYY-MM-DD): &#34;
+set /p bio=&#34;Enter a short bio: &#34;
+set /p websites=&#34;Enter websites (comma-separated, optional): &#34;
+set /p birthdate=&#34;Enter birthdate (e.g.,YYYY-MM-DD): &#34;
+
+echo.
+echo --- Interests and Preferences ---
+echo.
+
+:: Set interests and preferences
+set /p food=&#34;Enter favorite food: &#34;
+set /p drinks=&#34;Enter favorite drinks: &#34;
+set /p snacks=&#34;Enter favorite snacks: &#34;
+set /p rooms=&#34;Enter favorite rooms: &#34;
+set /p bed=&#34;Enter favorite bed type: &#34;
+set /p restroom=&#34;Enter favorite restroom type: &#34;
+set /p sink=&#34;Enter favorite sink type: &#34;
+set /p furniture=&#34;Enter favorite furniture: &#34;
+set /p follows=&#34;Enter what you follow (e.g., topics, people): &#34;
+set /p interest=&#34;Enter general interests (comma-separated): &#34;
+
+:: Create folders for profile, interests, and preferences
+mkdir FamSocialNetwork\%name%\Profile
+mkdir FamSocialNetwork\%name%\Interests
+mkdir FamSocialNetwork\%name%\Preferences
+mkdir FamSocialNetwork\%name%\Friends
+mkdir FamSocialNetwork\%name%\Following
+mkdir FamSocialNetwork\%name%\Followers
+mkdir FamSocialNetwork\%name%\JoinedClubs
+mkdir FamSocialNetwork\%name%\JoinedGroups
+mkdir FamSocialNetwork\%name%\FollowedPages
+mkdir FamSocialNetwork\%name%\Messages
+
+:: Write profile information to file
+(
+echo PROFILE:
+echo Name: %name%
+echo Date: %date%
+echo Bio: %bio%
+echo Websites: %websites%
+echo Birthdate: %birthdate%
+) &gt; FamSocialNetwork\%name%\Profile\profile.txt
+
+:: Write interests to file
+(
+echo INTERESTS:
+echo Follows: %follows%
+echo Interests: %interest%
+) &gt; FamSocialNetwork\%name%\Interests\interests.txt
+
+:: Write preferences to file
+(
+echo PREFERENCES:
+echo Food: %food%
+echo Drinks: %drinks%
+echo Snacks: %snacks%
+echo Rooms: %rooms%
+echo Bed: %bed%
+echo Restroom: %restroom%
+echo Sink: %sink%
+echo Furniture: %furniture%
+) &gt; FamSocialNetwork\%name%\Preferences\preferences.txt
+
+echo.
+echo ====================================
+echo Your New Social Network Profile:
+echo ====================================
+echo.
+type FamSocialNetwork\%name%\Profile\profile.txt
+type FamSocialNetwork\%name%\Interests\interests.txt
+type FamSocialNetwork\%name%\Preferences\preferences.txt
+echo.
+echo ====================================
+
+:: Log the new signup
+rem Simplified date/time for web sim
+echo [SIM_DATE SIM_TIME] New User Signup: %name% &gt;&gt; FamSocialNetwork\\signup_join_log.txt
+
+echo.
+echo Profile for &#34;%name%&#34; created successfully!
+echo To view this profile or any other profile, use the dashboard: user_dashboard.bat
+echo.
+
+:: Only pause if run directly, otherwise return to caller
+if not defined called_from_dashboard (
+    pause
+)
+endlocal
+goto :eof`.replace(/&#34;/g, '"').replace(/&gt;/g, '>').replace(/&lt;/g, '<').replace(/&amp;/g, '&'),
+                "view_profile.bat": `@echo off
+setlocal
+
+echo.
+echo ====================================
+echo    FamSocialNetwork - Profile Viewer
+echo ====================================
+echo.
+
+:: Check if a username is provided
+if &#34;%~1&#34;==&#34;&#34; (
+    echo Usage: %~n0 ^<username^>
+    echo.
+    echo Example: %~n0 John
+    echo.
+    :: Only pause if run directly, otherwise return to caller
+    if not defined called_from_dashboard (
+        pause
+    )
+    goto :eof
+)
+
+set &#34;username=%~1&#34;
+set &#34;user_dir=FamSocialNetwork\%username%&#34;
+
+:: Check if the user directory exists
+if not exist &#34;%user_dir%&#34; (
+    echo Error: Profile for &#34;%username%&#34; not found.
+    echo.
+    :: Only pause if run directly, otherwise return to caller
+    if not defined called_from_dashboard (
+        pause
+    )
+    goto :eof
+)
+
+echo.
+echo Displaying Profile for: %username%
+echo.
+
+if exist &#34;%user_dir%\Profile\profile.txt&#34; (
+    echo --- PROFILE ---
+    type &#34;%user_dir%\Profile\profile.txt&#34;
+    echo.
+) else (
+    echo No profile information found for %username%.
+)
+
+if exist &#34;%user_dir%\Interests\interests.txt&#34; (
+    echo --- INTERESTS ---
+    type &#34;%user_dir%\Interests\interests.txt&#34;
+    echo.
+) else (
+    echo No interests information found for %username%.
+)
+
+if exist &#34;%user_dir%\Preferences\preferences.txt&#34; (
+    echo --- PREFERENCES ---
+    type &#34;%user_dir%\Preferences\preferences.txt&#34;
+    echo.
+) else (
+    echo No preferences information found for %username%.
+)
+
+echo ====================================
+echo End of Profile for %username%
+echo ====================================
+echo.
+
+:EditPrompt
+set /p &#34;choice=Would you like to edit the Interests and Preferences for %username%? (Y/N): &#34;
+
+if /i &#34;%choice%&#34;==&#34;Y&#34; (
+    goto :EditProfileSection
+) else if /i &#34;%choice%&#34;==&#34;N&#34; (
+    echo Exiting profile viewer.
+    :: Only pause if run directly, otherwise return to caller
+    if not defined called_from_dashboard (
+        pause
+    )
+    goto :eof
+) else (
+    echo Invalid choice. Please enter Y or N.
+    goto :EditPrompt
+)
+
+:EditProfileSection
+echo.
+echo --- Currently editing: %username%&#39;s Interests and Preferences ---
+echo.
+echo Please enter the NEW interests and preferences.
+echo (Existing data will be overwritten.)
+echo.
+
+:: Set new interests and preferences
+set /p follows=&#34;Enter NEW what you follow (e.g., topics, people): &#34;
+set /p interest=&#34;Enter NEW general interests (comma-separated): &#34;
+echo.
+set /p food=&#34;Enter NEW favorite food: &#34;
+set /p drinks=&#34;NEW favorite drinks: &#34;
+set /p snacks=&#34;Enter NEW favorite snacks: &#34;
+set /p rooms=&#34;Enter NEW favorite rooms: &#34;
+set /p bed=&#34;Enter NEW favorite bed type: &#34;
+set /p restroom=&#34;Enter NEW favorite restroom type: &#34;
+set /p sink=&#34;Enter NEW favorite sink type: &#34;
+set /p furniture=&#34;Enter NEW favorite furniture: &#34;
+
+
+:: Write new interests to file (overwriting existing)
+(
+echo INTERESTS:
+echo Follows: %follows%
+echo Interests: %interest%
+) &gt; &#34;%user_dir%\Interests\interests.txt&#34;
+
+:: Write new preferences to file (overwriting existing)
+(
+echo PREFERENCES:
+echo Food: %food%
+echo Drinks: %drinks%
+echo Snacks: %snacks%
+echo Rooms: %rooms%
+echo Bed: %bed%
+echo Restroom: %restroom%
+echo Sink: %sink%
+echo Furniture: %furniture%
+) &gt; &#34;%user_dir%\Preferences\preferences.txt&#34;
+
+echo.
+echo ====================================
+echo Interests and Preferences for &#34;%username%&#34; updated successfully!
+echo.
+echo You can view the updated profile by running: view_profile &#34;%username%&#34; again (or use the dashboard).
+echo.
+
+:: Only pause if run directly, otherwise return to caller
+if not defined called_from_dashboard (
+    pause
+)
+endlocal
+goto :eof`.replace(/&#34;/g, '"').replace(/&gt;/g, '>').replace(/&lt;/g, '<').replace(/&amp;/g, '&'),
+                "main_feed.bat": `@echo off
+setlocal
+
+cls
+echo.
+echo =========================================
+echo    FamSocialNetwork - Network Feed
+echo =========================================
+echo.
+
+set &#34;social_dir=FamSocialNetwork&#34;
+set &#34;posts_file=%social_dir%\\posts.txt&#34;
+
+if not exist &#34;%social_dir%&#34; (
+    echo No content available yet. Create a profile and post!
+    echo.
+    if not defined called_from_dashboard (
+        pause
+    )
+    goto :eof
+)
+
+echo.
+echo --- RECENT NETWORK POSTS ---
+echo.
+
+if exist &#34;%posts_file%&#34; (
+    type &#34;%posts_file%&#34;
+) else (
+    echo No posts yet. Be the first to post!
+)
+
+echo.
+echo =========================================
+echo.
+echo --- PROFILES ON THE NETWORK ---
+echo.
+_list_users FamSocialNetwork
+echo.
+echo =========================================
+echo.
+echo To view a profile or make a post, return to the dashboard.
+echo.
+
+if not defined called_from_dashboard (
+    pause
+)
+endlocal
+goto :eof`.replace(/&#34;/g, '"').replace(/&gt;/g, '>').replace(/&lt;/g, '<').replace(/&amp;/g, '&'),
+                "user_discover.bat": `@echo off
+setlocal
+
+cls
+echo.
+echo =========================================
+echo    FamSocialNetwork - Discover Users
+echo =========================================
+echo.
+
+set &#34;social_dir=FamSocialNetwork&#34;
+
+if not exist &#34;%social_dir%&#34; (
+    echo No profiles exist yet. Be the first to create one!
+    echo.
+    :: Only pause if run directly, otherwise return to caller
+    if not defined called_from_dashboard (
+        pause
+    )
+    goto :eof
+)
+
+echo Users currently on FamSocialNetwork:
+echo -------------------------------------
+_list_users FamSocialNetwork
+echo -------------------------------------
+echo.
+echo Use the dashboard to view a specific profile or create a new one.
+echo.
+
+if not defined called_from_dashboard (
+    pause
+)
+endlocal
+goto :eof`.replace(/&#34;/g, '"').replace(/&gt;/g, '>').replace(/&lt;/g, '<').replace(/&amp;/g, '&'),
+                "manage_relationships.bat": `@echo off
+setlocal
+
+:: This script requires the current username as an argument
+if &#34;%~1&#34;==&#34;&#34; (
+    echo Error: Username not provided to manage_relationships.bat.
+    if not defined called_from_dashboard (
+        pause
+    )
+    goto :eof
+)
+
+set &#34;current_user=%~1&#34;
+set &#34;current_user_dir=FamSocialNetwork\%current_user%&#34;
+
+:RelationshipsMenu
+cls
+echo.
+echo =========================================
+echo    %current_user%&#39;s Relationship Manager
+echo =========================================
+echo.
+echo What would you like to do?
+echo    1. Follow a User
+echo    2. Add a Friend (Mutual)
+echo    3. View Who %current_user% Follows
+echo    4. View %current_user%&#39;s Followers
+echo    5. View %current_user%&#39;s Friends
+echo    6. Back to Dashboard
+echo.
+set /p &#34;choice=Enter your choice (1-6): &#34;
+
+if &#34;%choice%&#34;==&#34;1&#34; (
+    echo.
+    set /p &#34;target_user=Enter username to FOLLOW: &#34;
+    call :PerformFollow &#34;%target_user%&#34;
+    pause
+    goto :RelationshipsMenu
+) else if &#34;%choice%&#34;==&#34;2&#34; (
+    echo.
+    set /p &#34;target_user=Enter username to ADD AS FRIEND: &#34;
+    call :PerformAddFriend &#34;%target_user%&#34;
+    pause
+    goto :RelationshipsMenu
+) else if &#34;%choice%&#34;==&#34;3&#34; (
+    echo.
+    echo --- Users %current_user% Follows ---
+    if exist &#34;%current_user_dir%\\Following\\following.txt&#34; (
+        type &#34;%current_user_dir%\\Following\\following.txt&#34;
+    ) else (
+        echo %current_user% is not following anyone yet.
+    )
+    echo.
+    pause
+    goto :RelationshipsMenu
+) else if &#34;%choice%&#34;==&#34;4&#34; (
+    echo.
+    echo --- Users Following %current_user% ---
+    if exist &#34;%current_user_dir%\\Followers\\followers.txt&#34; (
+        type &#34;%current_user_dir%\\Followers\\followers.txt&#34;
+    ) else (
+        echo %current_user% has no followers yet.
+    )
+    echo.
+    pause
+    goto :RelationshipsMenu
+) else if &#34;%choice%&#34;==&#34;5&#34; (
+    echo.
+    echo --- %current_user%&#39;s Friends ---
+    if exist &#34;%current_user_dir%\\Friends\\friends.txt&#34; (
+        type &#34;%current_user_dir%\\Friends\\friends.txt&#34;
+    ) else (
+        echo %current_user% has no friends yet.
+    )
+    echo.
+    pause
+    goto :RelationshipsMenu
+) else if &#34;%choice%&#34;==&#34;6&#34; (
+    echo.
+    echo Returning to dashboard...
+    goto :eof
+) else (
+    echo.
+    echo Invalid choice. Please enter 1-6.
+    pause
+    goto :RelationshipsMenu
+)
+
+:: Subroutines
+:PerformFollow
+set &#34;target_user=%~1&#34;
+set &#34;target_user_dir=FamSocialNetwork\%target_user%&#34;
+
+if &#34;%target_user%&#34;==&#34;&#34; (
+    echo Error: Target username cannot be empty.
+    goto :eof
+)
+if /i &#34;%target_user%&#34;==&#34;%current_user%&#34; (
+    echo You cannot follow yourself.
+    goto :eof
+)
+if not exist &#34;%target_user_dir%&#34; (
+    echo Error: User &#39;%target_user%&#39; does not exist.
+    goto :eof
+)
+
+:: Check if already following
+rem Simplified findstr for web sim
+set &#34;found_follow=false&#34;
+for /f &#34;tokens=*&#34; %%L in (&#39;type &#34;%current_user_dir%\\Following\\following.txt&#34; 2&gt;nul&#39;) do (
+    if /i &#34;%%L&#34;==&#34;%target_user%&#34; set &#34;found_follow=true&#34;
+)
+if &#34;%found_follow%&#34;==&#34;true&#34; (
+    echo You are already following %target_user%.
+    goto :eof
+)
+
+echo %target_user%&gt;&gt; &#34;%current_user_dir%\\Following\\following.txt&#34;
+echo %current_user%&gt;&gt; &#34;%target_user_dir%\\Followers\\followers.txt&#34;
+echo Successfully followed %target_user%!
+goto :eof
+
+:PerformAddFriend
+set &#34;target_user=%~1&#34;
+set &#34;target_user_dir=FamSocialNetwork\%target_user%&#34;
+
+if &#34;%target_user%&#34;==&#34;&#34; (
+    echo Error: Target username cannot be empty.
+    goto :eof
+)
+if /i &#34;%target_user%&#34;==&#34;%current_user%&#34; (
+    echo You cannot be friends with yourself.
+    goto :eof
+)
+if not exist &#34;%target_user_dir%&#34; (
+    echo Error: User &#39;%target_user%&#39; does not exist.
+    goto :eof
+)
+
+:: Check if already friends with target user
+rem Simplified findstr for web sim
+set &#34;found_friend=false&#34;
+for /f &#34;tokens=*&#34; %%L in (&#39;type &#34;%current_user_dir%\\Friends\\friends.txt&#34; 2&gt;nul&#39;) do (
+    if /i &#34;%%L&#34;==&#34;%target_user%&#34; set &#34;found_friend=true&#34;
+)
+if &#34;%found_friend%&#34;==&#34;true&#34; (
+    echo You are already friends with %target_user%.
+    goto :eof
+)
+
+echo %target_user%&gt;&gt; &#34;%current_user_dir%\\Friends\\friends.txt&#34;
+echo %current_user%&gt;&gt; &#34;%target_user_dir%\\Friends\\friends.txt&#34;
+echo Successfully added %target_user% as a mutual friend!
+goto :eof
+
+endlocal`.replace(/&#34;/g, '"').replace(/&gt;/g, '>').replace(/&lt;/g, '<').replace(/&amp;/g, '&'),
+                "friend_feed.bat": `@echo off
+setlocal
+
+if &#34;%~1&#34;==&#34;&#34; (
+    echo Error: Username not provided to friend_feed.bat.
+    if not defined called_from_dashboard (
+        pause
+    )
+    goto :eof
+)
+
+set &#34;current_user=%~1&#34;
+set &#34;friends_file=FamSocialNetwork\%current_user%\\Friends\\friends.txt&#34;
+set &#34;posts_file=FamSocialNetwork\\posts.txt&#34;
+
+cls
+echo.
+echo =========================================
+echo    %current_user%&#39;s Friend Feed
+echo =========================================
+echo.
+
+if not exist &#34;%friends_file%&#34; (
+    echo You don&#39;t have any friends yet. Add some to see their posts!
+    echo.
+    if not defined called_from_dashboard (
+        pause
+    )
+    goto :eof
+)
+
+if not exist &#34;%posts_file%&#34; (
+    echo No posts on the network yet.
+    echo.
+    if not defined called_from_dashboard (
+        pause
+    )
+    goto :eof
+)
+
+echo --- Posts from your Friends ---
+echo.
+
+set &#34;found_posts=false&#34;
+for /f &#34;tokens=*&#34; %%f in (&#39;type &#34;%friends_file%&#34; 2&gt;nul&#39;) do (
+    :: %%f contains a friend&#39;s username
+    :: Use findstr to get posts from that friend
+    rem Simplified findstr for web sim
+    set &#34;friend_username=%%f&#34;
+    set &#34;search_term=%friend_username%:&#34;
+    set &#34;posts_content=&#34;
+    for /f &#34;delims=&#34; %%L in (&#39;type &#34;%posts_file%&#34; 2&gt;nul&#39;) do (
+        echo %%L | findstr /i /l /c:&#34;%search_term%&#34; &gt;nul &amp;&amp; (
+            echo %%L
+            set &#34;found_posts=true&#34;
+        )
+    )
+)
+
+if &#34;%found_posts%&#34;==&#34;false&#34; (
+    echo No recent posts from your friends.
+)
+
+echo.
+echo =========================================
+echo.
+if not defined called_from_dashboard (
+    pause
+)
+endlocal
+goto :eof`.replace(/&#34;/g, '"').replace(/&gt;/g, '>').replace(/&lt;/g, '<').replace(/&amp;/g, '&'),
+                "follow_feed.bat": `@echo off
+setlocal
+
+if &#34;%~1&#34;==&#34;&#34; (
+    echo Error: Username not provided to follow_feed.bat.
+    if not defined called_from_dashboard (
+        pause
+    )
+    goto :eof
+)
+
+set &#34;current_user=%~1&#34;
+set &#34;following_file=FamSocialNetwork\%current_user%\\Following\\following.txt&#34;
+set &#34;posts_file=FamSocialNetwork\\posts.txt&#34;
+
+cls
+echo.
+echo =========================================
+echo    %current_user%&#39;s Follow Feed
+echo =========================================
+echo.
+
+if not exist &#34;%following_file%&#34; (
+    echo You are not following anyone yet. Follow some users to see their posts!
+    echo.
+    if not defined called_from_dashboard (
+        pause
+    )
+    goto :eof
+)
+
+if not exist &#34;%posts_file%&#34; (
+    echo No posts on the network yet.
+    echo.
+    if not defined called_from_dashboard (
+        pause
+    )
+    goto :eof
+)
+
+echo --- Posts from Users You Follow ---
+echo.
+
+set &#34;found_posts=false&#34;
+for /f &#34;tokens=*&#34; %%f in (&#39;type &#34;%following_file%&#34; 2&gt;nul&#39;) do (
+    :: %%f contains a followed user&#39;s username
+    :: Use findstr to get posts from that user
+    rem Simplified findstr for web sim
+    set &#34;followed_username=%%f&#34;
+    set &#34;search_term=%followed_username%:&#34;
+    for /f &#34;delims=&#34; %%L in (&#39;type &#34;%posts_file%&#34; 2&gt;nul&#39;) do (
+        echo %%L | findstr /i /l /c:&#34;%search_term%&#34; &gt;nul &amp;&amp; (
+            echo %%L
+            set &#34;found_posts=true&#34;
+        )
+    )
+)
+
+if &#34;%found_posts%&#34;==&#34;false&#34; (
+    echo No recent posts from users you follow.
+)
+
+echo.
+echo =========================================
+echo.
+if not defined called_from_dashboard (
+    pause
+)
+endlocal
+goto :eof`.replace(/&#34;/g, '"').replace(/&gt;/g, '>').replace(/&lt;/g, '<').replace(/&amp;/g, '&'),
+                "manage_communities.bat": `@echo off
+setlocal
+
+if &#34;%~1&#34;==&#34;&#34; (
+    echo Error: Username not provided to manage_communities.bat.
+    if not defined called_from_dashboard (
+        pause
+    )
+    goto :eof
+)
+
+set &#34;current_user=%~1&#34;
+set &#34;social_dir=FamSocialNetwork&#34;
+set &#34;community_posts_file=%social_dir%\\community_posts.txt&#34;
+set &#34;signup_join_log_file=%social_dir%\\signup_join_log.txt&#34;
+
+:CommunitiesMenu
+cls
+echo.
+echo =========================================
+echo    %current_user%&#39;s Community Manager
+echo =========================================
+echo.
+echo What would you like to do?
+echo    1. Create a New Club
+echo    2. Create a New Group
+echo    3. Create a New Page
+echo    4. Join a Club
+echo    5. Join a Group
+echo    6. Follow a Page
+echo    7. Post to a Club (if joined)
+echo    8. Post to a Group (if joined)
+echo    9. Post to a Page (if followed)
+echo    10. Back to Dashboard
+echo.
+set /p &#34;choice=Enter your choice (1-10): &#34;
+
+if &#34;%choice%&#34;==&#34;1&#34; (
+    call :CreateCommunity &#34;Club&#34;
+    pause
+    goto :CommunitiesMenu
+) else if &#34;%choice%&#34;==&#34;2&#34; (
+    call :CreateCommunity &#34;Group&#34;
+    pause
+    goto :CommunitiesMenu
+) else if &#34;%choice%&#34;==&#34;3&#34; (
+    call :CreateCommunity &#34;Page&#34;
+    pause
+    goto :CommunitiesMenu
+) else if &#34;%choice%&#34;==&#34;4&#34; (
+    call :JoinCommunity &#34;Club&#34; &#34;JoinedClubs&#34;
+    pause
+    goto :CommunitiesMenu
+) else if &#34;%choice%&#34;==&#34;5&#34; (
+    call :JoinCommunity &#34;Group&#34; &#34;JoinedGroups&#34;
+    pause
+    goto :CommunitiesMenu
+) else if &#34;%choice%&#34;==&#34;6&#34; (
+    call :JoinCommunity &#34;Page&#34; &#34;FollowedPages&#34;
+    pause
+    goto :CommunitiesMenu
+) else if &#34;%choice%&#34;==&#34;7&#34; (
+    call :PostToCommunity &#34;Club&#34; &#34;JoinedClubs&#34;
+    pause
+    goto :CommunitiesMenu
+) else if &#34;%choice%&#34;==&#34;8&#34; (
+    call :PostToCommunity &#34;Group&#34; &#34;JoinedGroups&#34;
+    pause
+    goto :CommunitiesMenu
+) else if &#34;%choice%&#34;==&#34;9&#34; (
+    call :PostToCommunity &#34;Page&#34; &#34;FollowedPages&#34;
+    pause
+    goto :CommunitiesMenu
+) else if &#34;%choice%&#34;==&#34;10&#34; (
+    echo.
+    echo Returning to dashboard...
+    goto :eof
+) else (
+    echo.
+    echo Invalid choice. Please enter 1-10.
+    pause
+    goto :CommunitiesMenu
+)
+
+:: Subroutines
+:GetTimestamp
+    rem Simplified date/time for web sim
+    set &#34;timestamp=[SIM_DATE SIM_TIME]&#34;
+goto :eof
+
+:CreateCommunity
+    set &#34;community_type=%~1&#34;
+    set /p &#34;community_name=Enter name for new %community_type%: &#34;
+    if &#34;%community_name%&#34;==&#34;&#34; (
+        echo Name cannot be empty.
+        goto :eof
+    )
+
+    set &#34;community_dir=%social_dir%\%community_type%s\%community_name%&#34;
+    if exist &#34;%community_dir%&#34; (
+        echo %community_type% &#34;%community_name%&#34; already exists.
+        goto :eof
+    )
+
+    mkdir FamSocialNetwork\%community_type%s
+    mkdir &#34;%community_dir%&#34;
+    echo %community_type% &#34;%community_name%&#34; created by %current_user%.
+    call :GetTimestamp
+    echo %timestamp% New %community_type% Created: %community_name% by %current_user% &gt;&gt; &#34;%signup_join_log_file%&#34;
+goto :eof
+
+:JoinCommunity
+    set &#34;community_type=%~1&#34;
+    set &#34;user_membership_folder=%~2&#34;
+    set /p &#34;target_community=Enter name of %community_type% to join/follow: &#34;
+    if &#34;%target_community%&#34;==&#34;&#34; (
+        echo Community name cannot be empty.
+        goto :eof
+    )
+
+    set &#34;community_path=%social_dir%\%community_type%s\%target_community%&#34;
+    if not exist &#34;%community_path%&#34; (
+        echo %community_type% &#34;%target_community%&#34; does not exist.
+        goto :eof
+    )
+
+    set &#34;user_membership_file=FamSocialNetwork\%current_user%\%user_membership_folder%\%community_type%s.txt&#34;
+    rem Simplified findstr for web sim
+    set &#34;already_member=false&#34;
+    for /f &#34;tokens=*&#34; %%L in (&#39;type &#34;%user_membership_file%&#34; 2&gt;nul&#39;) do (
+        if /i &#34;%%L&#34;==&#34;%target_community%&#34; set &#34;already_member=true&#34;
+    )
+    if &#34;%already_member%&#34;==&#34;true&#34; (
+        echo You are already a member/follower of &#34;%target_community%&#34;.
+        goto :eof
+    )
+
+    echo %target_community% &gt;&gt; &#34;%user_membership_file%&#34;
+    echo Successfully joined/followed %community_type% &#34;%target_community%&#34;!
+    call :GetTimestamp
+    echo %timestamp% %current_user% joined/followed %community_type%: %target_community% &gt;&gt; &#34;%signup_join_log_file%&#34;
+goto :eof
+
+:PostToCommunity
+    set &#34;community_type=%~1&#34;
+    set &#34;user_membership_folder=%~2&#34;
+    set /p &#34;target_community=Enter name of %community_type% to post to: &#34;
+    if &#34;%target_community%&#34;==&#34;&#34; (
+        echo Community name cannot be empty.
+        goto :eof
+    )
+
+    set &#34;community_path=%social_dir%\%community_type%s\%target_community%&#34;
+    if not exist &#34;%community_path%&#34; (
+        echo %community_type% &#34;%target_community%&#34; does not exist.
+        goto :eof
+    )
+
+    :: Check if user is a member/follower
+    set &#34;user_membership_file=FamSocialNetwork\%current_user%\%user_membership_folder%\%community_type%s.txt&#34;
+    rem Simplified findstr for web sim
+    set &#34;is_member=false&#34;
+    for /f &#34;tokens=*&#34; %%L in (&#39;type &#34;%user_membership_file%&#34; 2&gt;nul&#39;) do (
+        if /i &#34;%%L&#34;==&#34;%target_community%&#34; set &#34;is_member=true&#34;
+    )
+    if &#34;%is_member%&#34;==&#34;false&#34; (
+        echo You are not a member/follower of &#34;%target_community%&#34;. Join/Follow it first.
+        goto :eof
+    )
+
+    set /p &#34;post_message=Enter your post for %target_community%: &#34;
+    if &#34;%post_message%&#34;==&#34;&#34; (
+        echo Post cannot be empty.
+        goto :eof
+    )
+
+    call :GetTimestamp
+    echo [%community_type%:%target_community%] %timestamp% %current_user%: %post_message% &gt;&gt; &#34;%community_posts_file%&#34;
+    echo Post successfully made to %community_type% &#34;%target_community%&#34;!
+goto :eof
+
+endlocal`.replace(/&#34;/g, '"').replace(/&gt;/g, '>').replace(/&lt;/g, '<').replace(/&amp;/g, '&'),
+                "marketplace_feed.bat": `@echo off
+setlocal
+
+set &#34;marketplace_posts_file=FamSocialNetwork\\marketplace_posts.txt&#34;
+
+cls
+echo.
+echo =========================================
+echo    FamSocialNetwork - Marketplace Feed
+echo =========================================
+echo.
+
+if not exist &#34;%marketplace_posts_file%&#34; (
+    echo No items currently listed in the Marketplace.
+    echo.
+    if not defined called_from_dashboard (
+        pause
+    )
+    goto :eof
+)
+
+echo --- Latest Listings ---
+echo.
+type &#34;%marketplace_posts_file%&#34;
+echo.
+echo =========================================
+echo.
+echo To list your own item, return to the dashboard.
+echo.
+
+if not defined called_from_dashboard (
+    pause
+)
+endlocal
+goto :eof`.replace(/&#34;/g, '"').replace(/&gt;/g, '>').replace(/&lt;/g, '<').replace(/&amp;/g, '&'),
+                "clubs_feed.bat": `@echo off
+setlocal
+
+if &#34;%~1&#34;==&#34;&#34; (
+    echo Error: Username not provided to clubs_feed.bat.
+    if not defined called_from_dashboard (
+        pause
+    )
+    goto :eof
+)
+
+set &#34;current_user=%~1&#34;
+set &#34;community_type=Club&#34;
+set &#34;user_membership_folder=JoinedClubs&#34;
+set &#34;community_posts_file=FamSocialNetwork\\community_posts.txt&#34;
+set &#34;user_membership_file=FamSocialNetwork\%current_user%\%user_membership_folder%\%community_type%s.txt&#34;
+
+cls
+echo.
+echo =========================================
+echo    %current_user%&#39;s Clubs Feed
+echo =========================================
+echo.
+
+if not exist &#34;%user_membership_file%&#34; (
+    echo You have not joined any Clubs yet. Join some to see their posts!
+    echo.
+    if not defined called_from_dashboard (
+        pause
+    )
+    goto :eof
+)
+
+if not exist &#34;%community_posts_file%&#34; (
+    echo No posts in any communities yet.
+    echo.
+    if not defined called_from_dashboard (
+        pause
+    )
+    goto :eof
+)
+
+echo --- Posts from your Joined Clubs ---
+echo.
+
+set &#34;found_posts=false&#34;
+for /f &#34;tokens=*&#34; %%c in (&#39;type &#34;%user_membership_file%&#34; 2&gt;nul&#39;) do (
+    :: %%c contains a joined club&#39;s name
+    :: Filter community_posts.txt for posts from this club
+    rem Simplified findstr for web sim
+    set &#34;club_name=%%c&#34;
+    set &#34;search_term=[%community_type%:%club_name%]&#34;
+    for /f &#34;delims=&#34; %%L in (&#39;type &#34;%community_posts_file%&#34; 2&gt;nul&#39;) do (
+        echo %%L | findstr /i /l /c:&#34;%search_term%&#34; &gt;nul &amp;&amp; (
+            echo %%L
+            set &#34;found_posts=true&#34;
+        )
+    )
+)
+
+if &#34;%found_posts%&#34;==&#34;false&#34; (
+    echo No recent posts from your joined clubs.
+)
+
+echo.
+echo =========================================
+echo.
+if not defined called_from_dashboard (
+    pause
+)
+endlocal
+goto :eof`.replace(/&#34;/g, '"').replace(/&gt;/g, '>').replace(/&lt;/g, '<').replace(/&amp;/g, '&'),
+                "groups_feed.bat": `@echo off
+setlocal
+
+if &#34;%~1&#34;==&#34;&#34; (
+    echo Error: Username not provided to groups_feed.bat.
+    if not defined called_from_dashboard (
+        pause
+    )
+    goto :eof
+)
+
+set &#34;current_user=%~1&#34;
+set &#34;community_type=Group&#34;
+set &#34;user_membership_folder=JoinedGroups&#34;
+set &#34;community_posts_file=FamSocialNetwork\\community_posts.txt&#34;
+set &#34;user_membership_file=FamSocialNetwork\%current_user%\%user_membership_folder%\%community_type%s.txt&#34;
+
+cls
+echo.
+echo =========================================
+echo    %current_user%&#39;s Groups Feed
+echo =========================================
+echo.
+
+if not exist &#34;%user_membership_file%&#34; (
+    echo You have not joined any Groups yet. Join some to see their posts!
+    echo.
+    if not defined called_from_dashboard (
+        pause
+    )
+    goto :eof
+)
+
+if not exist &#34;%community_posts_file%&#34; (
+    echo No posts in any communities yet.
+    echo.
+    if not defined called_from_dashboard (
+        pause
+    )
+    goto :eof
+)
+
+echo --- Posts from your Joined Groups ---
+echo.
+
+set &#34;found_posts=false&#34;
+for /f &#34;tokens=*&#34; %%c in (&#39;type &#34;%user_membership_file%&#34; 2&gt;nul&#39;) do (
+    :: %%c contains a joined group&#39;s name
+    :: Filter community_posts.txt for posts from this group
+    rem Simplified findstr for web sim
+    set &#34;group_name=%%c&#34;
+    set &#34;search_term=[%community_type%:%group_name%]&#34;
+    for /f &#34;delims=&#34; %%L in (&#39;type &#34;%community_posts_file%&#34; 2&gt;nul&#39;) do (
+        echo %%L | findstr /i /l /c:&#34;%search_term%&#34; &gt;nul &amp;&amp; (
+            echo %%L
+            set &#34;found_posts=true&#34;
+        )
+    )
+)
+
+if &#34;%found_posts%&#34;==&#34;false&#34; (
+    echo No recent posts from your joined groups.
+)
+
+echo.
+echo =========================================
+echo.
+if not defined called_from_dashboard (
+    pause
+)
+endlocal
+goto :eof`.replace(/&#34;/g, '"').replace(/&gt;/g, '>').replace(/&lt;/g, '<').replace(/&amp;/g, '&'),
+                "pages_feed.bat": `@echo off
+setlocal
+
+if &#34;%~1&#34;==&#34;&#34; (
+    echo Error: Username not provided to pages_feed.bat.
+    if not defined called_from_dashboard (
+        pause
+    )
+    goto :eof
+)
+
+set &#34;current_user=%~1&#34;
+set &#34;community_type=Page&#34;
+set &#34;user_membership_folder=FollowedPages&#34;
+set &#34;community_posts_file=FamSocialNetwork\\community_posts.txt&#34;
+set &#34;user_membership_file=FamSocialNetwork\%current_user%\%user_membership_folder%\%community_type%s.txt&#34;
+
+cls
+echo.
+echo =========================================
+echo    %current_user%&#39;s Pages Feed
+echo =========================================
+echo.
+
+if not exist &#34;%user_membership_file%&#34; (
+    echo You have not followed any Pages yet. Follow some to see their posts!
+    echo.
+    if not defined called_from_dashboard (
+        pause
+    )
+    goto :eof
+)
+
+if not exist &#34;%community_posts_file&#34; (
+    echo No posts in any communities yet.
+    echo.
+    if not defined called_from_dashboard (
+        pause
+    )
+    goto :eof
+)
+
+echo --- Posts from your Followed Pages ---
+echo.
+
+set &#34;found_posts=false&#34;
+for /f &#34;tokens=*&#34; %%c in (&#39;type &#34;%user_membership_file%&#34; 2&gt;nul&#39;) do (
+    :: %%c contains a followed page&#39;s name
+    :: Filter community_posts.txt for posts from this page
+    rem Simplified findstr for web sim
+    set &#34;page_name=%%c&#34;
+    set &#34;search_term=[%community_type%:%page_name%]&#34;
+    for /f &#34;delims=&#34; %%L in (&#39;type &#34;%community_posts_file%&#34; 2&gt;nul&#39;) do (
+        echo %%L | findstr /i /l /c:&#34;%search_term%&#34; &gt;nul &amp;&amp; (
+            echo %%L
+            set &#34;found_posts=true&#34;
+        )
+    )
+)
+
+if &#34;%found_posts%&#34;==&#34;false&#34; (
+    echo No recent posts from your followed pages.
+)
+
+echo.
+echo =========================================
+echo.
+if not defined called_from_dashboard (
+    pause
+)
+endlocal
+goto :eof`.replace(/&#34;/g, '"').replace(/&gt;/g, '>').replace(/&lt;/g, '<').replace(/&amp;/g, '&'),
+                "signup_join_feed.bat": `@echo off
+setlocal
+
+set &#34;signup_join_log_file=FamSocialNetwork\\signup_join_log.txt&#34;
+
+cls
+echo.
+echo =========================================
+echo    FamSocialNetwork - Join &amp; Signup Log
+echo =========================================
+echo.
+
+if not exist &#34;%signup_join_log_file%&#34; (
+    echo No signup or join activity logged yet.
+    echo.
+    if not defined called_from_dashboard (
+        pause
+    )
+    goto :eof
+)
+
+echo --- Latest Activity ---
+echo.
+type &#34;%signup_join_log_file%&#34;
+echo.
+echo =========================================
+echo.
+if not defined called_from_dashboard (
+    pause
+)
+endlocal
+goto :eof`.replace(/&#34;/g, '"').replace(/&gt;/g, '>').replace(/&lt;/g, '<').replace(/&amp;/g, '&'),
+                "send_message.bat": `@echo off
+setlocal
+
+if &#34;%~1&#34;==&#34;&#34; (
+    echo Error: Sender username not provided to send_message.bat.
+    if not defined called_from_dashboard (
+        pause
+    )
+    goto :eof
+)
+
+set &#34;sender_user=%~1&#34;
+set &#34;social_dir=FamSocialNetwork&#34;
+
+cls
+echo.
+echo =========================================
+echo    Send Message - From %sender_user%
+echo =========================================
+echo.
+
+set /p &#34;recipient_user=Enter recipient username: &#34;
+
+set &#34;recipient_dir=%social_dir%\%recipient_user%&#34;
+if not exist &#34;%recipient_dir%&#34; (
+    echo Error: Recipient &#34;%recipient_user%&#34; does not exist.
+    pause
+    goto :eof
+)
+
+set /p &#34;message_content=Enter your message: &#34;
+if &#34;%message_content%&#34;==&#34;&#34; (
+    echo Message cannot be empty.
+    pause
+    goto :eof
+)
+
+:: Ensure recipient&#39;s messages directory exists
+if not exist &#34;%recipient_dir%\\Messages&#34; mkdir &#34;%recipient_dir%\\Messages&#34;
+
+:: Write message to recipient&#39;s inbox
+rem Simplified date/time for web sim
+echo [SIM_DATE SIM_TIME] From %sender_user%: %message_content% &gt;&gt; &#34;%recipient_dir%\\Messages\\inbox.txt&#34;
+
+echo.
+echo Message sent to %recipient_user%!
+echo.
+if not defined called_from_dashboard (
+    pause
+)
+endlocal
+goto :eof`.replace(/&#34;/g, '"').replace(/&gt;/g, '>').replace(/&lt;/g, '<').replace(/&amp;/g, '&'),
+                "view_messages.bat": `@echo off
+setlocal
+
+if &#34;%~1&#34;==&#34;&#34; (
+    echo Error: Username not provided to view_messages.bat.
+    if not defined called_from_dashboard (
+        pause
+    )
+    goto :eof
+)
+
+set &#34;current_user=%~1&#34;
+set &#34;inbox_file=FamSocialNetwork\%current_user%\\Messages\\inbox.txt&#34;
+
+cls
+echo.
+echo =========================================
+echo    %current_user%&#39;s Inbox
+echo =========================================
+echo.
+
+if not exist &#34;%inbox_file%&#34; (
+    echo Your inbox is empty.
+    echo.
+    if not defined called_from_dashboard (
+        pause
+    )
+    goto :eof
+)
+
+echo --- Messages ---
+echo.
+type &#34;%inbox_file%&#34;
+echo.
+echo =========================================
+echo.
+if not defined called_from_dashboard (
+    pause
+)
+endlocal
+goto :eof`.replace(/&#34;/g, '"').replace(/&gt;/g, '>').replace(/&lt;/g, '<').replace(/&amp;/g, '&'),
+                "video_feed.bat": `@echo off
+setlocal
+
+cls
+echo.
+echo =========================================
+echo    FamSocialNetwork - Video Feed
+echo =========================================
+echo.
+
+set &#34;video_posts_file=FamSocialNetwork\\video_posts.txt&#34;
+
+if not exist &#34;%video_posts_file%&#34; (
+    echo No video posts available yet.
+    echo.
+    if not defined called_from_dashboard (
+        pause
+    )
+    goto :eof
+)
+
+echo --- Latest Video Posts ---
+echo.
+type &#34;%video_posts_file%&#34;
+echo.
+echo =========================================
+echo.
+if not defined called_from_dashboard (
+    pause
+)
+endlocal
+goto :eof`.replace(/&#34;/g, '"').replace(/&gt;/g, '>').replace(/&lt;/g, '<').replace(/&amp;/g, '&'),
+                "radio_feed.bat": `@echo off
+setlocal
+
+cls
+echo.
+echo =========================================
+echo    FamSocialNetwork - Radio Feed
+echo =========================================
+echo.
+
+set &#34;radio_posts_file=FamSocialNetwork\\radio_posts.txt&#34;
+
+if not exist &#34;%radio_posts_file%&#34; (
+    echo No radio posts available yet.
+    echo.
+    if not defined called_from_dashboard (
+        pause
+    )
+    goto :eof
+)
+
+echo --- Latest Radio Posts ---
+echo.
+type &#34;%radio_posts_file%&#34;
+echo.
+echo =========================================
+echo.
+if not defined called_from_dashboard (
+    pause
+)
+endlocal
+goto :eof`.replace(/&#34;/g, '"').replace(/&gt;/g, '>').replace(/&lt;/g, '<').replace(/&amp;/g, '&'),
+                "tv_feed.bat": `@echo off
+setlocal
+
+cls
+echo.
+echo =========================================
+echo    FamSocialNetwork - TV Feed
+echo =========================================
+echo.
+
+set &#34;tv_posts_file=FamSocialNetwork\\tv_posts.txt&#34;
+
+if not exist &#34;%tv_posts_file%&#34; (
+    echo No TV posts available yet.
+    echo.
+    if not defined called_from_dashboard (
+        pause
+    )
+    goto :eof
+)
+
+echo --- Latest TV Posts ---
+echo.
+type &#34;%tv_posts_file%&#34;
+echo.
+echo =========================================
+echo.
+if not defined called_from_dashboard (
+    pause
+)
+endlocal
+goto :eof`.replace(/&#34;/g, '"').replace(/&gt;/g, '>').replace(/&lt;/g, '<').replace(/&amp;/g, '&'),
+                "communities_feed.bat": `@echo off
+setlocal
+
+cls
+echo.
+echo =========================================
+echo    FamSocialNetwork - Communities Feed
+echo =========================================
+echo.
+
+echo --- Clubs ---
+_list_communities Clubs
+echo.
+
+echo --- Groups ---
+_list_communities Groups
+echo.
+
+echo --- Pages ---
+_list_communities Pages
+echo.
+
+echo =========================================
+echo.
+echo To manage communities, return to the dashboard.
+echo.
+
+if not defined called_from_dashboard (
+    pause
+)
+endlocal
+goto :eof`.replace(/&#34;/g, '"').replace(/&gt;/g, '>').replace(/&lt;/g, '<').replace(/&amp;/g, '&')
+            };
+
+            for (const fileName in batchFileContents) {
+                batchFiles[fileName] = batchFileContents[fileName];
+            }
+            updateBatchFileList();
+            appendOutput('Initial batch files loaded (user_dashboard.bat, create_profile.bat, view_profile.bat, main_feed.bat, user_discover.bat, manage_relationships.bat, friend_feed.bat, follow_feed.bat, manage_communities.bat, clubs_feed.bat, groups_feed.bat, pages_feed.bat, marketplace_feed.bat, signup_join_feed.bat, send_message.bat, view_messages.bat, video_feed.bat, radio_feed.bat, tv_feed.bat, communities_feed.bat).');
+            appendOutput('You can now run "run user_dashboard.bat" to start the social network simulation.');
+        }
+
+    </script>
+</body>
+</html>

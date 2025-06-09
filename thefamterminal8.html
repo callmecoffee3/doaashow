@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>the fam terminal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles to enhance the terminal look and feel */
+        body {
+            font-family: 'Inter', sans-serif; /* Using Inter font as per instructions */
+            background-color: #1a202c; /* Dark background for terminal feel */
+            color: #e2e8f0; /* Light text color */
+        }
+        .terminal-container {
+            max-width: 90vw; /* Fluid width */
+            width: 900px; /* Max width for larger screens */
+            min-height: 600px; /* Minimum height to accommodate batch file input */
+            background-color: #2d3748; /* Slightly lighter dark background for terminal */
+            border-radius: 0.75rem; /* Rounded corners */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08); /* Subtle shadow */
+            display: flex;
+            flex-direction: column;
+            overflow: hidden; /* Hide scrollbars if content overflows initially */
+        }
+        .terminal-output {
+            flex-grow: 1; /* Allows output area to take available space */
+            overflow-y: auto; /* Scroll for overflow */
+            word-wrap: break-word; /* Ensure long lines break */
+            white-space: pre-wrap; /* Preserve whitespace and wrap text */
+            font-family: 'Courier New', monospace; /* Monospaced font for output */
+            line-height: 1.5;
+            padding: 1rem;
+            color: #a0aec0; /* Lighter grey for output text */
+            border-bottom: 1px solid #4a5568; /* Separator line */
+        }
+        .terminal-input-area {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background-color: #232a36; /* Darker background for input area */
+            border-bottom-left-radius: 0.75rem;
+            border-bottom-right-radius: 0.75rem;
+        }
+        .terminal-prompt {
+            color: #68d391; /* Green color for prompt */
+            font-weight: bold;
+            margin-right: 0.5rem;
+            font-family: 'Courier New', monospace;
+        }
+        .terminal-input {
+            flex-grow: 1; /* Input field takes most space */
+            background-color: transparent; /* Transparent background */
+            border: none; /* No border */
+            outline: none; /* No outline on focus */
+            color: #edf2f7; /* White text for input */
+            font-family: 'Courier New', monospace;
+            padding: 0.5rem 0;
+        }
+        .terminal-input:focus {
+            box-shadow: none; /* No shadow on focus */
+        }
+        .execute-button {
+            background-color: #4299e1; /* Blue button */
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem; /* Slightly rounded button */
+            transition: background-color 0.2s ease-in-out;
+            margin-left: 1rem;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .execute-button:hover {
+            background-color: #3182ce; /* Darker blue on hover */
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+    <div class="terminal-container flex flex-col rounded-xl overflow-hidden shadow-lg">
+        <div class="terminal-output" id="terminal-output"></div>
+        <div class="terminal-input-area">
+            <span class="terminal-prompt">$</span>
+            <input type="text" id="command" class="terminal-input" placeholder="Enter command...">
+            <button id="run" class="execute-button">Run</button>
+        </div>
+    </div>
+
+    <script>
+        const terminalOutput = document.getElementById("terminal-output");
+        const commandInput = document.getElementById("command");
+        const runButton = document.getElementById("run");
+        const fileSystem = {};
+        let currentUser = null;
+        const users = {};
+        let families = {};
+
+        function appendOutput(output) {
+            terminalOutput.innerText += output + "\n";
+            terminalOutput.scrollTop = terminalOutput.scrollHeight;
+        }
+
+        function runCommand(command) {
+            const args = command.split(" ");
+            const cmd = args[0].toLowerCase();
+
+            switch (cmd) {
+           case "mkdir":
+                    mkdir(args[1]);
+                    break;
+                case "ls":
+                    ls();
+                    break;
+                case "run":
+                    runBatchFile(args[1]);
+                    break;
+                case "help":
+                    showHelpMenu();
+                    break;
+                case "signup":
+                    signup(args[1], args[2]);
+                    break;
+                case "login":
+                    login(args[1], args[2]);
+                    break;
+                case "logout":
+                    logout();
+                    break;
+                case "deleteuser":
+                    deleteUser(args[1]);
+                    break;
+                case "thefam":
+                    if (currentUser) {
+                        runBatchFile("thefam.bat");
+                    } else {
+                        appendOutput("You must be logged in to access this feature.");
+                    }
+                    break;
+                case "users":
+                    runBatchFile("users.bat");
+                    break;
+                case "post":
+                    runBatchFile("post.bat");
+                    break;
+                case "marketplace":
+                    runBatchFile("marketplace.bat");
+                    break;
+                case "friends":
+                    runBatchFile("friends.bat");
+                    break;
+                case "family":
+                    runBatchFile("family.bat");
+                    break;
+                case "follows":
+                    runBatchFile("follows.bat");
+                    break;
+                case "follow":
+                    runBatchFile("follow.bat");
+                    break;
+                case "messages":
+                    runBatchFile("messages.bat");
+                    break;
+                case "chat":
+                    runBatchFile("chat.bat");
+                    break;
+                case "groups":
+                    runBatchFile("groups.bat");
+                    break;
+                case "clubs":
+                    runBatchFile("clubs.bat");
+                    break;
+                case "trends":
+                    runBatchFile("trends.bat");
+                    break;
+                case "public":
+                    runBatchFile("public.bat");
+                    break;
+                case "private":
+                    runBatchFile("private.bat");
+                    break;
+                case "feed":
+                    runBatchFile("feed.bat");
+                    break;
+                case "push":
+                    pushChanges(args.slice(1).join(" "));
+                    break;
+                case "clear":
+                    terminalOutput.innerText = "";
+                    appendOutput("Screen cleared.");
+                    break;
+                default:
+                    appendOutput(`Unknown command: ${command}`);
+            }
+
+                case "create":
+                    if (args[1] === "family") {
+                        createFamily(args.slice(2).join(" "));
+                    }
+                    break;
+
+                case "join":
+                    if (args[1] === "family") {
+                        joinFamily(args.slice(2).join(" "));
+                    }
+                    break;
+
+                case "leave":
+                    if (args[1] === "family") {
+                        leaveFamily();
+                    }
+                    break;
+
+                case "follow":
+                    followUser(args[1]);
+                    break;
+
+                case "unfollow":
+                    unfollowUser(args[1]);
+                    break;
+
+
+            }
+        }
+
+
+        function mkdir(dirName) {
+            if (!fileSystem[dirName]) {
+                fileSystem[dirName] = {};
+                appendOutput(`Directory ${dirName} created.`);
+            } else {
+                appendOutput(`Directory ${dirName} already exists.`);
+            }
+        }
+
+        function ls() {
+            appendOutput("Files and directories:");
+            for (const file in fileSystem) {
+                appendOutput(file);
+            }
+        }
+
+        function runBatchFile(batchFileName) {
+            const batchFiles = {
+                "thefam.bat": `@echo off
+echo Welcome to TheFam!`,
+                "users.bat": `@echo off
+echo Users:
+echo JohnDoe
+echo JaneDoe`,
+                "post.bat": `@echo off
+echo Post something:
+set /p post=Enter your post: 
+echo You posted: %post%`,
+                "marketplace.bat": `@echo off
+echo Marketplace:
+echo Buy and sell items here.`,
+                "friends.bat": `@echo off
+echo Friends:
+echo JohnDoe is your friend.`,
+                "family.bat": `@echo off
+echo Family:
+echo JaneDoe is your family member.`,
+                "follows.bat": `@echo off
+echo Follows:
+echo You follow JohnDoe.`,
+                "follow.bat": `@echo off
+echo Follow someone:
+set /p follow=Enter username: 
+echo You are now following %follow%.`,
+                "messages.bat": `@echo off
+echo Messages:
+echo You have a message from JohnDoe.`,
+                "chat.bat": `@echo off
+echo Chat:
+echo You are chatting with JohnDoe.`,
+                "groups.bat": `@echo off
+echo Groups:
+echo You are a member of Group1.`,
+                "clubs.bat": `@echo off
+echo Clubs:
+echo You are a member of Club1.`,
+                "trends.bat": `@echo off
+echo Trends:
+echo #Trend1 is trending.`,
+                "public.bat": `@echo off
+echo Public:
+echo This is a public post.`,
+                "private.bat": `@echo off
+echo Private:
+echo This is a private message.`,
+                "feed.bat": `@echo off
+echo Feed:
+echo You have a new post from JohnDoe.
+echo You have a new message from JaneDoe.`
+            };
+
+            if (batchFiles[batchFileName]) {
+                const batchFileContent = batchFiles[batchFileName];
+                const lines = batchFileContent.split("\n");
+                lines.forEach((line) => {
+                    if (line.startsWith("echo")) {
+                        appendOutput(line.replace("echo", "").trim());
+                    }
+                });
+            } else {
+                appendOutput(`Batch file ${batchFileName} not found.`);
+            }
+        }
+
+        function pushChanges(commitMessage) {
+            if (!users[currentUser]) {
+                users[currentUser] = {};
+            }
+            if (!users[currentUser].repository) {
+                users[currentUser].repository = [];
+            }
+            users[currentUser].repository.push({
+                commitMessage: commitMessage,
+                timestamp: new Date().toLocaleString()
+            });
+            appendOutput(`Changes pushed with commit message: ${commitMessage}`);
+        }
+
+        function signup(username, password) {
+            if (!users[username]) {
+                users[username] = {
+                    password: password
+                };
+                appendOutput(`User ${username} created.`);
+            } else {
+                appendOutput(`Username ${username} already exists.`);
+            }
+        }
+
+        function login(username, password) {
+            if (users[username] && users[username].password === password) {
+                currentUser = username;
+                appendOutput(`Welcome, ${username}!`);
+            } else {
+                appendOutput("Invalid username or password.");
+            }
+        }
+
+        function logout() {
+            currentUser = null;
+            appendOutput("You have been logged out.");
+        }
+
+        function deleteUser(username) {
+            if (currentUser && users[username]) {
+                if (currentUser === username || confirm(`Are you sure you want to delete user ${username}?`)) {
+                    delete users[username];
+                    appendOutput(`User ${username} deleted.`);
+                    if (currentUser === username) {
+                        currentUser = null;
+                    }
+                }
+            } else {
+                appendOutput("You must be logged in to delete a user, or the user does not exist.");
+            }
+        }
+
+        function createFamily(familyName) {
+            if (currentUser) {
+                if (!families[familyName]) {
+                    families[familyName] = {
+                        members: [currentUser]
+                    };
+                    appendOutput(`Family ${familyName} created.`);
+                } else {
+                    appendOutput(`Family ${familyName} already exists.`);
+                }
+            } else {
+                appendOutput("You must be logged in to create a family.");
+            }
+        }
+
+        function joinFamily(familyName) {
+            if (currentUser) {
+                if (families[familyName]) {
+                    if (!families[familyName].members.includes(currentUser)) {
+                        families[familyName].members.push(currentUser);
+                        appendOutput(`You have joined ${familyName}.`);
+                    } else {
+                        appendOutput(`You are already a member of ${familyName}.`);
+                    }
+                } else {
+                    appendOutput(`Family ${familyName} does not exist.`);
+                }
+            } else {
+                appendOutput("You must be logged in to join a family.");
+            }
+        }
+
+        function leaveFamily() {
+            if (currentUser) {
+                for (const familyName in families) {
+                    if (families[familyName].members.includes(currentUser)) {
+                        families[familyName].members = families[familyName].members.filter(member => member !== currentUser);
+                        appendOutput(`You have left ${familyName}.`);
+                        return;
+                    }
+                }
+                appendOutput("You are not a member of any family.");
+            } else {
+                appendOutput("You must be logged in to leave a family.");
+            }
+        }
+
+        function followUser(username) {
+            if (currentUser) {
+                if (users[username]) {
+                    if (!users[currentUser].following) {
+                        users[currentUser].following = [];
+                    }
+                    if (!users[currentUser].following.includes(username)) {
+                        users[currentUser].following.push(username);
+                        appendOutput(`You are now following ${username}.`);
+                    } else {
+                        appendOutput(`You are already following ${username}.`);
+                    }
+                } else {
+                    appendOutput(`User ${username} does not exist.`);
+                }
+            } else {
+                appendOutput("You must be logged in to follow someone.");
+            }
+        }
+
+        function unfollowUser(username) {
+            if (currentUser) {
+                if (users[currentUser].following) {
+                    users[currentUser].following = users[currentUser].following.filter(user => user !== username);
+                    appendOutput(`You are no longer following ${username}.`);
+                } else {
+                    appendOutput(`You are not following ${username}.`);
+                }
+            } else {
+                appendOutput("You must be logged in to unfollow someone.");
+            }
+        }
+
+        runButton.addEventListener("click", () => {
+            const command = commandInput.value.trim();
+            runCommand(command);
+            commandInput.value = "";
+        });
+
+      function showHelpMenu() {
+    appendOutput("Available commands:");
+    appendOutput("  mkdir <dirName>  - Create a new directory");
+    appendOutput("  ls              - List files and directories");
+    appendOutput("  run <batchFile> - Run a batch file");
+    appendOutput("  help           - Show this help menu");
+    appendOutput("  signup <username> <password> - Create a new user");
+    appendOutput("  login <username> <password> - Log in to an existing user");
+    appendOutput("  logout         - Log out of the current user");
+    appendOutput("  deleteuser <username> - Delete a user from the network");
+    appendOutput("  push <commitMessage> - Push changes with a commit message");
+    appendOutput("  clear          - Clear the terminal screen");
+    appendOutput("  Available directories:");
+    appendOutput("  thefam");
+    appendOutput("  users");
+    appendOutput("  post");
+    appendOutput("  marketplace");
+    appendOutput("  friends");
+    appendOutput("  family");
+    appendOutput("  follows");
+    appendOutput("  messages");
+    appendOutput("  chat");
+    appendOutput("  groups");
+    appendOutput("  clubs");
+    appendOutput("  trends");
+    appendOutput("  public");
+    appendOutput("  private");
+}
+
+        runButton.addEventListener("click", () => {
+            const command = commandInput.value.trim();
+            runCommand(command);
+            commandInput.value = "";
+        });
+
+        appendOutput("Welcome to the terminal simulator!");
+        appendOutput("Type 'help' for a list of available commands.");
+
+        // Create directories
+mkdir("thefam");
+mkdir("users");
+mkdir("post");
+mkdir("marketplace");
+mkdir("friends");
+mkdir("family");
+mkdir("follows");
+mkdir("messages");
+mkdir("chat");
+mkdir("groups");
+mkdir("clubs");
+mkdir("trends");
+mkdir("public");
+mkdir("private");
+            </script>
+</body>
+</html>
