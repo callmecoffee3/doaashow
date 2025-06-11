@@ -5,7 +5,7 @@ Here's the updated code with additional features:
 title Facebook-Like Platform (FB-LP)
 color 0a
 
-:: Initialize database
+:: Initialize database >>database.bat
 if not exist database (
     mkdir database
 )
@@ -36,7 +36,7 @@ if not exist database\posts.txt (
     echo id,title,description,author > database\posts.txt
 )
 
-:: Main Menu
+:: Main Menu >>main_menu.bat
 :menu
 cls
 echo Facebook-Like Platform (FB-LP)
@@ -56,7 +56,7 @@ if %errorlevel% == 1 goto login
 if %errorlevel% == 2 goto register
 if %errorlevel% == 3 exit
 
-:: Login
+:: Login >>login.bat
 :login
 cls
 echo Login
@@ -76,7 +76,7 @@ pause
 goto login
 
 :: Register
-:register
+:register >>register.bat
 cls
 echo Register
 echo.
@@ -90,14 +90,14 @@ echo Registration successful!
 pause
 goto menu
 
-:: Profile
+:: Profile >>profile.batt
 :profile
 cls
 echo Profile
 echo.
 echo Welcome, %logged_in_name%!
 
-:: Navigation Bar
+:: Navigation Bar >>navigation_bar.bat
 echo.
 echo **********************************
 echo - Navigation *
@@ -126,7 +126,7 @@ if %errorlevel% == 7 goto marketplace
 if %errorlevel% == 8 goto profile_settings
 if %errorlevel% == 9 goto create_post
 
-:: Create Post
+:: Create Post >>create_post.bat
 :create_post
 cls
 echo Create Post
@@ -138,7 +138,7 @@ echo Post created successfully!
 pause
 goto profile
 
-:: News Feed
+:: News Feed >>news_feed.batt
 :news_feed
 cls
 echo News Feed
@@ -149,7 +149,7 @@ for /f "tokens=1-4" %%a in (database\posts.txt) do (
 pause
 goto profile
 
-:: Groups
+:: Groups >>groups.bat
 :groups
 cls
 echo Groups

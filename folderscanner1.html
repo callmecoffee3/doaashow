@@ -1,0 +1,125 @@
+
+Server-side code (Node.js):
+const express = require('express');
+const app = express();
+const fs = require('fs');
+const path = require('path');
+
+app.use(express.json());
+app.use(express.static('public'));
+
+app.post('/scan-folder', (req, res) => {
+    const folderPath = req.body.folder;
+    const outputFile = req.body.outputFile;
+    const result = [];
+
+    function scanFolder(folderPath) {
+        fs.readdirSync(folderPath).forEach(file => {
+            const filePath = path.join(folderPath, file);
+            const stat = fs.statSync(filePath);
+
+            if (stat.isDirectory()) {
+                result.push(Folder: ${filePath});
+                scanFolder(filePath);
+            } else {
+                result.push(File: ${filePath});
+            }
+        });
+    }
+
+    scanFolder(folderPath);
+
+    fs.writeFile(outputFile, result.join('\n'), (err) => {
+        if (err) {
+            console.error(err);
+            res.status(500).send('Error scanning folder');
+        } else {
+            res.send(Folder scanned successfully! Results saved to ${outputFile});
+        }
+    });
+});
+
+app.listen(3000, () => {
+    console.log('Server listening on port 3000');
+});
+
+
+
+Client-side code (HTML and JavaScript):
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Folder Scanner</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+        form {
+            width: 50%;
+            margin: 40px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #337ab7;
+        }
+        input[type="file"] {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #3e8e41;
+        }
+    </style>
+</head>
+<body>
+    <form id="folder-form">
+        <label for="folder">Select Folder to Scan:</label>
+        <input type="file" id="folder" name="folder" webkitdirectory directory multiple>
+        <label for="output-file">Select Output File:</label>
+        <input type="file" id="output-file" name="output-file" nwsaveas>
+        <input type="submit" value="Scan Folder">
+    </form>
+    <div id="result"></div>
+
+    <script>
+        const form = document.getElementById('folder-form');
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const folderInput = document.getElementById('folder');
+            const outputFileInput = document.getElementById('output-file');
+            const folder = folderInput.files[0].path;
+            const outputFile = outputFileInput.files[0].path;
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '/scan-folder', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            const data = { folder: folder, outputFile: outputFile };
+            xhr.send(JSON.stringify(data));
+            xhr.onload = () => {
+                if (xhr.status === 200) {
+                    const result = document.getElementById('result');
+                    result.innerHTML = xhr.responseText;
+                } else {
+                    console.error('Error scanning folder:', xhr.statusText);
+                }
+            };
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+index.html | this scans every folder on your computer then prints it to a txt file
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Folder Scanner</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+        #result {
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <button id="scan-button">Scan Folder</button>
+    <div id="result"></div>
+
+    <script>
+        const scanButton = document.getElementById('scan-button');
+        const resultElement = document.getElementById('result');
+
+        scanButton.addEventListener('click', async () => {
+            try {
+                const directoryHandle = await window.showDirectoryPicker();
+                const files = [];
+
+                async function scanDirectory(directoryHandle) {
+                    for await (const entry of directoryHandle.values()) {
+                        if (entry.kind === 'file') {
+                            files.push(File: ${entry.name});
+                        } else if (entry.kind === 'directory') {
+                            files.push(Folder: ${entry.name});
+                            await scanDirectory(entry);
+                        }
+                    }
+                }
+
+                await scanDirectory(directoryHandle);
+                resultElement.innerText = files.join('\n');
+            } catch (error) {
+                console.error('Error scanning folder:', error);
+            }
+        });
+    </script>
+</body>
+</html>

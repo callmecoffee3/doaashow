@@ -1,0 +1,273 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Folder Scanner</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+        form {
+            width: 50%;
+            margin: 40px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #337ab7;
+        }
+        input[type="file"] {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #3e8e41;
+        }
+        .header {
+            background-color: #337ab7;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            border-radius: 10px 10px 0 0;
+        }
+    </style>
+</head>
+<body>
+    <form id="folder-form">
+        <div class="header">
+            <h2>Folder Scanner</h2>
+        </div>
+        <label for="folder">Select Folder:</label>
+        <input type="file" id="folder" name="folder" webkitdirectory directory multiple>
+        <label for="output-file">Select Output File:</label>
+        <input type="file" id="output-file" name="output-file">
+        <label for="logo">Select Logo:</label>
+        <input type="file" id="logo" name="logo">
+        <label for="image">Upload Image:</label>
+        <input type="file" id="image" name="image">
+        <input type="submit" value="Scan Folder" style="background-color: #337ab7;">
+    </form>
+
+    <script>
+        const form = document.getElementById('folder-form');
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Add code to handle form submission and scan folder
+            
+const form = document.getElementById('folder-form');
+form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const folderInput = document.getElementById('folder');
+    const outputFileInput = document.getElementById('output-file');
+    const logoInput = document.getElementById('logo');
+    const imageInput = document.getElementById('image');
+
+    const folder = folderInput.files[0];
+    const outputFile = outputFileInput.files[0];
+    const logo = logoInput.files[0];
+    const image = imageInput.files[0];
+
+    // Check if all files are selected
+    if (folder && outputFile && logo && image) {
+        // Create a new XMLHttpRequest object
+        const xhr = new XMLHttpRequest();
+
+        // Set the request method and URL
+        xhr.open('POST', '/scan-folder', true);
+
+        // Set the request headers
+        xhr.setRequestHeader('Content-Type', 'application/json');
+
+        // Create a JSON object to send to the server
+        const data = {
+            folder: folder.path,
+            outputFile: outputFile.path,
+            logo: logo.path,
+            image: image.path
+        };
+
+        // Send the request to the server
+        xhr.send(JSON.stringify(data));
+
+        // Handle the response from the server
+        xhr.onload = () => {
+            if (xhr.status === 200) {
+                console.log('Folder scanned successfully!');
+            } else {
+                console.error('Error scanning folder:', xhr.statusText);
+            }
+        };
+    } else {
+        console.error('Please select all files.');
+    }
+});
+        });
+
+
+        
+const express = require('express');
+const app = express();
+const fs = require('fs');
+const path = require('path');
+
+app.post('/scan-folder', (req, res) => {
+    const folderPath = req.body.folder;
+    const outputFilePath = req.body.outputFile;
+
+    fs.readdir(folderPath, (err, files) => {
+        if (err) {
+            console.error(err);
+            res.status(500).send('Error scanning folder');
+        } else {
+            const fileNames = files.map((file) => path.join(folderPath, file));
+            res.send(fileNames);
+        }
+    });
+});    </script>
+</body>
+</html>
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+public class FolderScanner extends JFrame {
+
+    private JTextField folderPathField;
+    private JTextField outputFileField;
+    private JButton folderButton;
+    private JButton outputButton;
+    private JButton scanButton;
+    private JButton logoButton;
+    private JButton imageButton;
+
+    private File selectedFolder;
+    private File selectedOutputFile;
+    private File selectedLogo;
+    private File selectedImage;
+
+    public FolderScanner() {
+        createGUI();
+    }
+
+    private void createGUI() {
+        setLayout(new BorderLayout());
+
+        // Create panel for folder selection
+        JPanel folderPanel = new JPanel();
+        folderPanel.add(new JLabel("Folder Path:"));
+        folderPathField = new JTextField(20);
+        folderPanel.add(folderPathField);
+        folderButton = new JButton("Browse");
+        folderButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                int returnValue = fileChooser.showOpenDialog(null);
+                if (returnValue == JFileChooser.APPROVE_OPTION) {
+                    selectedFolder = fileChooser.getSelectedFile();
+                    folderPathField.setText(selectedFolder.getAbsolutePath());
+                }
+            }
+        });
+        folderPanel.add(folderButton);
+        add(folderPanel, BorderLayout.NORTH);
+
+        // Create panel for output file selection
+        JPanel outputPanel = new JPanel();
+        outputPanel.add(new JLabel("Output File:"));
+        outputFileField = new JTextField(20);
+        outputPanel.add(outputFileField);
+        outputButton = new JButton("Browse");
+        outputButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                int returnValue = fileChooser.showSaveDialog(null);
+                if (returnValue == JFileChooser.APPROVE_OPTION) {
+                    selectedOutputFile = fileChooser.getSelectedFile();
+                    outputFileField.setText(selectedOutputFile.getAbsolutePath());
+                }
+            }
+        });
+        outputPanel.add(outputButton);
+        add(outputPanel, BorderLayout.CENTER);
+
+        // Create panel for logo and image selection
+        JPanel logoPanel = new JPanel();
+        logoButton = new JButton("Choose Logo");
+        logoButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                int returnValue = fileChooser.showOpenDialog(null);
+                if (returnValue == JFileChooser.APPROVE_OPTION) {
+                    selectedLogo = fileChooser.getSelectedFile();
+                    JOptionPane.showMessageDialog(null, "Logo selected: " + selectedLogo.getName());
+                }
+            }
+        });
+        logoPanel.add(logoButton);
+
+        imageButton = new JButton("Upload Image");
+        imageButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                int returnValue = fileChooser.showOpenDialog(null);
+                if (returnValue == JFileChooser.APPROVE_OPTION) {
+                    selectedImage = fileChooser.getSelectedFile();
+                    JOptionPane.showMessageDialog(null, "Image uploaded: " + selectedImage.getName());
+                }
+            }
+        });
+        logoPanel.add(imageButton);
+        add(logoPanel, BorderLayout.SOUTH);
+
+        // Create scan button
+        scanButton = new JButton("Scan Folder");
+        scanButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (selectedFolder != null && selectedOutputFile != null) {
+                    scanFolders(selectedFolder, selectedOutputFile);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Please select folder and output file");
+                }
+            }
+        });
+        add(scanButton, BorderLayout.EAST);
+
+        setSize(400, 300);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setVisible(true);
+    }
+
+    private void scanFolders(File dir, File outputFile) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(outputFile))) {
+            File[] files = dir.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    if (file.isDirectory()) {
+                        writer.println("Folder: " + file.getAbsolutePath());
+                        System.out.println("Folder: " + file.getAbsolutePath());
+                        scanFolders(file, outputFile); // Recursive call
