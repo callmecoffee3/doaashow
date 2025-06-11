@@ -1,0 +1,93 @@
+index.html | this scans every folder on your computer then prints it to a txt file and writes results of scan
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Folder Scanner</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+        #result {
+            white-space: pre-wrap;
+        }
+        #status {
+            font-size: 14px;
+            color: #666;
+        }
+        #scan-indicator {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #4CAF50;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <button id="scan-button">Scan Folder</button>
+    <div id="scan-indicator"></div>
+    <div id="status">Status: Idle</div>
+    <div id="result"></div>
+    <a id="download-link" style="display: none;">Download Result</a>
+
+    <script>
+        const scanButton = document.getElementById('scan-button');
+        const scanIndicator = document.getElementById('scan-indicator');
+        const statusElement = document.getElementById('status');
+        const resultElement = document.getElementById('result');
+        const downloadLink = document.getElementById('download-link');
+
+        scanButton.addEventListener('click', async () => {
+            statusElement.innerText = 'Status: Scanning...';
+            scanIndicator.style.display = 'inline-block';
+            resultElement.innerText = '';
+            try {
+                const directoryHandle = await window.showDirectoryPicker();
+                const files = [];
+
+                async function scanDirectory(directoryHandle, path = '') {
+                    for await (const entry of directoryHandle.values()) {
+                        const entryPath = path + '/' + entry.name;
+                        if (entry.kind === 'file') {
+                            files.push(File: ${entryPath});
+                            resultElement.innerText += File: ${entryPath}\n;
+                        } else if (entry.kind === 'directory') {
+                            files.push(Folder: ${entryPath});
+                            resultElement.innerText += Folder: ${entryPath}\n;
+                            await scanDirectory(entry, entryPath);
+                        }
+                    }
+                }
+
+                await scanDirectory(directoryHandle);
+                const resultText = files.join('\n');
+                const blob = new Blob([resultText], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                downloadLink.href = url;
+                downloadLink.download = 'folder-scan-result.txt';
+                downloadLink.style.display = 'block';
+
+                statusElement.innerText = 'Status: Scan Complete!';
+            } catch (error) {
+                console.error('Error scanning folder:', error);
+                statusElement.innerText = 'Status: Error Occurred';
+            } finally {
+                scanIndicator.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
