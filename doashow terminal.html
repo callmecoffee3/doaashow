@@ -1,0 +1,147 @@
+index.html: doashow terminal
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Doashow</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .folder-structure {
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Doashow</h1> 
+    <h2>Folder Structure:</h2>
+    <ul class="folder-structure">
+        <li>Main-Package</li>
+        <li>Main-Menu</li>
+        <li>Producer</li>
+        <li>Writers Corner</li>
+        <li>Prices</li>
+        <li>Settings</li>
+        <li>Options</li>
+        <li>Media</li>
+        <li>Games</li>
+        <li>Videos</li>
+        <li>Uppercase Letters
+            <ul>
+                <li>A</li>
+                <li>B</li>
+                <li>C</li>
+                <li>D</li>
+                <li>E</li>
+                <li>F</li>
+                <li>G</li>
+                <li>H</li>
+                <li>I</li>
+                <li>J</li>
+                <li>K</li>
+                <li>L</li>
+                <li>M</li>
+                <li>N</li>
+                <li>O</li>
+                <li>P</li>
+                <li>Q</li>
+                <li>R</li>
+                <li>S</li>
+                <li>T</li>
+                <li>U</li>
+                <li>V</li>
+                <li>W</li>
+                <li>X</li>
+                <li>Y</li>
+                <li>Z</li>
+            </ul>
+        </li>
+        <li>Lowercase Letters
+            <ul>
+                <li>a</li>
+                <li>b</li>
+                <li>c</li>
+                <li>d</li>
+                <li>e</li>
+                <li>f</li>
+                <li>g</li>
+                <li>h</li>
+                <li>i</li>
+                <li>j</li>
+                <li>k</li>
+                <li>l</li>
+                <li>m</li>
+                <li>n</li>
+                <li>o</li>
+                <li>p</li>
+                <li>q</li>
+                <li>r</li>
+                <li>s</li>
+                <li>t</li>
+                <li>u</li>
+                <li>v</li>
+                <li>w</li>
+                <li>x</li>
+                <li>y</li>
+                <li>z</li>
+            </ul>
+        </li>
+        <li>Numbers
+            <ul>
+                <li>0</li>
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+                <li>5</li>
+                <li>6</li>
+                <li>7</li>
+                <li>8</li>
+                <li>9</li>
+                <li>10</li>
+            </ul>
+        </li>
+    </ul>
+    <button onclick="createFolderStructure()">Create Folder Structure</button>
+
+    <script>
+        function createFolderStructure() {
+            // Make an AJAX request to create the folder structure
+            fetch('/create-folder-structure')
+                .then(response => response.text())
+                .then(message => console.log(message))
+                .catch(error => console.error(error));
+        }
+    </script>
+</body>
+</html>
+
+
+
+server.js:
+const fs = require('fs');
+const path = require('path');
+const http = require('http');
+
+const directoryPath = path.join(process.cwd(), 'Doashow');
+
+// Create the root folder
+if (!fs.existsSync(directoryPath)) {
+    fs.mkdirSync(directoryPath);
+}
+
+const server = http.createServer((req, res) => {
+    if (req.url === '/create-folder-structure') {
+        createFolderStructure();
+        res.writeHead(200, { 'Content-Type': 'text/plain' });
+        res.end('Folder structure created successfully!');
+    } else if (req.url === '/') {
+        fs.readFile('index.html', (err, data) => {
+            if (err) {
+                res.writeHead(404, { 'Content-Type': 'text/plain' });
+                res.end('404 Not Found');
+            } else {
+                res.writeHead(200, { 'Content-Type': 'text/html' });
+                res.end(data);
+            }
+        });

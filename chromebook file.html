@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chromebook Directory</title>
+    <style>
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-left: 20px;
+        }
+
+        li::before {
+            content: "\25B8";
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="directory"></div>
+
+    <script>
+        const directory = {
+            'My Files': {
+                'Documents': {
+                    'School': ['Homework.txt', 'Projects.docx'],
+                    'Personal': ['Letters.pdf', 'Photos.jpg']
+                },
+                'Downloads': ['Files', 'Images'],
+                'Pictures': ['Vacation.jpg', 'Family.png']
+            }
+        };
+
+        function generateDirectory(directory, element) {
+            for (const folder in directory) {
+                const folderElement = document.createElement('li');
+                folderElement.textContent = folder;
+                element.appendChild(folderElement);
+
+                if (typeof directory[folder] === 'object') {
+                    const subDirectoryElement = document.createElement('ul');
+                    folderElement.appendChild(subDirectoryElement);
+                    generateDirectory(directory[folder], subDirectoryElement);
+                } else if (Array.isArray(directory[folder])) {
+                    const subDirectoryElement = document.createElement('ul');
+                    folderElement.appendChild(subDirectoryElement);
+                    for (const file of directory[folder]) {
+                        const fileElement = document.createElement('li');
+                        fileElement.textContent = file;
+                        subDirectoryElement.appendChild(fileElement);
+                    }
+                }
+            }
+        }
+
+        const directoryElement = document.getElementById('directory');
+        const ulElement = document.createElement('ul');
+        directoryElement.appendChild(ulElement);
+        generateDirectory(directory, ulElement);
+    </script>
+</body>
+</html>

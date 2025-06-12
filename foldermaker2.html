@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Folder Maker</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+</head>
+<body>
+    <h1>Folder Maker</h1>
+    <button id="generate-folders">Generate Folders</button>
+
+    <script>
+        const generateFoldersButton = document.getElementById('generate-folders');
+        generateFoldersButton.addEventListener('click', () => {
+            try {
+                const zip = new JSZip();
+
+                // Uppercase letters
+                const uppercaseLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                const uppercaseFolder = zip.folder('Uppercase Letters');
+                for (let i = 0; i < uppercaseLetters.length; i++) {
+                    uppercaseFolder.folder(uppercaseLetters[i]);
+                }
+
+                // Lowercase letters
+                const lowercaseLetters = 'abcdefghijklmnopqrstuvwxyz';
+                const lowercaseFolder = zip.folder('Lowercase Letters');
+                for (let i = 0; i < lowercaseLetters.length; i++) {
+                    lowercaseFolder.folder(lowercaseLetters[i]);
+                }
+
+                // Numbers
+                const numbersFolder = zip.folder('Numbers');
+                for (let i = 0; i <= 10; i++) {
+                    numbersFolder.folder(i.toString());
+                }
+
+
+                zip.generateAsync({ type: 'blob' })
+                    .then((content) => {
+                        saveAs(content, 'folders.zip');
+                    })
+                    .catch((error) => {
+                        console.error('Error generating zip file:', error);
+                    });
+            } catch (error) {
+                console.error('Error creating folders:', error);
+            }
+        });
+    </script>
+</body>
+</html>

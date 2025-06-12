@@ -1,0 +1,104 @@
+
+index.html: (no changes needed)
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Folder Structure</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .folder-structure {
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Folder Structure</h1>
+    <p>Click the button below to download the folder structure as a zip file.</p>
+    <form action="/download-folder-structure" method="post">
+        <button type="submit">Download Folder Structure</button>
+    </form>
+</body>
+</html>
+
+
+
+app.py:
+
+
+from flask import Flask, render_template, send_file
+import os
+import zipfile
+
+app = Flask(_name_)
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/download-folder-structure', methods=['POST'])
+def download_folder_structure():
+    directory_path = os.path.join(os.getcwd(), 'Doashow')
+    if not os.path.exists(directory_path):
+        os.mkdir(directory_path)
+
+    main_folders = [
+        'Main-Package',
+        'Main-Menu',
+        'Producer',
+        'Writers Corner',
+        'Prices',
+        'Settings',
+        'Options',
+        'Media',
+        'Games',
+        'Videos'
+    ]
+    for folder in main_folders:
+        folder_path = os.path.join(directory_path, folder)
+        if not os.path.exists(folder_path):
+            os.mkdir(folder_path)
+
+    uppercase_letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    uppercase_folder = os.path.join(directory_path, 'Uppercase Letters')
+    if not os.path.exists(uppercase_folder):
+        os.mkdir(uppercase_folder)
+    for letter in uppercase_letters:
+        folder_path = os.path.join(uppercase_folder, letter)
+        if not os.path.exists(folder_path):
+            os.mkdir(folder_path)
+
+    lowercase_letters = 'abcdefghijklmnopqrstuvwxyz'
+    lowercase_folder = os.path.join(directory_path, 'Lowercase Letters')
+    if not os.path.exists(lowercase_folder):
+        os.mkdir(lowercase_folder)
+    for letter in lowercase_letters:
+        folder_path = os.path.join(lowercase_folder, letter)
+        if not os.path.exists(folder_path):
+            os.mkdir(folder_path)
+
+    numbers_folder = os.path.join(directory_path, 'Numbers')
+    if not os.path.exists(numbers_folder):
+        os.mkdir(numbers_folder)
+    for i in range(11):
+        folder_path = os.path.join(numbers_folder, str(i))
+        if not os.path.exists(folder_path):
+            os.mkdir(folder_path)
+
+    zip_path = os.path.join(os.getcwd(), 'Doashow.zip')
+    with zipfile.ZipFile(zip_path, 'w') as zip_file:
+        for root, dirs, files in os.walk(directory_path):
+            for dir in dirs:
+                dir_path = os.path.join(root, dir)
+                zip_file.write(dir_path, os.path.relpath(dir_path, os.getcwd()))
+            for file in files:
+                file_path = os.path.join(root, file)
+                zip_file.write(file_path, os.path.relpath(file_path, os.getcwd()))
+
+    return send_file(zip_path, as_attachment=True)
+
+if _name_ == '_main_':
+    app.run(debug=True
