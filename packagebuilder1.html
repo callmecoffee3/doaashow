@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Package Uploader</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="package-uploader">
+        <h1>Package Uploader</h1>
+        <form id="package-form">
+            <input type="file" id="package-file" accept=".json">
+            <button id="upload-package-button">Upload Package</button>
+            <button id="download-package-button" style="display: none;">Download Package</button>
+        </form>
+        <div id="package-output"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+
+
+
+CSS (no changes)
+
+
+JavaScript
+
+
+document.getElementById("upload-package-button").addEventListener("click", function(event) {
+    event.preventDefault();
+
+    var fileInput = document.getElementById("package-file");
+    var file = fileInput.files[0];
+
+    if (file) {
+        var reader = new FileReader();
+        reader.onload = function(event) {
+            try {
+                var packageData = JSON.parse(event.target.result);
+                var packageOutput = document.getElementById("package-output");
+                packageOutput.innerText = JSON.stringify(packageData, null, 2);
+
+                // Show download button
+                var downloadButton = document.getElementById("download-package-button");
+                downloadButton.style.display = "inline-block";
+                downloadButton.addEventListener("click", function() {
+                    var blob = new Blob([JSON.stringify(packageData, null, 2)], {type: "application/json"});
+                    var link = document.createElement("a");
+                    link.href = URL.createObjectURL(blob);
+                    link.download = "package.json";
+                    link.click();
+                });
+            } catch (error) {
+                console.error("Error parsing JSON:", error);
+                var packageOutput = document.getElementById("package-output");
+                packageOutput.innerText = "Error parsing JSON: " + error.message;
+            }
+        };
+        reader.readAsText(file);
+    } else {
+        console.error("No file selected");
+        var packageOutput = document.getElementById("package-output");
+        packageOutput.innerText = "No file selected";
+    }
+});

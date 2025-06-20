@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Package Builder</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="package-builder">
+        <h1>Package Builder</h1>
+        <form id="package-form">
+            <label for="package-name">Package Name:</label>
+            <input type="text" id="package-name" required>
+            <br><br>
+            <label for="package-version">Package Version:</label>
+            <input type="text" id="package-version" required>
+            <br><br>
+            <label for="package-description">Package Description:</label>
+            <textarea id="package-description" required></textarea>
+            <br><br>
+            <button id="build-package-button">Build Package</button>
+        </form>
+        <div id="package-output"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+
+
+
+CSS (in style.css file)
+
+
+.package-builder {
+    width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#package-form {
+    margin-bottom: 20px;
+}
+
+#package-form label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+#package-form input, #package-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+}
+
+#build-package-button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#package-output {
+    padding: 20px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+}
+
+
+
+JavaScript (in script.js file)
+
+
+document.getElementById("build-package-button").addEventListener("click", function() {
+    var packageName = document.getElementById("package-name").value;
+    var packageVersion = document.getElementById("package-version").value;
+    var packageDescription = document.getElementById("package-description").value;
+
+    var packageData = {
+        name: packageName,
+        version: packageVersion,
+        description: packageDescription
+    };
+
+    var packageJson = JSON.stringify(packageData, null, 2);
+
+    var packageOutput = document.getElementById("package-output");
+    packageOutput.innerText = packageJson;
+
+    // Create a blob with the package data
+    var blob = new Blob([packageJson], {type: "application/json"});
+
+    // Create a link to download the package
+    var link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = packageName + ".json";
+    link.click();
+});

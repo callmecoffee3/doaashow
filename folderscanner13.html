@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Folder Scanner</title>
+</head>
+<body>
+    <h1>Folder Scanner</h1>
+    <input type="file" id="folder-input" webkitdirectory directory multiple>
+    <button id="scan-button" style="display: none;">Scan Folder</button>
+    <div id="download-options" style="display: none;">
+        <button id="download-text-button">Download as Text</button>
+        <button id="download-zip-button">Download as Zip</button>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script>
+        const folderInput = document.getElementById('folder-input');
+        const scanButton = document.getElementById('scan-button');
+        const downloadOptions = document.getElementById('download-options');
+        const downloadTextButton = document.getElementById('download-text-button');
+        const downloadZipButton = document.getElementById('download-zip-button');
+
+        let folderStructureText = '';
+        let zip = new JSZip();
+        let files = [];
+
+        folderInput.addEventListener('change', () => {
+            if (folderInput.files.length > 0) {
+                scanButton.style.display = 'inline-block';
+            } else {
+                scanButton.style.display = 'none';
+            }
+        });
+
+        scanButton.addEventListener('click', () => {
+            folderStructureText = '';
+            zip = new JSZip();
+            files = folderInput.files;
+            getFolderStructure(files);
+            downloadOptions.style.display = 'block';
+        });
+
+        function getFolderStructure(files) {
+            for (const file of files) {
+                const path = file.webkitRelativePath;
+                folderStructureText += path + '\n';
+                const pathParts = path.split('/');
+                let currentFolder = zip;
+                for (let i = 0; i < pathParts.length - 1; i++) {
+                    const folderName = pathParts[i];
+                    if (!currentFolder.folder(folderName)) {
+                        currentFolder = currentFolder.folder(folderName);
+                    } else {
+                        currentFolder = currentFolder.folder(folderName);
+                    }
+                }
+                currentFolder.file(pathParts[pathParts.length - 1], file);
+            }
+        }
+
+        downloadTextButton.addEventListener('click', () => {
+            const blob = new Blob([folderStructureText], { type: 'text/plain' + '.txt');
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'folder-structure.txt';
+            link.click();
+        });
+
+        downloadZipButton.addEventListener('click', () => {
+            zip.generateAsync({ type: 'blob' })
+                .then((content) => {
+                    saveAs(content, 'folder-structure.zip');
+                });
+        });
+    </script>
+</body>
+</html>

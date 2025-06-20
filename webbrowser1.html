@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Web Browser</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="browser-container">
+        <div class="address-bar">
+            <input type="text" id="url-input" placeholder="Enter URL">
+            <button id="go-button">Go</button>
+        </div>
+        <iframe id="web-view" src="https://www.google.com" frameborder="0"></iframe>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+
+
+
+CSS (in style.css file)
+
+
+.browser-container {
+    width: 800px;
+    height: 1600px;
+    border: 1px solid #ccc;
+    margin: 20px auto;
+}
+
+.address-bar {
+    padding: 10px;
+    background-color: #f0f0f0;
+    border-bottom: 1px solid #ccc;
+}
+
+#url-input {
+    width: 70%;
+    height: 30px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+#go-button {
+    width: 20%;
+    height: 30px;
+    padding: 10px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+#web-view {
+    width: 100%;
+    height: calc(100% - 50px);
+    border: none;
+}
+
+
+
+JavaScript (in script.js file)
+
+
+document.getElementById("go-button").addEventListener("click", function() {
+    var url = document.getElementById("url-input").value;
+    if (!url.startsWith("http://") && !url.startsWith("https://")) {
+        url = "http://" + url;
+    }
+    document.getElementById("web-view").src = url;
+});

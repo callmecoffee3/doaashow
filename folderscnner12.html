@@ -1,0 +1,52 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Folder Scanner</title>
+</head>
+<body>
+    <h1> folder Scanner</h1>
+    <input type="file" id="folder-input" webkitdirectory directory multiple>
+    <button id="scan-button" style="display: none;">Scan Folder</button>
+    <button id="download-button" style="display: none;">Download Folder Structure</button>
+    <script>
+        const folderInput = document.getElementById('folder-input');
+        const scanButton = document.getElementById('scan-button');
+        const downloadButton = document.getElementById('download-button');
+
+        let folderStructureText = '';
+
+        folderInput.addEventListener('change', () => {
+            if (folderInput.files.length > 0) {
+                scanButton.style.display = 'inline-block';
+            } else {
+                scanButton.style.display = 'none';
+            }
+        });
+
+        scanButton.addEventListener('click', () => {
+            folderStructureText = '';
+            const files = folderInput.files;
+            getFolderStructure(files);
+            downloadButton.style.display = 'inline-block';
+        });
+
+        function getFolderStructure(files) {
+            for (const file of files) {
+                const path = file.webkitRelativePath;
+                folderStructureText += path + '\n';
+            }
+        }
+
+        downloadButton.addEventListener('click', () => {
+            if (folderStructureText !== '') {
+                const blob = new Blob([folderStructureText], { type: 'text/plain' });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = 'folder-structure.txt';
+                link.click();
+            }
+        });
+    </script>
+</body>
+</html>
