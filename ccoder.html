@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>C Code Editor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #editor {
+            width: 80%;
+            height: 300px;
+            font-size: 16px;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>C Code Editor</h1>
+    <textarea id="editor"></textarea>
+    <button id="compile-btn">Compile</button>
+    <button id="run-btn">Run</button>
+    <div id="output"></div>
+
+    <script>
+        const editor = document.getElementById('editor');
+        const compileBtn = document.getElementById('compile-btn');
+        const runBtn = document.getElementById('run-btn');
+        const outputDiv = document.getElementById('output');
+
+        compileBtn.addEventListener('click', () => {
+            const code = editor.value;
+            // Simulated compilation process
+            if (code.includes("error")) {
+                outputDiv.innerText = "Compilation failed!";
+            } else {
+                outputDiv.innerText = "Compilation successful!";
+            }
+        });
+
+        runBtn.addEventListener('click', () => {
+            const code = editor.value;
+            // Simulated execution process
+            if (code.includes("printf")) {
+                const output = code.match(/printf\("(.*)"\)/)[1];
+                outputDiv.innerText = `Output: ${output}`;
+            } else {
+                outputDiv.innerText = "No output!";
+            }
+        });
+    </script>
+</body>
+</html>

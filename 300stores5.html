@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mall Store Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <h1>Mall Store Management</h1>
+    <form id="add-store-form">
+        <input type="text" id="store-name" placeholder="Enter store name">
+        <textarea id="store-description" placeholder="Enter store description"></textarea>
+        <button type="submit">Add Store</button>
+    </form>
+    <ul id="store-list"></ul>
+
+    <script>
+        let stores = [];
+        const storeList = document.getElementById('store-list');
+        const addStoreForm = document.getElementById('add-store-form');
+
+        addStoreForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const storeName = document.getElementById('store-name').value;
+            const storeDescription = document.getElementById('store-description').value;
+            if (storeName !== '' && storeDescription !== '') {
+                stores.push({ 
+                    name: storeName, 
+                    description: storeDescription, 
+                    directories: [] 
+                });
+                displayStores();
+                document.getElementById('store-name').value = '';
+                document.getElementById('store-description').value = '';
+            }
+        });
+
+        function displayStores() {
+            storeList.innerHTML = '';
+            if (stores.length === 0) {
+                const storeListItem = document.createElement('li');
+                storeListItem.textContent = 'No stores added yet!';
+                storeList.appendChild(storeListItem);
+            } else {
+                stores.forEach((store, index) => {
+                    const storeListItem = document.createElement('li');
+                    const storeText = document.createElement('span');
+                    storeText.textContent = `${index + 1}. ${store.name} `;
+                    const viewStoreBtn = document.createElement('button');
+                    viewStoreBtn.textContent = 'View Store';
+                    viewStoreBtn.onclick = () => viewStore(store);
+                    const addDirectoryBtn = document.createElement('button');
+                    addDirectoryBtn.textContent = 'Add Directory';
+                    addDirectoryBtn.onclick = () => addDirectory(store);
+                    storeListItem.appendChild(storeText);
+                    storeListItem.appendChild(viewStoreBtn);
+                    storeListItem.appendChild(addDirectoryBtn);
+                    storeList.appendChild(storeListItem);
+                });
+            }
+        }
+
+        function viewStore(store) {
+            let directories = '';
+            if (store.directories.length > 0) {
+                directories = store.directories.join(', ');
+            } else {
+                directories = 'No directories added yet!';
+            }
+            alert(`Store Name: ${store.name}\nDescription: ${store.description}\nDirectories: ${directories}`);
+        }
+
+        function addDirectory(store) {
+            const directoryName = prompt('Enter directory name:');
+            if (directoryName !== null && directoryName !== '') {
+                store.directories.push(directoryName);
+                alert(`Directory added to ${store.name} successfully!`);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mall Store Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <h1>Mall Store Management</h1>
+    <form id="add-store-form">
+        <input type="text" id="store-name" placeholder="Enter store name">
+        <button type="submit">Add Store</button>
+    </form>
+    <ul id="store-list"></ul>
+
+    <script>
+        let stores = [];
+        const storeList = document.getElementById('store-list');
+        const addStoreForm = document.getElementById('add-store-form');
+
+        addStoreForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const storeName = document.getElementById('store-name').value;
+            if (storeName !== '') {
+                stores.push(storeName);
+                displayStores();
+                document.getElementById('store-name').value = '';
+            }
+        });
+
+        function displayStores() {
+            storeList.innerHTML = '';
+            stores.forEach((store, index) => {
+                const storeListItem = document.createElement('li');
+                storeListItem.textContent = `${index + 1}. ${store}`;
+                storeList.appendChild(storeListItem);
+            });
+        }
+    </script>
+</body>
+</html>

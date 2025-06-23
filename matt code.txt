@@ -1,0 +1,71 @@
+matt code
+=================
+(c0, ro) //website name
+(c0, r0) //wesite notes (how it looks)
+(c0, r0) //My Project
+(c0, r0) //time & date (dispaly)
+
+=================
+(c1, r0) //Design & Displays
+(c1, r1) :logo
+(c1, r2) :navigation
+(c1, r3) :color scheme
+
+
+=================
+(c2, r0) //Main Content
+(c2, r1) :home
+(c2, r2) :about
+(c2, r3) :contact
+
+
+=================
+(c3, r0) //User Interactions
+(c3, r1) :login
+(c3, r2) :register
+(c3, r3) :forgot password
+
+
+=================
+(c4, r0) //Game/Features
+(c4, r1) :start
+(c4, r2) :pause
+(c4, r3) :settings
+
+
+=================
+(c5, r0) //Settings/Options
+(c5, r1) :sound
+(c5, r2) :difficulty
+(c5, r3) :language
+
+
+=================
+(c6, r0) //Chatbot/AI Integration
+(c6, r1) :greetings
+(c6, r2) :responses
+(c6, r3) :intents
+
+
+=================
+(c7, r0) //Search & Filter
+(c7, r1) :search bar
+(c7, r2) :filter options
+(c7, r3) :results display
+
+
+=================
+(c8, r0) //Extensions
+(c8, r1) :social media integration
+(c8, r2) :payment gateway
+(c8, r3) :email marketing
+(c8, r4) :analytics tracking
+(c8, r5) :SEO optimization
+
+
+=================
+(c9, r0) //Additional Extensions (optional)
+(c9, r1) :forum/discussion board
+(c9, r2) :e-commerce functionality
+(c9, r3) :membership/subscription model
+(c9, r4) :API integrations
