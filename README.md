@@ -10,3 +10,4 @@ git push -u origin main
 
 this is for entertainment pourposes 
 i do this just for goofing off just for fun
+I originally wanted it to be spelled doashow but missed spelled it
