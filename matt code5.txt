@@ -1,0 +1,392 @@
+/// define the matt code 
+[
+/// Define Categories and Items in Matt Code
+
+// Header Section
+header: (c0, r0) // Website Name
+title: (c0, r0) // Website Notes
+body: (c0, r0) // My Project
+dateTime: (c0, r0) // Time & Date
+
+// Design & Displays
+category: (c1, r0) {
+    item1: (c1, r1) // Logo
+    item2: (c1, r2) // Navigation
+    item3: (c1, r3) // Color Scheme
+}
+
+// Main Content
+category: (c2, r0) {
+    item1: (c2, r1) // Home
+    item2: (c2, r2) // About
+    item3: (c2, r3) // Contact
+}
+
+// User Interactions
+category: (c3, r0) {
+    item1: (c3, r1) // Login
+    item2: (c3, r2) // Register
+    item3: (c3, r3) // Forgot Password
+}
+
+// Game/Features
+category: (c4, r0) {
+    item1: (c4, r1) // Start
+    item2: (c4, r2) // Pause
+    item3: (c4, r3) // Settings
+}
+
+// Settings
+category: (c5, r0) {
+    option1: (c5, r1) // Display Options
+    option2: (c5, r2) // Audio Options
+    option3: (c5, r3) // Video Options
+    option4: (c5, r4) // Accessibility Options
+    option5: (c5, r5) // Help
+    option6: (c5, r6) // Feedback
+    option7: (c5, r7) // Setting Options
+    option8: (c5, r8) // Notification Settings
+    option9: (c5, r9) // Account Settings
+    option10: (c5, r10) // Security Settings
+    option11: (c5, r11) // Advanced Settings
+}
+
+// Social
+category: (c6, r0) {
+    subCategory1: (c6, r1) // Groups
+    groupOption1: (c6, r2) // Create Group
+    groupOption2: (c6, r3) // Join Group
+    groupOption3: (c6, r4) // Group Settings
+    subCategory2: (c6, r5) // Pages
+    pageOption1: (c6, r6) // Create Page
+    pageOption2: (c6, r7) // View Pages
+    pageOption3: (c6, r8) // Page Settings
+    subCategory3: (c6, r9) // Users
+    userOption1: (c6, r10) // User Profiles
+    userOption2: (c6, r11) // User Settings
+}
+
+// Media
+category: (c7, r0) {
+    subCategory1: (c7, r1) // Watch
+    watchOption1: (c7, r2) // Watch Videos
+    watchOption2: (c7, r3) // Watch Live Streams
+    watchOption3: (c7, r4) // Watch Settings
+    subCategory2: (c7, r5) // Video
+    videoOption1: (c7, r6) // Upload Video
+    videoOption2: (c7, r7) // View Videos
+    videoOption3: (c7, r8) // Video Settings
+    subCategory3: (c7, r9) // Audio
+    audioOption1: (c7, r10) // Upload Audio
+    audioOption2: (c7, r11) // View Audio
+    audioOption3: (c7, r12) // Audio Settings
+}
+
+// Marketplace
+category: (c8, r0) {
+    marketItem1: (c8, r1) // Buy
+    marketItem2: (c8, r2) // Sell
+    marketItem3: (c8, r3) // Auctions
+    marketItem4: (c8, r4) // Shopping Cart
+    marketItem5: (c8, r5) // Order History
+    subCategory1: (c8, r6) // Groups
+    groupOption1: (c8, r7) // Create Marketplace Group
+    groupOption2: (c8, r8) // Join Marketplace Group
+    groupOption3: (c8, r9) // Marketplace Group Settings
+}
+
+// Chatbot/AI Integration
+category: (c9, r0) {
+    aiOption1: (c9, r1) // Greetings
+    aiOption2: (c9, r2) // Responses
+    aiOption3: (c9, r3) // Intents
+}
+
+// Search & Filter
+category: (c10, r0) {
+    searchOption1: (c10, r1) // Search Bar
+    searchOption2: (c10, r2) // Filter Options
+    searchOption3: (c10, r3) // Results Display
+}
+
+// Extensions
+category: (c11, r0) {
+    extOption1: (c11, r1) // Social Media Integration
+    extOption2: (c11, r2) // Payment Gateway
+    extOption3: (c11, r3) // Email Marketing
+    extOption4: (c11, r4) // Analytics Tracking
+    extOption5: (c11, r5) // SEO Optimization
+}
+
+// Additional Extensions
+category: (c12, r0) {
+    addExtOption1: (c12, r1) // Forum/Discussion Board
+    addExtOption2: (c12, r2) // E-commerce Functionality
+    addExtOption3: (c12, r3) // Membership/Subscription Model
+    addExtOption4: (c12, r4) // API Integrations
+}
+
+// Recently Added
+category: (c13, r0) {
+    recentOption1: (c13, r1) // View Recently Added
+    recentOption2: (c13, r2) // Manage Recently Added
+    recentOption3: (c13, r3) // Settings for Recently Added
+}
+
+// Groups
+category: (c14, r0) {
+    groupOption1: (c14, r1) // Create Group
+    groupOption2: (c14, r2) // Join Group
+    groupOption3: (c14, r3) // Group Settings
+}
+
+// Pages
+category: (c15, r0) {
+    pageOption1: (c15, r1) // Create Page
+    pageOption2: (c15, r2) // View Pages
+    pageOption3: (c15, r3) // Page Settings
+}
+
+// Users
+category: (c16, r0) {
+    userOption1: (c16, r1) // User Profiles
+    userOption2: (c16, r2) // User Settings
+}
+
+// Variables
+variables: {
+    header: (c0, r0)
+    title: (c0, r0)
+    body: (c0, r0)
+    item1: (c1, r1)
+    item2: (c1, r2)
+    startCategory: (c1, c0)
+    menu: (c10, r0)
+    settings: (c5, r0)
+    options: (c5, r1)
+    fullScreenOption: (c5, r4) if
+}
+
+(matt code)Here is the code:
+===============================
+(c0, r0) // Website Name
+(c0, r0) // Website Notes
+(c0, r0) // My Project
+(c0, r0) // Time & Date
+
+===============================
+(c1, r0) // Design & Displays
+(c1, r1) : Logo
+(c1, r2) : Navigation
+(c1, r3) : Color Scheme
+
+===============================
+(c2, r0) // Main Content
+(c2, r1) : Home
+(c2, r2) : About
+(c2, r3) : Contact
+
+===============================
+(c3, r0) // User Interactions
+(c3, r1) : Login
+(c3, r2) : Register
+(c3, r3) : Forgot Password
+
+===============================
+(c4, r0) // Game/Features
+(c4, r1) : Start
+(c4, r2) : Pause
+(c4, r3) : Settings
+
+===============================
+(c5, r0) // Settings
+(c5, r1) : Display Options
+(c5, r2) : Audio Options
+(c5, r3) : Video Options
+(c5, r4) : Accessibility Options
+(c5, r5) : Help
+(c5, r6) : Feedback
+(c5, r7) : Setting Options
+(c5, r8) : Notification Settings
+(c5, r9) : Account Settings
+(c5, r10) : Security Settings
+(c5, r11) : Advanced Settings
+
+===============================
+(c6, r0) // Social
+(c6, r1) // Groups
+(c6, r2) : Create Group
+(c6, r3) : Join Group
+(c6, r4) : Group Settings
+(c6, r5) // Pages
+(c6, r6) : Create Page
+(c6, r7) : View Pages
+(c6, r8) : Page Settings
+(c6, r9) // Users
+(c6, r10) : User Profiles
+(c6, r11) : User Settings
+
+===============================
+(c7, r0) // Media
+(c7, r1) // Watch
+(c7, r2) : Watch Videos
+(c7, r3) : Watch Live Streams
+(c7, r4) : Watch Settings
+(c7, r5) // Video
+(c7, r6) : Upload Video
+(c7, r7) : View Videos
+(c7, r8) : Video Settings
+(c7, r9) // Audio
+(c7, r10) : Upload Audio
+(c7, r11) : View Audio
+(c7, r12) : Audio Settings
+
+===============================
+(c8, r0) // Marketplace
+(c8, r1) : Buy
+(c8, r2) : Sell
+(c8, r3) : Auctions
+(c8, r4) : Shopping Cart
+(c8, r5) : Order History
+
+(c8, r6) // Groups in marketplace
+(c8, r7) : Create Marketplace Group
+(c8, r8) : Join Marketplace Group
+(c8, r9) : Marketplace Group Settings
+
+===============================
+(c9, r0) // Chatbot/AI Integration
+(c9, r1) : Greetings
+(c9, r2) : Responses
+(c9, r3) : Intents
+
+===============================
+(c10, r0) // Search & Filter
+(c10, r1) : Search Bar
+(c10, r2) : Filter Options
+(c10, r3) : Results Display
+
+
+===============================
+(c11, r0) // Extensions
+(c11, r1) : Social Media Integration
+(c11, r2) : Payment Gateway
+(c11, r3) : Email Marketing
+(c11, r4) : Analytics Tracking
+(c11, r5) : SEO Optimization
+
+===============================
+(c12, r0) // Additional Extensions (optional)
+(c12, r1) : Forum/Discussion Board
+(c12, r2) : E-commerce Functionality
+(c12, r3) : Membership/Subscription Model
+(c12, r4) : API Integrations
+
+===============================
+(c13, r0) // Recently Added
+(c13, r1) : View Recently Added
+(c13, r2) : Manage Recently Added
+(c13, r3) : Settings for Recently Added
+
+===============================
+(c14, r0) // Groups
+(c14, r1) : Create Group
+(c14, r2) : Join Group
+(c14, r3) : Group Settings
+(c14, r4) // sub groups
+(c14, r4) : create sub group 
+(c14, r5) : join sub group
+(c14, r6) : sub grup settings
+
+===============================
+(c15, r0) // Pages
+(c15, r1) : Create Page
+(c15, r2) : View Pages
+(c15, r3) : Page Settings
+(c15, r4) : Page followers
+(c15, r5) : Page likes
+
+===============================
+(c16, r0) // Users
+(c16, r1) : User Profiles
+(c16, r2) : User Settings
+
+===============================
+(c17, r0) //Start
+(c17, r0) // Power Turn on, turn off (simulated)
+(c17, r1) :menu
+(c17, r2) :options
+(c17, r3) :files
+(c17, r4) :emojis
+(c17, r5) :avatar
+(c17, r6) :files
+(c17, r7) :users
+(c17, r8) :programs
+(c17, r9) :videos
+(c17, r10) :pictures
+(c17, r11) :camera
+(c17, r12) :notes
+(c17, r13) :calender
+(c17, r14) :contacts
+(c17, r15) :pages
+(c17, r16) :groups
+(c17, r17) :online
+(c18, r18) :offline
+
+==================================
+(c19, r0) // Followers
+(c20, r0) // Follows
+(c21, r0) // Likes
+(c22, r0) // trends
+(c23, r0) // post
+(c24, r0) // live
+(c25, r0) // joined
+(c26, r0) // users
+(c29, r0) // friends
+(c30, r0) // messenger
+(c31, r0) // profile
+(c32, r0) // notes
+(c33, r0) // calls
+(c34, r0) // personal
+(c35, ro) // private
+(c36, r0) // business
+(c37, r0) // relitives
+(c38, r0) // walkie-talkie
+(c39, r0) // cb-radio
+(c40, r0) // movies, tvshow, radio, podcast, theater
+(c41, r0) // mail
+(c42, r0) // photos
+(c43, r0) // videos
+
+========================================
+Variables:
+: header = (c0, r0)
+: title = (c0, r0)
+: body = (c0, r0)
+: footer = (c0, r0)
+: style = (c0, r0)
+: script = (c0, r0)
+: item1 = (c1, r1)
+: item2 = (c1, r2)
+: start category = (c1, c0)
+: menue = (c10, r0)
+: settings = (c5, r0)
+: options = (c5, r1)
+: full screen option = (c5, r4)
+
+=============================================
+Math:
+: item per each catergory = total sum = true
+: item  per each item in row = total sum rows = true 
+: getfuction item in catoegory, itemCategory
+: getfunction item in row, itemRow
+: defintion of item
+==============================================
+Srtings:
+: include
+: char  test 
+: char  character
+: char  name 
+: char  date
+: char  time
+: char  note
