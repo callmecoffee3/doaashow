@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Drive Scanner</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #333;
+        }
+        #output {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            height: 300px;
+            overflow-y: scroll;
+        }
+    </style>
+</head>
+<body>
+    <h1>Local Drive Scanner</h1>
+    <input type="file" id="fileInput" webkitdirectory directory multiple />
+    <button id="scanButton">Scan Drive</button>
+    <button id="downloadButton" style="display:none;">Download Results</button>
+    <div id="output"></div>
+
+    <script>
+        let scannedResults = '';
+
+        document.getElementById('scanButton').addEventListener('click', function() {
+            const input = document.getElementById('fileInput');
+            const output = document.getElementById('output');
+            output.innerHTML = ''; // Clear previous output
+            scannedResults = ''; // Clear previous results
+
+            if (input.files.length === 0) {
+                output.innerHTML = 'No files selected.';
+                return;
+            }
+
+            const fileList = Array.from(input.files);
+
+            fileList.forEach(file => {
+                const fileInfo = document.createElement('div');
+                fileInfo.textContent = `File: ${file.webkitRelativePath}, Size: ${file.size} bytes`;
+                output.appendChild(fileInfo);
+                scannedResults += `File: ${file.webkitRelativePath}, Size: ${file.size} bytes\n`; // Append to results
+            });
+
+            // Show download button
+            document.getElementById('downloadButton').style.display = 'block';
+        });
+
+        document.getElementById('downloadButton').addEventListener('click', function() {
+            const blob = new Blob([scannedResults], { type: 'text/plain' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'scanned_results.txt'; // Name of the downloaded file
+            link.click(); // Trigger the download
+        });
+    </script>
+</body>
+</html>
