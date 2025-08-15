@@ -1,0 +1,142 @@
+-(dos)
+├── camera/
+├── church/
+│   ├── board/
+│   │   ├── pastors/
+│   │   │   ├── Pastor_A/
+│   │   │   ├── Pastor_B/
+│   │   │   ├── Pastor_C/
+│   │   ├── members/
+│   │       ├── Member_1/
+│   │       ├── Member_2/
+│   │       ├── Member_3/
+│   ├── services/
+│   │   ├── sunday/
+│   │   ├── wednesday/
+│   │   ├── study/
+│   │   ├── classes/
+│   ├── events/
+│   │   ├── weddings/
+│   │   ├── funerals/
+│   │   ├── breakfast/
+│   │   ├── lunch/
+│   │   ├── dinner/
+│   ├── groups/
+│   │   ├── youth/
+│   │   ├── choir/
+│   │   ├── men/
+│   │   ├── women/
+│   ├── donations/
+│   │   ├── gifts/
+│   │   ├── offerings/
+│   │   ├── givings/
+│   │   ├── charity/
+│   │   ├── missions/
+│   ├── products/
+│       ├── books/
+│       ├── magazines/
+│       ├── videos/
+│       ├── audios/
+│       ├── pens/
+│       ├── papers/
+├── dashboards/
+│   ├── business/
+│   ├── payment/
+│   ├── personal/
+│   ├── metrics/
+│   │   ├── by_the_month/
+│   ├── visitors/
+│   │   ├── by_the_month/
+│   ├── views/
+│   │   ├── by_the_month/
+│   ├── followers/
+│   │   ├── by_the_month/
+│   ├── non_followers/
+│   │   ├── by_the_month/
+├── feed/
+├── live/
+│   ├── channels/
+│   ├── stream/
+│   ├── users/
+├── main/
+│   ├── art/
+│   │   ├── digital/
+│   │   ├── traditional/
+│   ├── characters/
+│   │   ├── heroes/
+│   │   ├── villains/
+│   ├── clubs/
+│   │   ├── sports/
+│   │   ├── hobbies/
+│   │   ├── academic/
+│   ├── communities/
+│   │   ├── local/
+│   │   ├── online/
+│   │   ├── interests/
+│   ├── experiments/
+│   │   ├── viruses/
+│   │   ├── bacteria/
+│   │   ├── other_stuff/
+│   ├── film_making/
+│   ├── mail/
+│   │   ├── inbox/
+│   │   ├── sent/
+│   │   ├── drafts/
+│   │   ├── trash/
+│   ├── maps/
+│   │   ├── physical/
+│   │   ├── digital/
+│   ├── music/
+│   │   ├── genres/
+│   │   ├── artists/
+│   ├── people/
+│   │   ├── friends/
+│   │   ├── family/
+│   │   ├── workers/
+│   │   ├── bosses/
+│   │   ├── doctors/
+│   │   ├── nurses/
+│   │   ├── writers/
+│   │   ├── directors/
+│   │   ├── producers/
+│   │   ├── chefs/
+│   │   ├── follows/
+│   ├── props/
+│   │   ├── costumes/
+│   │   ├── furniture/
+│   ├── trash/
+│   │   ├── deleted_files/
+│   │       ├── old_docs/
+│   │       ├── junk/
+│   ├── videos/
+│   │   ├── clips/
+│   │   ├── movies/
+│   │   ├── shorts/
+│   ├── web/
+│       ├── sites/
+│       ├── blogs/
+│       ├── forums/
+├── marketplace/
+│   ├── animals/
+│   ├── art/
+│   ├── cast/
+│   ├── clothing/
+│   ├── equipment/
+│   ├── gadgets/
+│   ├── jobs/
+│   ├── shop/
+├── navbar/
+│   ├── menu/
+├── profiles/
+│   ├── users/
+├── quick_links/
+│   ├── menu/
+├── sub/
+│   ├── log_in/
+│   ├── signup/
+│   ├── users/
+│   ├── accounts/
+├── trash/
+│   ├── deleted_files/
+│       ├── old_docs/
+│       ├── junk/
