@@ -1,0 +1,824 @@
+doashow file
+====================================
+
+************************************
+* -(dos) main                      *
+*                                  *
+* doashow file drive               *
+*                                  *
+************************************
+=================================
+
+simulate make drives in content window
+dont replace -(dos) (it stands for do a show)
+
+-(dos) programs/
+├── -(dos) channel/
+│   ├── Matt Grosso/
+│   └── podcast/
+├── -(dos) shows/
+│   ├── Matt Grosso/
+│   |   └── podcast/│    
+|   ├── Radio/
+│   |   └ podcast/
+│   ├── Tv/
+│   |    └── podcast/
+│   |    └ show/
+│   └── Movies/
+│       └── podcast/
+├── -(dos) chats/
+│   ├── personal/
+│   ├── group/
+│   └── work/
+├── -(dos) church/
+│   └── /WednesdayChurchService/
+│       ├── 0_WednesdayChurch/
+│       ├── 1_Arrivals/
+│       ├── 2_PhoneCalling/
+│       ├── 3_Praise/
+│       ├── 4_Prayers/
+│       ├── 5_Offerings/
+│       ├── 6_Music/
+│       ├── 7_Beginning/
+│       ├── 8_Reading/
+│       ├── 9_Discussions/
+│       ├── 10_PrayerOfOfferings/
+│       ├── 11_Closings/
+│       └── 12_Leaving/
+│   └── SundayChurchService/
+│       └── relating_to_church/
+├── -(dos) audio/
+│   ├── Audio_001 - Audio_300 (conceptual)
+├── -(dos) camera/
+│   ├── Camera_001 - Camera_300 (conceptual)
+├── -(dos) character/
+│   ├── Character_001 - Character_300 (conceptual)
+├── -(dos) docs/
+│   ├── html/
+│   ├── study/
+│   └── txt/
+├── -(dos) laptop/
+│   ├── hardware/
+│   └── software/
+├── -(dos) main/
+│   ├── boards/
+│   │   ├── announcements/
+│   │   ├── discussions/
+│   │   └── events/
+│   ├── clubs/
+│   │   ├── sports/
+│   │   ├── hobbies/
+│   │   └── academic/
+│   ├── communities/
+│   │   ├── local/
+│   │   ├── online/
+│   │   └── interests/
+│   ├── experiments/
+│   │   ├── viruses/
+│   │   ├── bacteria/
+│   │   └── other_stuff/
+│   ├── mail/
+│   │   ├── inbox/
+│   │   ├── sent/
+│   │   ├── drafts/
+│   │   └── trash/
+│   ├── maps/
+│   │   ├── physical/
+│   │   └── digital/
+│   ├── marketplace/
+│   │   |   ├── animals/
+│   │   │   ├── cats/
+│   │   │   ├── dogs/
+│   │   │   └── birds/
+│   │   ├── art/
+│   │   │   ├── hats/
+│   │   │   ├── shirts/
+│   │   │   ├── pants/
+│   │   │   └── hoodies/
+│   │   ├── cast/
+│   │   │   ├── actors/
+│   │   │   ├── directors/
+│   │   │   ├── producers/
+│   │   │   └── photographers/
+│   │   │   ├── videoographer/
+│   │   │   ├── art/
+│   │   │   └── blood/
+│   │   │   ├── music/
+│   │   │   ├── radio/
+│   │   │   ├── sound/
+│   │   │   └── cameras/
+│   │   │   ├── equipment/
+│   │   │   ├── sports/
+│   │   │   ├── audio/
+│   │   │   └── agents/
+│   │   │   ├── secrataries/
+│   │   │   ├── receprtionist/
+│   │   │   ├── hats/
+│   │   │   ├── shirts/
+│   │   │   ├── pants/
+│   │   │   └── hoodies/
+│   │   │   ├── contractors/
+│   │   │   └── plumbers/
+│   │   │   ├── entertainmnent/
+│   │   │   ├── electonics/
+│   │   │   ├── travel/
+│   │   │   └── reporters/
+│   │   |   ├── agents/
+│   │   │   ├── tv/
+│   │   │   ├── radio/
+│   │   │   └── news/
+│   │   │   ├── movies/
+│   │   │   ├── magizine/
+│   │   │   ├── guides/
+│   │   │── caracters/
+│   │   │   ├── mob/
+│   │   │   ├── criminal/
+│   │   │   ├── police/
+│   │   │   ├── judge/
+│   │   │   └── doctor/
+│   │   │   ├── nurses/
+|   |   |   ├── contractors/
+│   │   │   └── plumbers/
+│   │   │   ├── entertainmnent/
+│   │   │   ├── electonics/
+│   │   │   ├── travel/
+│   │   │   └── reporters/
+│   │   |   ├── agents/
+│   │   │   ├── tv/
+│   │   │   ├── radio/
+│   │   │   └── news/
+│   │   │   ├── movies/
+│   │   │   ├── magizine/
+│   │   │   ├── guides/
+│   │   │   └── /
+│   │   ├── clothing/
+│   │   │   ├── shirts/
+│   │   │   ├── pants/
+│   │   │   └── hoodies/
+│   │   │   ├── shirts/
+│   │   │   ├── short/
+│   │   │   └── hoodies/
+│   │   │   ├── hats/
+│   │   │   ├── gloves/
+│   │   │   └── boots/
+│   │   │   ├── mens/
+│   │   │   ├── womens/
+│   │   │   ├── children/
+│   │   │   └── infants/
+│   │   │   ├── bra/
+│   │   │   ├── painties/
+│   │   │   ├── underware/
+│   │   │   └── swimware/
+│   │   ├── equipment/
+│   │   │   ├── camera/
+│   │   │   ├── synth/
+│   │   │   ├── audio/
+│   │   │   ├── recorder/
+│   │   │   └── phones/
+│   │   ├── film_making/
+│   │   │   ├── plants/
+│   │   │   ├── producers/
+│   │   │   ├── weapons/
+│   │   │   ├── world/
+│   │   │   ├── writers/
+│   │   │   ├── fx/
+│   │   │   └── directors/
+│   │   ├── gadgets/
+│   │   │   ├── wearables/
+│   │   │   ├── entertainment/
+│   │   │   └── productivity/
+│   │   ├── jobs/
+│   │   │   ├── tech_jobs/
+│   │   │   ├── creative_jobs/
+│   │   │   ├── other_jobs/
+│   │   │   └── secretaries/
+│   │   ├── shop/
+│   │   │   ├── owner/
+│   │   │   ├── realestate/
+│   │   │   ├── renter/
+│   │   │   ├── retail/
+│   │   │   ├── sub wholesale/
+│   │   │   └── wholesale/
+│   ├── people/
+│   │   ├── friends/
+│   │   ├── family/
+│   │   ├── workers/
+│   │   ├── bosses/
+│   │   ├── doctors/
+│   │   ├── nurses/
+│   │   ├── writers/
+│   │   ├── directors/
+│   │   ├── producers/
+│   │   ├── chefs/
+│   │   ├── follows/
+│   │   ├── following/
+│   │   ├── likes/
+│   │   ├── comments/
+│   │   ├── subscribe/
+│   │   ├── users/
+│   │   ├── moderators/
+│   │   ├── members/
+│   │   └── owners/
+│   ├── web/
+│   │   ├── sites/
+│   │   ├── pages/
+│   │   └── resources/
+├── -(dos) media/
+│   ├── photo/
+│   ├── video/
+│   ├── spaces/
+│   ├── notes/
+├── -(dos) idea/
+│   ├── photo/
+|   │   ├── sites/
+│   │   ├── pages/
+│   │   └── resources/
+│   ├── video/
+│   │   ├── sites/
+│   │   ├── pages/
+│   │   └── resources/
+│   ├── spaces/
+│   │   ├── sites/
+│   │   ├── pages/
+│   │   └── resources/│
+|   └── notes/
+|       ├── sites/
+|       ├── pages/
+|       └── resources/
+└──
+=====================================
+
+functions :
+
+-- Main Look
+give it a windows 10 look and feal.
+add, edit, delete, move, select folders
+let user:  add, edit, delete, move, select folders and or files
+let user change menu look 
+give it a menu list
+add toolbar icon to taskbar
+expand toolbar to full screen mode 
+expand file browser to full screen mode
+add icons to taskbar
+click on close all to close window open
+make toolbar scrollable
+let user close all sub pages
+add a draw that hides on the bottom of the screen
+click on the draw and it opens
+and in the draw it shows all the contents that you have 
+let user put stuff in the draw
+add web counter with title and next to display user name
+add user name next to doashow with pic icon
+add on in place of user name when just turned on
+display notifications display in tollbar
+dispay banner: get verified badge from doashow
+
+-- sidebar
+make sidebar menu options
+let user move folders drag and drop with mouse
+
+-- Menu list 
+add menu items other then quick access
+add menu bar with options and settings
+put menu list below headder
+give a list of menu with options
+Show item in menu as drop down list
+
+-- Header
+add a header in th e center add "doashow"
+add menu items: home, file, share, view 
+show user content window that diplays user current selection
+show main content window
+make all buttons work with sub pages
+
+-- Main Feed
+
+
+-- Search
+display all search results
+have history of past search results
+have it look a lot like windows 10
+give the file explorer window 10 settings and features
+let user pin stuff to the pin section
+
+-- Profile
+let user add user profile
+let users view other user profiles
+add discover other users
+
+-- social
+let user add to social internet feed
+let user have a social profile sub page
+let user edit user profile page
+let user add photos to social feed 
+let user add videos to social feed
+let user add text to there social feed
+let social feed functions interacte with the user files 
+
+-- Scocial menu
+display follows
+diseplay follow
+display likes
+display coment 
+display subcribe
+display saved
+let user like, comment, subscribe, save to save
+
+-- Time
+set time to the proper time
+
+-- Calender
+set calender to the proper date
+
+-- Files
+let user add files
+let user add floders
+let user upload files
+let user upload folders
+display file and folders
+open file and folders when clicked
+close file and folders when clicked
+
+-- Camera
+let user use there own camera and mike( request permision)
+let user add social feed
+add social feed button {to see latest social feed}
+let user click on camera
+maake sub page for camera
+ask user for permission to use camera
+
+-- Others
+let user pin items to the pinned section
+let users join 
+let users sign up
+add a pin for user to clik to add to pin section
+
+-- Settings
+set the theme to dark theme
+let themes to {select} : light, dark, bule, red
+put theme to dark as primary option
+add visitor webpage counter {keep counting on acual vitors}
+let user add search term in search bar
+let user sign up
+let user log in
+let user set time
+let user add task
+
+-- Marketplace
+add buy
+add sell  
+add trade 
+add free
+display list of items
+display new listed items
+display recent listed items
+display prices
+display name of seller
+display date and time of selling
+display popular
+display recent
+display shop name 
+display details
+
+-- Pages
+dispaly pages feed
+dipaly followers to page
+make pages seditable
+add page bio
+add page name
+add page date
+add page details
+
+-- Groups
+display groups feed
+display followers to groups
+make groups editable
+make groups joinable
+
+-- Friends
+display friends feed
+display friends
+display details
+
+-- Contacts
+display contacts feed
+display contacts
+display details 
+
+-- Messages
+display user menu feed 
+display messages feed
+display messages
+display details 
+
+-- News
+display news feed
+display picture feed
+display video feed
+let user add post to news section
+
+-- eMail
+dispaly email menu feed
+dispaly recives email feed
+put in taskbar in a colapsable and scrollable
+
+-- save
+save project
+
+-- full screen 
+add full screen option
+add full screen to chats
+add full screen to ai chat
+make each app have full wcreen
+
+-- Toolbar
+add toolbar 
+add toolbar in side bar and make cloapsable and scrollable
+add items that work in tool bar
+
+-- Files
+add filse
+display fils added
+
+--Folders
+let users add folders
+display folders
+
+-- Content Area And Feed
+displays files, and folders
+
+-- Show and Hide bar 
+when clcked
+
+-- settings
+put settings in draw
+
+
+-- notificatons
+send notifcation
+let user turn on notifications
+let user turn off notifications
+put notifications in draw
+send user notifcation when user makes a post
+send user notifiction when user adds a group
+send user notification when user adds a video
+send user notification when user starts a live
+let user turn on notification bell
+show and hide user notification bar
+make notification tab display and show it
+
+--live video
+start live vide
+title live video
+let user title live video
+
+-- Shutdown
+simulate shutting down
+
+--power on 
+simulate power on
+
+-- user sign up
+simulate user signnign up
+
+-- user sign on
+simulate user signning on
+
+-- user log off
+simulate user logging off
+
+-- drawer
+move icon draw 
+put icon drwar in task bar 
+
+--full screen
+set full screen background to full 
+
+
+============================================================
+
+
+sidebar menu
+
+--------------------------------------
+
+| > Quick Access
+|  |-- Recent Files
+|  |-- Frequent Folders
+|  |-- Pined Items
+
+| > Home
+| |-- Dashboard
+| |-- Profile
+| |-- Settings
+
+| > Documents
+| |-- Works
+| |-- Personal
+| |-- Reoports
+| |-- Tazes
+| |-- Letters
+
+
+| > Downloads
+| |--Software
+| |-- PDFs
+| |-- Images
+| |-- Videos
+| |-- Audio
+
+| > Music
+| |-- Playlist
+| |-- Artist
+| |-- Albums
+| |-- Genres
+| |-- Band
+
+| > Pictures
+| |-- Albumss
+| |-- Events
+| |-- Favorite
+
+| > Videos
+| |-- Movies
+| |-- TV Shows
+| |-- Clipd
+
+| > Social
+|  |--- Users
+|  |--- Pages
+|  |--- Groups
+|  |--- Profiles
+|  |--_ Discover
+|  |--- Post
+|  |--- Feeds
+|  |--- Follows
+|  |--- Friends
+|  |--- Groups
+|  |--- Messages
+|  |--- Notifications 
+
+| > Marketplace
+|  |-- Popular
+|  |-- Recomended
+|  |-- 
+|  |-- Produucts
+|  |-- Ai
+|  |-- Animals
+|  |-- Art
+|  |-- Cast
+|  |-- Clothing
+|  |-- Equipment
+|  |-- Gadgets
+|  |-- Jobs
+|  |-- Shops
+
+| > [add, edit, delet folder]
+
+==============================================
+
+
+Menu Items
+
+---------------------------------------------
+
+| > Home
+| |> New Folder
+| |> cut
+| |> copy
+| |> Paste
+| |> Nove
+| |> Deleate
+| |> Rename
+| |> Select All
+| |> Properties
+
+| > File
+| |> Open
+| |> Save
+| |> Save As
+| |> Print 
+| |> Impoort
+| |> Export
+| |> Close
+
+| > Share
+| |> Share via Email
+| |> Share via Bluetooth
+| |> Share Link
+| |> Share To Social Media Platforme
+
+| > View 
+| |> Large Icons
+| |> Small Icons
+| |> Medium Icons
+| |> Details
+| |> List
+| |> Sort by (Name, Size, Type) 
+| |> Group By
+| |> Refresh
+| |> Full Screen
+
+| > Settings
+| |> Theme (LIght/ Dark)
+| |> Sidebar Options
+| |> Folder OPtions
+| |> Language
+| |> About
+| |> Help
+| |> Feedback
+
+| > Help
+| |> Help
+| |> General
+| |> Comunity
+| |> Segustions
+| |> Feedback
+
+============================================================================================
+
+
+toolbar
+
+--------------------------------
+
+| > Search
+| > History
+| > Profiles
+| > Discover
+| > AI Messenger 
+| > Messanger
+
+===========================================================================================
+
+
+task bar
+
+-------------------------------------
+
+| > Power {simulate power turning on - proing off}
+| |> Simulate power on
+| |> Simulate power off
+
+| > Time
+| |> Clock
+| |> Set Time
+
+| > Calender
+|  |> Set Calender 
+|  |> Set task
+|  |> set calender date
+
+| > Messenges
+|   |> Friends 
+|   |> Messages
+|   |> Follows 
+|   |> Contacts
+|   |> AI Messenger
+
+| > Contacts
+|     |> Favorites
+|     |> Family
+|     |> Friends
+|     |> Follows
+|     |> Followers
+
+| > Search bar
+| |> serch items and folders
+| |> recent searches
+
+| > Groups
+|   |> Groups
+|   |> Discover
+|   |> Join
+|   |> Create
+   
+| > Pages
+|   |> Discover
+|   |> Join
+|   |> Create
+
+|> Profiles
+|   |> Your Profile
+||       |> Edit
+||       |> add
+||       |> delete
+||       |> age
+||       |> Bio
+|   |> Discover
+|   |> Join
+|   |> Create
+|   |> Post
+|   |> Like
+|   |> Comment
+|   |> Follow
+   
+| > apps
+|  |> Notes
+|  |> Clock
+|  |> Recorder
+|  |> Camera
+|  |> Games
+|  |> Docs
+|  |> Games
+|  |> Store
+|  |> Merch
+|  |> Personal
+|  |> Business
+|  |> Phone
+|  |> Calender
+|  |> Media
+|  |> Vidoe
+|  |> Live
+|  |> Shop
+|  |> Spaces
+|  |> Grops
+|  |> Pages
+|  |> profiles
+|  |> experiments
+|  |> Stories
+  
+| > Join - login
+|    |> Join
+|    |> loginn
+
+
+
+==================================================================================================
+
+on simulated powed off screen:
+> add banner doashow
+> make simulate power tun off, mak ebutton work 
+> make guest button, make button work
+> make sign on button wi
+> make sign up button, make button work
+> when user signs up or logs on show user name
+> add user name and profile
+> let user edit user profile
+> when guest signs on show guest name
+
+simulate; guest -log in, user - sign up, user- sign on , user - log off L simulate when button is clicked
+simulate return to powoer on wnen cancel button is clicked 
+simulate add folders when clicked added
+simulate edit folders when clicke edit
+simulate large icons when clicke large icons
+simulate medium icons when clickede large icons
+simulate small icons when clicked small icons
+add website counter 
+add user name banner when file is simulate turned on
+let user search for other simulated users
+
+===================================================================================================
+
+simulate thes 
+> power on
+> power off
+> user sign in
+> user sign up
+> user sign off
+> Guets sign on
+> guest sign off
+> make mesages work; with send, recive , edit , delete
+> sub pages
+> sub pages from main menu iteems
+> eidit user profile
+> save user profile
+> running clock
+> working calender
+> working messages with ai
+> Wroking goups
+> working pages
+> working apps
+> working docs
+> working games
+> working notes
+> working live
+> working video
+> working photos
+> when users add photo add user info
+> when youer add video dd user info
+> add date and time when user adds something
+> create grupd
+> groups main sub page
+> groups features
+> display user name in file drive
+> close window every open widow when clicked
+> simulate pic and info for every sub page open
+> simulate content in open sub pages
+> search bar display search results
+> social 
+> marketplace
+> docs
+> apps
+> pages
+> groups
+> news
+> shops
+> live streems
+> profiles
+> working main menu items
+> working menu
+=========================================================================================================
+> 
+
+=================================================================================================

@@ -1,0 +1,13 @@
+video scenes
+{scene 1 arrivals}
+{scene 2 callings on the phone}
+{scene 3 music}
+{scene 4 praise reports}
+{scene 5 prayer request}
+{scene 6 offerings}
+{scene 7 beginings}
+{scene 8 readings}
+{scene 9 discussions}
+{scene 10 prayers of offerings}
+{scene 11 closings}
+{scene 12 leavings (people leaving)}

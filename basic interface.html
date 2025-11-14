@@ -1,0 +1,104 @@
+Here's a basic HTML structure for the interface you described:
+HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Interface</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .menu-bar {
+            background-color: #2f4f7f; /* Dark blue */
+            color: white;
+            padding: 10px;
+            text-align: left;
+        }
+        
+        .menu-bar h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        
+        .content {
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+        
+        .icon-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            color: white;
+        }
+        
+        .red {
+            background-color: red;
+        }
+        
+        .yellow {
+            background-color: yellow;
+            color: black;
+        }
+        
+        .blue {
+            background-color: blue;
+        }
+        
+        .taskbar {
+            background-color: black;
+            color: white;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .taskbar-icons {
+            display: flex;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="menu-bar">
+        <h1>Main Menu</h1>
+    </div>
+    <div class="content">
+        <div class="icon-row">
+            <div class="icon red">X</div>
+            <div class="icon yellow">J</div>
+            <div class="icon blue">V</div>
+        </div>
+        <!-- Add more content here -->
+    </div>
+    <div class="taskbar">
+        <div class="taskbar-icons">
+            <!-- Add taskbar icons here -->
+        </div>
+        <div>
+            <span>Clock: 12:00 PM</span>
+            <span>Wi-Fi</span>
+            <span>Battery: 100%</span>
+        </div>
+    </div>
+</body>
+</html>
+This code creates a basic layout with a menu bar, content area, and taskbar. You can customize the styles and add more content as needed. Let me know if you need further assistance!

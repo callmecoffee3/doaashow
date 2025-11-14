@@ -1,0 +1,130 @@
+project/
+|-- scenes/
+    |-- scene1/
+        |-- description.txt
+        |-- spoken_lines.txt
+        |-- plot_points.txt
+    |-- scene2/
+        |-- description.txt
+        |-- spoken_lines.txt
+        |-- plot_points.txt
+    |-- ...
+    |-- scene300/
+        |-- description.txt
+        |-- spoken_lines.txt
+        |-- plot_points.txt
+|-- characters/
+    |-- character1/
+        |-- backstory.txt
+        |-- personality.txt
+        |-- dialogue_examples.txt
+    |-- character2/
+        |-- backstory.txt
+        |-- personality.txt
+        |-- dialogue_examples.txt
+    |-- ...
+|-- plot/
+    |-- plot_outline.txt
+    |-- character_arcs/
+        |-- character1_arc.txt
+        |-- character2_arc.txt
+        |-- ...
+    |-- themes/
+        |-- theme1.txt
+        |-- theme2.txt
+        |-- ...
+    |-- storylines/
+        |-- A+_plot/
+            |-- plot1.txt
+            |-- plot2.txt
+            |-- ...
+            |-- plot20.txt
+        |-- A_plot/
+            |-- plot1.txt
+            |-- plot2.txt
+            |-- ...
+            |-- plot20.txt
+        |-- B_plot/
+            |-- plot1.txt
+            |-- plot2.txt
+            |-- ...
+            |-- plot20.txt
+        |-- C_plot/
+            |-- plot1.txt
+            |-- plot2.txt
+            |-- ...
+            |-- plot20.txt
+|-- world-building/
+    |-- geography/
+        |-- island_map.txt
+        |-- climate.txt
+        |-- ...
+    |-- history/
+        |-- island_history.txt
+        |-- mythology.txt
+        |-- ...
+    |-- culture/
+        |-- island_culture.txt
+        |-- traditions.txt
+        |-- ...
+    |-- sceinces/
+        |-- medical
+        |-- history
+        |-- present day
+        |-- past
+        |--
+   |-- news/
+        |-- current
+        |-- past
+        |-- present
+        |-- future
+   |-- people/
+        |-- race
+        |-- curent
+        |--
+   |-- robots/
+   |-- games/
+   |-- politics/
+   |-- shows/
+   
+-----------------------------------------------
+        
+mkdir project
+cd project
+mkdir scenes characters plot world-building
+
+# Create scene directories
+for i in {1..300}; do
+  mkdir scenes/scene$i
+  touch scenes/scene$i/description.txt
+  touch scenes/scene$i/spoken_lines.txt
+  touch scenes/scene$i/plot_points.txt
+done
+
+# Create character directories (assuming 5 characters)
+mkdir characters/character{1..5}
+for i in {1..5}; do
+  touch characters/character$i/backstory.txt
+  touch characters/character$i/personality.txt
+  touch characters/character$i/dialogue_examples.txt
+done
+
+# Create plot directories
+mkdir plot/character_arcs plot/themes plot/storylines
+mkdir plot/storylines/A+_plot plot/storylines/A_plot plot/storylines/B_plot plot/storylines/C_plot
+touch plot/plot_outline.txt
+
+for type in A+_plot A_plot B_plot C_plot; do
+  for i in {1..20}; do
+    touch plot/storylines/$type/plot$i.txt
+  done
+done
+
+# Create world-building directories
+mkdir world-building/geography world-building/history world-building/culture
+touch world-building/geography/island_map.txt
+touch world-building/geography/climate.txt
+touch world-building/history/island_history.txt
+touch world-building/history/mythology.txt
+touch world-building/culture/island_culture.txt
+touch world-building/culture/traditions.txt

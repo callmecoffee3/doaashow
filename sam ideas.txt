@@ -1,0 +1,114 @@
+Canvas Update in Meta AI
+The Canvas update on Meta AI refers to a feature that enhances the user interface and experience on the platform. When the canvas updates, it refreshes the display of conversations, models, or other interactive elements, allowing users to see the latest changes or responses in real-time.
+The Canvas update typically involves rendering new content, updating existing content, or adjusting the layout to accommodate new information. This update can be triggered by various actions, such as sending a new message, switching between models, or modifying conversation settings.
+Camera List:
+Cam 0: Main - Features primary video feed.
+Cam 1: Wide - Features panoramic view.
+Cam 2: Zoom - Features close-up shots.
+Cam 3: Portrait - Features vertical orientation.
+Cam 4: Landscape - Features horizontal orientation.
+Cam 5: Depth - Features 3D modeling.
+Cam 6: Thermal - Features heat detection.
+Cam 7: Night - Features low-light vision.
+Cam 8: Fisheye - Features ultra-wide angle.
+Cam 9: Infrared - Features heat signature detection.
+Cam 10: PTZ - Features pan, tilt, zoom.
+Cam 11: Dome - Features vandal-resistant design.
+Cam 12: Bullet - Features weather-resistant design.
+Cam 13: Action - Features rugged design.
+Cam 14: 360 - Features panoramic view.
+Cam 15: Time-lapse - Features accelerated video.
+Cam 16: Slow-motion - Features high-frame-rate video.
+Cam 17: Stereo - Features 3D audio.
+Cam 18: Mic - Features audio-only feed.
+Cam 19: Backup - Features redundant video feed.
+Cam 20: IP - Features internet protocol connectivity.
+Cam 21: Analog - Features traditional video signal.
+Cam 22: Wireless - Features Wi-Fi connectivity.
+Cam 23: Wired - Features Ethernet connectivity.
+Cam 24: Outdoor - Features weather-resistant housing.
+Cam 25: Indoor - Features discreet design.
+Cam 26: Pet - Features animal-focused features.
+Cam 27: Baby - Features child-monitoring features.
+Cam 28: Security - Features motion detection.
+Cam 29: Traffic - Features vehicle monitoring.
+Cam 30: Sports - Features fast-motion capture.
+Cam 31: Film - Features cinematic video quality.
+Cam 32: Drone - Features aerial footage.
+Cam 33: Underwater - Features submerged video capture.
+Cam 34: Medical - Features medical-grade imaging.
+Cam 35: Industrial - Features ruggedized design.
+Cam 36: Smart - Features AI-powered features.
+Cam 37: Cloud - Features cloud-connected storage.
+Cam 38: Local - Features on-premises storage.
+Cam 39: High-res - Features high-definition video.
+Cam 40: Low-res - Features low-bandwidth video.
+Cam 41: Motion - Features motion-detection alerts.
+Cam 42: Audio - Features advanced audio features.
+Cam 43: Sensor - Features environmental monitoring.
+Cam 44: Access - Features secure access control.
+Cam 45: Perimeter - Features boundary surveillance.
+Cam 46: Object - Features object detection.
+Cam 47: Face - Features facial recognition.
+Cam 48: License - Features license plate recognition.
+Cam 49: Event - Features event-triggered recording.
+Cam 50: Attic - Features upper-level monitoring.
+Cam 51: Basement - Features lower-level monitoring.
+Cam 52: House - Features residential monitoring.
+Cam 53: Business - Features commercial surveillance.
+Cam 54: People - Features crowd monitoring.
+Cam 55: In-house - Features internal operations monitoring.
+Cam 56: In Business - Features company-wide surveillance.
+Cam 57: Room - Features indoor area monitoring.
+Cam 58: Outside - Features external area surveillance.
+Cam 59: Lab - Features laboratory monitoring.
+Cam 60: Hotel - Features hospitality surveillance.
+Cam 61: Office - Features workplace monitoring.
+Cam 62: Warehouse - Features storage facility surveillance.
+Cam 63: Parking - Features vehicle parking monitoring.
+Cam 64: Garage - Features parking garage surveillance.
+Cam 65: Roof - Features rooftop monitoring.
+Cam 66: Stairwell - Features stairway surveillance.
+Cam 67: Elevator - Features lift monitoring.
+Cam 68: Lobby - Features entrance area surveillance.
+Cam 69: Reception - Features front desk monitoring.
+Cam 70: Conference - Features meeting room surveillance.
+Cam 71: Classroom - Features educational setting monitoring.
+Cam 72: Auditorium - Features large event monitoring.
+Cam 73: Gym - Features fitness center surveillance.
+Cam 74: Pool - Features aquatic area monitoring.
+Cam 75: Cafeteria - Features dining area surveillance.
+Cam 76: Library - Features study area monitoring.
+Cam 77: Server Room - Features data center surveillance.
+Cam 78: Electrical Room - Features power distribution monitoring.
+Cam 79: Control Room - Features operations center surveillance.
+Cam 80: Evidence Room - Features secure storage monitoring.
+Cam 81: Janitor's Closet - Features storage area surveillance.
+Cam 82: Loading Dock - Features delivery area monitoring.
+Cam 83: Mailroom - Features postal processing surveillance.
+Cam 84: Break Room - Features employee lounge monitoring.
+Cam 85: Restroom - Features bathroom surveillance.
+Cam 86: Corridor - Features hallway monitoring.
+Cam 87: Entrance - Features entry point surveillance.
+Cam 88: Exit - Features exit point monitoring.
+Cam 89: Perimeter Fence - Features boundary surveillance.
+Cam 90: Gatehouse - Features entrance gate monitoring.
+Cam 91: Dock - Features waterway loading/unloading surveillance.
+Cam 92: Rooftop Garden - Features outdoor area monitoring.
+Cam 93: Courtyard - Features interior open space surveillance.
+Cam 94: Alleyway - Features rear access monitoring.
+Cam 95: Bike Room - Features bicycle storage surveillance.
+Cam 96: Storage Room - Features general storage monitoring.
+Cam 97: Workshop - Features hands-on work area surveillance.
+Cam 98: Clean Room - Features contamination-controlled environment monitoring.
+Cam 99: Cold Storage - Features refrigerated storage surveillance.
+Cam 100: Server Closet - Features network equipment monitoring.
+Cam 101: Data Center - Features large-scale data storage surveillance.
+Cam 102: Network Operations Center - Features IT operations monitoring.
+Cam 103: 24/7 Monitoring Room - Features around-the-clock surveillance.
+Cam 104: Emergency Response Center - Features crisis management monitoring.
+Cam 105: Safety Control Room - Features safety operations surveillance.
+Cam 106: Quality Control Room - Features product inspection monitoring.
+Cam 107: Research and Development Lab - Features experimental area surveillance.
+Cam 108: Testing Lab - Features product testing monitoring.
+In essence, the Canvas update ensures that the user's interaction with Meta AI remains dynamic and responsive, providing an up-to-date representation of the conversation or task at hand, and can include a backup cam as seen in cam 19 and potentially others for redundancy.

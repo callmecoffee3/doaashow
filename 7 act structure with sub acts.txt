@@ -1,0 +1,119 @@
+7 act structure with sub acts
+format script this way
+
+Act 1 (5 minutes)
+Sub-act 1: Introduce Protagonist (1 minute)
+
+Matt, a struggling writer, sits at his desk.
+Sub-act 2: Establish Stakes (2 minutes)
+
+Matt's deadline is looming, and he's struggling to write.
+Sub-act 3: Inciting Incident (2 minutes)
+
+Matt meets with his friend, Sarah, who suggests a new idea.
+Act 2 (8 minutes)
+Sub-act 1: Explore New Idea (1.5 minutes)
+
+Matt and Sarah brainstorm.
+Sub-act 2: Obstacles Arise (1.5 minutes)
+
+Matt faces writer's block.
+Sub-act 3: Plot Twist (1 minute)
+
+Matt discovers a hidden talent.
+Sub-act 4: Raise Stakes (1 minute)
+
+Matt's publisher wants a new manuscript.
+Sub-act 5: Character Development (1.5 minutes)
+
+Matt learns to trust himself.
+Sub-act 6: Midpoint Revelation (1 minute)
+
+Matt realizes his true passion.
+Act 3 (8 minutes)
+Sub-act 1: Newfound Inspiration (1.5 minutes)
+
+Matt writes with renewed purpose.
+Sub-act 2: Challenges Mount (1.5 minutes)
+
+Matt faces criticism.
+Sub-act 3: Character Growth (1 minute)
+
+Matt develops confidence.
+Sub-act 4: Plot Thickens (1 minute)
+
+Matt's story takes a surprising turn.
+Sub-act 5: Relationships Deepen (1.5 minutes)
+
+Matt and Sarah's friendship grows.
+Sub-act 6: Complications Arise (1 minute)
+
+Matt's publisher has doubts.
+Act 4 (8 minutes)
+Sub-act 1: Turning Point (1.5 minutes)
+
+Matt's manuscript is rejected.
+Sub-act 2: Emotional Shift (1.5 minutes)
+
+Matt feels defeated.
+Sub-act 3: New Perspective (1 minute)
+
+Matt re-evaluates his work.
+Sub-act 4: Resolve Strengthened (1 minute)
+
+Matt decides to self-publish.
+Sub-act 5: Action Plan (1.5 minutes)
+
+Matt outlines a new strategy.
+Sub-act 6: Momentum Builds (1 minute)
+
+Matt gains support.
+Act 5 (8 minutes)
+Sub-act 1: Self-Doubt (1.5 minutes)
+
+Matt questions his decision.
+Sub-act 2: External Pressures (1.5 minutes)
+
+Financial struggles.
+Sub-act 3: Creative Block (1 minute)
+
+Matt struggles to write.
+Sub-act 4: Support System (1 minute)
+
+Sarah encourages Matt.
+Sub-act 5: Breakthrough (1.5 minutes)
+
+Matt finds inspiration.
+Sub-act 6: Resolve Strengthened (1 minute)
+
+Matt perseveres.
+Act 6 (8 minutes)
+Sub-act 1: Final Push (1.5 minutes)
+
+Matt completes his manuscript.
+Sub-act 2: Confronting Fears (1.5 minutes)
+
+Matt faces his critics.
+Sub-act 3: Triumph (1 minute)
+
+Matt's work is recognized.
+Sub-act 4: Emotional Release (1 minute)
+
+Matt feels proud.
+Sub-act 5: New Beginnings (1.5 minutes)
+
+Matt's career takes off.
+Sub-act 6: Reflection (1 minute)
+
+Matt reflects on his journey.
+Act 7 (8 minutes)
+Sub-act 1: New Chapter (2 minutes)
+
+Matt starts a new project.
+Sub-act 2: Closure (2 minutes)
+
+Matt says goodbye to his old life.
+Sub-act 3: Future Prospects (4 minutes)
+
+Matt looks forward to his future.
+Sub-act 4: film comes to an end( 2 minutes)

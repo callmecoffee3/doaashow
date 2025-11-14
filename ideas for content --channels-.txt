@@ -1,0 +1,203 @@
+ideas for content --
+CHANNELS 
+==========================================
+The list:
+
+01. Haunting
+2. camping
+3. overnight
+4. forest
+5. house
+6. challenges
+7. games
+8. camp-fires
+9. cooking
+10. rando
+11. abandoned
+12. fighting
+13. zombies
+14. nerf
+15. hospitals
+16. contest
+17. sleeping
+18. guest
+19. cops
+20. resturants
+21. sports
+22. food
+23. reviews
+24. communicate
+25. social
+26. modesl
+27. girls
+28. weddings
+29. viewing
+30. graves
+31. family
+32. travels
+33. morning
+34. noon
+35. night
+36. gym
+37. reactions
+38. animals
+39. cars
+40. houses
+41. wild
+42. market
+43. shopping
+44. eating
+45. investigations
+46. killed
+47. death
+48. murder
+49. cigaretts
+50. ritual
+51. cia
+52. government
+53. experiments
+54. medicals
+55. scieance
+56. mind
+57. body
+58. sprit
+59. god
+60. race
+61. life
+62. allowcations
+63. Sifi 
+64. Space 
+65. Technology 
+66. scary 
+67. Horror 
+68. Science 
+69. News
+70. Commentary 
+71. Journal
+72. Live
+73. Channel 
+74. Handhelds 
+75. Crafts 
+76. Cult
+77. Stalker 
+78. Satanic 
+79. Church 
+80. Van 
+81. Car
+82. Plane
+83. Trip
+84. Arrest 
+85. Warrant 
+86. Police 
+87. Morgue
+88. Dog
+89. Cat
+90. Pet
+91. Pest
+92. Dating
+93. Wrestling 
+94. Pro
+95. Sports
+96. Widow 
+97. Windows
+98. Computer 
+99. Money 
+100. Monkey 
+101. Supernatural 
+102. Spritual
+103. Podcast 
+104. Radio 
+105. Play
+106. Tv
+107. Movie
+108. Sheriff 
+109. CSI
+110. Doctor 
+111. Lawyer 
+112. Rescue 
+113. Fire
+114. Military 
+115. Found
+116. Lost
+117. Footage
+118. Media
+119. Social
+120. Vlog
+121. Casino
+122. Gambling 
+123. Investing 
+124. Collectibles 
+125. Collecting 
+126. Collect
+127. Bills
+128. Invoice
+129. Designs 
+130. Decoration 
+131. Producer
+132. Writers 
+133. Cheerleader 
+134. Song
+135. Music
+136. Dance
+137. Trainer
+138. marriage
+139. Play 
+140. Theater
+141. Church
+142. Teacher 
+143. Student 
+144. Test
+145. Subject 
+146. Murder
+147. Debate
+148. Dance
+149. children
+150. adults
+151. storys
+152. law
+153. criminal
+154. crime
+155. action
+156. drama
+157. lunch
+158. dinner
+159. breakfast
+160. Cult
+161. Cult classic 
+162. 90s
+163. 80s
+164. 70s
+165. 60s
+166. Modern 
+167. Classic 
+
+=============================
+- Functions 
+
+• Make it have the same look
+• Give it the same color design look 
+• Give me a paragraph of an outline of show 
+• Give me 5 generated ideas 
+• let user click 3 items in menu
+• Give director name 
+• Give producer name
+• Give show release date 
+• Give show genre 
+• Give it a show title 
+• Give show idea title
+• Give show episode number 
+• Give show season number 
+• Give it a header bar
+• Put menu in header bar 
+• Make the menu the list content button 
+• completely Show and  completely hide menu 
+• Add user input bar
+• Generate ideas on input and off of list 
+• Add submit button 
+• Display generated list of ideas 
+• Let user click on list item generate
+• Generate ideas and display from clicked menu list item
+• Include the whole list with numbered
+• Include each item from the list 
+• Include total film length 
+• Search bar to search list 
