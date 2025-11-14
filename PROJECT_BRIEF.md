@@ -1,0 +1,109 @@
+
+Callmecoffee3Desktop
+make a simulated destop wired frame usin g —————————————- 
+add all these as apps also add categories add in start menu as well as options like full screen and add let user: download app; 
+Add footer in taskbar callmecoffee3 simulated desktop
+—————————————————- 
+Commands to add to terminal: 
+1. Files 
+2. Folders 
+3. Help 
+4. Custom 
+5. New file 
+6. New folder 
+7. Reboot 
+8. App list 
+9. Add app 
+10. Date 
+11. Clear 
+12. Copy 
+13. Paste 
+14. Command 
+15. Open 
+16. Close 
+17. Edit 
+18. Rename 
+19. //get 
+20.//edit 
+21.//let 
+22.users
+
+——————————- 
+Functions : Let user; 
+
+0. Include as app category (-) ;
+1. (download app), 
+2. (install apps), 
+3. (Remove apps), 
+4. (Get apps from AppStore),
+5. (remove apps): 
+6. (Update apps); 
+7. (Notifications); on display as small floating cards 
+8. (User accounts); 
+9. (Callmecoffee3 simulated desktop); footer 
+
+Notifications; 1. (Display as floating header card) 2. (Optional to turn on & off) 3. (Delivery options)
+
+let user ; Make changes to app id 
+Background: 1. add (themes), 2. (add customization), 3. (add photos),    4. (Upload photos), 5. (Upload video) 6. (Upload sound)  7. (pin to taskbar) 
+Taskbar:    1. add (themes), 2. (add customization), 3. (add photos),    4. (Upload photos), 5. (Upload video) 6. (Upload sound)  7. (pin to taksbar)
+Settings;   1. Add (themes), 2. (add custumization), 3. (custom changes) 4. (Full screen) 4. Add (sound & options) 5. (themes)
+Files: 1. (add themes ), 2. (add customization), 3. (add photos), 4. (Upload photos), 5. (Upload video) 6. (Upload sound)
+Profile: 1. (add themes ), 2. (add customization), 3. (add photos), 4. (Upload photos), 5. (Upload video) 6. (Upload sound)
+Pages: 1. (add themes ), 2. (add customization), 3. (add photos), 4. (Upload photos), 5. (Upload video) 6. (Upload sound)
+Videos: 1. (add themes ), 2. (add customization), 3. (add photos), 4. (Upload photos), 5. (Upload video) 6. (Upload sound)
+Notifications: 1. (add themes ), 2. (add customization), 3. (add photos), 4. (Upload photos), 5. (Upload video) 6. (Upload sound)
+Profesional: 1. (add themes ), 2. (add customization), 3. (add photos), 4. (Upload photos), 5. (Upload video) 6. (Upload sound)
+Personal: 1. (add themes ), 2. (add customization), 3. (add photos), 4. (Upload photos), 5. (Upload video) 6. (Upload sound)
+
+
+———————-___———————- 
+Apps 
+
+-Main Core: Welcome Feed Discover All Apps All Categories Programs App Store News Friends Groups Message Boards Events Files Browser Mail Messages Websites Phone Calendar Video Photos Settings Options WebStore Ai
+
+-Health: Health Hospital Treatment Experiments Dr Nurse School Test Aids Manager Adult Kids Family Blood Teeth Hair Skin Bone Tissue Mussels Cells
+
+-Medical: Diseases Viruses Test Medical Insurances Outbreaks Fire Water Air Rescues
+
+-Law: Judge Lawyers School Police Politicians Mayor President
+
+-Home: Homes Camping Hiking Fishing Trailing Friends Family Kids Repairs Supplies Money
+
+-Entertainment: Shows Movies Theater Audio Radio Movies News Music Trailers Sports TV Shows Sports 24 Hours Overnight Challenges Watch Live Stream Travel Models Fashion Stage Magizine Radio Tv Online
+
+-Library: Media Stories Photo Live Camera Recorder
+
+-Life: The Fam Plants Animals Props Events Party Dates Parks Recreations Makeup Costume Parade
+
+-Law & Government: Law Police Lawyer Judge Politician President Governor Election Voting Government Sponsors Class
+
+-Exploration: Exploring Adventure Abandoned Ghost Hunting Hauntings Places Hospitals Asylms
+
+-Production: Actors Characters Charlie Sets Cameras Equipment Directors Producers Writer Cook Cast Crew Members Constructions
+
+-Transportation: Boats Ships Planes Cars Vehicles
+
+-Genres: Scary Horror Happy Creepy
+
+-Special Effects (SFX): Weapons Blood Guts Gore
+
+-Series: Part 1, Part 2, Part 3, Part 4, Season 1, Season 2, Season 3, Season 4
+
+-Data: Dashboard History Tabs Browser
+
+-Reality: AI VR 3D 360
+
+-Tools: Notes Calculator Tasks Games Books Tv Radio Shows Music Files Notes Intercom Browser Contacts Contracts News Articles
+
+-Commerce: Marketplace Bank Tickets Sales Advertisement Contracts Buildings Where house Whole sale Sub wholesale Shipping Building Farms Shops Electronics Gear News Brand New Recommend Follow Follows Model
+
+-Settings: Memory Main Apps
+
+-Options: Full screen Download app Colors Displays Arrangements
+
+-Help: Help Community Feedback Issues
+
+-searchbar on taskbar In start menu show as floating cards as search results 
+
+-categories -In App Store -In Start Menu : scelect by; -(arranged by category), -(Arranged by alphabetical order), -(arragged by current use), -(file size), -(file name)
