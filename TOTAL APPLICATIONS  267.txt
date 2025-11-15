@@ -2,6 +2,7 @@ TOTAL APPLICATIONS: 267
 
 --- APPLICATIONS ---
 
+---------- Main Core ---------------
 App: Welcome
   ID:          welcome
   Category:    Main Core
@@ -13,14 +14,14 @@ App: Feed
   ID:          feed
   Category:    Main Core
   Description: A social network feed for posts.
-  Default:     No
+  Default:     Yes
   User App:    No
 
 App: Discover
   ID:          discover
   Category:    Main Core
   Description: Discover new content and trends.
-  Default:     No
+  Default:     Yes
   User App:    No
 
 App: Applications
@@ -41,7 +42,7 @@ App: Programs
   ID:          programs
   Category:    Main Core
   Description: A dashboard for launching various programs.
-  Default:     No
+  Default:     Yes
   User App:    No
 
 App: App Store
@@ -69,15 +70,17 @@ App: Categories
   ID:          categories-app
   Category:    Main Core
   Description: App for managing categories.
-  Default:     No
+  Default:     Yes
   User App:    No
 
 App: Voice Command
   ID:          voice-command
   Category:    Main Core
   Description: Control the desktop with voice commands.
-  Default:     No
+  Default:     Yes
   User App:    No
+
+--------- Personal ------------------------------
 
 App: Personal
   ID:          personal
@@ -93,12 +96,16 @@ App: User Dashboard
   Default:     No
   User App:    No
 
+--------------- Profesional --------------------------
+
 App: Professional
   ID:          professional
   Category:    Professional
   Description: Dashboard for professional and work-related apps.
   Default:     Yes
   User App:    No
+
+------------ Business -------------------------------------
 
 App: Business
   ID:          business
@@ -107,12 +114,16 @@ App: Business
   Default:     Yes
   User App:    No
 
+---------- Tools -----------------------------------------
+
 App: Tools
   ID:          tools
   Category:    Tools
   Description: A collection of utility applications.
   Default:     Yes
   User App:    No
+  
+----------- Personal -----------------------------------------
 
 App: Social
   ID:          social
@@ -198,6 +209,8 @@ App: Contacts
   Default:     No
   User App:    No
 
+----------------- Profesional --------------------------
+
 App: Website Builder
   ID:          website-builder
   Category:    Professional
@@ -260,6 +273,8 @@ App: Slides
   Description: A presentation application.
   Default:     Yes
   User App:    No
+  
+-------- Business ------------
 
 App: Calculator
   ID:          calculator
@@ -272,14 +287,14 @@ App: Marketplace
   ID:          marketplace
   Category:    Business
   Description: Buy and sell items.
-  Default:     No
+  Default:     Yes
   User App:    No
 
 App: Bank
   ID:          bank
   Category:    Business
   Description: Manage your finances.
-  Default:     No
+  Default:     Yes
   User App:    No
 
 App: Sales
@@ -293,29 +308,31 @@ App: Ads
   ID:          advertisement
   Category:    Business
   Description: Manage advertisements.
-  Default:     No
+  Default:     Yes
   User App:    No
 
 App: Shop
   ID:          shop-app
   Category:    Business
   Description: An e-commerce storefront.
-  Default:     No
+  Default:     Yes
   User App:    No
 
 App: Pages
   ID:          pages
   Category:    Business
   Description: Manage business pages.
-  Default:     No
+  Default:     Yes
   User App:    No
 
 App: Text
   ID:          text
   Category:    Business
   Description: A simple text editor.
-  Default:     No
+  Default:     Yes
   User App:    No
+
+------ Broadcast ----------------------
 
 App: Commercials
   ID:          commercials
@@ -335,7 +352,7 @@ App: TV Show
   ID:          tv-show
   Category:    Broadcast
   Description: Watch TV shows.
-  Default:     No
+  Default:     Yes
   User App:    No
 
 App: Radio Show
@@ -349,14 +366,14 @@ App: Movies
   ID:          movies-app
   Category:    Broadcast
   Description: Browse and watch movies.
-  Default:     No
+  Default:     Yes
   User App:    No
 
 App: Main Channel
   ID:          main-channel
   Category:    Broadcast
   Description: The main broadcast channel.
-  Default:     No
+  Default:     Yes
   User App:    No
 
 App: Sub Main
@@ -386,6 +403,7 @@ App: AI Movies
   Description: Generate and watch AI-created movies.
   Default:     Yes
   User App:    No
+--------------- Health -------------------
 
 App: Health
   ID:          health
@@ -533,6 +551,8 @@ App: Cells
   Description: Cellular biology information.
   Default:     No
   User App:    No
+  
+------------- Medical -------------------------
 
 App: Diseases
   ID:          diseases
@@ -603,6 +623,8 @@ App: Rescues
   Description: Coordinate and manage rescue operations.
   Default:     No
   User App:    No
+  
+----------------- Law -----------------------------
 
 App: Judge
   ID:          judge
@@ -659,6 +681,8 @@ App: Government
   Description: Government services and information.
   Default:     No
   User App:    No
+  
+----------------- Home ------------------------
 
 App: Homes
   ID:          homes
@@ -744,6 +768,8 @@ App: Downloads
   Default:     Yes
   User App:    No
 
+----------- Entertainment ---------------------------
+
 App: Shows
   ID:          shows
   Category:    Entertainment
@@ -769,7 +795,7 @@ App: Audio
   ID:          audio
   Category:    Entertainment
   Description: Listen to audio content.
-  Default:     No
+  Default:     Yes
   User App:    No
 
 App: AI Radio
@@ -783,14 +809,14 @@ App: News
   ID:          ent-news
   Category:    Entertainment
   Description: Entertainment news.
-  Default:     No
+  Default:     Yes
   User App:    No
 
 App: Music
   ID:          music
   Category:    Entertainment
   Description: Listen to your music library.
-  Default:     No
+  Default:     Yes
   User App:    No
 
 App: Trailers
@@ -811,7 +837,7 @@ App: TV Shows
   ID:          tv-shows
   Category:    Entertainment
   Description: Track and watch TV shows.
-  Default:     No
+  Default:     Yes
   User App:    No
 
 App: 24 Hours
@@ -895,35 +921,37 @@ App: MGS Studios
   ID:          matt-grosso-show
   Category:    Entertainment
   Description: The official app for Matt Grosso Show Studios.
-  Default:     No
+  Default:     Yes
   User App:    No
+
+----------------- Library ------------------------------
 
 App: Media
   ID:          media
   Category:    Library
   Description: A library of all your media.
-  Default:     No
+  Default:     Yes
   User App:    No
 
 App: Media Explorer
   ID:          media-explorer
   Category:    Library
   Description: Explore your media files.
-  Default:     No
+  Default:     Yes
   User App:    No
 
 App: Stories
   ID:          stories
   Category:    Library
   Description: Read and write stories.
-  Default:     No
+  Default:     Yes
   User App:    No
 
 App: Photo
   ID:          photo-lib
   Category:    Library
   Description: Your personal photo library.
-  Default:     No
+  Default:     Yes
   User App:    No
 
 App: Videos
@@ -944,22 +972,24 @@ App: Live
   ID:          live
   Category:    Library
   Description: Access live content.
-  Default:     No
+  Default:     Yes
   User App:    No
 
 App: Camera
   ID:          camera
   Category:    Library
   Description: A simple camera application.
-  Default:     No
+  Default:     Yes
   User App:    No
 
 App: Recorder
   ID:          recorder
   Category:    Library
   Description: Record audio notes.
-  Default:     No
+  Default:     Yes
   User App:    No
+
+--------------- Life -------------------------
 
 App: The Fam
   ID:          the-fam
@@ -1044,6 +1074,8 @@ App: Parade
   Description: Information about parades.
   Default:     No
   User App:    No
+  
+-------- Law & Government -------------------
 
 App: Law
   ID:          gov-law
@@ -1121,6 +1153,8 @@ App: Class
   Description: Civics classes.
   Default:     No
   User App:    No
+  
+------------- Exploration ----------------------
 
 App: Exploring
   ID:          exploring
@@ -1233,6 +1267,8 @@ App: Campers
   Description: Camper van life.
   Default:     No
   User App:    No
+  
+----------- Production -----------------
 
 App: Content Ideas
   ID:          content-ideas
@@ -1352,6 +1388,8 @@ App: Extensions
   Description: Manage production extensions.
   Default:     No
   User App:    No
+  
+-------------- Transportaion -------------------------------
 
 App: Boats
   ID:          boats
@@ -1387,6 +1425,8 @@ App: Vehicles
   Description: General vehicle information.
   Default:     No
   User App:    No
+  
+---------------- Genres -----------------------
 
 App: Scary
   ID:          scary
@@ -1408,6 +1448,8 @@ App: Creepy
   Description: Content for the creepy genre.
   Default:     No
   User App:    No
+
+------------- Fun ------------------------
 
 App: Creature
   ID:          creature
@@ -1436,6 +1478,8 @@ App: Fun
   Description: A collection of fun activities.
   Default:     No
   User App:    No
+  
+--------------- Horror ------------------------
 
 App: Gore
   ID:          gore
@@ -1450,6 +1494,8 @@ App: Horror
   Description: Content for the horror genre.
   Default:     No
   User App:    No
+
+-------------- SFX -------------------------------
 
 App: Effects
   ID:          effects
@@ -1478,6 +1524,8 @@ App: Guts
   Description: Guts special effects.
   Default:     No
   User App:    No
+  
+----------- Series ------------------------
 
 App: Part 1
   ID:          part-1
@@ -1534,6 +1582,8 @@ App: Season 4
   Description: The fourth season of a show.
   Default:     No
   User App:    No
+  
+--------------- Data ----------------------
 
 App: Dashboard
   ID:          dashboard
@@ -1555,6 +1605,8 @@ App: Tabs
   Description: Manage data tabs.
   Default:     No
   User App:    No
+  
+-------------- Reality ----------------------
 
 App: VR
   ID:          vr
@@ -1576,6 +1628,8 @@ App: 360
   Description: 360-degree video and images.
   Default:     No
   User App:    No
+
+---------- Tools ----------------------------
 
 App: Games
   ID:          games
@@ -1693,7 +1747,7 @@ App: Walkie Talkie
   ID:          walkie-talkie
   Category:    Tools
   Description: A walkie-talkie communication app.
-  Default:     No
+  Default:     Yes
   User App:    No
 
 App: Memory
@@ -1707,28 +1761,30 @@ App: Drawing
   ID:          canvas
   Category:    Tools
   Description: A simple drawing application.
-  Default:     No
+  Default:     Yes
   User App:    No
+  
+------------ Commerce -------------------------
 
 App: Merch Shop
   ID:          merch-shop
   Category:    Commerce
   Description: Buy and sell merchandise.
-  Default:     No
+  Default:     Yes
   User App:    No
 
 App: Tickets
   ID:          tickets
   Category:    Commerce
   Description: Buy event tickets.
-  Default:     No
+  Default:     Yes
   User App:    No
 
 App: Contracts
   ID:          commerce-contracts
   Category:    Commerce
   Description: Manage business contracts.
-  Default:     No
+  Default:     Yes
   User App:    No
 
 App: Buildings
@@ -1842,6 +1898,8 @@ App: Model
   Description: Fashion models in commerce.
   Default:     No
   User App:    No
+  
+------------- Settings ------------------------
 
 App: Memory
   ID:          settings-memory
@@ -1854,8 +1912,10 @@ App: Main Apps
   ID:          main-apps
   Category:    Settings
   Description: Configure main applications.
-  Default:     No
+  Default:     Yes
   User App:    No
+  
+------------------ About -----------------------
 
 App: About
   ID:          about
@@ -1868,12 +1928,26 @@ App: callmecoffee3Desktop
   ID:          callmecoffee3-desktop
   Category:    About
   Description: About this specific desktop instance.
-  Default:     No
+  Default:     Yes
   User App:    No
 
 
 --- UPDATE LOG ---
+* Version 2.5.0:
+  - Added footer copyright #callmecoffee3 2025
+  - added tote
+  - added settings
+  - added window pages to each application that describes the application
+  - added help
+  - added comuinity
+  - added detect, prevent crashes and error checks
+  - added detect, prevent lag time 
+  - added detect, and write to update log
+  - added taskbar
+  - added drawer laucher
+  - added 
 
+  
 * Version 2.4.0:
   - Added a comprehensive changelog to the 'System Information' app.
   - Enhanced app descriptions for better clarity.
