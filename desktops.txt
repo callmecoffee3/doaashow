@@ -1,0 +1,84 @@
+desktops 
+Core elements:
+. Taskbar
+. Search bar
+. Bookmark bar
+. Address bar 
+. Clock : SWITCH BETWEEN 12 TO 24 HOURS
+. Icons 
+. Start menu 
+. Icon Launcher 
+. File manager 
+. Settings 
+. Options 
+. Full Screen 
+. Color change 
+. Mode
+. Sounds 
+. Notifications
+. Memory 
+. Versions 
+. OS Name 
+. Operations 
+. Header : [desktops name]
+. Footer : "made by callmecoffee3"
+.  ADD PROFILE PIC ON BOOKMARKBAR
+
+Core apps:
+. Online App Store : add notes
+. Marketplace : add notes
+. Merch Shop : add notes
+. Unknown : add notes
+. Communication : add notes 
+. Calendar : add notes
+. Calculator : add notes
+. Notes : add notes
+. Clubs : add notes
+. Groups : add notes
+. Pages : add notes
+. Church : SundayService, WendnesdayService, Teacher, Class : add notes
+. Homework : add notes
+. Praise Reports : add notes
+. Prayer Request : add notes
+. Friends : add notes
+. Follows : add notes
+. Followers : add notes
+. Video : (somthing like youtube)
+. Photos : ( something like google photos)
+. Feed-Wall : friends and  you can post (something like facebook)
+. Film : add notes
+
+App window: 
+. Taskbar
+. Search bar
+. Bookmark bar
+. Address bar 
+. NAV MENU
+. Clock
+. Icons 
+. Start menu 
+. Icon Launcher 
+. File manager 
+. Settings 
+. Options 
+. Full Screen 
+. Color change 
+. Mode
+. Sounds 
+. Notifications
+. Memory 
+. Versions 
+. ITS OS Name 
+. Operations
+. Expand full screen
+
+SPECIAL NOTES:
+• LET USER  UPLOAD FROM FOLDER TREE
+• LET USER UPLOAD FROM FOLDER PATH
+• LET USER ADD FOLDER AND UPLOAD
+•  GIVE APPS THE  WINDOWS 80S LOOK
+•  ON DESKTOP SCREEN : MADE BY CALLMEECOFFEE3
+•  ON DESKTOP SCREEN : ADD A BIG CLOCK
+•  ON DESKTOP SCREEN : ADD SEARCHBAR 
+•  SHOW PROFILE PIC ON : NAV MENU
+•  ADD A SWITCH TO GO BETWEEN : WINDOWS 80S RETRO , TO FACBOOK LOOK
