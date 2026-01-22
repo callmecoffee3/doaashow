@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Folder Text Viewer</title>
+    <style>
+        body { font-family: sans-serif; margin: 40px; background: #f4f4f9; color: #333; }
+        .container { max-width: 900px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .upload-section { border: 2px dashed #007bff; padding: 30px; text-align: center; border-radius: 8px; cursor: pointer; }
+        .file-card { margin-top: 20px; border: 1px solid #ddd; border-radius: 5px; overflow: hidden; }
+        .file-header { background: #e9ecef; padding: 10px 15px; font-weight: bold; display: flex; justify-content: space-between; }
+        pre { background: #272822; color: #f8f8f2; padding: 15px; margin: 0; overflow-x: auto; white-space: pre-wrap; font-size: 14px; }
+        .stats { margin-bottom: 20px; color: #666; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>📂 Folder Text Content Viewer</h2>
+    <p class="stats" id="stats">Upload a folder to extract and read all .txt files.</p>
+
+    <div class="upload-section" onclick="document.getElementById('folderInput').click()">
+        <p>Click here or drag a folder to upload</p>
+        <input type="file" id="folderInput" webkitdirectory directory multiple style="display:none">
+    </div>
+
+    <div id="output"></div>
+</div>
+
+<script>
+    const folderInput = document.getElementById('folderInput');
+    const output = document.getElementById('output');
+    const stats = document.getElementById('stats');
+
+    folderInput.addEventListener('change', (event) => {
+        const files = event.target.files;
+        output.innerHTML = ''; // Clear previous results
+        let txtCount = 0;
+
+        Array.from(files).forEach(file => {
+            // Only process .txt files
+            if (file.name.endsWith('.txt')) {
+                txtCount++;
+                const reader = new FileReader();
+
+                reader.onload = (e) => {
+                    const content = e.target.result;
+                    displayFile(file.webkitRelativePath || file.name, content);
+                };
+
+                reader.readAsText(file);
+            }
+        });
+
+        stats.innerText = `Found ${files.length} items. Displaying ${txtCount} text files.`;
+    });
+
+    function displayFile(filePath, content) {
+        const card = document.createElement('div');
+        card.className = 'file-card';
+
+        card.innerHTML = `
+            <div class="file-header">
+                <span>📄 ${filePath}</span>
+            </div>
+            <pre><code>${escapeHtml(content)}</code></pre>
+        `;
+
+        output.appendChild(card);
+    }
+
+    // Helper to prevent HTML injection if the text file contains code
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+</script>
+
+</body>
+</html>

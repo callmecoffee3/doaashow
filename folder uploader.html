@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Folder Info Generator</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 40px; background-color: #f8f9fa; line-height: 1.6; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        .upload-zone { border: 2px dashed #4a90e2; padding: 40px; text-align: center; border-radius: 10px; background: #f0f7ff; cursor: pointer; transition: 0.3s; }
+        .upload-zone:hover { background: #e2eeff; }
+        .btn { background: #4a90e2; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; margin-top: 10px; }
+        .btn:disabled { background: #ccc; }
+        #report-preview { background: #2d2d2d; color: #61dafb; padding: 20px; border-radius: 8px; margin-top: 20px; white-space: pre-wrap; font-family: monospace; max-height: 400px; overflow-y: auto; display: none; }
+        .header { display: flex; justify-content: space-between; align-items: center; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h2>📁 Folder Info Creator</h2>
+        <button id="downloadBtn" class="btn" style="display:none;">Download .txt Report</button>
+    </div>
+    
+    <p>Upload a folder to generate a text-based structure and file metadata report.</p>
+
+    <div class="upload-zone" onclick="document.getElementById('folderInput').click()">
+        <strong>Click to select a folder</strong>
+        <p style="font-size: 0.9em; color: #666;">Your data stays in the browser and is never uploaded to a server.</p>
+        <input type="file" id="folderInput" webkitdirectory directory multiple style="display:none">
+    </div>
+
+    <div id="report-preview"></div>
+</div>
+
+<script>
+    const folderInput = document.getElementById('folderInput');
+    const preview = document.getElementById('report-preview');
+    const downloadBtn = document.getElementById('downloadBtn');
+    let generatedReport = "";
+
+    folderInput.addEventListener('change', (event) => {
+        const files = event.target.files;
+        if (files.length === 0) return;
+
+        let report = `FOLDER ANALYSIS REPORT\n`;
+        report += `Generated on: ${new Date().toLocaleString()}\n`;
+        report += `Total Files: ${files.length}\n`;
+        report += `------------------------------------------\n\n`;
+        report += `DIRECTORY STRUCTURE:\n`;
+
+        // Sort files by path for a clean tree view
+        const fileList = Array.from(files).sort((a, b) => a.webkitRelativePath.localeCompare(b.webkitRelativePath));
+        
+        fileList.forEach(file => {
+            const sizeKB = (file.size / 1024).toFixed(2);
+            report += `[FILE] ${file.webkitRelativePath} (${sizeKB} KB)\n`;
+        });
+
+        generatedReport = report;
+        preview.textContent = report;
+        preview.style.display = 'block';
+        downloadBtn.style.display = 'block';
+    });
+
+    downloadBtn.addEventListener('click', () => {
+        const blob = new Blob([generatedReport], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = "folder_structure_report.txt";
+        a.click();
+        URL.revokeObjectURL(url);
+    });
+</script>
+
+</body>
+</html>

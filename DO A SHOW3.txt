@@ -1,0 +1,137 @@
+-(dos) main programs/
+├── -(dos) channel/
+│   ├── Matt Grosso/
+│   └── podcast/
+├── -(dos) chats/
+├── -(dos) church/
+│   └── /WednesdayChurchService/
+│       ├── 0_WednesdayChurch/
+│       ├── 1_Arrivals/
+│       ├── 2_PhoneCalling/
+│       ├── 3_Praise/
+│       ├── 4_Prayers/
+│       ├── 5_Offerings/
+│       ├── 6_Music/
+│       ├── 7_Beginning/
+│       ├── 8_Reading/
+│       ├── 9_Discussions/
+│       ├── 10_PrayerOfOfferings/
+│       ├── 11_Closings/
+│       └── 12_Leaving/
+│   └── SundayChurchService/
+│       └── relating_to_church/
+├── -(dos) audio/
+│   ├── Audio_001 
+|   └─  Audio_300 (conceptual)
+├── -(dos) camera/
+│   ├── Camera_001 
+|   └── Camera_300 (conceptual)
+├── -(dos) character/
+│   ├── Character_001 - 
+    └── Character_300 (conceptual)
+├── -(dos) docs/
+│   ├── html/
+│   ├── study/
+│   └── txt/
+├── -(dos) laptop/
+├── -(dos) main/
+│   ├── boards/
+│   ├── clubs/
+│   ├── communities/
+│   ├── experiments/
+│   │   ├── viruses/
+│   │   ├── bacteria/
+│   │   └── other_stuff/
+│   ├── maps/
+│   ├── marketplace/
+│   │   ├── animals/
+│   │   │   ├── cats/
+│   │   │   ├── dogs/
+│   │   │   └── birds/
+│   │   ├── art/
+|   |   |      ├── pant/
+|   |   |      ├── markers/
+|   |   |      └── clay/
+│   │   ├── cast/
+|   |   |      ├── crew/
+|   |   |      ├── markers/
+|   |   |      └── clay/
+│   │   ├── clothing/
+│   │   │   ├── hats/
+│   │   │   ├── shirts/
+│   │   │   ├── pants/
+│   │   │   └── hoodies/
+│   │   ├── equipment/
+│   │   │   ├── camera/
+│   │   │   ├── synth/
+│   │   │   ├── audio/
+│   │   │   ├── recorder/
+│   │   │   └── phones/
+│   │   ├── film_making/
+│   │   │   ├── plants/
+│   │   │   ├── producers/
+│   │   │   ├── weapons/
+│   │   │   ├── world/
+│   │   │   ├── writers/
+│   │   │   ├── fx/
+│   │   │   └── directors/
+│   │   ├── gadgets/
+│   │   ├── jobs/
+│   │   │   ├── tech_jobs/
+│   │   │   ├── creative_jobs/
+│   │   │   ├── other_jobs/
+│   │   │   └── secretaries/
+│   │   ├── owner/
+│   │   ├── realestate/
+│   │   ├── renter/
+│   │   ├── retail/
+│   │   ├── sub wholesale/
+│   │   └── wholesale/
+│   ├── people/
+│   │   ├── friends/
+│   │   ├── family/
+│   │   ├── workers/
+│   │   ├── bosses/
+│   │   ├── doctors/
+│   │   ├── nurses/
+│   │   ├── writers/
+│   │   ├── directors/
+│   │   ├── producers/
+│   │   ├── chefs/
+│   │   ├── follows/
+│   │   ├── following/
+│   │   ├── likes/
+│   │   ├── comments/
+│   │   ├── subscribe/
+│   │   ├── users/
+│   │   ├── moderators/
+│   │   ├── members/
+│   │   └── owners/
+├── -(dos) media/
+│   ├── photo/
+│   ├── video/
+│   ├── spaces/
+│   ├── notes/
+│   ├── articles/
+│   ├── watch/
+│   ├── short/
+│   └── stories/
+├── -(dos) scenes/
+│   ├── Scene_001 -
+    ├── Scene_300 (conceptual)
+└── -(dos) Users/
+     -- Guset
+     -- Callmecoffee3
+     -- Signup
+--- -(dos) Notes/
+       -- New
+       -- Recents
+--- -(dos) social: Post/
+       -- New
+       -- Comments
+       -- Likes
+       -- Repost
+       -- Freinds
+       -- Follows
+       -- Followers
+--- -(dos)       

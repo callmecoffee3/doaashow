@@ -1,0 +1,126 @@
+  Film,
+  DollarSign,
+  Building2,
+  Warehouse,
+  Users,
+  LayoutDashboard,
+  Menu,
+  X,
+} from "lucide-react";
+import { useState } from "react";
+
+export default function Sidebar({ activeSection, setActiveSection }) {
+  const import {
+[mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const menuItems = [
+    { id: "overview", label: "Dashboard", icon: LayoutDashboard },
+    { id: "projects", label: "Projects", icon: Film },
+    { id: "deals", label: "Deals & Money", icon: DollarSign },
+    { id: "frontlot", label: "Front Lot", icon: Building2 },
+    { id: "backlot", label: "Back Lot", icon: Warehouse },
+    { id: "contacts", label: "Contacts", icon: Users },
+  ];
+
+  const NavContent = () => (
+    <>
+      <div className="p-6 border-b border-[#1E2126]">
+        <div className="flex items-center space-x-3">
+          <div className="w-10 h-10 bg-gradient-to-br from-[#D4AF37] to-[#B8941E] rounded-lg flex items-center justify-center">
+            <Film size={22} className="text-[#0A0B0D]" strokeWidth={2.5} />
+          </div>
+          <div>
+            <h1 className="font-montserrat font-bold text-lg text-white">
+              Studio OS
+            </h1>
+            <p className="font-inter text-xs text-[#9CA3AF]">
+              Production Suite
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <nav className="p-4 space-y-2">
+        {menuItems.map((item) => {
+          const Icon = item.icon;
+          const isActive = activeSection === item.id;
+
+          return (
+            <button
+              key={item.id}
+              onClick={() => {
+                setActiveSection(item.id);
+                setMobileMenuOpen(false);
+              }}
+              className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 group ${
+                isActive
+                  ? "bg-[#D4AF37] text-[#0A0B0D]"
+                  : "text-[#9CA3AF] hover:bg-[#1E2126] hover:text-white"
+              }`}
+            >
+              <Icon
+                size={20}
+                strokeWidth={2}
+                className={
+                  isActive
+                    ? "text-[#0A0B0D]"
+                    : "text-[#9CA3AF] group-hover:text-white"
+                }
+              />
+              <span className="font-inter font-medium text-sm">
+                {item.label}
+              </span>
+            </button>
+          );
+        })}
+      </nav>
+    </>
+  );
+
+  return (
+    <>
+      {/* Mobile menu button */}
+      <button
+        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+        className="lg:hidden fixed top-4 left-4 z-50 p-3 bg-[#1E2126] rounded-lg text-white hover:bg-[#2A2F37] transition-colors"
+      >
+        {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+      </button>
+
+      {/* Desktop sidebar */}
+      <aside className="hidden lg:block fixed left-0 top-0 h-screen w-64 bg-[#12141A] border-r border-[#1E2126] overflow-y-auto">
+        <NavContent />
+      </aside>
+
+      {/* Mobile sidebar */}
+      {mobileMenuOpen && (
+        <div
+          className="lg:hidden fixed inset-0 z-40 bg-black bg-opacity-50"
+          onClick={() => setMobileMenuOpen(false)}
+        >
+          <aside
+            className="absolute left-0 top-0 h-screen w-64 bg-[#12141A] border-r border-[#1E2126] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <NavContent />
+          </aside>
+        </div>
+      )}
+
+      <style jsx global>{`
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Inter:wght@400;500;600&display=swap');
+        
+        .font-montserrat {
+          font-family: 'Montserrat', sans-serif;
+        }
+        
+        .font-inter {
+          font-family: 'Inter', sans-serif;
+        }
+      `}</style>
+    </>
+  );
+}
+
+
+

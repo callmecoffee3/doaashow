@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ITS OS</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Taskbar -->
+  <div class="taskbar">
+    <div class="start-menu">Start</div>
+    <div class="icon-launcher">Icon Launcher</div>
+    <div class="search-bar">
+      <input type="search" placeholder="Search...">
+    </div>
+    <div class="bookmark-bar">
+      <img id="profile-pic" src="profile-pic.jpg" alt="Profile Pic">
+      <!-- Add bookmarks here -->
+    </div>
+    <div class="clock" id="clock-taskbar">00:00</div>
+  </div>
+
+  <!-- Desktop -->
+  <div class="desktop">
+    <h1 id="desktops-name">ITS OS</h1>
+    <div class="big-clock" id="clock">00:00:00</div>
+    <div class="search-bar desktop-search-bar">
+      <input type="search" placeholder="Search...">
+    </div>
+    <!-- Add desktop icons here -->
+    <div class="made-by">Made by callmecoffee3</div>
+  </div>
+
+  <!-- App Window -->
+  <div class="app-window" style="display: none;">
+    <div class="taskbar">
+      <div class="start-menu">Start</div>
+      <div class="icon-launcher">Icon Launcher</div>
+      <div class="search-bar">
+        <input type="search" placeholder="Search...">
+      </div>
+      <div class="bookmark-bar">
+        <img id="profile-pic" src="profile-pic.jpg" alt="Profile Pic">
+        <!-- Add bookmarks here -->
+      </div>
+      <div class="clock" id="clock-taskbar">00:00</div>
+    </div>
+    <div class="nav-menu">
+      <!-- Add nav menu items here -->
+    </div>
+    <div class="content">
+      <!-- App content here -->
+    </div>
+  </div>
+
+  <!-- Core Apps -->
+  <div class="core-apps">
+    <!-- Add core apps here -->
+    <div class="app" id="online-app-store">Online App Store</div>
+    <div class="app" id="marketplace">Marketplace</div>
+    <div class="app" id="merch-shop">Merch Shop</div>
+    <div class="app" id="unknown">Unknown</div>
+    <div class="app" id="communication">Communication</div>
+    <div class="app" id="calendar">Calendar</div>
+    <div class="app" id="calculator">Calculator</div>
+    <div class="app" id="notes">Notes</div>
+    <div class="app" id="clubs">Clubs</div>
+    <div class="app" id="groups">Groups</div>
+    <div class="app" id="pages">Pages</div>
+    <div class="app" id="church">Church</div>
+    <div class="app" id="homework">Homework</div>
+    <div class="app" id="praise-reports">Praise Reports</div>
+    <div class="app" id="prayer-request">Prayer Request</div>
+    <div class="app" id="friends">Friends</div>
+    <div class="app" id="follows">Follows</div>
+    <div class="app" id="followers">Followers</div>
+    <div class="app" id="video">Video</div>
+    <div class="app" id="photos">Photos</div>
+    <div class="app" id="feed-wall">Feed-Wall</div>
+    <div class="app" id="film">Film</div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
+
+/* styles.css */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.taskbar {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.start-menu {
+  font-size: 18px;
+  font-weight: bold;
+  margin-right: 20px;
+}
+
+.icon-launcher {
+  font-size: 18px;
+  margin-right: 20px;
+}
+
+.search-bar input[type="search"] {
+  padding: 5px;
+  width: 200px;
+}
+
+.bookmark-bar {
+  display: flex;
+  align-items: center;
+}
+
+.bookmark-bar img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.clock {
+  font-size: 18px;
+  margin-left: 20px;
+}
+
+.desktop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f0f0f0;
+}
+
+.big-clock {
+  font-size: 48px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.made-by {
+  font-size: 18px;
+  color: #666;
+}
+
+.app-window {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  display: none;
+}
+
+.nav-menu {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.core-apps {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.app {
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.app:hover {
+  background-color: #f0f0f0;
+}
+
+
+// script.js
+// Add event listeners and functionality here
+document.addEventListener('DOMContentLoaded', () => {
+  const clock = document.getElementById('clock');
+  const clockTaskbar = document.getElementById('clock-taskbar');
+  const profilePic = document.getElementById('profile-pic');
+
+  // Update clock
+  setInterval(() => {
+    const now = new Date();
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const seconds = now.getSeconds().toString().padStart(2, '0');
+    clock.textContent = ${hours}:${minutes}:${seconds};
+    clockTaskbar.textContent = ${hours}:${minutes};
+  }, 1000);
+
+  // Add profile pic functionality
+  profilePic.addEventListener('click', () => {
+    // Add profile pic functionality here
+    console.log('Profile pic clicked!');
+  });
+
+  // Add switch to toggle between Windows 80s Retro and Facebook look
+  const switchButton = document.createElement('button');
+  switchButton.textContent = 'Switch to Facebook Look';
+  document.body.appendChild(switchButton);
+
+  switchButton.addEventListener('click', () => {
+    // Add toggle functionality here
+    console.log('Switch button clicked!');
+  });
+});

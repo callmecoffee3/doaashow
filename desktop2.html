@@ -1,0 +1,173 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>callmecoffee3 OS</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Desktop Screen -->
+    <div class="desktop">
+        <div class="header" id="header">Desktops Name</div>
+        <div class="clock" id="clock"></div>
+        <div class="search-bar">
+            <input type="search" id="search" placeholder="Search...">
+        </div>
+        <div class="profile-pic" id="profile-pic"></div>
+        <!-- Icons and Apps -->
+        <div class="icon-grid">
+            <!-- Icons will be generated dynamically -->
+        </div>
+        <div class="footer" id="footer">made by callmecoffee3</div>
+    </div>
+
+    <!-- Taskbar -->
+    <div class="taskbar">
+        <div class="start-menu" id="start-menu">Start</div>
+        <div class="icon-launcher" id="icon-launcher"></div>
+        <div class="clock-taskbar" id="clock-taskbar"></div>
+    </div>
+
+    <!-- App Window -->
+    <div class="app-window" id="app-window">
+        <div class="app-header">
+            <div class="app-title" id="app-title"></div>
+            <div class="app-controls">
+                <button id="minimize">-</button>
+                <button id="maximize">[]</button>
+                <button id="close">X</button>
+            </div>
+        </div>
+        <div class="app-content" id="app-content"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html/* styles.css */
+body {
+    font-family: 'MS Sans Serif', sans-serif;
+    background-color: #008080;
+    color: #fff;
+}
+
+.desktop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('background.jpg');
+    background-size: cover;
+}
+
+.header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 30px;
+    background-color: #000080;
+    color: #fff;
+    text-align: center;
+    font-size: 20px;
+    padding-top: 5px;
+}
+
+.clock {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 48px;
+    font-weight: bold;
+}
+
+.search-bar {
+    position: absolute;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.profile-pic {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #fff;
+}
+
+.taskbar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    background-color: #c0c0c0;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.start-menu {
+    background-color: #000080;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.icon-launcher {
+    margin-left: 10px;
+}
+
+.app-window {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 80%;
+    background-color: #fff;
+    border: 1px solid #000;
+    display: none;
+}
+
+.app-header {
+    background-color: #000080;
+    color: #fff;
+    padding: 5px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.app-content {
+    padding: 10px;
+}
+// script.js
+// Add event listeners and functionality here
+document.addEventListener('DOMContentLoaded', () => {
+    const clock = document.getElementById('clock');
+    const clockTaskbar = document.getElementById('clock-taskbar');
+    const profilePic = document.getElementById('profile-pic');
+
+    // Update clock
+    setInterval(() => {
+        const now = new Date();
+        const hours = now.getHours().toString().padStart(2, '0');
+        const minutes = now.getMinutes().toString().padStart(2, '0');
+        const seconds = now.getSeconds().toString().padStart(2, '0');
+        clock.textContent = `${hours}:${minutes}:${seconds}`;
+        clockTaskbar.textContent = `${hours}:${minutes}`;
+    }, 1000);
+
+    // Add profile pic functionality
+    profilePic.addEventListener('click', () => {
+        // Add profile pic functionality here
+    });
+});

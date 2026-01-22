@@ -1,0 +1,1563 @@
+add these app to the os app store
+
+TOTAL APPLICATIONS: 267
+
+--- APPLICATIONS ---
+
+---------- Main Core ---------------
+App: Welcome
+  ID:          welcome
+  Category:    Main Core
+  Description: Welcomes the user to the desktop simulator environment.
+  Default:     Yes
+  User App:    No
+
+App: Feed
+  ID:          feed
+  Category:    Main Core
+  Description: A social network feed for posts.
+  Default:     Yes
+  User App:    No
+
+App: Discover
+  ID:          discover
+  Category:    Main Core
+  Description: Discover new content and trends.
+  Default:     Yes
+  User App:    No
+
+App: Applications
+  ID:          all-apps
+  Category:    Main Core
+  Description: Browse and manage all installed and available applications.
+  Default:     Yes
+  User App:    No
+
+App: Categories
+  ID:          all-categories
+  Category:    Main Core
+  Description: View all application categories.
+  Default:     Yes
+  User App:    No
+
+App: Programs
+  ID:          programs
+  Category:    Main Core
+  Description: A dashboard for launching various programs.
+  Default:     Yes
+  User App:    No
+
+App: App Store
+  ID:          app-store
+  Category:    Main Core
+  Description: Install, update, and manage applications.
+  Default:     Yes
+  User App:    No
+
+App: Settings
+  ID:          settings
+  Category:    Main Core
+  Description: Configure system and application settings.
+  Default:     Yes
+  User App:    No
+
+App: AI Assistant
+  ID:          ai
+  Category:    Main Core
+  Description: An AI-powered assistant to help with tasks.
+  Default:     Yes
+  User App:    No
+
+App: Categories
+  ID:          categories-app
+  Category:    Main Core
+  Description: App for managing categories.
+  Default:     Yes
+  User App:    No
+
+App: Voice Command
+  ID:          voice-command
+  Category:    Main Core
+  Description: Control the desktop with voice commands.
+  Default:     Yes
+  User App:    No
+
+--------- Personal ------------------------------
+
+App: Personal
+  ID:          personal
+  Category:    Personal
+  Description: Dashboard for personal applications.
+  Default:     Yes
+  User App:    No
+
+App: User Dashboard
+  ID:          user-dashboard
+  Category:    Personal
+  Description: View and manage user data.
+  Default:     No
+  User App:    No
+
+--------------- Profesional --------------------------
+
+App: Professional
+  ID:          professional
+  Category:    Professional
+  Description: Dashboard for professional and work-related apps.
+  Default:     Yes
+  User App:    No
+
+------------ Business -------------------------------------
+
+App: Business
+  ID:          business
+  Category:    Business
+  Description: Dashboard for business management applications.
+  Default:     Yes
+  User App:    No
+
+---------- Tools -----------------------------------------
+
+App: Tools
+  ID:          tools
+  Category:    Tools
+  Description: A collection of utility applications.
+  Default:     Yes
+  User App:    No
+  
+----------- Personal -----------------------------------------
+
+App: Social
+  ID:          social
+  Category:    Personal
+  Description: A comprehensive social media application.
+  Default:     Yes
+  User App:    No
+
+App: Login
+  ID:          login
+  Category:    Personal
+  Description: Manage user authentication and sessions.
+  Default:     Yes
+  User App:    No
+
+App: Profile
+  ID:          profile
+  Category:    Personal
+  Description: View and edit your user profile.
+  Default:     Yes
+  User App:    No
+
+App: Friends
+  ID:          friends
+  Category:    Personal
+  Description: Manage your social connections.
+  Default:     No
+  User App:    No
+
+App: Groups
+  ID:          groups
+  Category:    Personal
+  Description: Participate in user groups.
+  Default:     No
+  User App:    No
+
+App: Messages
+  ID:          messages
+  Category:    Personal
+  Description: Send and receive private messages.
+  Default:     Yes
+  User App:    No
+
+App: Mail
+  ID:          mail
+  Category:    Personal
+  Description: A simple email client.
+  Default:     Yes
+  User App:    No
+
+App: Calendar
+  ID:          calendar
+  Category:    Personal
+  Description: A basic calendar application.
+  Default:     Yes
+  User App:    No
+
+App: Photos
+  ID:          photos
+  Category:    Personal
+  Description: Browse your image library.
+  Default:     Yes
+  User App:    No
+
+App: Notes
+  ID:          notes
+  Category:    Personal
+  Description: A simple note-taking application.
+  Default:     Yes
+  User App:    No
+
+App: Tasks
+  ID:          tasks
+  Category:    Personal
+  Description: Manage your to-do list.
+  Default:     Yes
+  User App:    No
+
+App: Contacts
+  ID:          contacts
+  Category:    Personal
+  Description: Manage your contact list.
+  Default:     No
+  User App:    No
+
+----------------- Profesional --------------------------
+
+App: Website Builder
+  ID:          website-builder
+  Category:    Professional
+  Description: Create and publish your own websites.
+  Default:     No
+  User App:    No
+
+App: Terminal
+  ID:          terminal
+  Category:    Professional
+  Description: A command-line interface for the desktop.
+  Default:     Yes
+  User App:    No
+
+App: Files
+  ID:          files
+  Category:    Professional
+  Description: A comprehensive file explorer for all user data.
+  Default:     Yes
+  User App:    No
+
+App: Contracts
+  ID:          contracts
+  Category:    Professional
+  Description: Manage and view contracts.
+  Default:     No
+  User App:    No
+
+App: Browser
+  ID:          browser
+  Category:    Professional
+  Description: A web browser to navigate the internet.
+  Default:     Yes
+  User App:    No
+
+App: Bookmarks
+  ID:          bookmarks
+  Category:    Professional
+  Description: Manage your web bookmarks.
+  Default:     Yes
+  User App:    No
+
+App: Post
+  ID:          post-app
+  Category:    Professional
+  Description: Create and edit posts.
+  Default:     No
+  User App:    No
+
+App: Sheets
+  ID:          sheets
+  Category:    Professional
+  Description: A spreadsheet application.
+  Default:     Yes
+  User App:    No
+
+App: Slides
+  ID:          slides
+  Category:    Professional
+  Description: A presentation application.
+  Default:     Yes
+  User App:    No
+  
+-------- Business ------------
+
+App: Calculator
+  ID:          calculator
+  Category:    Business
+  Description: A basic calculator.
+  Default:     Yes
+  User App:    No
+
+App: Marketplace
+  ID:          marketplace
+  Category:    Business
+  Description: Buy and sell items.
+  Default:     Yes
+  User App:    No
+
+App: Bank
+  ID:          bank
+  Category:    Business
+  Description: Manage your finances.
+  Default:     Yes
+  User App:    No
+
+App: Sales
+  ID:          sales
+  Category:    Business
+  Description: Track sales and revenue.
+  Default:     No
+  User App:    No
+
+App: Ads
+  ID:          advertisement
+  Category:    Business
+  Description: Manage advertisements.
+  Default:     Yes
+  User App:    No
+
+App: Shop
+  ID:          shop-app
+  Category:    Business
+  Description: An e-commerce storefront.
+  Default:     Yes
+  User App:    No
+
+App: Pages
+  ID:          pages
+  Category:    Business
+  Description: Manage business pages.
+  Default:     Yes
+  User App:    No
+
+App: Text
+  ID:          text
+  Category:    Business
+  Description: A simple text editor.
+  Default:     Yes
+  User App:    No
+
+------ Broadcast ----------------------
+
+App: Commercials
+  ID:          commercials
+  Category:    Broadcast
+  Description: View commercials.
+  Default:     No
+  User App:    No
+
+App: Channels
+  ID:          channels
+  Category:    Broadcast
+  Description: A feature-rich channel browser and player.
+  Default:     No
+  User App:    No
+
+App: TV Show
+  ID:          tv-show
+  Category:    Broadcast
+  Description: Watch TV shows.
+  Default:     Yes
+  User App:    No
+
+App: Radio Show
+  ID:          radio-show
+  Category:    Broadcast
+  Description: Listen to radio shows.
+  Default:     No
+  User App:    No
+
+App: Movies
+  ID:          movies-app
+  Category:    Broadcast
+  Description: Browse and watch movies.
+  Default:     Yes
+  User App:    No
+
+App: Main Channel
+  ID:          main-channel
+  Category:    Broadcast
+  Description: The main broadcast channel.
+  Default:     Yes
+  User App:    No
+
+App: Sub Main
+  ID:          sub-main-channel
+  Category:    Broadcast
+  Description: A secondary broadcast channel.
+  Default:     No
+  User App:    No
+
+App: His Main
+  ID:          his-main-channel
+  Category:    Broadcast
+  Description: A personal broadcast channel.
+  Default:     No
+  User App:    No
+
+App: Her Main
+  ID:          her-main-channel
+  Category:    Broadcast
+  Description: A personal broadcast channel.
+  Default:     No
+  User App:    No
+
+App: AI Movies
+  ID:          ai-movies
+  Category:    Broadcast
+  Description: Generate and watch AI-created movies.
+  Default:     Yes
+  User App:    No
+--------------- Health -------------------
+
+App: Health
+  ID:          health
+  Category:    Health
+  Description: Monitor your health.
+  Default:     No
+  User App:    No
+
+App: Hospital
+  ID:          hospital
+  Category:    Health
+  Description: A hospital management application.
+  Default:     No
+  User App:    No
+
+App: Treatment
+  ID:          treatment
+  Category:    Health
+  Description: Track medical treatments.
+  Default:     No
+  User App:    No
+
+App: Experiments
+  ID:          experiments
+  Category:    Health
+  Description: Log and track experiments.
+  Default:     No
+  User App:    No
+
+App: Dr
+  ID:          dr
+  Category:    Health
+  Description: Doctor profiles and information.
+  Default:     No
+  User App:    No
+
+App: Nurse
+  ID:          nurse
+  Category:    Health
+  Description: Nurse profiles and information.
+  Default:     No
+  User App:    No
+
+App: School
+  ID:          school
+  Category:    Health
+  Description: Access school-related information.
+  Default:     No
+  User App:    No
+
+App: Test
+  ID:          test-health
+  Category:    Health
+  Description: View test results.
+  Default:     No
+  User App:    No
+
+App: Aids
+  ID:          aids
+  Category:    Health
+  Description: Information about medical aids.
+  Default:     No
+  User App:    No
+
+App: Manager
+  ID:          manager
+  Category:    Health
+  Description: Management tools.
+  Default:     No
+  User App:    No
+
+App: Adult
+  ID:          adult
+  Category:    Health
+  Description: Adult health information.
+  Default:     No
+  User App:    No
+
+App: Kids
+  ID:          kids
+  Category:    Health
+  Description: Pediatric health information.
+  Default:     No
+  User App:    No
+
+App: Family
+  ID:          family-health
+  Category:    Health
+  Description: Family health management.
+  Default:     No
+  User App:    No
+
+App: Blood
+  ID:          blood
+  Category:    Health
+  Description: Blood work and analysis.
+  Default:     No
+  User App:    No
+
+App: Teeth
+  ID:          teeth
+  Category:    Health
+  Description: Dental health information.
+  Default:     No
+  User App:    No
+
+App: Hair
+  ID:          hair
+  Category:    Health
+  Description: Hair care and health.
+  Default:     No
+  User App:    No
+
+App: Skin
+  ID:          skin
+  Category:    Health
+  Description: Skin care and health.
+  Default:     No
+  User App:    No
+
+App: Bone
+  ID:          bone
+  Category:    Health
+  Description: Orthopedic information.
+  Default:     No
+  User App:    No
+
+App: Tissue
+  ID:          tissue
+  Category:    Health
+  Description: Histology and tissue analysis.
+  Default:     No
+  User App:    No
+
+App: Mussels
+  ID:          mussels
+  Category:    Health
+  Description: Information about mussels (seafood).
+  Default:     No
+  User App:    No
+
+App: Cells
+  ID:          cells
+  Category:    Health
+  Description: Cellular biology information.
+  Default:     No
+  User App:    No
+  
+------------- Medical -------------------------
+
+App: Diseases
+  ID:          diseases
+  Category:    Medical
+  Description: Information about various diseases.
+  Default:     No
+  User App:    No
+
+App: Viruses
+  ID:          viruses
+  Category:    Medical
+  Description: Information about viruses.
+  Default:     No
+  User App:    No
+
+App: Test
+  ID:          test-medical
+  Category:    Medical
+  Description: Medical testing information.
+  Default:     No
+  User App:    No
+
+App: Medical
+  ID:          medical
+  Category:    Medical
+  Description: General medical information.
+  Default:     No
+  User App:    No
+
+App: Insurances
+  ID:          insurances
+  Category:    Medical
+  Description: Manage medical insurance.
+  Default:     No
+  User App:    No
+
+App: Outbreaks
+  ID:          outbreaks
+  Category:    Medical
+  Description: Track disease outbreaks.
+  Default:     No
+  User App:    No
+
+App: Fire
+  ID:          fire
+  Category:    Medical
+  Description: Fire safety and response.
+  Default:     No
+  User App:    No
+
+App: Water
+  ID:          water
+  Category:    Medical
+  Description: Water safety and quality.
+  Default:     No
+  User App:    No
+
+App: Air
+  ID:          air
+  Category:    Medical
+  Description: Air quality and safety.
+  Default:     No
+  User App:    No
+
+App: Rescues
+  ID:          rescues
+  Category:    Medical
+  Description: Coordinate and manage rescue operations.
+  Default:     No
+  User App:    No
+  
+----------------- Law -----------------------------
+
+App: Judge
+  ID:          judge
+  Category:    Law
+  Description: Legal information from a judge's perspective.
+  Default:     No
+  User App:    No
+
+App: Lawyers
+  ID:          lawyers
+  Category:    Law
+  Description: Directory of lawyers.
+  Default:     No
+  User App:    No
+
+App: Law School
+  ID:          law-school
+  Category:    Law
+  Description: Information about law school.
+  Default:     No
+  User App:    No
+
+App: Police
+  ID:          police
+  Category:    Law
+  Description: Police department information.
+  Default:     No
+  User App:    No
+
+App: Politicians
+  ID:          politicians
+  Category:    Law
+  Description: Information about politicians.
+  Default:     No
+  User App:    No
+
+App: Mayor
+  ID:          mayor
+  Category:    Law
+  Description: Information about the mayor's office.
+  Default:     No
+  User App:    No
+
+App: President
+  ID:          president
+  Category:    Law
+  Description: Information about the president's office.
+  Default:     No
+  User App:    No
+
+App: Government
+  ID:          government
+  Category:    Law & Government
+  Description: Government services and information.
+  Default:     No
+  User App:    No
+  
+----------------- Home ------------------------
+
+App: Homes
+  ID:          homes
+  Category:    Home
+  Description: Manage home-related tasks.
+  Default:     No
+  User App:    No
+
+App: Camping
+  ID:          camping
+  Category:    Home
+  Description: Plan camping trips.
+  Default:     No
+  User App:    No
+
+App: Hiking
+  ID:          hiking
+  Category:    Home
+  Description: Find hiking trails.
+  Default:     No
+  User App:    No
+
+App: Fishing
+  ID:          fishing
+  Category:    Home
+  Description: Fishing information and logs.
+  Default:     No
+  User App:    No
+
+App: Trailing
+  ID:          trailing
+  Category:    Home
+  Description: Track your trails.
+  Default:     No
+  User App:    No
+
+App: Friends
+  ID:          home-friends
+  Category:    Home
+  Description: Connect with friends at home.
+  Default:     No
+  User App:    No
+
+App: Family
+  ID:          home-family
+  Category:    Home
+  Description: Family organization tools.
+  Default:     No
+  User App:    No
+
+App: Kids
+  ID:          home-kids
+  Category:    Home
+  Description: Activities and tools for kids.
+  Default:     No
+  User App:    No
+
+App: Repairs
+  ID:          repairs
+  Category:    Home
+  Description: Track home repairs.
+  Default:     No
+  User App:    No
+
+App: Supplies
+  ID:          supplies
+  Category:    Home
+  Description: Manage household supplies.
+  Default:     No
+  User App:    No
+
+App: Money
+  ID:          money
+  Category:    Home
+  Description: Personal finance management.
+  Default:     No
+  User App:    No
+
+App: Downloads
+  ID:          downloads
+  Category:    Home
+  Description: View and manage downloaded files.
+  Default:     Yes
+  User App:    No
+
+----------- Entertainment ---------------------------
+
+App: Shows
+  ID:          shows
+  Category:    Entertainment
+  Description: Browse and watch shows.
+  Default:     No
+  User App:    No
+
+App: Movies
+  ID:          movies
+  Category:    Entertainment
+  Description: A library of movies to watch.
+  Default:     No
+  User App:    No
+
+App: Theater
+  ID:          theater
+  Category:    Entertainment
+  Description: Information about theater shows.
+  Default:     No
+  User App:    No
+
+App: Audio
+  ID:          audio
+  Category:    Entertainment
+  Description: Listen to audio content.
+  Default:     Yes
+  User App:    No
+
+App: AI Radio
+  ID:          radio
+  Category:    Entertainment
+  Description: An AI-powered radio station.
+  Default:     Yes
+  User App:    No
+
+App: News
+  ID:          ent-news
+  Category:    Entertainment
+  Description: Entertainment news.
+  Default:     Yes
+  User App:    No
+
+App: Music
+  ID:          music
+  Category:    Entertainment
+  Description: Listen to your music library.
+  Default:     Yes
+  User App:    No
+
+App: Trailers
+  ID:          trailers
+  Category:    Entertainment
+  Description: Watch movie trailers.
+  Default:     No
+  User App:    No
+
+App: Sports
+  ID:          sports
+  Category:    Entertainment
+  Description: Sports news and scores.
+  Default:     No
+  User App:    No
+
+App: TV Shows
+  ID:          tv-shows
+  Category:    Entertainment
+  Description: Track and watch TV shows.
+  Default:     Yes
+  User App:    No
+
+App: 24 Hours
+  ID:          24-hours
+  Category:    Entertainment
+  Description: 24-hour content stream.
+  Default:     No
+  User App:    No
+
+App: Overnight
+  ID:          overnight
+  Category:    Entertainment
+  Description: Content for late-night viewing.
+  Default:     No
+  User App:    No
+
+App: Challenges
+  ID:          challenges
+  Category:    Entertainment
+  Description: Participate in challenges.
+  Default:     No
+  User App:    No
+
+App: Watch
+  ID:          watch
+  Category:    Entertainment
+  Description: A simple video watching app.
+  Default:     No
+  User App:    No
+
+App: Live Stream
+  ID:          live-stream
+  Category:    Entertainment
+  Description: Watch live streams.
+  Default:     No
+  User App:    No
+
+App: Travel
+  ID:          travel
+  Category:    Entertainment
+  Description: Travel vlogs and guides.
+  Default:     No
+  User App:    No
+
+App: Models
+  ID:          models
+  Category:    Entertainment
+  Description: Information about models.
+  Default:     No
+  User App:    No
+
+App: Fashion
+  ID:          fashion
+  Category:    Entertainment
+  Description: Fashion news and trends.
+  Default:     No
+  User App:    No
+
+App: Stage
+  ID:          stage
+  Category:    Entertainment
+  Description: Information about stage performances.
+  Default:     No
+  User App:    No
+
+App: Magazine
+  ID:          magazine
+  Category:    Entertainment
+  Description: Read digital magazines.
+  Default:     No
+  User App:    No
+
+App: Online
+  ID:          ent-online
+  Category:    Entertainment
+  Description: Online entertainment content.
+  Default:     No
+  User App:    No
+
+App: MGS Studios
+  ID:          matt-grosso-show
+  Category:    Entertainment
+  Description: The official app for Matt Grosso Show Studios.
+  Default:     Yes
+  User App:    No
+
+----------------- Library ------------------------------
+
+App: Media
+  ID:          media
+  Category:    Library
+  Description: A library of all your media.
+  Default:     Yes
+  User App:    No
+
+App: Media Explorer
+  ID:          media-explorer
+  Category:    Library
+  Description: Explore your media files.
+  Default:     Yes
+  User App:    No
+
+App: Stories
+  ID:          stories
+  Category:    Library
+  Description: Read and write stories.
+  Default:     Yes
+  User App:    No
+
+App: Photo
+  ID:          photo-lib
+  Category:    Library
+  Description: Your personal photo library.
+  Default:     Yes
+  User App:    No
+
+App: Videos
+  ID:          videos
+  Category:    Library
+  Description: Browse and play local video files.
+  Default:     Yes
+  User App:    No
+
+App: Music
+  ID:          music-player
+  Category:    Library
+  Description: A simple and elegant music player.
+  Default:     Yes
+  User App:    No
+
+App: Live
+  ID:          live
+  Category:    Library
+  Description: Access live content.
+  Default:     Yes
+  User App:    No
+
+App: Camera
+  ID:          camera
+  Category:    Library
+  Description: A simple camera application.
+  Default:     Yes
+  User App:    No
+
+App: Recorder
+  ID:          recorder
+  Category:    Library
+  Description: Record audio notes.
+  Default:     Yes
+  User App:    No
+
+--------------- Life -------------------------
+
+App: The Fam
+  ID:          the-fam
+  Category:    Life
+  Description: Family organization and communication.
+  Default:     No
+  User App:    No
+
+App: Plants
+  ID:          plants
+  Category:    Life
+  Description: Care for your virtual plants.
+  Default:     No
+  User App:    No
+
+App: Animals
+  ID:          animals
+  Category:    Life
+  Description: Information about animals.
+  Default:     No
+  User App:    No
+
+App: People
+  ID:          people
+  Category:    Life
+  Description: Manage information about people.
+  Default:     No
+  User App:    No
+
+App: Props
+  ID:          props
+  Category:    Life
+  Description: Manage props for projects.
+  Default:     No
+  User App:    No
+
+App: Party
+  ID:          party
+  Category:    Life
+  Description: Plan and manage parties.
+  Default:     No
+  User App:    No
+
+App: Dates
+  ID:          dates
+  Category:    Life
+  Description: Keep track of important dates.
+  Default:     No
+  User App:    No
+
+App: Parks
+  ID:          parks
+  Category:    Life
+  Description: Information about local parks.
+  Default:     No
+  User App:    No
+
+App: Recreations
+  ID:          recreations
+  Category:    Life
+  Description: Find recreational activities.
+  Default:     No
+  User App:    No
+
+App: Makeup
+  ID:          makeup
+  Category:    Life
+  Description: Makeup tutorials and looks.
+  Default:     No
+  User App:    No
+
+App: Costume
+  ID:          costume-life
+  Category:    Life
+  Description: Manage your costumes.
+  Default:     No
+  User App:    No
+
+App: Parade
+  ID:          parade
+  Category:    Life
+  Description: Information about parades.
+  Default:     No
+  User App:    No
+  
+-------- Law & Government -------------------
+
+App: Law
+  ID:          gov-law
+  Category:    Law & Government
+  Description: Legal resources.
+  Default:     No
+  User App:    No
+
+App: Police
+  ID:          gov-police
+  Category:    Law & Government
+  Description: Police department resources.
+  Default:     No
+  User App:    No
+
+App: Lawyer
+  ID:          gov-lawyer
+  Category:    Law & Government
+  Description: Lawyer directory.
+  Default:     No
+  User App:    No
+
+App: Judge
+  ID:          gov-judge
+  Category:    Law & Government
+  Description: Information about judges.
+  Default:     No
+  User App:    No
+
+App: Politician
+  ID:          gov-politician
+  Category:    Law & Government
+  Description: Politician directory.
+  Default:     No
+  User App:    No
+
+App: President
+  ID:          gov-president
+  Category:    Law & Government
+  Description: Presidential information.
+  Default:     No
+  User App:    No
+
+App: Governor
+  ID:          gov-governor
+  Category:    Law & Government
+  Description: Governor information.
+  Default:     No
+  User App:    No
+
+App: Election
+  ID:          gov-election
+  Category:    Law & Government
+  Description: Election information.
+  Default:     No
+  User App:    No
+
+App: Voting
+  ID:          gov-voting
+  Category:    Law & Government
+  Description: Voter information.
+  Default:     No
+  User App:    No
+
+App: Sponsors
+  ID:          gov-sponsors
+  Category:    Law & Government
+  Description: Government sponsors.
+  Default:     No
+  User App:    No
+
+App: Class
+  ID:          gov-class
+  Category:    Law & Government
+  Description: Civics classes.
+  Default:     No
+  User App:    No
+  
+------------- Exploration ----------------------
+
+App: Exploring
+  ID:          exploring
+  Category:    Exploration
+  Description: Explore the world.
+  Default:     No
+  User App:    No
+
+App: Adventure
+  ID:          adventure
+  Category:    Exploration
+  Description: Plan your next adventure.
+  Default:     No
+  User App:    No
+
+App: Abandoned
+  ID:          abandoned-exp
+  Category:    Exploration
+  Description: Explore abandoned places.
+  Default:     No
+  User App:    No
+
+App: Ghost Hunting
+  ID:          ghost-hunting
+  Category:    Exploration
+  Description: Tools for ghost hunting.
+  Default:     No
+  User App:    No
+
+App: Hauntings
+  ID:          hauntings
+  Category:    Exploration
+  Description: Information about haunted places.
+  Default:     No
+  User App:    No
+
+App: Places
+  ID:          places
+  Category:    Exploration
+  Description: Discover new places.
+  Default:     No
+  User App:    No
+
+App: Hospitals
+  ID:          hospitals-exp
+  Category:    Exploration
+  Description: Explore old hospitals.
+  Default:     No
+  User App:    No
+
+App: Asylums
+  ID:          asylums
+  Category:    Exploration
+  Description: Explore old asylums.
+  Default:     No
+  User App:    No
+
+App: Bigfoot
+  ID:          bigfoot
+  Category:    Exploration
+  Description: Information about Bigfoot.
+  Default:     No
+  User App:    No
+
+App: Camping
+  ID:          exp-camping
+  Category:    Exploration
+  Description: Camping exploration tools.
+  Default:     No
+  User App:    No
+
+App: Trails
+  ID:          trails
+  Category:    Exploration
+  Description: Find and track trails.
+  Default:     No
+  User App:    No
+
+App: Hikes
+  ID:          exp-hikes
+  Category:    Exploration
+  Description: Plan and track hikes.
+  Default:     No
+  User App:    No
+
+App: Museums
+  ID:          museums
+  Category:    Exploration
+  Description: Find and explore museums.
+  Default:     No
+  User App:    No
+
+App: Motels
+  ID:          motels
+  Category:    Exploration
+  Description: Explore unique motels.
+  Default:     No
+  User App:    No
+
+App: Hotels
+  ID:          hotels
+  Category:    Exploration
+  Description: Explore unique hotels.
+  Default:     No
+  User App:    No
+
+App: Campers
+  ID:          campers
+  Category:    Exploration
+  Description: Camper van life.
+  Default:     No
+  User App:    No
+  
+----------- Production -----------------
+
+App: Content Ideas
+  ID:          content-ideas
+  Category:    Production
+  Description: Generate and manage content ideas.
+  Default:     No
+  User App:    No
+
+App: Actors
+  ID:          actors
+  Category:    Production
+  Description: Manage actor information.
+  Default:     No
+  User App:    No
+
+App: Characters
+  ID:          characters
+  Category:    Production
+  Description: Develop and manage characters.
+  Default:     No
+  User App:    No
+
+App: Charlie
+  ID:          charlie
+  Category:    Production
+  Description: A character management app.
+  Default:     No
+  User App:    No
+
+App: Sets
+  ID:          sets
+  Category:    Production
+  Description: Manage production sets.
+  Default:     No
+  User App:    No
+
+App: Cameras
+  ID:          cameras-prod
+  Category:    Production
+  Description: Manage camera equipment.
+  Default:     No
+  User App:    No
+
+App: Equipment
+  ID:          equipment
+  Category:    Production
+  Description: Track production equipment.
+  Default:     No
+  User App:    No
+
+App: Directors
+  ID:          directors
+  Category:    Production
+  Description: Director information.
+  Default:     No
+  User App:    No
+
+App: Producers
+  ID:          producers
+  Category:    Production
+  Description: Producer information.
+  Default:     No
+  User App:    No
+
+App: Writer
+  ID:          writer
+  Category:    Production
+  Description: Tools for writers.
+  Default:     No
+  User App:    No
+
+App: Cook
+  ID:          cook
+  Category:    Production
+  Description: Manage craft services.
+  Default:     No
+  User App:    No
+
+App: Cast
+  ID:          cast
+  Category:    Production
+  Description: Manage cast lists.
+  Default:     No
+  User App:    No
+
+App: Crew
+  ID:          crew
+  Category:    Production
+  Description: Manage crew lists.
+  Default:     No
+  User App:    No
+
+App: Members
+  ID:          members
+  Category:    Production
+  Description: Manage production members.
+  Default:     No
+  User App:    No
+
+App: Constructions
+  ID:          constructions
+  Category:    Production
+  Description: Manage set construction.
+  Default:     No
+  User App:    No
+
+App: Channel Ideas
+  ID:          channel-ideas
+  Category:    Production
+  Description: Generate ideas for new channels.
+  Default:     No
+  User App:    No
+
+App: Extensions
+  ID:          extensions
+  Category:    Production
+  Description: Manage production extensions.
+  Default:     No
+  User App:    No
+  
+-------------- Transportaion -------------------------------
+
+App: Boats
+  ID:          boats
+  Category:    Transportation
+  Description: Information about boats.
+  Default:     No
+  User App:    No
+
+App: Ships
+  ID:          ships
+  Category:    Transportation
+  Description: Information about ships.
+  Default:     No
+  User App:    No
+
+App: Planes
+  ID:          planes
+  Category:    Transportation
+  Description: Information about planes.
+  Default:     No
+  User App:    No
+
+App: Cars
+  ID:          cars
+  Category:    Transportation
+  Description: Information about cars.
+  Default:     No
+  User App:    No
+
+App: Vehicles
+  ID:          vehicles
+  Category:    Transportation
+  Description: General vehicle information.
+  Default:     No
+  User App:    No
+  
+---------------- Genres -----------------------
+
+App: Scary
+  ID:          scary
+  Category:    Genres
+  Description: Content for the scary genre.
+  Default:     No
+  User App:    No
+
+App: Happy
+  ID:          happy
+  Category:    Genres
+  Description: Content for the happy genre.
+  Default:     No
+  User App:    No
+
+App: Creepy
+  ID:          creepy
+  Category:    Genres
+  Description: Content for the creepy genre.
+  Default:     No
+  User App:    No
+
+------------- Fun ------------------------
+
+App: Creature
+  ID:          creature
+  Category:    Fun
+  Description: Fun with creatures.
+  Default:     No
+  User App:    No
+
+App: Costume
+  ID:          costume
+  Category:    Fun
+  Description: Fun with costumes.
+  Default:     No
+  User App:    No
+
+App: Hunting
+  ID:          hunting
+  Category:    Fun
+  Description: A fun hunting game.
+  Default:     No
+  User App:    No
+
+App: Fun
+  ID:          fun
+  Category:    Fun
+  Description: A collection of fun activities.
+  Default:     No
+  User App:    No
+  
+--------------- Horror ------------------------
+
+App: Gore
+  ID:          gore
+  Category:    Horror
+  Description: Content for the gore genre.
+  Default:     No
+  User App:    No
+
+App: Horror
+  ID:          horror
+  Category:    Horror
+  Description: Content for the horror genre.
+  Default:     No
+  User App:    No
+
+-------------- SFX -------------------------------
+
+App: Effects
+  ID:          effects
+  Category:    Special Effects (SFX)
+  Description: Create special effects.
+  Default:     No
+  User App:    No
+
+App: Weapons
+  ID:          weapons
+  Category:    Special Effects (SFX)
+  Description: SFX for weapons.
+  Default:     No
+  User App:    No
+
+App: Blood
+  ID:          blood-sfx
+  Category:    Special Effects (SFX)
+  Description: Blood special effects.
+  Default:     No
+  User App:    No
+
+App: Guts
+  ID:          guts
+  Category:    Special Effects (SFX)
+  Description: Guts special effects.
+  Default:     No
+  User App:    No
+  
+----------- Series ------------------------
+
+App: Part 1
+  ID:          part-1
+  Category:    Series
+  Description: The first part of a series.
+  Default:     No
+  User App:    No
+
+App: Part 2
+  ID:          part-2
+  Category:    Series
+  Description: The second part of a series.
+  Default:     No
+  User App:    No
+
+App: Part 3
+  ID:          part-3
+  Category:    Series
+  Description: The third part of a series.
+  Default:     No
+  User App:    No
+
+App: Part 4
+  ID:          part-4
+  Category:    Series
+  Description: The fourth part of a series.
+  Default:     No
+  User App:    No
+
+App: Season 1
+  ID:          season-1
+  Category:    Series
+  Description: The first season
