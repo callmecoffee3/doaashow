@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>A-Z Aisle Directory - Detailed Items</title>
+
+    <style>
+
+        body {
+
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+            background: #0f0f0f;
+
+            color: #ddd;
+
+            margin: 0;
+
+            padding: 20px;
+
+        }
+
+        h1 { text-align: center; color: #ffcc00; margin-bottom: 5px; }
+
+        .subtitle { text-align: center; color: #888; margin-bottom: 20px; }
+
+
+
+        .tools {
+
+            max-width: 900px;
+
+            margin: 0 auto 30px;
+
+            background: #1a1a1a;
+
+            padding: 15px 20px;
+
+            border-radius: 10px;
+
+            border: 1px solid #333;
+
+        }
+
+        .tool-row {
+
+            display: flex;
+
+            gap: 10px;
+
+            flex-wrap: wrap;
+
+        }
+
+        button {
+
+            padding: 10px 18px;
+
+            background: #222;
+
+            color: #ffcc00;
+
+            border: none;
+
+            border-radius: 6px;
+
+            cursor: pointer;
+
+            font-weight: bold;
+
+        }
+
+        button:hover { background: #ffcc00; color: #111; }
+
+
+
+        .search-container {
+
+            max-width: 600px;
+
+            margin: 0 auto 30px;
+
+            position: relative;
+
+        }
+
+        #searchInput {
+
+            width: 100%;
+
+            padding: 14px 50px 14px 20px;
+
+            font-size: 1.1em;
+
+            background: #1a1a1a;
+
+            border: 2px solid #333;
+
+            border-radius: 8px;
+
+            color: #fff;
+
+        }
+
+        .clear-btn {
+
+            position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+
+            background: none; border: none; color: #888; font-size: 1.4em; cursor: pointer;
+
+        }
+
+
+
+        .nav { text-align: center; margin: 20px 0 30px; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
+
+        .nav a {
+
+            padding: 6px 12px; background: #222; color: #ffcc00; text-decoration: none; border-radius: 5px;
+
+        }
+
+        .nav a:hover { background: #ffcc00; color: #111; }
+
+
+
+        .section {
+
+            margin: 25px 0;
+
+            padding: 20px;
+
+            background: #1a1a1a;
+
+            border-radius: 10px;
+
+            border-left: 6px solid #ffcc00;
+
+            display: none;
+
+        }
+
+        .section.show { display: block; }
+
+        .section h2 { color: #ffcc00; margin: 0 0 15px 0; }
+
+
+
+        .item-list {
+
+            columns: 2;
+
+            column-gap: 40px;
+
+            font-size: 1.02em;
+
+        }
+
+        .item {
+
+            padding: 4px 0;
+
+            break-inside: avoid;
+
+        }
+
+        .subcategory {
+
+            margin-left: 20px;
+
+            color: #aaffaa;
+
+            font-style: italic;
+
+        }
+
+
+
+        .directory-output {
+
+            background: #0a0a0a;
+
+            padding: 15px;
+
+            border-radius: 8px;
+
+            font-family: monospace;
+
+            white-space: pre-wrap;
+
+            margin-top: 15px;
+
+            max-height: 500px;
+
+            overflow-y: auto;
+
+            display: none;
+
+        }
+
+
+
+        .footer {
+
+            text-align: center;
+
+            margin-top: 60px;
+
+            padding: 20px;
+
+            color: #666;
+
+            font-size: 0.9em;
+
+        }
+
+        .no-results {
+
+            text-align: center;
+
+            color: #888;
+
+            font-style: italic;
+
+            display: none;
+
+            margin: 40px 0;
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+
+    <h1>A-Z AISLE DIRECTORY</h1>
+
+    <p class="subtitle">Fully Classified • Detailed Items List</p>
+
+
+
+    <!-- Tools -->
+
+    <div class="tools">
+
+        <div class="tool-row">
+
+            <button onclick="createDirectories()">Generate mkdir Commands</button>
+
+            <button onclick="listDirectories()">Show Full List</button>
+
+            <button onclick="downloadListOfAisles()">📥 Download List of Aisles (.txt)</button>
+
+            <button onclick="downloadFullHTML()">Download Full HTML</button>
+
+        </div>
+
+        <div id="directoryOutput" class="directory-output"></div>
+
+    </div>
+
+
+
+    <!-- Search -->
+
+    <div class="search-container">
+
+        <input type="text" id="searchInput" placeholder="Search any item or section... (burger, cloaths, shoes, etc.)" autocomplete="off">
+
+        <button class="clear-btn" onclick="clearSearch()">×</button>
+
+    </div>
+
+
+
+    <!-- Navigation -->
+
+    <div class="nav">
+
+        <a href="#" onclick="showAll()">Show All</a>
+
+        <a href="#A" onclick="jumpTo('A')">A</a><a href="#B" onclick="jumpTo('B')">B</a>
+
+        <a href="#C" onclick="jumpTo('C')">C</a><a href="#D" onclick="jumpTo('D')">D</a>
+
+        <a href="#E" onclick="jumpTo('E')">E</a><a href="#F" onclick="jumpTo('F')">F</a>
+
+        <a href="#G" onclick="jumpTo('G')">G</a><a href="#H" onclick="jumpTo('H')">H</a>
+
+        <a href="#I" onclick="jumpTo('I')">I</a><a href="#J" onclick="jumpTo('J')">J</a>
+
+        <a href="#K" onclick="jumpTo('K')">K</a><a href="#L" onclick="jumpTo('L')">L</a>
+
+        <a href="#M" onclick="jumpTo('M')">M</a><a href="#N" onclick="jumpTo('N')">N</a>
+
+        <a href="#O" onclick="jumpTo('O')">O</a><a href="#P" onclick="jumpTo('P')">P</a>
+
+        <a href="#Q" onclick="jumpTo('Q')">Q</a><a href="#R" onclick="jumpTo('R')">R</a>
+
+        <a href="#S" onclick="jumpTo('S')">S</a><a href="#T" onclick="jumpTo('T')">T</a>
+
+        <a href="#U" onclick="jumpTo('U')">U</a><a href="#V" onclick="jumpTo('V')">V</a>
+
+        <a href="#W" onclick="jumpTo('W')">W</a><a href="#X" onclick="jumpTo('X')">X</a>
+
+        <a href="#Y" onclick="jumpTo('Y')">Y</a><a href="#Z" onclick="jumpTo('Z')">Z</a>
+
+    </div>
+
+
+
+    <!-- A SECTION -->
+
+    <div id="A" class="section">
+
+        <h2>A SECTION - Fresh Produce &amp; Floral</h2>
+
+        <div class="item-list">
+
+            <div class="item">A1 to A30 - Fresh Produce &amp; Floral</div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- B SECTION - Fast Food Take Out with sub-categories -->
+
+    <div id="B" class="section">
+
+        <h2>B SECTION - Fast Food Take Out</h2>
+
+        <div class="item-list">
+
+            <div class="item">B1–B5   - Burgers &amp; Sandwiches</div>
+
+            <div class="item">B6–B9   - Fried Chicken &amp; Tenders</div>
+
+            <div class="item">B10–B12 - Tacos &amp; Mexican</div>
+
+            <div class="item">B13–B14 - Pizza &amp; Pasta</div>
+
+            <div class="item">B15–B17 - Fries &amp; Sides</div>
+
+            <div class="item">B18–B19 - Breakfast Items</div>
+
+            <div class="item">B20–B21 - Salads &amp; Healthy Options</div>
+
+            <div class="item">B22–B23 - Desserts &amp; Shakes</div>
+
+            <div class="item">B24–B25 - Drinks &amp; Beverages</div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- C to K -->
+
+    <div id="C" class="section"><h2>C SECTION - Pharmacy &amp; Health</h2><div class="item-list"><div class="item">C1 to C15 - Pharmacy &amp; Health</div></div></div>
+
+    <div id="D" class="section"><h2>D SECTION - Beauty &amp; Cosmetics</h2><div class="item-list"><div class="item">D1 to D12 - Beauty &amp; Cosmetics</div></div></div>
+
+    <div id="E" class="section"><h2>E SECTION - Pets &amp; Paper Goods</h2><div class="item-list"><div class="item">E1 to E10 - Pets &amp; Paper Goods</div></div></div>
+
+    <div id="F" class="section"><h2>F SECTION - Household Chemicals</h2><div class="item-list"><div class="item">F1 to F15 - Household Chemicals</div></div></div>
+
+    <div id="G" class="section"><h2>G SECTION - Electronics &amp; Photo</h2><div class="item-list"><div class="item">G1 to G10 - Electronics &amp; Photo</div></div></div>
+
+    <div id="H" class="section"><h2>H SECTION - Toys &amp; Sporting Goods</h2><div class="item-list"><div class="item">H1 to H12 - Toys &amp; Sporting Goods</div></div></div>
+
+    <div id="I" class="section"><h2>I SECTION - Home &amp; Kitchenware</h2><div class="item-list"><div class="item">I1 to I20 - Home &amp; Kitchenware</div></div></div>
+
+    <div id="J" class="section"><h2>J SECTION - Automotive &amp; Hardware</h2><div class="item-list"><div class="item">J1 to J15 - Automotive &amp; Hardware</div></div></div>
+
+    <div id="K" class="section"><h2>K SECTION - Stationery &amp; Crafts</h2><div class="item-list"><div class="item">K1 to K10 - Stationery &amp; Crafts</div></div></div>
+
+
+
+    <!-- L SECTION - Cloaths with sub-categories -->
+
+    <div id="L" class="section">
+
+        <h2>L SECTION - Cloaths</h2>
+
+        <div class="item-list">
+
+            <div class="item">L1–L8   - Men's Cloaths</div>
+
+            <div class="item">L9–L16  - Women's Cloaths</div>
+
+            <div class="item">L17–L20 - Kids Cloaths</div>
+
+            <div class="item">L21–L23 - Footwear</div>
+
+            <div class="item">L24–L25 - Accessories &amp; Belts</div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- M to Z (simple) -->
+
+    <div id="M" class="section"><h2>M SECTION - Bulk Storage</h2><div class="item-list"><div class="item">M1 to M10 - Bulk Storage</div></div></div>
+
+    <div id="N" class="section"><h2>N SECTION - Inventory Overflow</h2><div class="item-list"><div class="item">N1 to N10 - Inventory Overflow</div></div></div>
+
+    <div id="O" class="section"><h2>O SECTION - Order Fulfillment</h2><div class="item-list"><div class="item">O1 to O10 - Order Fulfillment</div></div></div>
+
+    <div id="P" class="section"><h2>P SECTION - Packaging &amp; Shipping</h2><div class="item-list"><div class="item">P1 to P10 - Packaging &amp; Shipping</div></div></div>
+
+    <div id="Q" class="section"><h2>Q SECTION - Quality Control</h2><div class="item-list"><div class="item">Q1 to Q10 - Quality Control</div></div></div>
+
+    <div id="R" class="section"><h2>R SECTION - Returns &amp; Processing</h2><div class="item-list"><div class="item">R1 to R10 - Returns &amp; Processing</div></div></div>
+
+    <div id="S" class="section"><h2>S SECTION - Streaming Media Hub</h2><div class="item-list"><div class="item">S1 to S10 - Streaming Media Hub</div></div></div>
+
+    <div id="T" class="section"><h2>T SECTION - TV Broadcast Center</h2><div class="item-list"><div class="item">T1 to T10 - TV Broadcast Center</div></div></div>
+
+    <div id="U" class="section"><h2>U SECTION - User Content Upload</h2><div class="item-list"><div class="item">U1 to U10 - User Content Upload</div></div></div>
+
+    <div id="V" class="section"><h2>V SECTION - Video Production</h2><div class="item-list"><div class="item">V1 to V10 - Video Production</div></div></div>
+
+    <div id="W" class="section"><h2>W SECTION - Web &amp; Digital Systems</h2><div class="item-list"><div class="item">W1 to W10 - Web &amp; Digital Systems</div></div></div>
+
+    <div id="X" class="section"><h2>X SECTION - Experimental Lab</h2><div class="item-list"><div class="item">X1 to X10 - Experimental Lab</div></div></div>
+
+    <div id="Y" class="section"><h2>Y SECTION - Archive Vault</h2><div class="item-list"><div class="item">Y1 to Y10 - Archive Vault</div></div></div>
+
+    <div id="Z" class="section"><h2>Z SECTION - Core Control Center</h2><div class="item-list"><div class="item">Z1 to Z10 - Core Control Center</div></div></div>
+
+
+
+    <div id="noResults" class="no-results">No matching items found for your search.</div>
+
+
+
+    <div class="footer">
+
+        GRID STATUS: FULLY CLASSIFIED (A-Z SYSTEM ACTIVE)<br>
+
+        The Matt Grosso Show • Detailed Aisle Items
+
+    </div>
+
+
+
+    <script>
+
+        const searchInput = document.getElementById('searchInput');
+
+        const sections = document.querySelectorAll('.section');
+
+        const noResults = document.getElementById('noResults');
+
+        const directoryOutput = document.getElementById('directoryOutput');
+
+
+
+        function filterSections() {
+
+            const term = searchInput.value.toLowerCase().trim();
+
+            let hasResults = false;
+
+
+
+            sections.forEach(section => {
+
+                if (term === '' || section.textContent.toLowerCase().includes(term)) {
+
+                    section.classList.add('show');
+
+                    hasResults = true;
+
+                } else {
+
+                    section.classList.remove('show');
+
+                }
+
+            });
+
+            noResults.style.display = hasResults ? 'none' : 'block';
+
+        }
+
+
+
+        function clearSearch() { searchInput.value = ''; filterSections(); }
+
+        function showAll() { searchInput.value = ''; filterSections(); }
+
+        function jumpTo(letter) { showAll(); document.getElementById(letter).scrollIntoView({ behavior: 'smooth' }); }
+
+
+
+        // ==================== DOWNLOAD LIST OF AISLES (FULL ITEMS) ====================
+
+        function downloadListOfAisles() {
+
+            let content = "A-Z AISLE DIRECTORY - FULL DETAILED ITEMS LIST\n";
+
+            content += "==============================================\n\n";
+
+
+
+            const sectionsData = [
+
+                {letter:"A", max:30, type:"Fresh Produce & Floral"},
+
+                {letter:"B", max:25, type:"Fast Food Take Out", sub: true},
+
+                {letter:"C", max:15, type:"Pharmacy & Health"},
+
+                {letter:"D", max:12, type:"Beauty & Cosmetics"},
+
+                {letter:"E", max:10, type:"Pets & Paper Goods"},
+
+                {letter:"F", max:15, type:"Household Chemicals"},
+
+                {letter:"G", max:10, type:"Electronics & Photo"},
+
+                {letter:"H", max:12, type:"Toys & Sporting Goods"},
+
+                {letter:"I", max:20, type:"Home & Kitchenware"},
+
+                {letter:"J", max:15, type:"Automotive & Hardware"},
+
+                {letter:"K", max:10, type:"Stationery & Crafts"},
+
+                {letter:"L", max:25, type:"Cloaths", sub: true},
+
+                {letter:"M", max:10, type:"Bulk Storage"},
+
+                {letter:"N", max:10, type:"Inventory Overflow"},
+
+                {letter:"O", max:10, type:"Order Fulfillment"},
+
+                {letter:"P", max:10, type:"Packaging & Shipping"},
+
+                {letter:"Q", max:10, type:"Quality Control"},
+
+                {letter:"R", max:10, type:"Returns & Processing"},
+
+                {letter:"S", max:10, type:"Streaming Media Hub"},
+
+                {letter:"T", max:10, type:"TV Broadcast Center"},
+
+                {letter:"U", max:10, type:"User Content Upload"},
+
+                {letter:"V", max:10, type:"Video Production"},
+
+                {letter:"W", max:10, type:"Web & Digital Systems"},
+
+                {letter:"X", max:10, type:"Experimental Lab"},
+
+                {letter:"Y", max:10, type:"Archive Vault"},
+
+                {letter:"Z", max:10, type:"Core Control Center"}
+
+            ];
+
+
+
+            sectionsData.forEach(s => {
+
+                content += `${s.letter} SECTION - ${s.type}\n`;
+
+                
+
+                if (s.sub && s.letter === "B") {
+
+                    content += "   B1–B5   - Burgers & Sandwiches\n";
+
+                    content += "   B6–B9   - Fried Chicken & Tenders\n";
+
+                    content += "   B10–B12 - Tacos & Mexican\n";
+
+                    content += "   B13–B14 - Pizza & Pasta\n";
+
+                    content += "   B15–B17 - Fries & Sides\n";
+
+                    content += "   B18–B19 - Breakfast Items\n";
+
+                    content += "   B20–B21 - Salads & Healthy Options\n";
+
+                    content += "   B22–B23 - Desserts & Shakes\n";
+
+                    content += "   B24–B25 - Drinks & Beverages\n";
+
+                } 
+
+                else if (s.sub && s.letter === "L") {
+
+                    content += "   L1–L8   - Men's Cloaths\n";
+
+                    content += "   L9–L16  - Women's Cloaths\n";
+
+                    content += "   L17–L20 - Kids Cloaths\n";
+
+                    content += "   L21–L23 - Footwear\n";
+
+                    content += "   L24–L25 - Accessories & Belts\n";
+
+                } 
+
+                else {
+
+                    for (let i = 1; i <= s.max; i++) {
+
+                        content += `   >> ${s.letter}${i} - ${s.type}\n`;
+
+                    }
+
+                }
+
+                content += "\n";
+
+            });
+
+
+
+            content += "--------------------------------------------------\n";
+
+            content += "GRID STATUS: FULLY CLASSIFIED (A-Z SYSTEM ACTIVE)\n";
+
+
+
+            const blob = new Blob([content], { type: 'text/plain' });
+
+            const url = URL.createObjectURL(blob);
+
+            const a = document.createElement('a');
+
+            a.href = url;
+
+            a.download = 'A-Z_Aisle_Full_Items_List.txt';
+
+            document.body.appendChild(a);
+
+            a.click();
+
+            document.body.removeChild(a);
+
+            URL.revokeObjectURL(url);
+
+        }
+
+
+
+        function createDirectories() {
+
+            let output = "mkdir commands:\n\n";
+
+            // Simple version - you can expand later
+
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").forEach(l => {
+
+                let m = (l==="A")?30 : (l==="B"||l==="L")?25 : (l==="C")?15 : (l==="F")?15 : (l==="I")?20 : (l==="J")?15 : 10;
+
+                output += `mkdir -p "Aisle_${l}"\n`;
+
+                for(let i=1; i<=m; i++) output += `   mkdir -p "Aisle_${l}/Bay_${l}${i}"\n`;
+
+                output += "\n";
+
+            });
+
+            directoryOutput.textContent = output;
+
+            directoryOutput.style.display = "block";
+
+        }
+
+
+
+        function listDirectories() {
+
+            directoryOutput.textContent = "Full detailed list is available via the Download button above.";
+
+            directoryOutput.style.display = "block";
+
+        }
+
+
+
+        function downloadFullHTML() {
+
+            const blob = new Blob([document.documentElement.outerHTML], { type: 'text/html' });
+
+            const url = URL.createObjectURL(blob);
+
+            const a = document.createElement('a');
+
+            a.href = url; a.download = 'A-Z_Aisle_Directory_Detailed.html';
+
+            a.click(); URL.revokeObjectURL(url);
+
+        }
+
+
+
+        searchInput.addEventListener('input', filterSections);
+
+        window.onload = () => filterSections();
+
+    </script>
+
+</body>
+
+</html>
