@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TMGS NETWORK | MULTI-CHANNEL BROADCAST</title>
+    <style>
+        /* MATT GROSSO DARK-PRO ARCHITECTURE */
+        :root {
+            --pure-black: #000000;
+            --deep-gray: #121212;
+            --signal-red: #ff0000;
+            --live-green: #00ff41;
+            --accent-blue: #007bff;
+            --glass: rgba(255, 255, 255, 0.03);
+        }
+
+        body {
+            background-color: var(--pure-black);
+            color: var(--signal-red);
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            grid-template-rows: 40px 1fr 100px;
+            height: 100vh;
+        }
+
+        /* TOP MARQUEE (3Mbps AI-Detection) */
+        .marquee-top {
+            grid-column: 1 / span 2;
+            background: #080808;
+            border-bottom: 1px solid var(--signal-red);
+            overflow: hidden;
+            line-height: 40px;
+        }
+
+        .marquee-text {
+            display: inline-block;
+            white-space: nowrap;
+            animation: scroll 25s linear infinite;
+        }
+
+        @keyframes scroll { from { transform: translateX(100%); } to { transform: translateX(-100%); } }
+
+        /* SIDEBAR CHANNELS */
+        aside {
+            background: var(--deep-gray);
+            border-right: 1px solid #333;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .channel-btn {
+            width: 100%;
+            background: var(--glass);
+            border: 1px solid #222;
+            color: #888;
+            padding: 12px;
+            margin-bottom: 10px;
+            text-align: left;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .channel-btn:hover, .channel-btn.active {
+            border-color: var(--signal-red);
+            color: var(--signal-red);
+            background: rgba(255, 0, 0, 0.05);
+        }
+
+        /* MAIN CONTENT & UPLOAD */
+        main {
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .upload-zone {
+            border: 2px dashed #333;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            background: #050505;
+        }
+
+        .upload-zone:hover { border-color: var(--signal-red); }
+
+        input[type="file"] { display: none; }
+
+        .custom-upload {
+            padding: 10px 20px;
+            background: var(--signal-red);
+            color: white;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        /* PLAYER CONSOLE */
+        .player-console {
+            grid-column: 1 / span 2;
+            background: #0a0a0a;
+            border-top: 2px solid var(--signal-red);
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 0 20px;
+        }
+
+        #current-meta { font-size: 0.8rem; text-transform: uppercase; }
+    </style>
+</head>
+<body>
+
+    <div class="marquee-top">
+        <div class="marquee-text">
+            SYSTEM STATUS: ONLINE // AI-DETECTION: 3Mbps // STORAGE: 3TB ALLOCATED // CURRENT SESSION: NIGHT-MODE // TMGS FM 99...
+        </div>
+    </div>
+
+    <aside>
+        <h3 style="font-size: 0.8rem; color: #444;">NETWORK CHANNELS</h3>
+        <button class="channel-btn active" onclick="switchChannel('TMGS FM 99', 'RADIO')">TMGS FM 99 (LIVE)</button>
+        <button class="channel-btn" onclick="switchChannel('ALIEN/SCIENCE', 'PARANORMAL')">ALIEN / SCIENCE</button>
+        <button class="channel-btn" onclick="switchChannel('HORROR/DARK', 'THEATER')">HORROR THEATER</button>
+        <button class="channel-btn" onclick="switchChannel('CRYPTO SATS', 'MARKET')">CRYPTO / STOCK-SATS</button>
+        <button class="channel-btn" onclick="switchChannel('INVENTION LOGS', 'LAB')">INVENTION DOCS</button>
+    </aside>
+
+    <main>
+        <div id="channel-header">
+            <h1 id="main-title">TMGS FM 99</h1>
+            <p id="sub-category">CATEGORY: RADIO BROADCAST</p>
+        </div>
+
+        <div class="upload-zone">
+            <p>UPLOAD MEDIA TO 3TB MASTER SERVER</p>
+            <label for="file-upload" class="custom-upload">SELECT AUDIO/VIDEO</label>
+            <input type="file" id="file-upload" multiple onchange="handleFiles(this.files)">
+            <div id="file-list" style="margin-top: 10px; font-size: 0.8rem; color: var(--live-green);"></div>
+        </div>
+
+        <div id="visualizer-area" style="height: 150px; background: #000; border: 1px solid #111;">
+            <p style="text-align: center; color: #222; padding-top: 60px;">STREAM SIGNAL STABLE</p>
+        </div>
+    </main>
+
+    <div class="player-console">
+        <div id="current-meta">NOW PLAYING: INITIALIZING...</div>
+        <audio id="main-player" controls style="filter: invert(1); width: 50%;"></audio>
+        <div id="live-tag" style="color: var(--live-green);">● 24/7 AUTO-DJ</div>
+    </div>
+
+    <script>
+        function switchChannel(name, cat) {
+            document.getElementById('main-title').innerText = name;
+            document.getElementById('sub-category').innerText = "CATEGORY: " + cat;
+            document.getElementById('current-meta').innerText = "TUNING TO " + name + "...";
+            
+            // Logic to swap the source URL would go here
+            document.querySelectorAll('.channel-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        function handleFiles(files) {
+            const list = document.getElementById('file-list');
+            list.innerHTML = "";
+            for (let i = 0; i < files.length; i++) {
+                list.innerHTML += "UPLOADED: " + files[i].name + " [SYNCING TO STORAGE...]<br>";
+                
+                // In a real C-based server, you'd send this via a POST request to your backend
+                console.log("[DETECTIVE LOG]: File " + files[i].name + " queued for 3TB storage.");
+            }
+        }
+    </script>
+</body>
+</html>
