@@ -1,0 +1,18 @@
+THE NAMES OF BARS
+top
+left
+right 
+bottom 
+side
+sidebar
+nav
+buttons 
+dropdown
+address 
+window 
+bookmark 
+history 
+hidden 
+collapsible 
+home
+homescreen
