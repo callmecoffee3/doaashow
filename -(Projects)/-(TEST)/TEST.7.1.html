@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MG Streaming PRO | Live Git Search</title>
+    <style>
+        body { background: #000; color: #00ff41; font-family: 'Courier New', monospace; margin: 0; }
+        .marquee { background: #111; border-bottom: 2px solid #00ff41; color: #ff0000; padding: 5px; }
+        .search-container { padding: 20px; border-bottom: 1px solid #333; }
+        input[type="text"] { 
+            background: #050505; border: 1px solid #00ff41; color: #00ff41; 
+            padding: 10px; width: 300px; font-family: inherit; 
+        }
+        button { background: #00ff41; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; }
+        .results-view { padding: 20px; }
+        .item { padding: 8px; border-left: 3px solid #00ff41; margin-bottom: 5px; background: #0a0a0a; }
+        .type-blob { color: #00ff41; } /* Files */
+        .type-tree { color: #fff; font-weight: bold; } /* Folders */
+    </style>
+</head>
+<body>
+    <div class="marquee">
+        <marquee>LIVE SEARCH ACTIVE // REPO: CALLMECOFFEE3 // 3Mbps AI-DETECTION: MONITORING PATHS...</marquee>
+    </div>
+
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search files or folders...">
+        <button onclick="performSearch()">SCAN GIT</button>
+    </div>
+
+    <div class="results-view" id="results">
+        <p>>_ Waiting for input. It's night out, let's find what's hidden.</p>
+    </div>
+
+    <script>
+        async function performSearch() {
+            const query = document.getElementById('searchInput').value;
+            const display = document.getElementById('results');
+            display.innerHTML = "<p>>_ ACCESSING GITHUB API...</p>";
+
+            // In your real setup, this calls your compiled C binary
+            // For this view, we simulate the output of the 'git_fetch.sh'
+            const mockData = [
+                {name: "-(Projects)/Dos_Programs", type: "tree"},
+                {name: "-(Projects)/Dos_Channels", type: "tree"},
+                {name: "-(Projects)/Podcast", type: "tree"},
+                {name: "-(Projects)/desktop_layout_v2.html", type: "blob"},
+                {name: "README.md", type: "blob"},
+                {name: "mg_stream_engine.sh", type: "blob"}
+            ];
+
+            const filtered = mockData.filter(item => item.name.toLowerCase().includes(query.toLowerCase()));
+            
+            display.innerHTML = `<h3>FOUND ${filtered.length} ARTIFACTS:</h3>`;
+            filtered.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'item';
+                const label = item.type === 'tree' ? '[FOLDER]' : '[FILE]';
+                const typeClass = 'type-' + item.type;
+                div.innerHTML = `<span class="${typeClass}">${label}</span> ${item.name}`;
+                display.appendChild(div);
+            });
+        }
+    </script>
+</body>
+</html>
+
+#!/bin/bash
+# git_fetch.sh - Live API Interrogator
+
+REPO="callmecoffee3/doaashow"
+QUERY=$1
+
+# Fetch the full recursive tree from GitHub
+# Note: In a production environment, use an OAUTH token for higher rate limits
+DATA=$(curl -s "https://api.github.com/repos/$REPO/git/trees/main?recursive=1")
+
+if [ -z "$QUERY" ]; then
+    # Return everything if no search query
+    echo "$DATA" | jq '.tree | map({name: .path, type: .type})'
+else
+    # Filter by the search term
+    echo "$DATA" | jq --arg Q "$QUERY" '.tree | map(select(.path | contains($Q))) | map({name: .path, type: .type})'
+fi
+
+/* mg_search_engine.c - The Deep Scan Query Tool */
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+void execute_search(const char *query) {
+    char command[512];
+    // We pass the query to our bash script which handles the API communication
+    snprintf(command, sizeof(command), "./git_fetch.sh %s", query);
+    
+    printf("{\"results\": ");
+    system(command); // The bash script will output a JSON array
+    printf("}");
+}
+
+int main(int argc, char *argv[]) {
+    if (argc < 2) {
+        // If no query, we just display the full manifest
+        execute_search("");
+    } else {
+        execute_search(argv[1]);
+    }
+    return 0;
+}
+        

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Matt Grosso Streaming PRO - Sandbox</title>
+    <style>
+        body { background-color: #000; color: #e50914; font-family: 'Courier New', Courier, monospace; }
+        .marquee { width: 100%; overflow: hidden; white-space: nowrap; border-bottom: 2px solid #e50914; padding: 10px 0; }
+        .content { text-align: center; margin-top: 20%; }
+        h1 { font-size: 3rem; }
+    </style>
+</head>
+<body>
+    <div class="marquee">
+        <marquee>3Mbps AI-Detection ACTIVE // Server Status: SECURE // News: Local Sandbox Initialized...</marquee>
+    </div>
+    <div class="content">
+        <h1>LOCAL SANDBOX</h1>
+        <p>Redirecting nexflix.com to Local Logic...</p>
+    </div>
+</body>
+</html>
+#!/bin/bash
+# The Setup - Redirecting the stream
+TARGET_DOMAIN="nexflix.com"
+LOCAL_IP="127.0.0.1"
+
+echo "Checking permissions... the shadows are watching."
+
+if [ "$EUID" -ne 0 ]; then 
+  echo "I need root access to rewire the system, detective."
+  exit
+fi
+
+# Appending the redirection to the hosts file
+echo "$LOCAL_IP $TARGET_DOMAIN" >> /etc/hosts
+
+echo "The trap is set. $TARGET_DOMAIN now points to $LOCAL_IP."
+
+#include <stdio.h>
+#include <sys/socket.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <netinet/in.h>
+#include <string.h>
+
+/* The heartbeat of the sandbox */
+int main() {
+    int server_fd, new_socket;
+    struct sockaddr_in address;
+    int opt = 1;
+    int addrlen = sizeof(address);
+    char *hello = "HTTP/1.1 200 OK\nContent-Type: text/plain\nContent-Length: 18\n\nSandbox Active\n";
+
+    if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0) {
+        perror("Socket failed");
+        exit(EXIT_FAILURE);
+    }
+
+    if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt))) {
+        perror("Setsockopt");
+        exit(EXIT_FAILURE);
+    }
+
+    address.sin_family = AF_INET;
+    address.sin_addr.s_addr = INADDR_ANY;
+    address.sin_port = htons(80);
+
+    if (bind(server_fd, (struct sockaddr *)&address, sizeof(address)) < 0) {
+        perror("Bind failed");
+        exit(EXIT_FAILURE);
+    }
+
+    if (listen(server_fd, 3) < 0) {
+        perror("Listen");
+        exit(EXIT_FAILURE);
+    }
+
+    while(1) {
+        printf("\nWaiting for the connection in the dark...\n");
+        if ((new_socket = accept(server_fd, (struct sockaddr *)&address, (socklen_t*)&addrlen))<0) {
+            perror("Accept");
+            exit(EXIT_FAILURE);
+        }
+        send(new_socket , hello , strlen(hello) , 0 );
+        printf("Packet captured. Closing connection.\n");
+        close(new_socket);
+    }
+    return 0;
+}

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PRIVATE | MG Streaming PRO</title>
+    <style>
+        body { background: #000; color: #00ff00; font-family: 'Courier New', Courier, monospace; margin: 0; }
+        .marquee-banner { background: #0a0a0a; border-bottom: 1px solid #00ff00; padding: 10px; color: #ff0000; font-weight: bold; }
+        .lock-status { position: absolute; top: 50px; right: 20px; color: #fff; background: #c00; padding: 5px 10px; border-radius: 5px; }
+        .content { padding: 40px; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="marquee-banner">
+        <marquee scrollamount="10">ENCRYPTED STREAM // 3Mbps AI-DETECTION: ARMED // USER: MATT GROSSO // STATUS: PRIVATE VAULT</marquee>
+    </div>
+
+    <div class="lock-status">● PRIVATE VIEW ACTIVE</div>
+
+    <div class="content">
+        <h2>SECURE STORAGE ACCESS</h2>
+        <p>The 3TB drive is now indexed and hidden from the public DNS.</p>
+        <div style="border: 2px dashed #00ff00; height: 300px; margin-top: 20px;">
+            <p style="padding-top: 130px;">[MEDIA FEED ENCRYPTED]</p>
+        </div>
+    </div>
+</body>
+</html>
+
+#!/bin/bash
+# private_shield.sh - Local Lockdown
+
+MY_IP="YOUR_HOME_IP_HERE"
+
+echo "[DETECTIVE LOG]: Initiating total blackout protocol..."
+
+# 1. Flush existing rules
+sudo iptables -F
+
+# 2. Allow only your IP to touch the streaming port
+sudo iptables -A INPUT -p tcp -s $MY_IP --dport 8080 -j ACCEPT
+
+# 3. Drop everyone else into the abyss
+sudo iptables -A INPUT -p tcp --dport 8080 -j DROP
+
+echo "[STATUS]: Port 8080 is now invisible to the city. Only $MY_IP has eyes on it."
+
+/* private_server.c - The Vault with a Key */
+#include <stdio.h>
+#include <string.h>
+#include <unistd.h>
+#include <arpa/inet.h>
+
+#define CREDENTIALS "Authorization: Basic TWF0dDpHcm9zc28yMDI2" // Matt:Grosso2026
+
+void handle_private_request(int client_socket) {
+    char buffer[4096];
+    read(client_socket, buffer, 4096);
+
+    // Check if the credentials are in the header
+    if (strstr(buffer, CREDENTIALS) == NULL) {
+        char *unauthorized = "HTTP/1.1 401 Unauthorized\n"
+                             "WWW-Authenticate: Basic realm=\"Private Vault\"\n"
+                             "Content-Length: 0\n\n";
+        write(client_socket, unauthorized, strlen(unauthorized));
+    } else {
+        char *response = "HTTP/1.1 200 OK\nContent-Type: text/html\n\n";
+        write(client_socket, response, strlen(response));
+        
+        // Serve the private HTML
+        char *content = "<html><body style='background:#000;color:#0f0;'>"
+                        "<h1>PRIVATE FEED ACTIVE</h1>"
+                        "<p>The street lights are off. Only the initiated see this.</p>"
+                        "</body></html>";
+        write(client_socket, content, strlen(content));
+    }
+    close(client_socket);
+}
+
+int main() {
+    int server_fd, new_socket;
+    struct sockaddr_in addr;
+    server_fd = socket(AF_INET, SOCK_STREAM, 0);
+    addr.sin_family = AF_INET;
+    addr.sin_addr.s_addr = INADDR_ANY;
+    addr.sin_port = htons(8080);
+    
+    bind(server_fd, (struct sockaddr *)&addr, sizeof(addr));
+    listen(server_fd, 5);
+    
+    while(1) {
+        new_socket = accept(server_fd, NULL, NULL);
+        handle_private_request(new_socket);
+    }
+    return 0;
+}

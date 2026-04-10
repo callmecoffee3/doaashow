@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MG Streaming PRO | Git Search</title>
+    <style>
+        body { background: #000; color: #00ff41; font-family: 'Courier New', monospace; margin: 0; }
+        .search-vault { padding: 40px; text-align: center; }
+        input[type="text"] { 
+            background: #0a0a0a; border: 2px solid #00ff41; color: #00ff41; 
+            padding: 15px; width: 60%; font-size: 1.2em; outline: none;
+            box-shadow: 0 0 10px #00ff41;
+        }
+        .btn-search { 
+            background: #00ff41; color: #000; border: none; padding: 16px 30px; 
+            font-weight: bold; cursor: pointer; font-size: 1.1em;
+        }
+        .results-view { 
+            margin-top: 30px; text-align: left; border: 1px solid #333; 
+            background: #050505; min-height: 200px; padding: 20px;
+        }
+        .result-item { border-left: 3px solid #ff0000; padding: 10px; margin: 10px 0; background: #111; }
+        .marquee { background: #ff0000; color: #000; font-weight: bold; padding: 5px; }
+    </style>
+</head>
+<body>
+    <div class="marquee">
+        <marquee>UNSIMULATED LIVE SEARCH ACTIVE // 3Mbps AI-DETECTION: MONITORING // REPO: DOAASHOW/MAIN</marquee>
+    </div>
+
+    <div class="search-vault">
+        <h2>GIT REPOSITORY SEARCH</h2>
+        <input type="text" id="gitSearch" placeholder="Enter filename or folder path...">
+        <button class="btn-search" onclick="executeSearch()">SEARCH</button>
+
+        <div id="results" class="results-view">
+            <p>>_ Awaiting input for live directory scan...</p>
+        </div>
+    </div>
+
+    <script>
+        function executeSearch() {
+            const query = document.getElementById('gitSearch').value;
+            const display = document.getElementById('results');
+            
+            display.innerHTML = `<p>>_ Searching for "${query}" in the vault...</p>`;
+
+            // In a real local drive hosting scenario, this would call your C/Bash bridge
+            // For now, we simulate the output of the 'mg_search_engine' C program
+            setTimeout(() => {
+                if(query.toLowerCase().includes("dos")) {
+                    display.innerHTML = `
+                        <div class='result-item'>[DETECTED]: -(Projects)/Dos_Programs</div>
+                        <div class='result-item'>[DETECTED]: -(Projects)/Dos_Channels</div>
+                    `;
+                } else if(query.toLowerCase().includes("podcast")) {
+                    display.innerHTML = `
+                        <div class='result-item'>[DETECTED]: -(Projects)/Podcast/ep1_intro.mp3</div>
+                    `;
+                } else {
+                    display.innerHTML = `<p style='color: #ff0000;'>>_ NO ARTIFACTS FOUND FOR "${query}"</p>`;
+                }
+            }, 800);
+        }
+    </script>
+</body>
+</html>
+
+/* mg_search_engine.c - The Unsimulated Filter */
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+void display_result(char *line) {
+    // This parses the GitHub tree JSON format into a readable string
+    if (strstr(line, "\"path\":")) {
+        char *path = strchr(line, ':') + 2;
+        path[strlen(path) - 2] = '\0'; // Clean up the quotes and commas
+        printf("<div class='result-item'>[DETECTED]: %s</div>", path);
+    }
+}
+
+int main(int argc, char *argv[]) {
+    FILE *fp = fopen("search_results.tmp", "r");
+    char buffer[1024];
+
+    if (!fp) return 1;
+
+    printf("<div class='results-container'>");
+    while (fgets(buffer, sizeof(buffer), fp)) {
+        display_result(buffer);
+    }
+    printf("</div>");
+
+    fclose(fp);
+    return 0;
+}
+
+#!/bin/bash
+# git_search_bridge.sh - The Live Data Retrieval
+
+REPO="callmecoffee3/doaashow"
+QUERY=$1
+
+# We fetch the entire recursive tree to search everything at once
+# This is the "Unsimulated" live feed
+curl -s "https://api.github.com/repos/$REPO/git/trees/main?recursive=1" | \
+grep -i "$QUERY" | \
+sed 's/^[ \t]*//' > search_results.tmp
+
+echo "[STATUS]: Live scan for '$QUERY' complete."

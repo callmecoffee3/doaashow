@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DOAASHOW | Sandbox Inspector</title>
+    <style>
+        body { background: #000; color: #00ff41; font-family: 'Courier New', monospace; margin: 0; }
+        .header { border-bottom: 2px solid #00ff41; padding: 10px; background: #0a0a0a; }
+        .file-list { padding: 20px; }
+        .file-item { border: 1px solid #333; margin: 5px 0; padding: 10px; display: flex; justify-content: space-between; }
+        .file-item:hover { background: #111; border-color: #00ff41; }
+        .marquee { color: #ff0000; font-size: 0.8em; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="marquee"><marquee>SANDBOX ACTIVE // TARGET: github.com/callmecoffee3/doaashow/tree/main/-(Projects) // MODE: READ-ONLY</marquee></div>
+        <h1>PROJECTS INSPECTOR</h1>
+    </div>
+
+    <div class="file-list">
+        <h3>Detected Artifacts:</h3>
+        <div class="file-item">
+            <span>[DIR] Dos_Programs</span>
+            <span>SECURE</span>
+        </div>
+        <div class="file-item">
+            <span>[FILE] podcast_schedule.txt</span>
+            <span>1.2KB</span>
+        </div>
+        <div class="file-item">
+            <span>[FILE] desktop_layout_v2.html</span>
+            <span>4.5KB</span>
+        </div>
+    </div>
+</body>
+</html>
+
+/* inspector.c - The Forensic Analyst */
+#include <stdio.h>
+#include <dirent.h>
+#include <sys/stat.h>
+
+void analyze_directory(const char *dir_name) {
+    struct dirent *entry;
+    struct stat file_stat;
+    DIR *dir = opendir(dir_name);
+
+    if (!dir) return;
+
+    printf("{\"files\": [");
+    int first = 1;
+
+    while ((entry = readdir(dir)) != NULL) {
+        if (entry->d_name[0] == '.') continue; // Skip hidden files
+
+        char path[1024];
+        snprintf(path, sizeof(path), "%s/%s", dir_name, entry->d_name);
+        stat(path, &file_stat);
+
+        if (!first) printf(",");
+        printf("{\"name\": \"%s\", \"size\": %ld}", entry->d_name, file_stat.st_size);
+        first = 0;
+    }
+    printf("]}");
+    closedir(dir);
+}
+
+int main() {
+    analyze_directory("./doaashow_sandbox/-(Projects)");
+    return 0;
+}
+
+#!/bin/bash
+# sandbox_fetch.sh - The Retrieval Operative
+
+REPO_URL="https://github.com/callmecoffee3/doaashow.git"
+TARGET_DIR="-(Projects)"
+SANDBOX_PATH="./doaashow_sandbox"
+
+echo "[DETECTIVE LOG]: Clearing the room..."
+rm -rf $SANDBOX_PATH
+mkdir -p $SANDBOX_PATH
+
+echo "[DETECTIVE LOG]: Pulling the files from the coast..."
+# We use a sparse-checkout to only grab the Projects folder
+git clone --no-checkout $REPO_URL $SANDBOX_PATH
+cd $SANDBOX_PATH
+git sparse-checkout set "$TARGET_DIR"
+git checkout main
+
+echo "[STATUS]: Files secured in $SANDBOX_PATH. Perimeter established."

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TMGS-99 | LOCAL WEB-LLM DEPLOYMENT</title>
+    <style>
+        body { background: #000; color: #00ff00; font-family: 'Courier New', monospace; margin: 0; }
+        .banner { background: #111; border-bottom: 2px solid #ff0000; padding: 10px; }
+        .marquee { color: #ff0000; font-weight: bold; text-transform: uppercase; }
+        .terminal { padding: 20px; border: 1px solid #333; margin: 20px; background: #050505; min-height: 400px; box-shadow: 0 0 15px #00ff0033; }
+        .cmd { color: #f1c40f; }
+        .blink { animation: blinker 1s linear infinite; }
+        @keyframes blinker { 50% { opacity: 0; } }
+    </style>
+</head>
+<body>
+    <div class="banner">
+        <marquee class="marquee">3MBPS AI-DETECTION: ACTIVE // BUILDING LOCAL SANDBOX: WEB-LLM-CHAT // STATUS: COMPILING // IT'S ALWAYS NIGHT OUT</marquee>
+    </div>
+    <div class="terminal">
+        <p>[*] INITIALIZING CLONE PROTOCOL...</p>
+        <p class="cmd">> git clone https://github.com/mlc-ai/web-llm-chat.git</p>
+        <p>[*] INSTALLING DEPENDENCIES (YARN/NODE)...</p>
+        <p class="cmd">> yarn install</p>
+        <p>[*] LAUNCHING LOCAL ENGINE...</p>
+        <p class="cmd">> yarn dev</p>
+        <p class="blink">_</p>
+    </div>
+</body>
+</html>
+
+#!/bin/bash
+# Case: Localizing the Web-LLM Suspect
+
+echo "[*] Entering the local vault..."
+mkdir -p ~/matt_grosso_labs
+cd ~/matt_grosso_labs
+
+# Cloning the repository
+echo "[*] Pulling the blueprint from GitHub..."
+git clone https://github.com/mlc-ai/web-llm-chat.git
+cd web-llm-chat
+
+# Installing dependencies
+# Note: On your hardware, this might take a few moments. Stay patient.
+echo "[*] Wiring the logic gates (yarn install)..."
+yarn install
+
+# Launching the local sandbox
+echo "[*] Igniting the local server on port 3000..."
+yarn dev
+
+#include <stdio.h>
+#include <stdlib.h>
+
+/**
+ * @brief Monitor for the Local Sandbox
+ * "Code like a religious song—steady, rhythmic, and unbreakable."
+ */
+int main() {
+    printf("[SYS] MATT GROSSO STREAMING PRO: MONITORING LOCAL LLM...\n");
+    
+    // Command to ping the local port 3000 where yarn dev usually sits
+    int status = system("curl -s --head http://localhost:3000 | grep '200 OK' > /dev/null");
+    
+    if (status == 0) {
+        printf("[OK] Local Sandbox is breathing. The connection is pure.\n");
+    } else {
+        printf("[!!] The local server is cold. Restarting the heartbeat...\n");
+        // system("./build_sandbox.sh"); 
+    }
+    
+    return 0;
+}

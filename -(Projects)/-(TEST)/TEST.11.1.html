@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { background: #050505; color: #00ff41; font-family: 'Courier', monospace; }
+        .marquee { border-bottom: 2px solid #ff00ff; padding: 10px; color: #ff00ff; }
+        .data-box { border: 1px solid #00ff41; margin: 20px; padding: 15px; background: #111; }
+        .detective-note { color: #888; font-style: italic; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="marquee">
+        <marquee scrollamount="5">>>> 3Mbps AI-DETECTION ACTIVE... SCANNING LOCAL FILES... NIGHT IS OUT THERE...</marquee>
+    </div>
+
+    <div class="data-box">
+        <h2>MATT GROSSO STREAMING PRO: FILE INTEL</h2>
+        <pre>
+[SYSTEM LOG]:
+- mg_scanner.sh  (Active)
+- mg_scan_engine (Compiled)
+- raw_scan.log   (Generated)
+        </pre>
+    </div>
+
+    <div class="detective-note">
+        "The code is music. The data is the truth. Stay in the shadows."
+    </div>
+</body>
+</html>
+
+#!/bin/bash
+# mg_scanner.sh - Data Gathering Protocol
+# 04-10-2026
+
+echo "[SCANNER]: Initializing..."
+
+# Compile the C code first
+gcc mg_scanner.c -o mg_scan_engine
+
+# Run the C engine and save to a temporary log
+./mg_scan_engine > raw_scan.log
+
+# Use find for the heavy cataloging
+find . -maxdepth 2 -not -path '*/.*' -printf "%s | %p\n" | sort -rh > final_intel.log
+
+echo "[SUCCESS]: Shadows mapped in final_intel.log"
+
+
+#include <stdio.h>
+#include <sys/types.h>
+#include <dirent.h>
+
+int main(void) {
+    struct dirent *de;  // Pointer for directory entry
+    DIR *dr = opendir("."); // Open current directory
+
+    if (dr == NULL) {
+        printf("Could not open current directory" );
+        return 0;
+    }
+
+    printf("--- RAW SYSTEM SCAN ---\n");
+    while ((de = readdir(dr)) != NULL) {
+        // Print the name and the type (d for directory, r for regular file)
+        printf("[%s] - Type: %d\n", de->d_name, de->d_type);
+    }
+
+    closedir(dr);    
+    return 0;
+}

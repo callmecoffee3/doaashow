@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MG Search | Pro Vault</title>
+    <style>
+        body { background: #000; color: #00ff00; font-family: 'Courier New', monospace; }
+        .search-container { padding: 20px; border-bottom: 2px solid #00ff00; background: #0a0a0a; }
+        input { background: #111; border: 1px solid #00ff00; color: #00ff00; padding: 10px; width: 300px; }
+        .results-view { padding: 20px; background: #050505; min-height: 400px; }
+        .result-item { border-left: 3px solid #ff0000; padding-left: 10px; margin-bottom: 10px; }
+        .tag { font-weight: bold; margin-right: 10px; }
+        .tag-folder { color: #fff; }
+        .tag-file { color: #00ff00; }
+        .marquee { color: #ff0000; font-size: 0.8em; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <div class="search-container">
+        <div class="marquee"><marquee>REAL-TIME DRIVE SCANNING ACTIVE // STORAGE: 3TB ARRAY // AI-DETECTION: MONITORING</marquee></div>
+        <h2>VAULT SEARCH</h2>
+        <input type="text" id="searchInput" placeholder="Enter file or folder name..." onkeyup="filterResults()">
+    </div>
+
+    <div class="results-view" id="resultsArea">
+        </div>
+
+    <script>
+        // Real-time result view logic
+        const manifest = [
+            { type: "FOLDER", name: "Dos_Programs", path: "-(Projects)/Dos_Programs" },
+            { type: "FILE", name: "desktop_layout_v2.html", path: "-(Projects)/desktop_layout_v2.html" },
+            { type: "FILE", name: "mg_stream_engine.sh", path: "-(Projects)/mg_stream_engine.sh" },
+            { type: "FOLDER", name: "Dos_Channels", path: "-(Projects)/Dos_Channels" },
+            { type: "FILE", name: "storage_index.c", path: "-(Projects)/storage_index.c" }
+        ];
+
+        function filterResults() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const area = document.getElementById('resultsArea');
+            area.innerHTML = "";
+
+            if (query.length === 0) return;
+
+            manifest.filter(item => item.name.toLowerCase().includes(query)).forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'result-item';
+                const tagClass = item.type === 'FOLDER' ? 'tag-folder' : 'tag-file';
+                div.innerHTML = `<span class="tag ${tagClass}">[${item.type}]</span> ${item.name} <br> <small>${item.path}</small>`;
+                area.appendChild(div);
+            });
+        }
+    </script>
+</body>
+</html>
+
+/* mg_recursive_search.c - The Deep Scan Search Engine */
+#include <stdio.h>
+#include <string.h>
+#include <dirent.h>
+#include <sys/stat.h>
+
+void search_vault(const char *base_path, const char *query) {
+    struct dirent *entry;
+    struct stat file_stat;
+    DIR *dir = opendir(base_path);
+
+    if (!dir) return;
+
+    while ((entry = readdir(dir)) != NULL) {
+        if (entry->d_name[0] == '.') continue; // Skip system hidden files
+
+        char path[1024];
+        snprintf(path, sizeof(path), "%s/%s", base_path, entry->d_name);
+        
+        // If the query is in the name, display it
+        if (strcasestr(entry->d_name, query)) {
+            stat(path, &file_stat);
+            printf("[%s] %s | %ld bytes\n", S_ISDIR(file_stat.st_mode) ? "FOLDER" : "FILE", path, file_stat.st_size);
+        }
+
+        // If it's a directory, dive deeper (Recursion)
+        if (S_ISDIR(file_stat.st_mode)) {
+            search_vault(path, query);
+        }
+    }
+    closedir(dir);
+}
+
+int main(int argc, char *argv[]) {
+    if (argc < 3) {
+        printf("Usage: %s <directory> <query>\n", argv[0]);
+        return 1;
+    }
+    search_vault(argv[1], argv[2]);
+    return 0;
+}

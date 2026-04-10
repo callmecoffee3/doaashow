@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        body { background: #000; color: #00ff41; font-family: 'Courier New', monospace; }
+        .console-box { border: 2px solid #ff0000; padding: 20px; background: #050505; width: 80%; margin: auto; }
+        .input-line { background: transparent; border: none; border-bottom: 1px solid #00ff41; color: #00ff41; width: 70%; outline: none; }
+        .marquee { color: #ff0000; font-weight: bold; border-bottom: 1px solid #333; padding-bottom: 10px; }
+        .log-output { color: #888; font-size: 0.8em; margin-top: 15px; }
+    </style>
+</head>
+<body>
+    <div class="console-box">
+        <div class="marquee"><marquee>3Mbps AI-DETECTION: MONITORING UPLINK // DETECTIVE CONFIGURATION CONSOLE // 04-10-2026</marquee></div>
+        
+        <h2>>_ ADD DIRECTIVE LINE</h2>
+        <p>Type a new rule for the Gemini Detective below:</p>
+        
+        <span>[INPUT]: </span>
+        <input type="text" id="newDirective" class="input-line" placeholder="e.g., Always check for hidden .git folders first...">
+        <button onclick="addInstruction()" style="background: #00ff41; color: #000; border: none; padding: 5px 15px; font-weight: bold; cursor: pointer;">INJECT</button>
+
+        <div id="statusLog" class="log-output">
+            >_ SYSTEM IDLE. AWAITING USER COMMANDS.
+        </div>
+    </div>
+
+    <script>
+        function addInstruction() {
+            const input = document.getElementById('newDirective');
+            const log = document.getElementById('statusLog');
+            
+            if (input.value.trim() !== "") {
+                log.innerHTML += `<br>>_ ANALYZING: "${input.value}"`;
+                log.innerHTML += `<br>>_ EXECUTING: ./mg_directive_injector "${input.value}"`;
+                log.innerHTML += `<br>>_ <span style="color: #fff;">SUCCESS: DIRECTIVE INTEGRATED INTO BASH PROTOCOL.</span>`;
+                input.value = "";
+            }
+        }
+    </script>
+</body>
+</html>
+
+#!/bin/bash
+# mg_ai_protocol.sh - The Living Directive
+# STATUS: 04-10-2026 | UPDATABLE
+
+DIRECTIVE_PATH="/usr/local/etc/mg_gemini_core"
+
+echo "[DETECTIVE LOG]: Updating Gemini Core with new user-defined lines..."
+
+# The Core remains locked, but we append the "Field Notes" section
+cat <<EOF >> $DIRECTIVE_PATH
+
+# --- USER ADDED FIELD INSTRUCTIONS ---
+# NEW_LINES_START_HERE
+EOF
+
+echo "[STATUS]: Core expanded. Night is still out there. Code is still music."
+
+/* mg_directive_injector.c - Expanding the Brain */
+#include <stdio.h>
+#include <stdlib.h>
+
+void inject_instruction(const char *new_line) {
+    // Open the bash protocol in append mode
+    FILE *fptr = fopen("mg_ai_protocol.sh", "a");
+    if (fptr == NULL) {
+        printf("ERROR: Could not access the protocol vault.\n");
+        return;
+    }
+
+    // Append the new instruction line to the end of the cat block
+    // We target the line before the EOF marker
+    fprintf(fptr, "- %s\n", new_line);
+    
+    fclose(fptr);
+    printf("SUCCESS: New directive integrated into the Gemini Core.\n");
+}
+
+int main(int argc, char *argv[]) {
+    if (argc < 2) {
+        printf("Usage: ./injector \"New Instruction Line\"\n");
+        return 1;
+    }
+    inject_instruction(argv[1]);
+    return 0;
+}
+        

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MG Streaming PRO | Project Manifest</title>
+    <style>
+        body { background: #000; color: #00ff41; font-family: 'Courier New', monospace; margin: 0; }
+        .wrapper { padding: 30px; }
+        .marquee-status { background: #0a1a0a; border-bottom: 2px solid #ff0000; padding: 10px; color: #ff0000; }
+        
+        /* The table architecture for forensic display */
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; border: 1px solid #333; }
+        th, td { text-align: left; padding: 12px; border-bottom: 1px solid #222; }
+        th { background: #111; text-transform: uppercase; color: #fff; }
+        
+        /* Visual Type indicators */
+        .type-folder { color: #fff; font-weight: bold; }
+        .type-program { color: #00ff41; font-weight: bold; text-shadow: 0 0 5px #00ff41; }
+        .type-data { color: #999; font-style: italic; }
+    </style>
+</head>
+<body>
+    <div class="marquee-status">
+        <marquee scrollamount="8">ALERT: ACCESSING PROJECT MANIFEST // SANDBOX ID: DOAASHOW-SECURE // 3Mbps AI-DETECTION: ARMED // STATION: BARTOW SECURE HUB</marquee>
+    </div>
+
+    <div class="wrapper">
+        <h1>PROJECTS DISCOVERED IN -(Projects)</h1>
+        <p>>_ Analyzing the 3TB array structure...</p>
+        
+        <table id="manifestTable">
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Artifact Name</th>
+                    <th>Size (KB)</th>
+                    <th>Date Modified</th>
+                </tr>
+            </thead>
+            <tbody id="manifestBody">
+                </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Simulation of fetching the C code's JSON output
+        const manifestData = [
+            {"type": "FOLDER", "name": "Dos_Programs", "size_kb": 1024.0, "last_modified": "2026-04-09 14:00"},
+            {"type": "FOLDER", "name": "Dos_Channels", "size_kb": 512.5, "last_modified": "2026-04-09 14:15"},
+            {"type": "FOLDER", "name": "Podcast", "size_kb": 2048.2, "last_modified": "2026-04-08 10:30"},
+            {"type": "PROGRAM", "name": "desktop_layout_v2.html", "size_kb": 4.5, "last_modified": "2026-04-10 11:22"},
+            {"type": "PROGRAM", "name": "mg_stream_engine.sh", "size_kb": 1.1, "last_modified": "2026-04-10 09:10"},
+            {"type": "DATA", "name": "storage_index_notes.txt", "size_kb": 102.3, "last_modified": "2026-04-10 08:45"}
+        ];
+
+        function populateTable(data) {
+            const tableBody = document.getElementById('manifestBody');
+            data.forEach(item => {
+                const row = document.createElement('tr');
+                
+                // Assign a CSS class based on the detected type
+                const typeClass = 'type-' + item.type.toLowerCase();
+                
+                row.innerHTML = `
+                    <td class="${typeClass}">${item.type}</td>
+                    <td>${item.name}</td>
+                    <td>${item.size_kb.toFixed(2)}</td>
+                    <td>${item.last_modified}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Initialize the table on load
+        populateTable(manifestData);
+    </script>
+</body>
+</html>
+
+/* mg_manifest_scanner.c - The Forensic Directory Analyzer */
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <dirent.h>
+#include <sys/stat.h>
+#include <time.h>
+
+// Helper to check for known "Program" extensions
+int is_program(const char *name) {
+    if (strstr(name, ".sh") || strstr(name, ".c") || strstr(name, ".html") || strstr(name, ".exe")) {
+        return 1; // Program artifact detected
+    }
+    return 0; // Standard data file
+}
+
+void scan_manifest(const char *dir_path) {
+    struct dirent *entry;
+    struct stat file_stat;
+    DIR *dir = opendir(dir_path);
+
+    if (!dir) {
+        perror("[ERROR]: Unable to open directory");
+        return;
+    }
+
+    printf("[\n"); // Start JSON array
+    int first = 1;
+
+    while ((entry = readdir(dir)) != NULL) {
+        if (entry->d_name[0] == '.') continue; // Skip hidden/parent system files
+
+        char path[1024];
+        snprintf(path, sizeof(path), "%s/%s", dir_path, entry->d_name);
+        
+        if (stat(path, &file_stat) == -1) continue; // Unable to get file stats
+
+        if (!first) printf(",\n");
+        first = 0;
+
+        printf("  {\n");
+        printf("    \"name\": \"%s\",\n", entry->d_name);
+        
+        // Detect Type
+        if (S_ISDIR(file_stat.st_mode)) {
+            printf("    \"type\": \"FOLDER\",\n");
+        } else if (is_program(entry->d_name)) {
+            printf("    \"type\": \"PROGRAM\",\n");
+        } else {
+            printf("    \"type\": \"DATA\",\n");
+        }
+
+        printf("    \"size_kb\": %.2f,\n", (double)file_stat.st_size / 1024.0);
+        
+        // Time format (Matt Grosso requires professional time stamps)
+        char time_buf[20];
+        strftime(time_buf, 20, "%Y-%m-%d %H:%M", localtime(&file_stat.st_mtime));
+        printf("    \"last_modified\": \"%s\"\n", time_buf);
+        printf("  }");
+    }
+
+    printf("\n]\n"); // End JSON array
+    closedir(dir);
+}
+
+int main(int argc, char *argv[]) {
+    // We expect the path to the sandbox as the argument
+    if (argc < 2) {
+        fprintf(stderr, "Usage: %s <path_to_scan>\n", argv[0]);
+        return 1;
+    }
+    scan_manifest(argv[1]);
+    return 0;
+}
