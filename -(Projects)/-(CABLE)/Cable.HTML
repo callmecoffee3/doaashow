@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>DOASHOW TV GUIDE</title>
+
+<style>
+body {
+    margin: 0;
+    background: black;
+    color: #00ffcc;
+    font-family: monospace;
+}
+
+header {
+    background: #111;
+    padding: 10px;
+    text-align: center;
+    font-size: 24px;
+    border-bottom: 2px solid #00ffcc;
+}
+
+#time {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+}
+
+.container {
+    display: flex;
+}
+
+.channels {
+    width: 30%;
+    border-right: 2px solid #00ffcc;
+    padding: 10px;
+}
+
+.channel {
+    padding: 10px;
+    border-bottom: 1px solid #00ffcc;
+    cursor: pointer;
+}
+
+.channel:hover {
+    background: #003333;
+}
+
+.guide {
+    width: 70%;
+    padding: 10px;
+}
+
+.now-playing {
+    border: 2px solid #00ffcc;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.schedule {
+    height: 300px;
+    overflow: hidden;
+    position: relative;
+}
+
+.scroll {
+    position: absolute;
+    animation: scrollUp 15s linear infinite;
+}
+
+@keyframes scrollUp {
+    0% { top: 100%; }
+    100% { top: -100%; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    DOASHOW TV GUIDE
+    <span id="time"></span>
+</header>
+
+<div class="container">
+
+    <!-- CHANNEL LIST -->
+    <div class="channels">
+        <div class="channel" onclick="openChannel('nostalgia')">01 Nostalgia TV</div>
+        <div class="channel" onclick="openChannel('movies')">02 Movies Channel</div>
+        <div class="channel" onclick="openChannel('youtube')">03 YouTube</div>
+        <div class="channel" onclick="openChannel('live')">04 Live Tools</div>
+        <div class="channel" onclick="openChannel('library')">05 Media Library</div>
+    </div>
+
+    <!-- GUIDE -->
+    <div class="guide">
+
+        <div class="now-playing">
+            <h3>NOW PLAYING</h3>
+            <p id="nowPlaying">Nostalgia TV - Retro Cartoons</p>
+        </div>
+
+        <div class="schedule">
+            <div class="scroll">
+                <p>01 Nostalgia TV - Cartoons</p>
+                <p>02 Movies Channel - Action Movie</p>
+                <p>03 YouTube - Creator Content</p>
+                <p>04 Live Tools - OBS Studio</p>
+                <p>05 Media Library - Files</p>
+                <br>
+                <p>UP NEXT:</p>
+                <p>01 Nostalgia TV - Sitcoms</p>
+                <p>02 Movies Channel - Drama</p>
+                <p>03 YouTube - Live Stream</p>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+// CLOCK
+function updateTime() {
+    const now = new Date();
+    document.getElementById("time").innerText =
+        now.toLocaleTimeString();
+}
+setInterval(updateTime, 1000);
+
+// CHANNEL ACTIONS
+function openChannel(channel) {
+    if (channel === "youtube") {
+        window.open("https://youtube.com", "_blank");
+    }
+    else if (channel === "movies") {
+        alert("Open your Movies Folder or Player");
+    }
+    else if (channel === "nostalgia") {
+        alert("Play Nostalgia Content");
+    }
+    else if (channel === "live") {
+        alert("Launch OBS or streaming tools");
+    }
+    else if (channel === "library") {
+        alert("Open Media Library");
+    }
+}
+</script>
+
+</body>
+</html>
