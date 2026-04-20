@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DOASHOW | Advanced File Explorer</title>
+    <style>
+        :root {
+            --win-bg: #ffffff;
+            --win-sidebar: #f0f0f0;
+            --win-accent: #0078d7;
+            --win-orange: #ff8c00;
+            --win-border: #d1d1d1;
+            --win-text: #1a1a1a;
+            --win-hover: #e5f3ff;
+        }
+
+        body { margin: 0; height: 100vh; background: #000; font-family: 'Segoe UI', sans-serif; overflow: hidden; }
+
+        #app-shell {
+            width: 100vw; height: 100vh; background: var(--win-bg);
+            display: flex; flex-direction: column; transition: all 0.3s ease;
+        }
+        
+        #app-shell.minimized { height: 35px; overflow: hidden; transform: translateY(95vh); }
+
+        .window-header { height: 32px; display: flex; justify-content: space-between; align-items: center; padding: 0 10px; font-size: 12px; border-bottom: 1px solid #ddd; }
+        .tab-bar { background: #e1e1e1; display: flex; padding-top: 5px; cursor: pointer; }
+        .tab { background: var(--win-bg); padding: 8px 20px; border: 1px solid var(--win-border); border-bottom: none; font-size: 12px; margin-right: 2px; }
+
+        .nav-bar { padding: 5px 10px; display: flex; gap: 8px; border-bottom: 1px solid var(--win-border); align-items: center; }
+        .address-bar { flex-grow: 1; border: 1px solid var(--win-border); padding: 4px; display: flex; gap: 5px; font-size: 13px; background: #fff; }
+        .address-link { color: var(--win-accent); cursor: pointer; text-decoration: none; }
+        .address-link:hover { text-decoration: underline; }
+
+        .bookmark-bar { height: 28px; background: #f9f9f9; border-bottom: 1px solid var(--win-border); display: flex; gap: 15px; padding: 0 15px; align-items: center; font-size: 11px; }
+        .history-bar { height: 22px; background: #eee; font-size: 10px; padding: 0 10px; display: flex; align-items: center; color: #666; }
+
+        .main-container { display: flex; flex-grow: 1; overflow: hidden; }
+        .sidebar { width: 220px; background: var(--win-sidebar); border-right: 1px solid var(--win-border); padding: 10px; overflow-y: auto; }
+        .content-window { flex-grow: 1; display: flex; flex-direction: column; }
+        
+        .file-grid { flex-grow: 1; padding: 20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 10px; align-content: start; }
+        
+        .item { padding: 10px; text-align: center; border: 1px solid transparent; cursor: pointer; border-radius: 2px; }
+        .item:hover { background: var(--win-hover); border-color: #cce8ff; }
+        .item.orange { border-left: 4px solid var(--win-orange); background: #fff8f0; }
+        .item-icon { font-size: 32px; display: block; margin-bottom: 5px; }
+        .item-name { font-size: 12px; word-break: break-all; }
+
+        .btn { border: 1px solid var(--win-border); background: #fff; cursor: pointer; padding: 2px 8px; font-size: 12px; }
+        .btn:hover { background: #eee; }
+    </style>
+</head>
+<body>
+
+<div id="app-shell">
+    <div class="window-header">
+        <div>📁 DOASHOW Explorer</div>
+        <div class="window-controls">
+            <button class="btn" onclick="toggleSize('min')">0</button>
+            <button class="btn" onclick="toggleSize('exp')">□</button>
+            <button class="btn" onclick="window.close()" style="color:red">✕</button>
+        </div>
+    </div>
+
+    <div class="tab-bar">
+        <div class="tab" onclick="navigateTo('portable-c')">📁 Portable (C:)</div>
+        <div class="tab" onclick="navigateTo('storage-d')">📁 Storage (D:)</div>
+    </div>
+
+    <div class="nav-bar">
+        <button class="btn" onclick="goUp()">↑ Up</button>
+        <div class="address-bar" id="addr-bar"></div>
+        <input type="text" placeholder="Search..." onkeyup="doSearch(this.value)" style="width:150px">
+    </div>
+
+    <div class="bookmark-bar">
+        <span>⭐ Bookmarks:</span>
+        <span class="address-link" onclick="navigateTo('portable-c/OPERATIONS')">OPERATIONS</span>
+        <span class="address-link" onclick="navigateTo('portable-c/Nightmares')">Nightmares</span>
+    </div>
+
+    <div class="main-container">
+        <div class="sidebar">
+            <h5 style="margin:5px 0">Quick Access</h5>
+            <div class="address-link" onclick="navigateTo('portable-c/0. Start')">0. Start</div>
+            <div class="address-link" onclick="navigateTo('portable-c/W. Current Running Projects')">W. Running Projects</div>
+            <hr>
+            <h5 style="margin:5px 0">Devices</h5>
+            <div class="address-link" onclick="navigateTo('portable-c')">💻 Portable (C:)</div>
+            <div class="address-link" onclick="navigateTo('storage-d')">💾 Storage (D:)</div>  
+            <div class="address-link" onclick="navigateTo('device-a')">💻 Device (A:)</div>
+            <div class="address-link" onclick="navigateTo('mount-b')">💾 Mount (B:)</div>
+        </div>
+
+        <div class="content-window">
+            <div style="padding:8px; border-bottom:1px solid #eee; display:flex; gap:10px">
+               <button class="btn" onclick="addItem('folder')">+ New Folder</button>
+                <button class="btn" onclick="addItem('file')">+ New File</button>
+                <button class="btn" onclick="sortItems('asc')">Sort A-Z</button>
+                <button class="btn" onclick="sortItems('desc')">Sort Z-A</button>
+            </div>
+            <div id="file-display" class="file-grid"></div>
+            <div id="hist-bar" class="history-bar">History: Ready</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // System Data Structure
+    const driveData = {
+        'portable-c': {
+            '0. Start': { type: 'folder', contents: {} },
+            'A. Activities': { type: 'folder', contents: {} },
+            'C. OPERATIONS': { type: 'folder', contents: {}, orange: true },
+            'I. Nightmares': { type: 'folder', contents: {}, orange: true },
+            'W. Current Running Projects': { type: 'folder', contents: {}, orange: true },
+            'system_log.txt': { type: 'file' }
+        },
+        'storage-d': {
+            'Archives': { type: 'folder', contents: {} }
+        }
+    };
+
+    let currentPath = ['portable-c'];
+
+    function render() {
+        const grid = document.getElementById('file-display');
+        const addr = document.getElementById('addr-bar');
+        grid.innerHTML = '';
+        
+        // Render Linkable Address Bar
+        addr.innerHTML = 'DOASHOW > ';
+        currentPath.forEach((p, i) => {
+            const span = document.createElement('span');
+            span.className = 'address-link';
+            span.innerText = p + ' > ';
+            span.onclick = () => {
+                currentPath = currentPath.slice(0, i + 1);
+                render();
+            };
+            addr.appendChild(span);
+        });
+
+        // Navigate to current folder in data
+        let currentFolder = driveData;
+        currentPath.forEach(p => { 
+            currentFolder = currentFolder[p].contents || currentFolder[p]; 
+        });
+
+        // Display Items
+        Object.keys(currentFolder).forEach(key => {
+            if(key === 'type' || key === 'contents' || key === 'orange') return;
+            
+            const itemData = currentFolder[key];
+            const div = document.createElement('div');
+            div.className = `item ${itemData.orange ? 'orange' : ''}`;
+            
+            const icon = itemData.type === 'folder' ? '📁' : '📄';
+            
+            div.onclick = () => {
+                if(itemData.type === 'folder') {
+                    currentPath.push(key);
+                    updateHistory(`Opened ${key}`);
+                    render();
+                } else {
+                    updateHistory(`Viewed file: ${key}`);
+                }
+            };
+            
+            div.innerHTML = `<span class="item-icon">${icon}</span><span class="item-name">${key}</span>`;
+            grid.appendChild(div);
+        });
+    }
+
+    function addItem(type) {
+        const name = prompt(`Enter ${type} name:`);
+        if(!name) return;
+
+        let currentFolder = driveData;
+        currentPath.forEach(p => { 
+            currentFolder = currentFolder[p].contents || currentFolder[p]; 
+        });
+
+        if(currentFolder[name]) {
+            alert("Item already exists.");
+            return;
+        }
+
+        currentFolder[name] = {
+            type: type,
+            contents: type === 'folder' ? {} : null,
+            orange: false
+        };
+        
+        updateHistory(`Created ${type}: ${name}`);
+        render();
+    }
+
+    function sortItems(dir) {
+        let currentFolder = driveData;
+        currentPath.forEach(p => { 
+            currentFolder = currentFolder[p].contents || currentFolder[p]; 
+        });
+
+        const keys = Object.keys(currentFolder).filter(k => !['type', 'contents', 'orange'].includes(k));
+        keys.sort((a, b) => dir === 'asc' ? a.localeCompare(b) : b.localeCompare(a));
+        
+        // This is a visual sort for the grid
+        renderSorted(keys, currentFolder);
+    }
+
+    function renderSorted(keys, currentFolder) {
+        const grid = document.getElementById('file-display');
+        grid.innerHTML = '';
+        keys.forEach(key => {
+            const itemData = currentFolder[key];
+            const div = document.createElement('div');
+            div.className = `item ${itemData.orange ? 'orange' : ''}`;
+            const icon = itemData.type === 'folder' ? '📁' : '📄';
+            div.innerHTML = `<span class="item-icon">${icon}</span><span class="item-name">${key}</span>`;
+            div.onclick = () => {
+                if(itemData.type === 'folder') {
+                    currentPath.push(key);
+                    render();
+                }
+            };
+            grid.appendChild(div);
+        });
+    }
+
+    function goUp() {
+        if(currentPath.length > 1) {
+            currentPath.pop();
+            render();
+        }
+    }
+
+    function navigateTo(pathStr) {
+        currentPath = pathStr.split('/');
+        render();
+    }
+
+    function updateHistory(msg) {
+        document.getElementById('hist-bar').innerText = `History: ${msg} | ${new Date().toLocaleTimeString()}`;
+    }
+
+    function toggleSize(mode) {
+        const shell = document.getElementById('app-shell');
+        if(mode === 'min') shell.classList.add('minimized');
+        else shell.classList.remove('minimized');
+    }
+
+    render();
+</script>
+</body>
+</html>

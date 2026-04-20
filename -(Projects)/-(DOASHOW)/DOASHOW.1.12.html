@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DOASHOW | Persistent Workstation</title>
+    <style>
+        :root {
+            --win-blue: #0078d7;
+            --win-bg: #ffffff;
+            --win-sidebar: #f3f3f3;
+            --win-border: #d1d1d1;
+            --win-hover: #e5f3ff;
+            --win-orange: #ff8c00;
+        }
+
+        body, html { margin: 0; padding: 0; height: 100vh; font-family: 'Segoe UI', sans-serif; background: #002035; overflow: hidden; }
+
+        /* Desktop */
+        #desktop { width: 100vw; height: 100vh; position: relative; padding: 20px; display: flex; flex-direction: column; gap: 20px; z-index: 1; }
+        .d-app { width: 85px; text-align: center; cursor: pointer; color: white; text-shadow: 1px 1px 2px #000; }
+        .d-icon { font-size: 40px; display: block; }
+        .d-label { font-size: 11px; margin-top: 4px; }
+
+        /* App Window */
+        #app-shell {
+            position: absolute; top: 30px; left: 50px; width: 92vw; height: 88vh;
+            background: var(--win-bg); display: flex; flex-direction: column;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.8); border: 1px solid #333;
+            z-index: 100; transition: transform 0.2s;
+        }
+        #app-shell.minimized { height: 32px; width: 300px; transform: translateY(85vh); overflow: hidden; }
+        #app-shell.fullscreen { width: 100vw; height: 100vh; top: 0; left: 0; }
+
+        /* Header & Ticker */
+        .win-header { height: 32px; background: #fff; display: flex; justify-content: space-between; align-items: center; padding: 0 10px; font-size: 12px; border-bottom: 1px solid #ddd; }
+        .ticker-wrap { background: #000; color: #0f0; height: 24px; display: flex; align-items: center; overflow: hidden; font-family: monospace; border-bottom: 1px solid #333; }
+        .ticker-move { white-space: nowrap; animation: marquee 20s linear infinite; cursor: pointer; }
+        @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+
+        /* Tabs */
+        .tab-bar { background: #e1e1e1; display: flex; padding-top: 5px; border-bottom: 1px solid var(--win-border); }
+        .tab { background: #dcdcdc; padding: 8px 15px; border: 1px solid var(--win-border); border-bottom: none; font-size: 11px; margin-left: 4px; cursor: pointer; display: flex; align-items: center; min-width: 130px; justify-content: space-between; }
+        .tab.active { background: var(--win-bg); border-top: 2px solid var(--win-blue); }
+        .close-tab { margin-left: 8px; font-weight: bold; opacity: 0.5; }
+        .close-tab:hover { opacity: 1; color: red; }
+
+        /* Navigation */
+        .nav-bar { padding: 6px 10px; display: flex; gap: 8px; align-items: center; background: #fff; border-bottom: 1px solid #eee; }
+        .addr-box { flex-grow: 1; border: 1px solid var(--win-border); padding: 4px 10px; display: flex; gap: 5px; font-size: 12px; height: 22px; align-items: center; overflow: hidden; background: #fff; }
+        .addr-link { color: #000; cursor: pointer; text-decoration: none; }
+        .addr-link:hover { color: var(--win-blue); text-decoration: underline; }
+
+        /* Main Workspace */
+        .workspace { display: flex; flex-grow: 1; overflow: hidden; }
+        .sidebar { width: 220px; background: var(--win-sidebar); border-right: 1px solid var(--win-border); padding: 10px; overflow-y: auto; font-size: 12px; }
+        .side-h { font-weight: bold; color: #666; font-size: 10px; text-transform: uppercase; margin: 15px 0 5px 5px; }
+        .side-row { padding: 6px 10px; display: flex; align-items: center; gap: 10px; cursor: pointer; border-radius: 2px; }
+        .side-row:hover { background: #e5e5e5; }
+
+        .view-panel { flex-grow: 1; display: flex; flex-direction: column; background: #fff; }
+        .grid { flex-grow: 1; padding: 20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 15px; align-content: start; overflow-y: auto; }
+        
+        .item { text-align: center; padding: 12px 5px; cursor: pointer; border: 1px solid transparent; position: relative; }
+        .item:hover { background: var(--win-hover); border-color: #cce8ff; }
+        .item.orange { border-bottom: 3px solid var(--win-orange); background: #fffcf8; }
+        .i-icon { font-size: 40px; display: block; margin-bottom: 5px; }
+        .i-name { font-size: 11px; color: #333; word-break: break-all; }
+
+        .win-ctrl-btn { width: 45px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+        .win-ctrl-btn:hover { background: #eee; }
+        .close-btn:hover { background: red !important; color: white; }
+
+        .hist-bar { height: 24px; background: #f0f0f0; border-top: 1px solid var(--win-border); display: flex; align-items: center; padding: 0 12px; font-size: 11px; color: #666; }
+    </style>
+</head>
+<body>
+
+<div id="desktop">
+    <div class="d-app" onclick="openExplorer()">
+        <span class="d-icon">📁</span>
+        <span class="d-label">DOASHOW Explorer</span>
+    </div>
+</div>
+
+<div id="app-shell">
+    <div class="win-header">
+        <div>📁 DOASHOW | This PC</div>
+        <div style="display: flex;">
+            <div class="win-ctrl-btn" onclick="winMode('min')">―</div>
+            <div class="win-ctrl-btn" onclick="winMode('exp')">❐</div>
+            <div class="win-ctrl-btn close-btn" onclick="winMode('cls')">✕</div>
+        </div>
+    </div>
+
+    <div class="ticker-wrap">
+        <div class="ticker-move" id="ticker-text" onclick="editTicker()">3Mbps AI-Detection Active... Server Status: Green... Custom News: DOASHOW Persistent Shell Loaded...</div>
+    </div>
+
+    <div class="tab-bar" id="tab-bar">
+        <button onclick="addTab()" style="padding: 0 10px; border:none; background:none; cursor:pointer; font-weight:bold;">+</button>
+    </div>
+
+    <div class="nav-bar">
+        <button onclick="goUp()">↑</button>
+        <div class="addr-box" id="addr-bar"></div>
+        <input type="text" id="search-box" placeholder="Search..." onkeyup="runSearch()" style="width:180px;">
+    </div>
+
+    <div class="workspace">
+        <div class="sidebar">
+            <div class="side-h">Quick Access</div>
+            <div id="pinned-list"></div>
+            
+            <div class="side-h">Heat Index</div>
+            <div id="heat-list"></div>
+
+            <div class="side-h">This PC</div>
+            <div class="side-row" onclick="nav(['portable-c'])">💻 Portable (C:)</div>
+            <div class="side-row" onclick="nav(['storage-d'])">💾 Storage (D:)</div>
+            <div class="side-row" onclick="nav(['device-a'])">📱 Device (A:)</div>
+            <div class="side-row" onclick="nav(['mount-b'])">🔌 Mount (B:)</div>
+
+            <div class="side-h">Network</div>
+            <div class="side-row" onclick="alert('Accessing Cloud Z...')">☁️ Cloud Z</div>
+        </div>
+
+        <div class="view-panel">
+            <div style="padding: 10px; display: flex; gap: 10px; border-bottom: 1px solid #eee;">
+                <button class="btn" onclick="make('folder')">+ Folder</button>
+                <button class="btn" onclick="make('file')">+ File</button>
+                <div style="flex-grow:1"></div>
+                <button class="btn" onclick="sort('asc')">Sort Asc</button>
+                <button class="btn" onclick="sort('desc')">Sort Desc</button>
+            </div>
+            <div class="grid" id="grid"></div>
+            <div class="hist-bar" id="hist-log">Ready. Monitoring DOASHOW...</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // PRE-DEFINED DEEP DIRECTORY MAP
+    const masterData = {
+        'portable-c': {
+            '0. Start': { type: 'folder', contents: {} },
+            'A. activities': { type: 'folder', contents: {} },
+            'B. posts': { type: 'folder', contents: {} },
+            'C. OPERATIONS': { 
+                type: 'folder', orange: true, 
+                contents: {
+                    '$ (others)': { type: 'folder', contents: { '$hiddenfolders': { type: 'folder', contents: {} } } },
+                    '-0 price': { 
+                        type: 'folder', 
+                        contents: {
+                            '--Prices Circle': {
+                                type: 'folder',
+                                contents: {
+                                    '(+) A_rolls': { type: 'folder', contents: {} },
+                                    '(+) B_rolls': { type: 'folder', contents: {} },
+                                    '(+) C_rolls': { type: 'folder', contents: {} },
+                                    '(+) Category': { type: 'folder', contents: {} },
+                                    '(+) NAV': { type: 'folder', contents: {} },
+                                    '(+) NAV CIRCLE': { type: 'folder', contents: {} },
+                                    'A': { type: 'folder', contents: {} },
+                                    'A_': { type: 'folder', contents: {} },
+                                    'A_.00 0': { type: 'folder', contents: {} },
+                                    'A_.00 1': { type: 'folder', contents: {} },
+                                    'A_.00 1 ROLLS': { type: 'folder', contents: {} }
+                                }
+                            }
+                        } 
+                    },
+                    '-1 project': { type: 'folder', contents: {} },
+                    '-2 stuff': { type: 'folder', contents: {} },
+                    '-3 apps': { type: 'folder', contents: {} },
+                    '-4 settings': { type: 'folder', contents: {} }
+                } 
+            },
+            'D. online': { type: 'folder', contents: {} },
+            'E. experiments': { type: 'folder', contents: {} },
+            'F. Media outlets': { type: 'folder', contents: {} },
+            'G. Names of Fighters': { type: 'folder', contents: {} },
+            'H. People': { type: 'folder', contents: {} },
+            'I. Nightmares': { type: 'folder', orange: true, contents: {} },
+            'J. Clips': { type: 'folder', contents: {} },
+            'K. folder': { type: 'folder', contents: {} },
+            'S. Shortcuts': { type: 'folder', contents: {} },
+            'W. Current running projects': { type: 'folder', orange: true, contents: {} },
+            'Z. something': { type: 'folder', contents: {} }
+        },
+        'storage-d': {}, 'device-a': {}, 'mount-b': {}
+    };
+
+    // State Persistence Management
+    let state = JSON.parse(localStorage.getItem('doashow_state')) || {
+        tabs: [{ name: 'Portable (C:)', path: ['portable-c'], active: true }],
+        pinned: [],
+        frequency: {},
+        ticker: "3Mbps AI-Detection Active... Server Status: Green... Custom News: DOASHOW Persistent Shell Loaded..."
+    };
+
+    function saveState() {
+        localStorage.setItem('doashow_state', JSON.stringify(state));
+    }
+
+    function init() {
+        document.getElementById('ticker-text').innerText = state.ticker;
+        renderTabs();
+        renderGrid();
+    }
+
+    function renderTabs() {
+        const bar = document.getElementById('tab-bar');
+        bar.querySelectorAll('.tab').forEach(t => t.remove());
+        state.tabs.forEach((t, i) => {
+            const div = document.createElement('div');
+            div.className = `tab ${t.active ? 'active' : ''}`;
+            div.innerHTML = `<span>📁 ${t.name}</span> <span class="close-tab" onclick="closeTab(${i}, event)">✕</span>`;
+            div.onclick = () => { 
+                state.tabs.forEach(x => x.active = false); 
+                t.active = true; 
+                saveState(); 
+                init(); 
+            };
+            bar.insertBefore(div, bar.querySelector('button'));
+        });
+    }
+
+    function renderGrid() {
+        const activeTab = state.tabs.find(t => t.active);
+        const grid = document.getElementById('grid');
+        const addr = document.getElementById('addr-bar');
+        grid.innerHTML = '';
+        
+        // Address Bar
+        addr.innerHTML = '<span class="addr-link" onclick="nav([\'portable-c\'])">DOASHOW</span> > ';
+        activeTab.path.forEach((p, i) => {
+            const s = document.createElement('span'); s.className = 'addr-link';
+            s.innerText = p + ' > ';
+            s.onclick = () => { activeTab.path = activeTab.path.slice(0, i+1); saveState(); init(); };
+            addr.appendChild(s);
+        });
+
+        // Resolve Obj
+        let cur = masterData;
+        activeTab.path.forEach(p => { if(cur[p]) cur = cur[p].contents || cur[p]; });
+
+        Object.keys(cur).forEach(key => {
+            if(['type','contents','orange'].includes(key)) return;
+            const item = cur[key];
+            const div = document.createElement('div');
+            div.className = `item ${item.orange ? 'orange' : ''}`;
+            div.innerHTML = `<span class="i-icon">${item.type==='folder'?'📁':'📄'}</span><span class="i-name">${key}</span>`;
+            div.onclick = () => {
+                if(item.type === 'folder') {
+                    activeTab.path.push(key);
+                    activeTab.name = key;
+                    state.frequency[key] = (state.frequency[key] || 0) + 1;
+                    saveState();
+                    init();
+                }
+            };
+            grid.appendChild(div);
+        });
+        updateSidebar();
+    }
+
+    function updateSidebar() {
+        const hList = document.getElementById('heat-list');
+        hList.innerHTML = '';
+        Object.entries(state.frequency).sort((a,b)=>b[1]-a[1]).slice(0, 3).forEach(([n, c]) => {
+            const d = document.createElement('div'); d.className='side-row';
+            d.innerHTML = `🔥 ${n} (${c})`;
+            hList.appendChild(d);
+        });
+    }
+
+    function addTab() {
+        state.tabs.forEach(t => t.active = false);
+        state.tabs.push({ name: 'Portable (C:)', path: ['portable-c'], active: true });
+        saveState(); init();
+    }
+
+    function closeTab(i, e) {
+        e.stopPropagation();
+        if(state.tabs.length > 1) {
+            state.tabs.splice(i, 1);
+            state.tabs[0].active = true;
+            saveState(); init();
+        }
+    }
+
+    function nav(p) {
+        const active = state.tabs.find(t => t.active);
+        active.path = p;
+        active.name = p[p.length-1];
+        saveState(); init();
+    }
+
+    function goUp() {
+        const active = state.tabs.find(t => t.active);
+        if(active.path.length > 1) { active.path.pop(); saveState(); init(); }
+    }
+
+    function editTicker() {
+        const news = prompt("Enter Ticker Intel:", state.ticker);
+        if(news) { state.ticker = news; saveState(); init(); }
+    }
+
+    function winMode(m) {
+        const s = document.getElementById('app-shell');
+        if(m === 'cls') s.style.display = 'none';
+        if(m === 'min') s.classList.toggle('minimized');
+        if(m === 'exp') s.classList.toggle('fullscreen');
+    }
+
+    function openExplorer() { document.getElementById('app-shell').style.display = 'flex'; }
+
+    init();
+</script>
+</body>
+</html>

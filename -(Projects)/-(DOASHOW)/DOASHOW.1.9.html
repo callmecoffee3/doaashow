@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DOASHOW | Windows 10 Workstation</title>
+    <style>
+        :root {
+            --win-blue: #0078d7;
+            --win-bg: #ffffff;
+            --win-sidebar: #f0f0f0;
+            --win-border: #d1d1d1;
+            --win-hover: #e5f3ff;
+            --win-orange: #ff8c00;
+        }
+
+        body { margin: 0; height: 100vh; background: #000; font-family: 'Segoe UI', sans-serif; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+
+        /* Window Shell */
+        #app-shell {
+            width: 98vw; height: 95vh; background: var(--win-bg);
+            display: flex; flex-direction: column; box-shadow: 0 0 20px rgba(0,0,0,0.8);
+            border: 1px solid #444; transition: transform 0.2s, height 0.2s;
+        }
+        #app-shell.minimized { height: 32px; transform: translateY(46vh); overflow: hidden; }
+        #app-shell.fullscreen { width: 100vw; height: 100vh; }
+
+        /* Title Bar */
+        .win-title { height: 32px; display: flex; justify-content: space-between; align-items: center; padding: 0 10px; font-size: 12px; border-bottom: 1px solid #ddd; }
+        .win-ctrl { display: flex; }
+        .ctrl-btn { width: 46px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+        .ctrl-btn:hover { background: #e5e5e5; }
+        .close-btn:hover { background: #e81123 !important; color: white; }
+
+        /* Tab Bar */
+        .tab-bar { background: #e1e1e1; display: flex; padding-top: 6px; border-bottom: 1px solid var(--win-border); }
+        .tab { background: var(--win-bg); padding: 8px 25px; border: 1px solid var(--win-border); border-bottom: none; font-size: 12px; margin-left: 5px; cursor: pointer; display: flex; align-items: center; gap: 8px; min-width: 120px; }
+        .tab.active { border-top: 2px solid var(--win-blue); }
+
+        /* Navigation Ribbon */
+        .nav-ribbon { padding: 5px 10px; display: flex; gap: 8px; align-items: center; background: #fff; border-bottom: 1px solid #eee; }
+        .address-bar { flex-grow: 1; border: 1px solid var(--win-border); padding: 4px 10px; display: flex; gap: 5px; font-size: 13px; color: #333; height: 22px; align-items: center; overflow: hidden; }
+        .address-link { color: #000; cursor: pointer; text-decoration: none; }
+        .address-link:hover { text-decoration: underline; color: var(--win-blue); }
+
+        .bookmark-strip { height: 28px; background: #fff; border-bottom: 1px solid var(--win-border); display: flex; gap: 12px; padding: 0 15px; align-items: center; font-size: 11px; }
+
+        /* Main Workspace */
+        .workspace { display: flex; flex-grow: 1; overflow: hidden; }
+        .sidebar { width: 220px; background: var(--win-sidebar); border-right: 1px solid var(--win-border); padding: 10px; font-size: 12px; overflow-y: auto; }
+        .side-section { margin-bottom: 20px; }
+        .side-title { font-weight: 600; color: #666; font-size: 11px; margin-bottom: 8px; padding-left: 5px; }
+        .side-link { padding: 6px 10px; cursor: pointer; display: flex; align-items: center; gap: 10px; border-radius: 2px; }
+        .side-link:hover { background: #e5e5e5; }
+
+        /* Content Area */
+        .content { flex-grow: 1; display: flex; flex-direction: column; background: #fff; }
+        .action-bar { padding: 10px 15px; border-bottom: 1px solid #eee; display: flex; gap: 10px; align-items: center; background: #fcfcfc; }
+        .file-grid { flex-grow: 1; padding: 20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 15px; align-content: start; overflow-y: auto; }
+        
+        /* File/Folder Items */
+        .item { text-align: center; padding: 12px 5px; cursor: pointer; border: 1px solid transparent; position: relative; transition: 0.1s; }
+        .item:hover { background: var(--win-hover); border-color: #cce8ff; }
+        .item.orange { border-left: 4px solid var(--win-orange); background: #fff8f0; }
+        .item-icon { font-size: 40px; display: block; margin-bottom: 8px; }
+        .item-name { font-size: 11.5px; word-break: break-all; color: #222; }
+        
+        .hover-tools { position: absolute; top: 2px; right: 2px; display: none; gap: 2px; }
+        .item:hover .hover-tools { display: flex; }
+        .tool-btn { font-size: 10px; border: 1px solid #ccc; background: #fff; cursor: pointer; padding: 2px 4px; }
+        .tool-btn:hover { background: var(--win-blue); color: white; }
+
+        .history-footer { height: 26px; background: #f0f0f0; border-top: 1px solid var(--win-border); display: flex; align-items: center; padding: 0 12px; font-size: 11px; color: #555; }
+        .btn { background: #fff; border: 1px solid #ccc; padding: 4px 12px; font-size: 12px; cursor: pointer; }
+        .btn:hover { background: #f5f5f5; border-color: #999; }
+    </style>
+</head>
+<body>
+
+<div id="app-shell">
+    <div class="win-title">
+        <div>📁 DOASHOW | Professional Workstation</div>
+        <div class="win-ctrl">
+            <div class="ctrl-btn" onclick="appCtrl('min')">―</div>
+            <div class="ctrl-btn" onclick="appCtrl('max')">❐</div>
+            <div class="ctrl-btn close-btn" onclick="appCtrl('cls')">✕</div>
+        </div>
+    </div>
+
+    <div class="tab-bar" id="tab-strip">
+        <div class="tab active" onclick="jumpTo('portable-c')">📁 Portable (C:)</div>
+        <div class="tab" onclick="jumpTo('storage-d')">📁 Storage (D:)</div>
+    </div>
+
+    <div class="nav-ribbon">
+        <button class="btn" onclick="goBack()">←</button>
+        <button class="btn" onclick="goUp()">↑</button>
+        <div class="address-bar" id="address-path"></div>
+        <input type="text" id="file-search" placeholder="Search DOASHOW..." onkeyup="searchFiles()" style="width:200px; padding:4px;">
+    </div>
+
+    <div class="bookmark-strip" id="bookmark-strip">
+        <span style="color:#999">⭐ Pinned:</span>
+    </div>
+
+    <div class="workspace">
+        <div class="sidebar">
+            <div class="side-section">
+                <div class="side-title">Quick Access</div>
+                <div id="pinned-list"></div>
+                <div class="side-link" onclick="jumpTo('portable-c/0. Start')">📌 0. Start</div>
+            </div>
+            
+            <div class="side-section">
+                <div class="side-title">Hot Leads (Frequency)</div>
+                <div id="freq-list"></div>
+            </div>
+
+            <div class="side-section">
+                <div class="side-title">This PC</div>
+                <div class="side-link" onclick="jumpTo('portable-c')">💻 Portable (C:)</div>
+                <div class="side-link" onclick="jumpTo('storage-d')">💾 Storage (D:)</div>
+                <div class="side-link" onclick="jumpTo('device-a')">📱 Device (A:)</div>
+                <div class="side-link" onclick="jumpTo('mount-b')">🔌 Mount (B:)</div>
+                <div class="side-link" onclick="jumpTo('cloud-z')">🔌 Cloud (Z:)</div>        
+            </div></div>
+
+        <div class="content">
+            <div class="action-bar">
+                <button class="btn" onclick="createNew('folder')">+ New Folder</button>
+                <button class="btn" onclick="createNew('file')">+ New File</button>
+                <div style="flex-grow:1"></div>
+                <button class="btn" onclick="sortGrid('asc')">A-Z</button>
+                <button class="btn" onclick="sortGrid('desc')">Z-A</button>
+            </div>
+            
+            <div id="file-grid" class="file-grid"></div>
+            
+            <div class="history-footer" id="history-log">Ready to browse local computer...</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // INITIAL DIRECTORY MAPPING
+    const systemData = {
+        'portable-c': {
+            '0. Start': { type: 'folder', contents: {} },
+            'A. activities': { type: 'folder', contents: {} },
+            'B. posts': { type: 'folder', contents: {} },
+            'C. OPERATIONS': { type: 'folder', contents: {}, orange: true },
+            'D. online': { type: 'folder', contents: {} },
+            'E. experiments': { type: 'folder', contents: {} },
+            'F. Media outlets': { type: 'folder', contents: {} },
+            'G. Names of Fighters': { type: 'folder', contents: {} },
+            'H. People': { type: 'folder', contents: {} },
+            'I. Nightmares': { type: 'folder', contents: {}, orange: true },
+            'J. Clips': { type: 'folder', contents: {} },
+            'K. Empty': { type: 'folder', contents: {} },
+            'L. Empty': { type: 'folder', contents: {} },
+            'M. Empty': { type: 'folder', contents: {} },
+            'N. Empty': { type: 'folder', contents: {} },
+            'O. Empty': { type: 'folder', contents: {} },
+            'P. Empty': { type: 'folder', contents: {} },
+            'Q. Empty': { type: 'folder', contents: {} },
+            'R. Empty': { type: 'folder', contents: {} },
+            'S. Shortcuts': { type: 'folder', contents: {} },
+            'T. Cenimatic Effects': { type: 'folder', contents: {} },
+            'U. Most popular': { type: 'folder', contents: {} },
+            'V. Most requested': { type: 'folder', contents: {} },
+            'W. Current running projects': { type: 'folder', contents: {}, orange: true },
+            'X. Empty': { type: 'folder', contents: {} },
+            'Y. Empty': { type: 'folder', contents: {} },
+            'Z. something': { type: 'folder', contents: {} }
+        },
+        'storage-d': { 'Archives': { type: 'folder', contents: {} } },
+        'device-a': {},
+        'mount-b': {},
+        'cloud-z': {} 
+    };
+
+    let path = ['portable-c'];
+    let pins = []; // Quick Access
+    let marks = []; // Bookmarks
+    let frequency = {}; // Click counting
+
+    function render() {
+        const grid = document.getElementById('file-grid');
+        const addr = document.getElementById('address-path');
+        grid.innerHTML = '';
+        
+        // Render Address Bar
+        addr.innerHTML = '<span class="address-link" onclick="jumpTo(\'portable-c\')">DOASHOW</span> > ';
+        path.forEach((p, i) => {
+            const span = document.createElement('span');
+            span.className = 'address-link';
+            span.innerText = p + ' > ';
+            span.onclick = () => { path = path.slice(0, i+1); render(); };
+            addr.appendChild(span);
+        });
+
+        // Resolve Path
+        let current = systemData;
+        path.forEach(p => { 
+            if(!current[p]) current[p] = { type: 'folder', contents: {} };
+            current = current[p].contents || current[p]; 
+        });
+
+        // Render Items
+        Object.keys(current).forEach(key => {
+            if(['type', 'contents', 'orange'].includes(key)) return;
+            const item = current[key];
+            const div = document.createElement('div');
+            div.className = `item ${item.orange ? 'orange' : ''}`;
+            
+            div.innerHTML = `
+                <div class="hover-tools">
+                    <button class="tool-btn" onclick="togglePin('${key}', event)">📌</button>
+                    <button class="tool-btn" onclick="toggleMark('${key}', event)">⭐</button>
+                    <button class="tool-btn" onclick="deleteItem('${key}', event)">✕</button>
+                </div>
+                <span class="item-icon">${item.type === 'folder' ? '📁' : '📄'}</span>
+                <span class="item-name">${key}</span>
+            `;
+
+            div.onclick = () => {
+                if(item.type === 'folder') {
+                    path.push(key);
+                    updateFreq(key);
+                    logHistory(`Opened folder: ${key}`);
+                    render();
+                } else {
+                    logHistory(`Inspecting file: ${key}`);
+                }
+            };
+            grid.appendChild(div);
+        });
+
+        updateSidebar();
+        updateBookmarks();
+    }
+
+    function createNew(type) {
+        const name = prompt(`Enter ${type} name:`);
+        if(!name) return;
+        let current = getCurrentObj();
+        current[name] = { type, contents: type === 'folder' ? {} : null, orange: false };
+        logHistory(`Created ${type}: ${name}`);
+        render();
+    }
+
+    function deleteItem(name, e) {
+        e.stopPropagation();
+        if(confirm(`Erase "${name}" from DOASHOW?`)) {
+            delete getCurrentObj()[name];
+            render();
+        }
+    }
+
+    function togglePin(name, e) {
+        e.stopPropagation();
+        const full = path.join('/') + '/' + name;
+        if(!pins.includes(full)) pins.push(full);
+        render();
+    }
+
+    function toggleMark(name, e) {
+        e.stopPropagation();
+        const full = path.join('/') + '/' + name;
+        if(!marks.includes(full)) marks.push(full);
+        render();
+    }
+
+    function updateSidebar() {
+        const pinList = document.getElementById('pinned-list');
+        pinList.innerHTML = '';
+        pins.forEach(p => {
+            const name = p.split('/').pop();
+            const div = document.createElement('div');
+            div.className = 'side-link';
+            div.innerHTML = `📌 ${name}`;
+            div.onclick = () => { path = p.split('/'); render(); };
+            pinList.appendChild(div);
+        });
+
+        const freqList = document.getElementById('freq-list');
+        freqList.innerHTML = '';
+        Object.entries(frequency).sort((a,b) => b[1]-a[1]).slice(0, 3).forEach(([name, count]) => {
+            const div = document.createElement('div');
+            div.className = 'side-link';
+            div.innerHTML = `🔥 ${name}`;
+            freqList.appendChild(div);
+        });
+    }
+
+    function updateBookmarks() {
+        const bBar = document.getElementById('bookmark-strip');
+        bBar.innerHTML = '<span style="color:#999">⭐ Pinned:</span>';
+        marks.forEach(p => {
+            const name = p.split('/').pop();
+            const span = document.createElement('span');
+            span.className = 'address-link';
+            span.style = "font-size: 11px; margin-left: 10px; background:#f0f0f0; padding: 2px 5px;";
+            span.innerText = name;
+            span.onclick = () => { path = p.split('/'); render(); };
+            bBar.appendChild(span);
+        });
+    }
+
+    function sortGrid(dir) {
+        let current = getCurrentObj();
+        const keys = Object.keys(current).filter(k => !['type','contents','orange'].includes(k));
+        keys.sort((a,b) => dir === 'asc' ? a.localeCompare(b) : b.localeCompare(a));
+        const sorted = {};
+        keys.forEach(k => { sorted[k] = current[k]; });
+        // Override folder data order
+        let pRef = systemData;
+        for(let i=0; i<path.length-1; i++) pRef = pRef[path[i]].contents;
+        pRef[path[path.length-1]].contents = sorted;
+        render();
+    }
+
+    function searchFiles() {
+        const term = document.getElementById('file-search').value.toLowerCase();
+        document.querySelectorAll('.item').forEach(it => {
+            const name = it.querySelector('.item-name').innerText.toLowerCase();
+            it.style.display = name.includes(term) ? 'block' : 'none';
+        });
+    }
+
+    function getCurrentObj() {
+        let cur = systemData;
+        path.forEach(p => { cur = cur[p].contents || cur; });
+        return cur;
+    }
+
+    function updateFreq(name) { frequency[name] = (frequency[name] || 0) + 1; }
+    function logHistory(msg) { document.getElementById('history-log').innerText = `History: ${msg} | ${new Date().toLocaleTimeString()}`; }
+    function jumpTo(p) { path = p.split('/'); render(); }
+    function goUp() { if(path.length > 1) { path.pop(); render(); } }
+    function appCtrl(m) {
+        const s = document.getElementById('app-shell');
+        if(m === 'min') s.classList.toggle('minimized');
+        if(m === 'max') s.classList.toggle('fullscreen');
+        if(m === 'cls') if(confirm("Close workstation?")) s.style.display = 'none';
+    }
+
+    render();
+</script>
+</body>
+</html>

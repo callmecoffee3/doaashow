@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOASHOW - File Explorer</title>
+    <style>
+        :root {
+            --win-blue: #0078d7;
+            --win-bg: #ffffff;
+            --win-gray: #f0f0f0;
+            --win-border: #d1d1d1;
+            --win-orange: #ff8c00;
+            --text: #333;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: #0f0f0f; /* Night ambience */
+            font-family: 'Segoe UI', Arial, sans-serif;
+            color: var(--text);
+        }
+
+        /* App Window Frame */
+        #doashow-app {
+            width: 1000px;
+            height: 650px;
+            background: var(--win-bg);
+            border: 1px solid #444;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.7);
+            position: relative;
+        }
+
+        /* Title Bar */
+        .title-bar {
+            height: 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 10px;
+            font-size: 12px;
+        }
+
+        .window-controls {
+            display: flex;
+        }
+
+        .control-btn {
+            width: 45px;
+            height: 32px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .control-btn:hover { background: #e5e5e5; }
+        .close:hover { background: #e81123; color: white; }
+
+        /* Tabs */
+        .tab-bar {
+            background: #e1e1e1;
+            display: flex;
+            padding: 0 10px;
+        }
+
+        .tab {
+            padding: 8px 15px;
+            background: var(--win-bg);
+            border: 1px solid var(--win-border);
+            border-bottom: none;
+            font-size: 12px;
+            min-width: 120px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Navigation & Address Bar */
+        .nav-bar {
+            padding: 5px 10px;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            background: #fff;
+            border-bottom: 1px solid var(--win-border);
+        }
+
+        .address-bar {
+            flex-grow: 1;
+            border: 1px solid var(--win-border);
+            height: 25px;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            font-size: 13px;
+        }
+
+        .search-bar {
+            width: 200px;
+            border: 1px solid var(--win-border);
+            height: 25px;
+            padding: 0 5px;
+        }
+
+        /* Bookmark & History */
+        .bookmark-bar {
+            height: 30px;
+            background: var(--win-gray);
+            border-bottom: 1px solid var(--win-border);
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            gap: 15px;
+            font-size: 12px;
+        }
+
+        /* Main Workspace */
+        .workspace {
+            display: flex;
+            flex-grow: 1;
+            overflow: hidden;
+        }
+
+        .sidebar {
+            width: 200px;
+            background: var(--win-gray);
+            border-right: 1px solid var(--win-border);
+            padding: 10px;
+            font-size: 13px;
+        }
+
+        .sidebar-section { margin-bottom: 20px; }
+        .sidebar-item { padding: 4px 8px; cursor: pointer; }
+        .sidebar-item:hover { background: #e5f3ff; }
+
+        .explorer-content {
+            flex-grow: 1;
+            padding: 15px;
+            overflow-y: auto;
+        }
+
+        .tool-ribbon {
+            margin-bottom: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        /* File Grid */
+        .file-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+            gap: 10px;
+        }
+
+        .item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 10px;
+            border: 1px solid transparent;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .item:hover { background: #e5f3ff; border: 1px solid #cce8ff; }
+        .item.orange { background: #fff3e0; border: 1px solid var(--win-orange); }
+
+        .icon { font-size: 32px; margin-bottom: 5px; }
+
+        /* Notes & Frequency */
+        .utility-panel {
+            width: 220px;
+            border-left: 1px solid var(--win-border);
+            padding: 10px;
+            background: #fff;
+        }
+
+        textarea {
+            width: 100%; height: 100px; border: 1px solid var(--win-border);
+            font-size: 12px; resize: none;
+        }
+    </style>
+</head>
+<body>
+
+<div id="doashow-app">
+    <div class="title-bar">
+        <span>📁 DOASHOW - Explorer</span>
+        <div class="window-controls">
+            <div class="control-btn">—</div>
+            <div class="control-btn">⬜</div>
+            <div class="control-btn close">✕</div>
+        </div>
+    </div>
+
+    <div class="tab-bar">
+        <div class="tab"><span>🏠 Home</span></div>
+        <div class="tab"><span>📁 Work</span></div>
+        <div class="tab">+</div>
+    </div>
+
+    <div class="nav-bar">
+        <button onclick="navigate('back')">←</button>
+        <button onclick="navigate('forward')">→</button>
+        <div class="address-bar" id="addressPath">DOASHOW > C: > Users > Detective</div>
+        <input type="text" class="search-bar" id="searchInp" placeholder="Search DOASHOW..." onkeyup="handleSearch()">
+    </div>
+
+    <div class="bookmark-bar">
+        <span onclick="addBookmark()">⭐ Add Bookmark</span>
+        <span style="color: #999;">|</span>
+        <span id="historyLink">🕒 History: /root</span>
+        <span id="freqLink">📈 Frequent: Evidence_Folder</span>
+    </div>
+
+    <div class="workspace">
+        <div class="sidebar">
+            <div class="sidebar-section">
+                <strong>Quick Access</strong>
+                <div class="sidebar-item">⭐ Favorites</div>
+                <div class="sidebar-item">📥 Downloads</div>
+                <div class="sidebar-item">📄 Documents</div>
+            </div>
+            <div class="sidebar-section">
+                <strong>DOASHOW (This PC)</strong>
+                <div class="sidebar-item">💾 Local Disk (C:)</div>
+                <div class="sidebar-item">💾 Storage (D:)</div>
+            </div>
+        </div>
+
+        <div class="explorer-content">
+            <div class="tool-ribbon">
+                <button onclick="createItem('folder')">New Folder</button>
+                <button onclick="createItem('file')">New File</button>
+                <button onclick="applySort('asc')">Sort Ascending</button>
+                <button onclick="applySort('desc')">Sort Descending</button>
+            </div>
+            <div class="file-grid" id="fileGrid">
+                </div>
+        </div>
+
+        <div class="utility-panel">
+            <strong>Quick Notes</strong>
+            <textarea placeholder="Write notes about these files..."></textarea>
+            <div style="margin-top: 20px;">
+                <strong>Recent Files</strong>
+                <ul id="recentList" style="font-size: 11px; padding-left: 15px;"></ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let fileSystem = [
+        { name: "Evidence_01", type: "folder", status: "normal" },
+        { name: "Suspect_Photos", type: "folder", status: "orange" },
+        { name: "Case_Report.pdf", type: "file", status: "normal" },
+        { name: "Alibi_Audio.mp3", type: "file", status: "normal" },
+        { name: "Backup_Logs", type: "folder", status: "normal" }
+    ];
+
+    function renderExplorer(data = fileSystem) {
+        const grid = document.getElementById('fileGrid');
+        grid.innerHTML = '';
+        data.forEach(item => {
+            const div = document.createElement('div');
+            div.className = `item ${item.status}`;
+            const icon = item.type === 'folder' ? '📁' : '📄';
+            div.innerHTML = `<div class="icon">${icon}</div><div>${item.name}</div>`;
+            grid.appendChild(div);
+        });
+    }
+
+    function createItem(type) {
+        const name = prompt(`Enter ${type} name:`);
+        if (name) {
+            fileSystem.push({ name, type, status: 'normal' });
+            renderExplorer();
+        }
+    }
+
+    function applySort(direction) {
+        fileSystem.sort((a, b) => {
+            const nameA = a.name.toUpperCase();
+            const nameB = b.name.toUpperCase();
+            if (direction === 'asc') return nameA < nameB ? -1 : 1;
+            return nameA > nameB ? -1 : 1;
+        });
+        renderExplorer();
+    }
+
+    function handleSearch() {
+        const term = document.getElementById('searchInp').value.toLowerCase();
+        const filtered = fileSystem.filter(f => f.name.toLowerCase().includes(term));
+        renderExplorer(filtered);
+    }
+
+    // Initialize
+    renderExplorer();
+</script>
+
+</body>
+</html>

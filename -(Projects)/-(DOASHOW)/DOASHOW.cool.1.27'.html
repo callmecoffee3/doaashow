@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DOASHOW | Workstation v11.5 PRO</title>
+    <style>
+        :root {
+            --win-blue: #0078d7; --win-bg: #ffffff; --win-sidebar: #f3f3f3;
+            --win-border: #d1d1d1; --win-hover: #e5f3ff; --win-orange: #ff8c00;
+            --terminal-green: #00ff41; --night-dark: #001e30;
+        }
+        body, html { margin: 0; padding: 0; height: 100vh; font-family: 'Segoe UI', sans-serif; background: var(--night-dark); overflow: hidden; color: #333; }
+
+        /* Desktop Grid */
+        #desktop { width: 100vw; height: 100vh; position: relative; padding: 25px; display: grid; grid-template-rows: repeat(auto-fill, 100px); grid-auto-flow: column; gap: 15px; z-index: 1; }
+        .d-app { width: 90px; text-align: center; cursor: pointer; color: white; text-shadow: 1px 1px 3px #000; transition: transform 0.1s; }
+        .d-app:active { transform: scale(0.95); }
+        .d-icon { font-size: 44px; display: block; margin-bottom: 5px; }
+        .d-label { font-size: 11px; font-weight: 500; }
+
+        /* Main App Shell */
+        #app-shell {
+            position: absolute; top: 15px; left: 25px; width: 96vw; height: 92vh;
+            background: var(--win-bg); display: flex; flex-direction: column;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.9); border: 1px solid #444; z-index: 100; transition: transform 0.3s;
+        }
+        #app-shell.minimized { height: 32px; width: 350px; transform: translateY(88vh); overflow: hidden; }
+
+        /* Header & Ticker */
+        .win-header { height: 32px; background: #fff; display: flex; justify-content: space-between; align-items: center; padding: 0 10px; font-size: 12px; border-bottom: 1px solid #ddd; }
+        .ticker-wrap { background: #000; color: var(--terminal-green); height: 26px; display: flex; align-items: center; overflow: hidden; font-family: 'Courier New', monospace; border-bottom: 1px solid #333; }
+        .ticker-move { white-space: nowrap; animation: marquee 35s linear infinite; cursor: pointer; padding-left: 100%; font-size: 14px; }
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-400%); } }
+
+        /* Tab System */
+        .tab-bar { background: #e1e1e1; display: flex; padding-top: 5px; border-bottom: 1px solid var(--win-border); }
+        .tab { background: #dcdcdc; padding: 8px 15px; border: 1px solid var(--win-border); border-bottom: none; font-size: 11px; margin-left: 4px; cursor: pointer; display: flex; align-items: center; min-width: 150px; justify-content: space-between; }
+        .tab.active { background: var(--win-bg); border-top: 2px solid var(--win-blue); font-weight: bold; }
+
+        /* Navigation UI */
+        .home-bar { height: 36px; background: #f3f3f3; border-bottom: 1px solid #ddd; display: flex; align-items: center; padding: 0 15px; font-size: 11px; gap: 12px; }
+        .nav-ribbon { padding: 8px 10px; display: flex; gap: 10px; align-items: center; background: #fff; border-bottom: 1px solid #eee; }
+        .addr-box { flex-grow: 1; border: 1px solid var(--win-border); padding: 4px 12px; font-size: 12px; height: 22px; display: flex; align-items: center; background: #fff; color: #666; font-family: monospace; }
+
+        /* Workspace & Sidebar */
+        .workspace { display: flex; flex-grow: 1; overflow: hidden; }
+        .sidebar { width: 240px; background: var(--win-sidebar); border-right: 1px solid var(--win-border); padding: 10px; overflow-y: auto; font-size: 12px; }
+        .side-h { font-weight: bold; color: #888; font-size: 10px; text-transform: uppercase; margin: 15px 0 5px 5px; }
+        .side-row { padding: 7px 10px; display: flex; align-items: center; gap: 10px; cursor: pointer; border-radius: 3px; }
+        .side-row:hover { background: #e8e8e8; }
+
+        /* Grid View */
+        .view-panel { flex-grow: 1; display: flex; flex-direction: column; background: #fff; position: relative; }
+        .grid { flex-grow: 1; padding: 25px; display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 20px; align-content: start; overflow-y: auto; }
+        .item { text-align: center; padding: 15px 5px; cursor: pointer; border: 1px solid transparent; border-radius: 4px; }
+        .item:hover { background: var(--win-hover); border-color: #cce8ff; }
+        .item.orange { border-bottom: 4px solid var(--win-orange); background: #fffcf8; }
+        .i-icon { font-size: 42px; display: block; margin-bottom: 8px; }
+        .i-name { font-size: 11px; color: #333; word-break: break-all; }
+
+        /* Workshop Overlay */
+        #workshop-panel {
+            position: absolute; bottom: 40px; right: 20px; width: 350px; height: 250px;
+            background: #111; color: var(--terminal-green); border: 2px solid #333;
+            padding: 15px; font-family: 'Courier New', monospace; display: none; z-index: 600;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+        }
+
+        /* Status Bar */
+        .status-bar { height: 26px; background: #f0f0f0; border-top: 1px solid var(--win-border); display: flex; align-items: center; padding: 0 12px; font-size: 10px; color: #666; justify-content: space-between; }
+        .vm-tag { background: #000; color: #0f0; padding: 2px 8px; border-radius: 10px; font-weight: bold; }
+        .btn { background: #fff; border: 1px solid #ccc; padding: 4px 10px; font-size: 11px; cursor: pointer; border-radius: 2px; }
+    </style>
+</head>
+<body>
+
+<div id="desktop">
+    <div class="d-app" onclick="openApp('explorer')"><span class="d-icon">📁</span><span class="d-label">DOASHOW</span></div>
+    <div class="d-app" onclick="openWorkshop()"><span class="d-icon">💡</span><span class="d-label">WORKSHOP</span></div>
+    <div class="d-app" onclick="alert('LOGS: 100% Persistence. Night mode active.')"><span class="d-icon">📒</span><span class="d-label">LOGS</span></div>
+</div>
+
+<div id="app-shell">
+    <div class="win-header">
+        <div>📁 DOASHOW | Workstation v11.5 PRO</div>
+        <div style="display:flex; gap:5px;">
+            <div class="btn" style="border:none;" onclick="winCtrl('min')">―</div>
+            <div class="btn" style="border:none; background:#e81123; color:white;" onclick="winCtrl('cls')">✕</div>
+        </div>
+    </div>
+
+    <div class="ticker-wrap">
+        <div class="ticker-move" id="ticker-text" onclick="editTicker()">
+            INTEL: 3Mbps AI-DETECTION ACTIVE... VM SERVER: STABLE... PERSISTENCE: 100%... DATA GATHERING COMPLETE...
+        </div>
+    </div>
+
+    <div class="tab-bar" id="tab-bar">
+        <button onclick="addTab()" style="padding:0 12px; border:none; background:none; cursor:pointer;">+</button>
+    </div>
+
+    <div class="home-bar">
+        <button class="btn" onclick="nav(['portable-c'])">🏠 Home</button>
+        <button class="btn" onclick="openWorkshop()">🛠️ Workshop</button>
+        <button class="btn" onclick="sort('asc')">Sort A-Z</button>
+        <div style="flex-grow:1"></div>
+        <span class="vm-tag">VM SERVER: ACTIVE</span>
+    </div>
+
+    <div class="nav-ribbon">
+        <button class="btn" onclick="goUp()">↑</button>
+        <div class="addr-box" id="addr-bar">DOASHOW > portable-c</div>
+        <input type="text" id="search-box" placeholder="Search workstation..." style="width:200px;">
+    </div>
+
+    <div class="workspace">
+        <div class="sidebar">
+            <div class="side-h">Quick Access</div>
+            <div class="side-row" onclick="nav(['portable-c', 'C. OPERATIONS'])">⚙️ Operations</div>
+            <div class="side-row" onclick="nav(['portable-c', 'I. Nightmares'])">🌙 Nightmares</div>
+            <div class="side-row" onclick="nav(['portable-c', 'Z. Zombie'])">🧟 Zombie</div>
+            <div class="side-h">Drives</div>
+            <div class="side-row" onclick="nav(['portable-c'])">💻 Portable (C:)</div>
+            <div class="side-row" onclick="alert('Drive empty.')">💾 Storage (D:)</div>
+        </div>
+
+        <div class="view-panel">
+            <div class="grid" id="grid"></div>
+
+            <div id="workshop-panel">
+                <div style="display:flex; justify-content:space-between; border-bottom:1px solid #333; padding-bottom:5px;">
+                    <span style="color:#fff">IDEA WORKSHOP [DETECTIVE LOG]</span>
+                    <span onclick="closeWorkshop()" style="cursor:pointer;">[X]</span>
+                </div>
+                <div id="workshop-log" style="font-size:11px; margin-top:10px; overflow-y:auto; height:180px;">
+                    > Initializing Alphabet Mapping...<br>
+                    > Coverage: A-Z Registered.<br>
+                    > System: Proper Data Gathering Complete.<br>
+                    -----------------------------------<br>
+                    [PERSISTENCE]: LocalStorage Linked.
+                </div>
+            </div>
+
+            <div class="status-bar">
+                <span id="status-log">System Ready.</span>
+                <span id="history-detail">Matt Grosso PRO Architecture v11.5</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const FS = {
+        'portable-c': {
+            '0. Start': { type: 'folder' },
+            'A. activities': { type: 'folder' },
+            'B. posts': { type: 'folder' },
+            'C. OPERATIONS': { type: 'folder', orange: true, contents: {
+                '$ (others)': { type: 'folder', contents: { '$hiddenfolders': { type: 'folder' } } },
+                '-0 price': { type: 'folder', contents: {
+                    '--Prices Circle': { type: 'folder', contents: {
+                        '(+) A_rolls': { type: 'folder' }, '(+) B_rolls': { type: 'folder' },
+                        '(+) C_rolls': { type: 'folder' }, '(+) Category': { type: 'folder' },
+                        '(+) NAV': { type: 'folder' }, '(+) NAV CIRCLE': { type: 'folder' },
+                        'A_.00 1 MORGUE': { type: 'folder' }, 'A_.00 1 ROLLS': { type: 'folder' }
+                    }}
+                }}
+            }},
+            'D. Morse': { type: 'folder' },
+            'E. Experiments': { type: 'folder' },
+            'F. Something': { type: 'folder' },
+            'G. Names of Fighters': { type: 'folder' },
+            'I. Nightmares': { type: 'folder', orange: true },
+            'J. TV': { type: 'folder' },
+            'K. Movies': { type: 'folder' },
+            'L. Radio': { type: 'folder' },
+            'M. News': { type: 'folder' },
+            'N. Science': { type: 'folder' },
+            'O. Medicine': { type: 'folder' },
+            'P. Tech': { type: 'folder' },
+            'Q. Music': { type: 'folder' },
+            'R. Recording': { type: 'folder' },
+            'S. Shortcuts': { type: 'folder' },
+            'T. People': { type: 'folder' },
+            'U. Computer': { type: 'folder' },
+            'V. Gadgets': { type: 'folder' },
+            'W. Characters': { type: 'folder' },
+            'X. Cast': { type: 'folder' },
+            'Y. Guest': { type: 'folder' },
+            'Z. Zombie': { type: 'folder' }
+        }
+    };
+
+    let state = JSON.parse(localStorage.getItem('DOASHOW_V11_STATE')) || {
+        tabs: [{ name: 'Portable (C:)', path: ['portable-c'], active: true }],
+        ticker: "INTEL: VM SERVER ACTIVE... 3Mbps DETECTION ENABLED..."
+    };
+
+    function save() { localStorage.setItem('DOASHOW_V11_STATE', JSON.stringify(state)); }
+
+    function init() {
+        document.getElementById('ticker-text').innerText = state.ticker;
+        drawTabs(); drawGrid();
+    }
+
+    function drawTabs() {
+        const bar = document.getElementById('tab-bar');
+        bar.querySelectorAll('.tab').forEach(t => t.remove());
+        state.tabs.forEach((t, i) => {
+            const div = document.createElement('div');
+            div.className = `tab ${t.active ? 'active' : ''}`;
+            div.innerHTML = `<span>📁 ${t.name}</span> <small onclick="closeTab(${i}, event)">✕</small>`;
+            div.onclick = () => { state.tabs.forEach(x => x.active = false); t.active = true; save(); init(); };
+            bar.insertBefore(div, bar.querySelector('button'));
+        });
+    }
+
+    function drawGrid() {
+        const active = state.tabs.find(t => t.active);
+        const grid = document.getElementById('grid'); grid.innerHTML = '';
+        document.getElementById('addr-bar').innerHTML = 'DOASHOW > ' + active.path.join(' > ');
+
+        let cur = FS;
+        active.path.forEach(p => { if(cur[p]) cur = cur[p].contents || cur[p]; });
+
+        Object.keys(cur).forEach(key => {
+            if(['type','contents','orange','data'].includes(key)) return;
+            const item = cur[key];
+            const div = document.createElement('div');
+            div.className = `item ${item.orange ? 'orange' : ''}`;
+            div.innerHTML = `<span class="i-icon">${item.type==='folder'?'📁':'📄'}</span><span class="i-name">${key}</span>`;
+            div.onclick = () => {
+                if(item.type === 'folder') {
+                    active.path.push(key); active.name = key; init();
+                } else { alert("File persistent."); }
+            };
+            grid.appendChild(div);
+        });
+    }
+
+    function openWorkshop() { document.getElementById('workshop-panel').style.display = 'block'; }
+    function closeWorkshop() { document.getElementById('workshop-panel').style.display = 'none'; }
+    function nav(p) { state.tabs.find(t=>t.active).path = p; save(); init(); }
+    function goUp() { const a=state.tabs.find(t=>t.active); if(a.path.length>1){ a.path.pop(); init(); }}
+    function addTab() { state.tabs.forEach(t=>t.active=false); state.tabs.push({name:'DOASHOW', path:['portable-c'], active:true}); init(); }
+    function winCtrl(m) { const s=document.getElementById('app-shell'); if(m==='cls') s.style.display='none'; if(m==='min') s.classList.toggle('minimized'); }
+    function openApp(n) { if(n==='explorer') document.getElementById('app-shell').style.display='flex'; }
+    function editTicker() { const t = prompt("Update Banner:", state.ticker); if(t){ state.ticker=t; save(); init(); }}
+
+    init();
+</script>
+</body>
+</html>

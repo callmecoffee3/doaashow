@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DOASHOW | Bookmark Explorer</title>
+    <style>
+        :root {
+            --win-bg: #ffffff;
+            --win-sidebar: #f0f0f0;
+            --win-accent: #0078d7;
+            --win-orange: #ff8c00;
+            --win-border: #d1d1d1;
+            --win-hover: #e5f3ff;
+            --win-danger: #e81123;
+            --win-star: #ffc107;
+        }
+
+        body { margin: 0; height: 100vh; background: #000; font-family: 'Segoe UI', sans-serif; overflow: hidden; }
+
+        #app-shell {
+            width: 100vw; height: 100vh; background: var(--win-bg);
+            display: flex; flex-direction: column; transition: all 0.3s ease;
+        }
+        
+        #app-shell.minimized { height: 35px; overflow: hidden; transform: translateY(95vh); }
+
+        .window-header { height: 32px; display: flex; justify-content: space-between; align-items: center; padding: 0 10px; font-size: 12px; border-bottom: 1px solid #ddd; }
+        .tab-bar { background: #e1e1e1; display: flex; padding-top: 5px; cursor: pointer; }
+        .tab { background: var(--win-bg); padding: 8px 20px; border: 1px solid var(--win-border); border-bottom: none; font-size: 12px; margin-right: 2px; }
+
+        .nav-bar { padding: 5px 10px; display: flex; gap: 8px; border-bottom: 1px solid var(--win-border); align-items: center; }
+        .address-bar { flex-grow: 1; border: 1px solid var(--win-border); padding: 4px; display: flex; gap: 5px; font-size: 13px; background: #fff; }
+        .address-link { color: var(--win-accent); cursor: pointer; text-decoration: none; font-size: 12px; }
+        .address-link:hover { text-decoration: underline; }
+
+        /* Bookmark Bar */
+        .bookmark-strip { height: 30px; background: #f9f9f9; border-bottom: 1px solid var(--win-border); display: flex; gap: 12px; padding: 0 15px; align-items: center; font-size: 11px; overflow-x: auto; }
+        .b-item { background: #fff; border: 1px solid #ddd; padding: 2px 8px; cursor: pointer; border-radius: 10px; display: flex; align-items: center; gap: 4px; white-space: nowrap; }
+        .b-item:hover { background: var(--win-hover); }
+
+        .main-container { display: flex; flex-grow: 1; overflow: hidden; }
+        .sidebar { width: 220px; background: var(--win-sidebar); border-right: 1px solid var(--win-border); padding: 10px; overflow-y: auto; }
+        .content-window { flex-grow: 1; display: flex; flex-direction: column; }
+        
+        .file-grid { flex-grow: 1; padding: 20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; align-content: start; overflow-y: auto; }
+        
+        .item { padding: 10px; text-align: center; border: 1px solid transparent; cursor: pointer; border-radius: 2px; position: relative; }
+        .item:hover { background: var(--win-hover); border-color: #cce8ff; }
+        .item.orange { border-left: 4px solid var(--win-orange); background: #fff8f0; }
+        .item-icon { font-size: 32px; display: block; margin-bottom: 5px; }
+        .item-name { font-size: 11px; font-weight: 500; word-break: break-all; }
+
+        /* Item Actions */
+        .item-actions { position: absolute; top: 2px; right: 2px; display: none; gap: 2px; }
+        .item:hover .item-actions { display: flex; }
+        .action-btn { font-size: 9px; padding: 2px 4px; border: none; cursor: pointer; background: #fff; border: 1px solid #ccc; }
+        .star-btn.active { color: var(--win-star); font-weight: bold; border-color: var(--win-star); }
+
+        .btn { border: 1px solid var(--win-border); background: #fff; cursor: pointer; padding: 4px 12px; font-size: 12px; }
+        .btn:hover { background: #eee; }
+        .history-bar { height: 22px; background: #eee; font-size: 10px; padding: 0 10px; display: flex; align-items: center; color: #666; border-top: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+
+<div id="app-shell">
+    <div class="window-header">
+        <div>📁 DOASHOW Explorer</div>
+        <div class="window-controls">
+            <button class="btn" onclick="toggleSize('min')">0</button>
+            <button class="btn" onclick="toggleSize('exp')">□</button>
+            <button class="btn" onclick="alert('Shutdown Denied')">✕</button>
+        </div>
+    </div>
+
+    <div class="tab-bar">
+        <div class="tab" onclick="navigateTo('portable-c')">📁 Portable (C:)</div>
+        <div class="tab" onclick="navigateTo('storage-d')">📁 Storage (D:)</div>
+    </div>
+
+    <div class="nav-bar">
+        <button class="btn" onclick="goUp()">↑</button>
+        <div class="address-bar" id="addr-bar"></div>
+        <input type="text" placeholder="Search..." style="width:150px">
+    </div>
+
+    <div class="bookmark-strip" id="bookmark-strip">
+        <span>⭐ Pinned:</span>
+        </div>
+
+    <div class="main-container">
+        <div class="sidebar">
+            <h5 style="margin:5px 0">Quick Access</h5>
+            <div class="address-link" onclick="navigateTo('portable-c/0. Start')">0. Start</div>
+            <div class="address-link" onclick="navigateTo('portable-c/C. OPERATIONS')">C. OPERATIONS</div>
+            <hr>
+            <h5 style="margin:5px 0">Devices</h5>
+            <div class="address-link" onclick="navigateTo('portable-c')">💻 Portable (C:)</div>
+            <div class="address-link" onclick="navigateTo('storage-d')">💾 Storage (D:)</div>
+        </div>
+
+        <div class="content-window">
+            <div style="padding:10px; border-bottom:1px solid #eee; display:flex; gap:10px; background:#f9f9f9">
+                <button class="btn" onclick="addItem('folder')">+ Folder</button>
+                <button class="btn" onclick="addItem('file')">+ File</button>
+                <div style="flex-grow:1"></div>
+                <button class="btn" onclick="sortItems('asc')">A-Z</button>
+                <button class="btn" onclick="sortItems('desc')">Z-A</button>
+            </div>
+            <div id="file-display" class="file-grid"></div>
+            <div id="hist-bar" class="history-bar">Ready</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let driveData = {
+        'portable-c': {
+            '0. Start': { type: 'folder', contents: {} },
+            'A. Activities': { type: 'folder', contents: {} },
+            'C. OPERATIONS': { type: 'folder', contents: {}, orange: true },
+            'I. Nightmares': { type: 'folder', contents: {}, orange: true },
+            'clue_log.txt': { type: 'file' }
+        },
+        'storage-d': { 'Archives': { type: 'folder', contents: {} } }
+    };
+
+    let currentPath = ['portable-c'];
+    let bookmarks = []; // Array of { name, fullPath, type }
+
+    function render() {
+        const grid = document.getElementById('file-display');
+        const addr = document.getElementById('addr-bar');
+        grid.innerHTML = '';
+        
+        // Render Address Bar
+        addr.innerHTML = 'DOASHOW > ';
+        currentPath.forEach((p, i) => {
+            const span = document.createElement('span');
+            span.className = 'address-link';
+            span.innerText = p + ' > ';
+            span.onclick = () => { currentPath = currentPath.slice(0, i + 1); render(); };
+            addr.appendChild(span);
+        });
+
+        // Resolve current folder
+        let currentFolder = driveData;
+        currentPath.forEach(p => { currentFolder = currentFolder[p].contents || currentFolder[p]; });
+
+        // Render Grid Items
+        Object.keys(currentFolder).forEach(key => {
+            if(['type', 'contents', 'orange'].includes(key)) return;
+            
+            const itemData = currentFolder[key];
+            const fullPathStr = currentPath.join('/') + '/' + key;
+            const isBookmarked = bookmarks.some(b => b.fullPath === fullPathStr);
+            
+            const div = document.createElement('div');
+            div.className = `item ${itemData.orange ? 'orange' : ''}`;
+            
+            const icon = itemData.type === 'folder' ? '📁' : '📄';
+            
+            div.innerHTML = `
+                <div class="item-actions">
+                    <button class="action-btn star-btn ${isBookmarked ? 'active' : ''}" onclick="toggleBookmark('${key}', '${itemData.type}', event)">⭐</button>
+                    <button class="action-btn" onclick="editItem('${key}', event)">E</button>
+                    <button class="action-btn" onclick="deleteItem('${key}', event)">X</button>
+                </div>
+                <span class="item-icon">${icon}</span>
+                <span class="item-name">${key} ${isBookmarked ? '⭐' : ''}</span>
+            `;
+
+            div.onclick = () => {
+                if(itemData.type === 'folder') {
+                    currentPath.push(key);
+                    render();
+                }
+            };
+            grid.appendChild(div);
+        });
+
+        renderBookmarks();
+    }
+
+    // BOOKMARK LOGIC
+    function toggleBookmark(name, type, e) {
+        e.stopPropagation();
+        const fullPathStr = currentPath.join('/') + '/' + name;
+        const index = bookmarks.findIndex(b => b.fullPath === fullPathStr);
+
+        if (index === -1) {
+            bookmarks.push({ name, fullPath: fullPathStr, type });
+            updateHistory(`Bookmarked ${name}`);
+        } else {
+            bookmarks.splice(index, 1);
+            updateHistory(`Removed bookmark: ${name}`);
+        }
+        render();
+    }
+
+    function renderBookmarks() {
+        const strip = document.getElementById('bookmark-strip');
+        strip.innerHTML = '<span>⭐ Pinned:</span>';
+        bookmarks.forEach(b => {
+            const span = document.createElement('div');
+            span.className = 'b-item';
+            span.innerHTML = `<span>${b.type === 'folder' ? '📁' : '📄'}</span> ${b.name}`;
+            span.onclick = () => {
+                if(b.type === 'folder') {
+                    currentPath = b.fullPath.split('/');
+                } else {
+                    // Navigate to the folder containing the file
+                    let parts = b.fullPath.split('/');
+                    parts.pop();
+                    currentPath = parts;
+                }
+                render();
+            };
+            strip.appendChild(span);
+        });
+    }
+
+    // FILE OPS
+    function addItem(type) {
+        const name = prompt(`Enter ${type} name:`);
+        if(!name) return;
+        getCurrentFolder()[name] = { type, contents: type === 'folder' ? {} : null, orange: false };
+        render();
+    }
+
+    function deleteItem(name, e) {
+        e.stopPropagation();
+        if(confirm(`Delete "${name}"?`)) {
+            const fullPathStr = currentPath.join('/') + '/' + name;
+            delete getCurrentFolder()[name];
+            bookmarks = bookmarks.filter(b => b.fullPath !== fullPathStr);
+            render();
+        }
+    }
+
+    function editItem(oldName, e) {
+        e.stopPropagation();
+        const newName = prompt(`Rename to:`, oldName);
+        if(newName && newName !== oldName) {
+            let current = getCurrentFolder();
+            current[newName] = current[oldName];
+            delete current[oldName];
+            
+            // Update bookmark path if it exists
+            const oldPath = currentPath.join('/') + '/' + oldName;
+            const newPath = currentPath.join('/') + '/' + newName;
+            bookmarks.forEach(b => { if(b.fullPath === oldPath) { b.fullPath = newPath; b.name = newName; } });
+            
+            render();
+        }
+    }
+
+    function getCurrentFolder() {
+        let current = driveData;
+        currentPath.forEach(p => { current = current[p].contents || current; });
+        return current;
+    }
+
+    function sortItems(dir) {
+        let current = getCurrentFolder();
+        const keys = Object.keys(current).filter(k => !['type', 'contents', 'orange'].includes(k));
+        keys.sort((a, b) => dir === 'asc' ? a.localeCompare(b) : b.localeCompare(a));
+        let parent = driveData;
+        for(let i=0; i<currentPath.length-1; i++) parent = parent[currentPath[i]].contents;
+        parent[currentPath[currentPath.length-1]].contents = Object.fromEntries(keys.map(k => [k, current[k]]));
+        render();
+    }
+
+    function goUp() { if(currentPath.length > 1) { currentPath.pop(); render(); } }
+    function navigateTo(p) { currentPath = p.split('/'); render(); }
+    function updateHistory(msg) { document.getElementById('hist-bar').innerText = `History: ${msg} | ${new Date().toLocaleTimeString()}`; }
+    function toggleSize(m) { const s = document.getElementById('app-shell'); m === 'min' ? s.classList.add('minimized') : s.classList.remove('minimized'); }
+
+    render();
+</script>
+</body>
+</html>

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOASHOW - File Explorer</title>
+    <style>
+        :root {
+            --win-blue: #0078d7;
+            --win-bg: #ffffff;
+            --win-sidebar: #f0f0f0;
+            --win-border: #d1d1d1;
+            --win-text: #000000;
+            --win-hover: #e5f3ff;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1a1a1a; /* Night mode surroundings */
+            color: var(--win-text);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #app-window {
+            width: 90%;
+            height: 85%;
+            background: var(--win-bg);
+            border: 1px solid #444;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        /* Header / Name on Explorer */
+        header {
+            height: 35px;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            font-size: 12px;
+            border-bottom: 1px solid var(--win-border);
+        }
+
+        /* Tab Bar */
+        .tab-bar {
+            height: 30px;
+            background: #e1e1e1;
+            display: flex;
+            align-items: flex-end;
+            padding-left: 10px;
+        }
+        .tab {
+            background: var(--win-bg);
+            padding: 5px 20px;
+            border: 1px solid var(--win-border);
+            border-bottom: none;
+            font-size: 11px;
+            margin-right: 2px;
+        }
+
+        /* Nav & Address Bar */
+        .nav-container {
+            display: flex;
+            align-items: center;
+            padding: 5px;
+            gap: 10px;
+            background: #fff;
+            border-bottom: 1px solid var(--win-border);
+        }
+
+        .address-bar {
+            flex-grow: 1;
+            border: 1px solid var(--win-border);
+            padding: 3px 10px;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            background: #fff;
+        }
+
+        /* Bookmark / History Bar */
+        .quick-bar {
+            height: 25px;
+            background: var(--win-sidebar);
+            border-bottom: 1px solid var(--win-border);
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            gap: 15px;
+            font-size: 11px;
+            color: #555;
+        }
+
+        /* Main Content */
+        .main-body {
+            display: flex;
+            flex-grow: 1;
+            overflow: hidden;
+        }
+
+        .sidebar {
+            width: 200px;
+            background: var(--win-sidebar);
+            border-right: 1px solid var(--win-border);
+            padding: 10px;
+        }
+
+        .content-view {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        /* File UI */
+        .controls {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        button {
+            padding: 5px 10px;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            background: #f5f5f5;
+        }
+
+        .file-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 20px;
+        }
+
+        .item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+            padding: 10px;
+            border: 1px solid transparent;
+        }
+
+        .item:hover {
+            background: var(--win-hover);
+            border: 1px solid #cce8ff;
+        }
+
+        .icon {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 5px;
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+
+        .folder-icon { background-image: url('https://img.icons8.com/color/48/000000/folder-invoices.png'); }
+        .file-icon { background-image: url('https://img.icons8.com/color/48/000000/file.png'); }
+
+        /* Quick Notes */
+        .notes-area {
+            width: 250px;
+            background: #fff9c4; /* Post-it yellow */
+            border-left: 1px solid var(--win-border);
+            padding: 10px;
+        }
+        
+        textarea {
+            width: 100%;
+            height: 150px;
+            border: none;
+            background: transparent;
+            font-family: 'Courier New', Courier, monospace;
+            resize: none;
+        }
+
+    </style>
+</head>
+<body>
+
+<div id="app-window">
+    <header>
+        <img src="https://img.icons8.com/color/16/000000/opened-folder.png" style="margin-right:8px;">
+        DOASHOW - File Explorer
+    </header>
+
+    <div class="tab-bar">
+        <div class="tab">This PC</div>
+        <div class="tab">+</div>
+    </div>
+
+    <div class="nav-container">
+        <button onclick="window.history.back()">←</button>
+        <button onclick="window.history.forward()">→</button>
+        <div class="address-bar">
+            <span>This PC > Local Disk (C:) > DOASHOW</span>
+        </div>
+        <input type="text" placeholder="Search..." style="padding: 3px;">
+    </div>
+
+    <div class="quick-bar">
+        <span>★ Bookmarks</span>
+        <span>🕒 History</span>
+        <span>📍 Frequent Folders</span>
+    </div>
+
+    <div class="main-body">
+        <div class="sidebar">
+            <div style="font-weight: bold; margin-bottom: 10px;">Quick Access</div>
+            <div style="padding-left: 10px; font-size: 13px;">
+                <p>🏠 Desktop</p>
+                <p>📥 Downloads</p>
+                <p>📄 Documents</p>
+                <p>🖼️ Pictures</p>
+            </div>
+        </div>
+
+        <div class="content-view">
+            <div class="controls">
+                <button onclick="addItem('folder')">+ New Folder</button>
+                <button onclick="addItem('file')">+ New File</button>
+                <button onclick="sortItems('asc')">Sort A-Z</button>
+                <button onclick="sortItems('desc')">Sort Z-A</button>
+            </div>
+            <div id="fileDisplay" class="file-list">
+                </div>
+        </div>
+
+        <div class="notes-area">
+            <h4>Quick Notes</h4>
+            <textarea placeholder="Type your clues here..."></textarea>
+            <hr>
+            <p style="font-size: 11px;"><i>Detective's Log: Keep it professional. No corners cut.</i></p>
+        </div>
+    </div>
+</div>
+
+<script>
+    let files = [
+        { name: "Project_Alpha", type: "folder" },
+        { name: "Evidence_001.txt", type: "file" },
+        { name: "Suspect_List", type: "folder" }
+    ];
+
+    function render() {
+        const display = document.getElementById('fileDisplay');
+        display.innerHTML = '';
+        files.forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'item';
+            div.innerHTML = `
+                <div class="icon ${item.type === 'folder' ? 'folder-icon' : 'file-icon'}"></div>
+                <div class="name">${item.name}</div>
+            `;
+            display.appendChild(div);
+        });
+    }
+
+    function addItem(type) {
+        const name = prompt(`Enter ${type} name:`);
+        if (name) {
+            files.push({ name, type });
+            render();
+        }
+    }
+
+    function sortItems(order) {
+        files.sort((a, b) => {
+            if (order === 'asc') return a.name.localeCompare(b.name);
+            return b.name.localeCompare(a.name);
+        });
+        render();
+    }
+
+    // Initial Render
+    render();
+</script>
+
+</body>
+</html>

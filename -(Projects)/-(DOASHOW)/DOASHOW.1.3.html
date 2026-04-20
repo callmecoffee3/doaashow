@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DOASHOW | Professional File Explorer</title>
+    <style>
+        :root {
+            --win-bg: #ffffff;
+            --win-sidebar: #f0f0f0;
+            --win-accent: #0078d7;
+            --win-orange: #ff8c00;
+            --win-border: #d1d1d1;
+            --win-text: #1a1a1a;
+        }
+
+        body {
+            margin: 0;
+            height: 100vh;
+            background: #202020; /* The night outside the app */
+            font-family: 'Segoe UI', Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* The App Window */
+        #doashow-app {
+            width: 95vw;
+            height: 90vh;
+            background: var(--win-bg);
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #333;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            position: relative;
+        }
+
+        /* Title Bar */
+        .title-bar {
+            height: 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 10px;
+            font-size: 12px;
+            background: #fff;
+        }
+
+        .window-controls span {
+            padding: 5px 15px;
+            cursor: pointer;
+        }
+        .window-controls .close:hover { background: #e81123; color: white; }
+
+        /* Tabs */
+        .tab-bar {
+            background: #e1e1e1;
+            display: flex;
+            padding-top: 5px;
+            padding-left: 10px;
+        }
+        .tab {
+            background: var(--win-bg);
+            padding: 8px 25px;
+            border: 1px solid var(--win-border);
+            border-bottom: none;
+            font-size: 12px;
+            margin-right: 2px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Nav & Address Bar */
+        .nav-section {
+            padding: 5px 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid var(--win-border);
+        }
+
+        .address-bar {
+            flex-grow: 1;
+            border: 1px solid var(--win-border);
+            padding: 4px 10px;
+            display: flex;
+            align-items: center;
+            font-size: 13px;
+        }
+
+        .search-bar { width: 200px; padding: 4px; border: 1px solid var(--win-border); }
+
+        /* Bookmark / History Bar */
+        .utility-bar {
+            height: 28px;
+            background: #f9f9f9;
+            border-bottom: 1px solid var(--win-border);
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            gap: 20px;
+            font-size: 11px;
+        }
+
+        /* Main Workspace */
+        .workspace {
+            display: flex;
+            flex-grow: 1;
+            overflow: hidden;
+        }
+
+        .sidebar {
+            width: 220px;
+            background: var(--win-sidebar);
+            border-right: 1px solid var(--win-border);
+            padding: 10px;
+            font-size: 13px;
+        }
+
+        .sidebar h5 { margin: 15px 0 5px 0; color: var(--win-accent); }
+
+        .content-area {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .file-grid {
+            flex-grow: 1;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 15px;
+            overflow-y: auto;
+        }
+
+        /* File Styles */
+        .item {
+            width: 90px;
+            text-align: center;
+            padding: 10px;
+            border: 1px solid transparent;
+            cursor: pointer;
+        }
+        .item:hover { background: #e5f3ff; border-color: #cce8ff; }
+        .item.orange { border: 2px solid var(--win-orange); background: #fff3e0; }
+
+        .icon { font-size: 40px; display: block; }
+
+        /* Quick Notes Sidebar */
+        .notes-panel {
+            width: 200px;
+            background: #fff;
+            border-left: 1px solid var(--win-border);
+            padding: 10px;
+        }
+        textarea { width: 100%; height: 200px; border: 1px solid #eee; resize: none; }
+
+    </style>
+</head>
+<body>
+
+<div id="doashow-app">
+    <div class="title-bar">
+        <div><img src="https://img.icons8.com/color/16/000000/folder-invoices.png"> DOASHOW</div>
+        <div class="window-controls">
+            <span>—</span>
+            <span>❐</span>
+            <span class="close">✕</span>
+        </div>
+    </div>
+
+    <div class="tab-bar">
+        <div class="tab">📁 DOASHOW (This PC)</div>
+        <div class="tab">+</div>
+    </div>
+
+    <div class="nav-section">
+        <button onclick="navigateBack()">←</button>
+        <button onclick="navigateForward()">→</button>
+        <div class="address-bar" id="addressDisplay">DOASHOW > Local Computer</div>
+        <input type="text" class="search-bar" placeholder="Search files..." onkeyup="searchFiles(this.value)">
+    </div>
+
+    <div class="utility-bar">
+        <div id="bookmarks">⭐ Favorites: [Empty]</div>
+        <div id="history">🕒 History: [Home]</div>
+    </div>
+
+    <div class="workspace">
+        <div class="sidebar">
+            <h5>Quick Access</h5>
+            <div>🏠 Desktop</div>
+            <div>📥 Downloads</div>
+            <div>📄 Documents</div>
+            <h5>Frequency</h5>
+            <div id="freq-list">Most visited...</div>
+            <hr>
+            <button onclick="browseLocal()" style="margin-top:10px; width:100%;">Browse Computer</button>
+        </div>
+
+        <div class="content-area">
+            <div style="padding: 10px; border-bottom: 1px solid #eee;">
+                <button onclick="createNew('folder')">+ New Folder</button>
+                <button onclick="sort('asc')">Sort Ascending</button>
+                <button onclick="sort('desc')">Sort Descending</button>
+                <button onclick="toggleOrange()">Orange Mode</button>
+            </div>
+            <div class="file-grid" id="mainGrid">
+                </div>
+        </div>
+
+        <div class="notes-panel">
+            <h5>Quick Notes</h5>
+            <textarea placeholder="Detective lead notes..."></textarea>
+            <div style="margin-top:10px; font-size:11px;">
+                <a href="#">🔍 Reference Case 41</a><br>
+                <a href="#">📎 Link to Evidence</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let currentFiles = [
+        { name: "Evidence_01", type: "folder", orange: false },
+        { name: "Suspect_Report.pdf", type: "file", orange: true },
+        { name: "Alibi_Notes.txt", type: "file", orange: false }
+    ];
+
+    function render() {
+        const grid = document.getElementById('mainGrid');
+        grid.innerHTML = '';
+        currentFiles.forEach((file, index) => {
+            const div = document.createElement('div');
+            div.className = `item ${file.orange ? 'orange' : ''}`;
+            div.onclick = () => addToHistory(file.name);
+            div.innerHTML = `
+                <span class="icon">${file.type === 'folder' ? '📁' : '📄'}</span>
+                <span class="name">${file.name}</span>
+            `;
+            grid.appendChild(div);
+        });
+    }
+
+    // Sort Logic
+    function sort(order) {
+        currentFiles.sort((a, b) => {
+            return order === 'asc' ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name);
+        });
+        render();
+    }
+
+    // Add Folders
+    function createNew(type) {
+        const name = prompt(`Enter ${type} name:`);
+        if(name) {
+            currentFiles.push({ name, type, orange: false });
+            render();
+        }
+    }
+
+    // History Tracking
+    function addToHistory(name) {
+        document.getElementById('history').innerText = `🕒 History: ${name}`;
+        document.getElementById('addressDisplay').innerText = `DOASHOW > ${name}`;
+    }
+
+    // Browse Local Computer (File System Access API)
+    async function browseLocal() {
+        try {
+            const dirHandle = await window.showDirectoryPicker();
+            currentFiles = [];
+            for await (const entry of dirHandle.values()) {
+                currentFiles.push({
+                    name: entry.name,
+                    type: entry.kind === 'directory' ? 'folder' : 'file',
+                    orange: false
+                });
+            }
+            render();
+            document.getElementById('addressDisplay').innerText = `DOASHOW > ${dirHandle.name}`;
+        } catch (err) {
+            console.error("Local browsing requires user permission or HTTPS.");
+        }
+    }
+
+    function toggleOrange() {
+        currentFiles.forEach(f => f.orange = !f.orange);
+        render();
+    }
+
+    function searchFiles(val) {
+        const filtered = currentFiles.filter(f => f.name.toLowerCase().includes(val.toLowerCase()));
+        // (Visual filtering logic could go here)
+    }
+
+    render();
+</script>
+
+</body>
+</html>

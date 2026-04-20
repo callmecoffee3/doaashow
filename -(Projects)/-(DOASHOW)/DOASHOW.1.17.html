@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DOASHOW | VM Workstation v8.0</title>
+    <style>
+        :root {
+            --win-blue: #0078d7; --win-bg: #ffffff; --win-sidebar: #f3f3f3;
+            --win-border: #d1d1d1; --win-hover: #e5f3ff; --win-orange: #ff8c00;
+        }
+        body, html { margin: 0; padding: 0; height: 100vh; font-family: 'Segoe UI', sans-serif; background: #001e30; overflow: hidden; color: #333; }
+
+        /* Desktop */
+        #desktop { width: 100vw; height: 100vh; position: relative; padding: 25px; display: grid; grid-template-rows: repeat(auto-fill, 100px); grid-auto-flow: column; gap: 15px; z-index: 1; }
+        .d-app { width: 90px; text-align: center; cursor: pointer; color: white; text-shadow: 1px 1px 3px #000; }
+        .d-icon { font-size: 44px; display: block; margin-bottom: 5px; }
+        .d-label { font-size: 11px; font-weight: 500; }
+
+        /* App Window */
+        #app-shell {
+            position: absolute; top: 20px; left: 30px; width: 95vw; height: 90vh;
+            background: var(--win-bg); display: flex; flex-direction: column;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.9); border: 1px solid #444; z-index: 100;
+        }
+        #app-shell.minimized { height: 32px; width: 320px; transform: translateY(85vh); overflow: hidden; }
+
+        /* Title Bar */
+        .win-header { height: 32px; background: #fff; display: flex; justify-content: space-between; align-items: center; padding: 0 10px; font-size: 12px; }
+        .win-ctrls { display: flex; }
+        .win-btn { width: 45px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; }
+        .win-btn:hover { background: #eee; }
+        .close-btn:hover { background: #e81123; color: white; }
+
+        /* Ticker */
+        .ticker-wrap { background: #000; color: #00ff41; height: 26px; display: flex; align-items: center; overflow: hidden; font-family: 'Courier New', monospace; border-bottom: 1px solid #333; }
+        .ticker-move { white-space: nowrap; animation: marquee 30s linear infinite; cursor: pointer; padding-left: 100%; font-size: 14px; }
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-250%); } }
+
+        /* Bars */
+        .tab-bar { background: #e1e1e1; display: flex; padding-top: 5px; border-bottom: 1px solid var(--win-border); }
+        .tab { background: #dcdcdc; padding: 8px 15px; border: 1px solid var(--win-border); border-bottom: none; font-size: 11px; margin-left: 4px; cursor: pointer; display: flex; align-items: center; min-width: 150px; justify-content: space-between; }
+        .tab.active { background: var(--win-bg); border-top: 2px solid var(--win-blue); font-weight: bold; }
+
+        .home-bar { height: 36px; background: #f3f3f3; border-bottom: 1px solid #ddd; display: flex; align-items: center; padding: 0 15px; font-size: 11px; gap: 20px; }
+        .nav-ribbon { padding: 8px 10px; display: flex; gap: 10px; align-items: center; background: #fff; border-bottom: 1px solid #eee; }
+        .addr-box { flex-grow: 1; border: 1px solid var(--win-border); padding: 4px 12px; display: flex; gap: 5px; font-size: 12px; height: 22px; align-items: center; background: #fff; }
+
+        /* Main UI */
+        .workspace { display: flex; flex-grow: 1; overflow: hidden; }
+        .sidebar { width: 240px; background: var(--win-sidebar); border-right: 1px solid var(--win-border); padding: 10px; overflow-y: auto; font-size: 12px; }
+        .side-h { font-weight: bold; color: #888; font-size: 10px; text-transform: uppercase; margin: 15px 0 5px 5px; }
+        .side-row { padding: 7px 10px; display: flex; align-items: center; gap: 10px; cursor: pointer; border-radius: 3px; }
+        .side-row:hover { background: #e8e8e8; }
+
+        .view-panel { flex-grow: 1; display: flex; flex-direction: column; background: #fff; position: relative; }
+        .grid { flex-grow: 1; padding: 25px; display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 20px; align-content: start; overflow-y: auto; }
+        
+        .item { text-align: center; padding: 15px 5px; cursor: pointer; border: 1px solid transparent; position: relative; }
+        .item:hover { background: var(--win-hover); border-color: #cce8ff; }
+        .item.orange { border-bottom: 4px solid var(--win-orange); background: #fffcf8; }
+        .i-icon { font-size: 42px; display: block; margin-bottom: 8px; }
+        .i-name { font-size: 11px; color: #333; }
+
+        .item-menu { position: absolute; top: 0; right: 0; display: none; background: #fff; border: 1px solid #ccc; flex-direction: column; z-index: 50; box-shadow: 2px 2px 5px rgba(0,0,0,0.2); }
+        .item:hover .item-menu { display: flex; }
+        .menu-btn { font-size: 10px; border: none; background: none; padding: 6px 10px; cursor: pointer; text-align: left; width: 100%; }
+        .menu-btn:hover { background: var(--win-blue); color: #fff; }
+
+        /* Media Viewer Overlay */
+        #media-viewer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 200; color: white; }
+        
+        .status-bar { height: 26px; background: #f0f0f0; border-top: 1px solid var(--win-border); display: flex; align-items: center; padding: 0 12px; font-size: 10px; color: #666; justify-content: space-between; }
+        .btn { background: #fff; border: 1px solid #ccc; padding: 4px 12px; font-size: 11px; cursor: pointer; }
+        .vm-tag { padding: 2px 6px; background: #000; color: #0f0; border-radius: 3px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div id="desktop">
+    <div class="d-app" onclick="openApp('explorer')">
+        <span class="d-icon">📁</span><span class="d-label">DOASHOW</span>
+    </div>
+    <div class="d-app" onclick="alert('Personal Notes: 1. Cover blind spots. 2. Nightmares are active.')">
+        <span class="d-icon">📒</span><span class="d-label">PERSONAL</span>
+    </div>
+    <div class="d-app" onclick="alert('Settings: State Persistence: ON')">
+        <span class="d-icon">⚙️</span><span class="d-label">SETTINGS</span>
+    </div>
+    <div class="d-app" onclick="alert('Options: VM Server: ACTIVE')">
+        <span class="d-icon">🛠️</span><span class="d-label">OPTIONS</span>
+    </div>
+</div>
+
+<div id="app-shell">
+    <div class="win-header">
+        <div>📁 DOASHOW | This PC</div>
+        <div class="win-ctrls">
+            <div class="win-btn" onclick="winCtrl('min')">―</div>
+            <div class="win-btn" onclick="winCtrl('exp')">❐</div>
+            <div class="win-btn close-btn" onclick="winCtrl('cls')">✕</div>
+        </div>
+    </div>
+
+    <div class="ticker-wrap">
+        <div class="ticker-move" id="ticker-text" onclick="editTicker()">WORKSTATION ONLINE... VM SERVER STATUS: RUNNING... DATA GATHERING ACTIVE...</div>
+    </div>
+
+    <div class="tab-bar" id="tab-bar">
+        <button onclick="addTab()" style="padding:0 12px; border:none; background:none; cursor:pointer;">+</button>
+    </div>
+
+    <div class="home-bar">
+        <div class="btn" onclick="nav(['portable-c'])">🏠 Home</div>
+        <div class="btn" onclick="sort('asc')">Sort Asc</div>
+        <div class="btn" onclick="sort('desc')">Sort Desc</div>
+        <label class="btn">📤 Upload Media <input type="file" style="display:none;" onchange="uploadMedia(this)"></label>
+        <div style="flex-grow:1"></div>
+        <div class="vm-tag">VM SERVER: ACTIVE</div>
+    </div>
+
+    <div class="nav-ribbon">
+        <button class="btn" onclick="goUp()">↑</button>
+        <div class="addr-box" id="addr-bar"></div>
+        <input type="text" id="search-box" placeholder="Search files..." onkeyup="doSearch()" style="width:200px;">
+    </div>
+
+    <div class="workspace">
+        <div class="sidebar">
+            <div class="side-h">Quick Access</div>
+            <div id="pinned-list"></div>
+            <div class="side-h">Frequency</div>
+            <div id="heat-list"></div>
+            <div class="side-h">DOASHOW PC</div>
+            <div class="side-row" onclick="nav(['portable-c'])">💻 Portable (C:)</div>
+            <div class="side-row" onclick="nav(['storage-d'])">💾 Storage (D:)</div>
+            <div class="side-row" onclick="nav(['device-a'])">📱 Device (A:)</div>
+            <div class="side-row" onclick="nav(['mount-b'])">🔌 Mount (B:)</div>
+            <div class="side-h">Network</div>
+            <div class="side-row" onclick="alert('Cloud Z: Remote Access Active.')">☁️ Cloud Z</div>
+        </div>
+
+        <div class="view-panel">
+            <div class="grid" id="grid"></div>
+            
+            <div id="media-viewer">
+                <div id="viewer-content"></div>
+                <button class="btn" onclick="closeViewer()" style="margin-top:20px;">Close Preview</button>
+            </div>
+
+            <div class="status-bar">
+                <span id="status-log">Ready.</span>
+                <span id="history-detail">Log: System Start</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // CORE FS - RECURSIVE MAPPING
+    const FS = {
+        'portable-c': {
+            '0. Start': { type: 'folder', contents: {} },
+            'A. activities': { type: 'folder', contents: {} },
+            'B. posts': { type: 'folder', contents: {} },
+            'C. OPERATIONS': { type: 'folder', orange: true, contents: {
+                '$ (others)': { type: 'folder', contents: { '$hiddenfolders': { type: 'folder', contents: {} } } },
+                '-0 price': { type: 'folder', contents: {
+                    '--Prices Circle': { type: 'folder', contents: {
+                        '(+) A_rolls': { type: 'folder', contents: {} }, '(+) B_rolls': { type: 'folder', contents: {} },
+                        '(+) C_rolls': { type: 'folder', contents: {} }, '(+) Category': { type: 'folder', contents: {} },
+                        '(+) NAV': { type: 'folder', contents: {} }, '(+) NAV CIRCLE': { type: 'folder', contents: {} },
+                        'A': { type: 'folder', contents: {} }, 'A_': { type: 'folder', contents: {} },
+                        'A_.00 1 ROLLS': { type: 'folder', contents: {} }
+                    }}
+                }},
+                '-3 apps': { type: 'folder', contents: {} }
+            }},
+            'I. Nightmares': { type: 'folder', orange: true, contents: {} },
+            'W. Current running projects': { type: 'folder', orange: true, contents: {} },
+            'S. Shortcuts': { type: 'folder', contents: {} }
+        },
+        'storage-d': {}, 'device-a': {}, 'mount-b': {}
+    };
+
+    // State Persistence
+    let state = JSON.parse(localStorage.getItem('DOASHOW_V8_STATE')) || {
+        tabs: [{ name: 'Portable (C:)', path: ['portable-c'], active: true }],
+        freq: {}, ticker: "SYSTEM STABLE... WELCOME TO DOASHOW...", pinned: []
+    };
+
+    function save() { localStorage.setItem('DOASHOW_V8_STATE', JSON.stringify(state)); }
+
+    function init() {
+        document.getElementById('ticker-text').innerText = state.ticker;
+        drawTabs(); drawGrid();
+    }
+
+    function drawTabs() {
+        const bar = document.getElementById('tab-bar');
+        bar.querySelectorAll('.tab').forEach(t => t.remove());
+        state.tabs.forEach((t, i) => {
+            const div = document.createElement('div');
+            div.className = `tab ${t.active ? 'active' : ''}`;
+            div.innerHTML = `<span>📁 ${t.name}</span> <span onclick="closeTab(${i}, event)">✕</span>`;
+            div.onclick = () => { state.tabs.forEach(x => x.active = false); t.active = true; save(); init(); };
+            bar.insertBefore(div, bar.querySelector('button'));
+        });
+    }
+
+    function drawGrid() {
+        const active = state.tabs.find(t => t.active);
+        const grid = document.getElementById('grid');
+        grid.innerHTML = '';
+        
+        // Address Bar
+        document.getElementById('addr-bar').innerHTML = '<span class="addr-link" onclick="nav([\'portable-c\'])">DOASHOW</span> > ';
+        active.path.forEach((p, i) => {
+            const s = document.createElement('span'); s.className='addr-link'; s.innerText=p+' > ';
+            s.onclick = () => { active.path = active.path.slice(0, i+1); save(); init(); };
+            document.getElementById('addr-bar').appendChild(s);
+        });
+
+        const cur = getCurRef();
+        Object.keys(cur).sort().forEach(key => {
+            if(['type','contents','orange','data'].includes(key)) return;
+            const item = cur[key];
+            const div = document.createElement('div');
+            div.className = `item ${item.orange ? 'orange' : ''}`;
+            div.innerHTML = `
+                <div class="item-menu">
+                    <button class="menu-btn" onclick="deleteItem('${key}', event)">✕ Delete</button>
+                    <button class="menu-btn" onclick="pinItem('${key}', event)">📌 Pin</button>
+                </div>
+                <span class="i-icon">${item.type==='folder'?'📁': (item.data ? '🖼️' : '📄')}</span>
+                <span class="i-name">${key}</span>`;
+            div.onclick = () => {
+                if(item.type === 'folder') {
+                    active.path.push(key); active.name = key;
+                    state.freq[key] = (state.freq[key] || 0) + 1;
+                    save(); init();
+                } else if(item.data) {
+                    viewMedia(key, item.data);
+                }
+            };
+            grid.appendChild(div);
+        });
+        updateSidebar();
+    }
+
+    function getCurRef() {
+        let cur = FS;
+        state.tabs.find(t=>t.active).path.forEach(p => { if(cur[p]) cur = cur[p].contents || cur[p]; });
+        return cur;
+    }
+
+    function updateSidebar() {
+        const hList = document.getElementById('heat-list'); hList.innerHTML = '';
+        Object.entries(state.freq).sort((a,b)=>b[1]-a[1]).slice(0,3).forEach(([n,c]) => {
+            const d=document.createElement('div'); d.className='side-row'; d.innerHTML=`🔥 ${n} (${c})`;
+            hList.appendChild(d);
+        });
+        const pList = document.getElementById('pinned-list'); pList.innerHTML = '';
+        state.pinned.forEach(p => {
+            const d=document.createElement('div'); d.className='side-row'; d.innerHTML=`📌 ${p}`;
+            pList.appendChild(d);
+        });
+    }
+
+    function uploadMedia(input) {
+        if(input.files && input.files[0]) {
+            const reader = new FileReader();
+            const fileName = input.files[0].name;
+            reader.onload = function(e) {
+                getCurRef()[fileName] = { type: 'file', data: e.target.result };
+                log(`Media Loaded: ${fileName}`); init();
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function viewMedia(name, data) {
+        const viewer = document.getElementById('media-viewer');
+        const content = document.getElementById('viewer-content');
+        viewer.style.display = 'flex';
+        content.innerHTML = `<img src="${data}" style="max-width:80%; max-height:70vh;"><p>${name}</p>`;
+    }
+
+    function closeViewer() { document.getElementById('media-viewer').style.display='none'; }
+
+    function deleteItem(key, e) {
+        e.stopPropagation();
+        if(confirm(`Erase ${key} from DOASHOW memory?`)) { delete getCurRef()[key]; init(); }
+    }
+
+    function pinItem(key, e) {
+        e.stopPropagation();
+        if(!state.pinned.includes(key)) { state.pinned.push(key); save(); updateSidebar(); }
+    }
+
+    function editTicker() {
+        const t = prompt("Broadcasting News:", state.ticker);
+        if(t) { state.ticker = t; save(); init(); }
+    }
+
+    function winCtrl(m) {
+        const s = document.getElementById('app-shell');
+        if(m==='cls') s.style.display='none';
+        if(m==='min') s.classList.toggle('minimized');
+    }
+
+    function addTab() {
+        state.tabs.forEach(t => t.active = false);
+        state.tabs.push({ name: 'DOASHOW', path: ['portable-c'], active: true });
+        save(); init();
+    }
+
+    function nav(p) { const a=state.tabs.find(t=>t.active); a.path=p; a.name=p[p.length-1]; save(); init(); }
+    function openApp(n) { if(n==='explorer') document.getElementById('app-shell').style.display='flex'; }
+    function goUp() { const a=state.tabs.find(t=>t.active); if(a.path.length>1){ a.path.pop(); save(); init(); }}
+    function log(m) { document.getElementById('history-detail').innerText = `Log: ${m}`; }
+
+    init();
+</script>
+</body>
+</html>
