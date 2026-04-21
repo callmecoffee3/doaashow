@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DOASHOW | Workstation v14.0</title>
+  <style>
+    :root {
+      --win-blue: #0078d7;
+      --win-bg: #ffffff;
+      --win-sidebar: #f2f2f2;
+      --win-border: #d1d1d1;
+      --win-hover: #e5f3ff;
+      --win-orange: #ff8c00;
+      --panel-bg: #fbfbfb;
+      --success: #1a7f37;
+      --danger: #c62828;
+      --text-muted: #666;
+    }
+
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #001e30, #0a2e48);
+      overflow: hidden;
+      color: #222;
+    }
+
+    #desktop {
+      width: 100vw;
+      height: 100vh;
+      position: relative;
+      padding: 25px;
+      display: grid;
+      grid-template-rows: repeat(auto-fill, 100px);
+      grid-auto-flow: column;
+      gap: 15px;
+      z-index: 1;
+    }
+
+    .d-app {
+      width: 90px;
+      text-align: center;
+      cursor: pointer;
+      color: white;
+      text-shadow: 1px 1px 3px #000;
+      transition: transform 0.12s ease;
+      user-select: none;
+    }
+    .d-app:hover { transform: scale(1.05); }
+    .d-icon { font-size: 42px; display: block; margin-bottom: 5px; }
+    .d-label { font-size: 11px; font-weight: 500; }
+
+    #app-shell {
+      position: absolute;
+      top: 15px;
+      left: 25px;
+      width: min(96vw, 1600px);
+      height: 92vh;
+      background: var(--win-bg);
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.62);
+      border: 1px solid #444;
+      z-index: 100;
+      transition: transform 0.18s ease, height 0.18s ease, width 0.18s ease, opacity 0.18s ease;
+    }
+
+    #app-shell.hidden { display: none; }
+
+    #app-shell.minimized {
+      height: 32px;
+      width: 360px;
+      transform: translateY(calc(92vh - 40px));
+      overflow: hidden;
+      border: 2px solid var(--win-blue);
+    }
+
+    .win-header {
+      height: 32px;
+      background: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 10px;
+      font-size: 12px;
+      border-bottom: 1px solid #eee;
+      user-select: none;
+    }
+
+    .win-ctrls { display: flex; }
+    .win-btn {
+      width: 45px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    .win-btn:hover { background: #eee; }
+    .close-btn:hover { background: #e81123; color: white; }
+
+    .ticker-wrap {
+      background: #000;
+      color: #00ff41;
+      height: 26px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      font-family: 'Consolas', monospace;
+      border-bottom: 1px solid #333;
+    }
+    .ticker-move {
+      white-space: nowrap;
+      animation: marquee 35s linear infinite;
+      cursor: pointer;
+      padding-left: 100%;
+      font-size: 13px;
+    }
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-300%); }
+    }
+
+    .tab-bar {
+      background: #e1e1e1;
+      display: flex;
+      padding-top: 5px;
+      border-bottom: 1px solid var(--win-border);
+      align-items: flex-end;
+      overflow-x: auto;
+    }
+
+    .tab {
+      background: #dcdcdc;
+      padding: 8px 12px;
+      border: 1px solid var(--win-border);
+      border-bottom: none;
+      font-size: 11px;
+      margin-left: 4px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      min-width: 150px;
+      justify-content: space-between;
+      border-radius: 4px 4px 0 0;
+      gap: 10px;
+    }
+    .tab.active {
+      background: var(--win-bg);
+      border-top: 2px solid var(--win-blue);
+      font-weight: bold;
+    }
+    .tab small {
+      color: #666;
+      font-weight: 400;
+      max-width: 110px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .tab-close {
+      font-size: 11px;
+      opacity: 0.65;
+      padding: 0 2px;
+    }
+    .tab-close:hover { opacity: 1; color: #c00; }
+
+    .bookmark-bar {
+      height: 30px;
+      background: #fff;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+      gap: 15px;
+      font-size: 11px;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+    .bm-item {
+      cursor: pointer;
+      color: #555;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+      padding: 3px 6px;
+      border-radius: 4px;
+    }
+    .bm-item:hover { background: #f0f7ff; }
+
+    .home-bar {
+      height: 38px;
+      background: #f3f3f3;
+      border-bottom: 1px solid #ddd;
+      display: flex;
+      align-items: center;
+      padding: 0 15px;
+      font-size: 11px;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .nav-ribbon {
+      padding: 8px 10px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      background: #fff;
+      border-bottom: 1px solid #eee;
+    }
+
+    .addr-box {
+      flex-grow: 1;
+      border: 1px solid var(--win-border);
+      padding: 4px 12px;
+      font-size: 12px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      background: #fff;
+      overflow: hidden;
+      border-radius: 4px;
+      color: #444;
+    }
+
+    .workspace { display: flex; flex-grow: 1; overflow: hidden; min-height: 0; }
+
+    .sidebar {
+      width: 240px;
+      background: var(--win-sidebar);
+      border-right: 1px solid var(--win-border);
+      padding: 10px;
+      overflow-y: auto;
+      font-size: 12px;
+    }
+
+    .side-h {
+      font-weight: bold;
+      color: #888;
+      font-size: 10px;
+      text-transform: uppercase;
+      margin: 15px 0 5px 5px;
+      letter-spacing: 0.06em;
+    }
+
+    .side-row {
+      padding: 7px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      cursor: pointer;
+      border-radius: 3px;
+    }
+    .side-row:hover { background: #e2e2e2; }
+    .side-row .side-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+    .side-row .pin-mini {
+      opacity: 0.45;
+      font-size: 11px;
+      cursor: pointer;
+    }
+    .side-row .pin-mini:hover { opacity: 1; }
+
+    .view-panel {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      background: #fff;
+      position: relative;
+      min-width: 0;
+      min-height: 0;
+    }
+
+    .grid {
+      flex-grow: 1;
+      padding: 25px;
+      display: grid;
+      gap: 15px;
+      align-content: start;
+      overflow-y: auto;
+      background: #fff;
+    }
+    .grid.icons { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
+    .grid.list { grid-template-columns: 1fr; gap: 2px; padding: 10px 0; }
+
+    .item {
+      text-align: center;
+      padding: 15px 8px;
+      cursor: pointer;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      transition: background 0.2s ease, border-color 0.2s ease, transform 0.12s ease;
+      user-select: none;
+    }
+    .item:hover {
+      background: var(--win-hover);
+      border-color: #cce8ff;
+      transform: translateY(-1px);
+    }
+    .item.orange {
+      border-bottom: 4px solid var(--win-orange);
+      background: #fffcf8;
+    }
+    .grid.list .item {
+      display: flex;
+      text-align: left;
+      padding: 8px 15px;
+      align-items: center;
+      border-radius: 0;
+      border-bottom: 1px solid #f2f2f2;
+    }
+    .grid.list .i-icon {
+      font-size: 20px;
+      margin-right: 15px;
+      margin-bottom: 0;
+      width: 28px;
+      text-align: center;
+    }
+    .grid.list .item-text { display: flex; flex-direction: column; gap: 2px; }
+    .grid.list .item-meta { font-size: 10px; color: #888; }
+
+    .i-icon { font-size: 44px; display: block; margin-bottom: 8px; }
+    .i-name {
+      font-size: 11px;
+      color: #333;
+      font-weight: 500;
+      word-break: break-word;
+    }
+
+    #content-window {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #fff;
+      display: none;
+      flex-direction: column;
+      z-index: 500;
+    }
+
+    .status-bar {
+      height: 26px;
+      background: #f0f0f0;
+      border-top: 1px solid var(--win-border);
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      font-size: 10px;
+      color: #666;
+      justify-content: space-between;
+      gap: 10px;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .btn {
+      background: #fff;
+      border: 1px solid #ccc;
+      padding: 4px 10px;
+      font-size: 11px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      border-radius: 4px;
+      transition: background 0.12s ease;
+    }
+    .btn:hover { background: #f6faff; }
+
+    .vm-tag {
+      color: #0f0;
+      background: #000;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+
+    .empty-state {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      color: #888;
+      font-size: 13px;
+      text-align: center;
+      padding: 30px;
+    }
+
+    .viewer-text {
+      width: min(900px, 95%);
+      min-height: 70%;
+      background: #fafafa;
+      color: #222;
+      padding: 24px;
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      white-space: pre-wrap;
+      line-height: 1.5;
+      margin: 20px auto;
+    }
+
+    .viewer-image {
+      max-width: 95%;
+      max-height: calc(100vh - 220px);
+      object-fit: contain;
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+
+    #search-box {
+      width: 250px;
+      height: 30px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      padding: 0 10px;
+      font-size: 12px;
+    }
+
+    @media (max-width: 980px) {
+      .sidebar { display: none; }
+      #app-shell { left: 2vw; width: 96vw; }
+      .home-bar { height: auto; padding: 8px; }
+      .nav-ribbon { flex-wrap: wrap; }
+      #search-box { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div id="desktop">
+    <div class="d-app" onclick="openApp('explorer')">
+      <span class="d-icon">📂</span><span class="d-label">DOASHOW</span>
+    </div>
+    <div class="d-app" onclick="notify('Personal Data Secured.')">
+      <span class="d-icon">💼</span><span class="d-label">PERSONAL</span>
+    </div>
+    <div class="d-app" onclick="notify('Settings: Persistence OK.')">
+      <span class="d-icon">⚙️</span><span class="d-label">SETTINGS</span>
+    </div>
+    <div class="d-app" onclick="notify('Options: Server Heartbeat 120ms')">
+      <span class="d-icon">📡</span><span class="d-label">OPTIONS</span>
+    </div>
+  </div>
+
+  <div id="app-shell">
+    <div class="win-header">
+      <div>📁 DOASHOW | Professional Workstation v14.0</div>
+      <div class="win-ctrls">
+        <div class="win-btn" onclick="winMode('min')">―</div>
+        <div class="win-btn close-btn" onclick="winMode('cls')">✕</div>
+      </div>
+    </div>
+
+    <div class="ticker-wrap">
+      <div class="ticker-move" id="ticker-text" onclick="editTicker()">GATHERING DATA... VM SERVER: BROADCASTING... BROWSE DOASHOW DIRECTORIES...</div>
+    </div>
+
+    <div class="tab-bar" id="tab-bar">
+      <button onclick="addTab()" style="padding:0 12px; border:none; background:none; cursor:pointer; font-weight:bold; height:31px;">+</button>
+    </div>
+
+    <div class="bookmark-bar">
+      <span style="font-weight:bold; margin-right:8px;">⭐ Bookmarks:</span>
+      <div id="bm-list" style="display:flex; gap:12px;"></div>
+      <button class="btn" onclick="addBookmark()" style="font-size:9px; padding:2px 5px;">+ Add</button>
+    </div>
+
+    <div class="home-bar">
+      <button class="btn" onclick="nav(['portable-c'])">🏠 Home</button>
+      <button class="btn" onclick="sort('asc')">Asc</button>
+      <button class="btn" onclick="sort('desc')">Desc</button>
+      <button class="btn" onclick="setView('icons')">Icons</button>
+      <button class="btn" onclick="setView('list')">List</button>
+      <button class="btn" onclick="nameTab()">🏷️ Name Tab</button>
+      <label class="btn">📤 Upload <input type="file" style="display:none;" onchange="upload(this)" /></label>
+      <div style="flex-grow:1"></div>
+      <span class="vm-tag">VM SERVER: ACTIVE</span>
+    </div>
+
+    <div class="nav-ribbon">
+      <button class="btn" onclick="goUp()">↑</button>
+      <div class="addr-box" id="addr-bar"></div>
+      <input type="text" id="search-box" placeholder="Search workstation..." oninput="doSearch()" />
+    </div>
+
+    <div class="workspace">
+      <div class="sidebar">
+        <div class="side-h">Quick Access</div>
+        <div id="pinned-list"></div>
+
+        <div class="side-h">Frequency</div>
+        <div id="freq-list"></div>
+
+        <div class="side-h">This PC (DOASHOW)</div>
+        <div class="side-row" onclick="nav(['portable-c'])"><div class="side-left">💻 Portable (C:)</div></div>
+        <div class="side-row" onclick="nav(['storage-d'])"><div class="side-left">💾 Storage (D:)</div></div>
+        <div class="side-row" onclick="nav(['device-a'])"><div class="side-left">📱 Device (A:)</div></div>
+
+        <div class="side-h">Network</div>
+        <div class="side-row" onclick="notify('Cloud Z: Remote Synced.')"><div class="side-left">☁️ Cloud Z</div></div>
+      </div>
+
+      <div class="view-panel">
+        <div style="padding:10px; display:flex; gap:10px; border-bottom:1px solid #eee; background:#fff;">
+          <button class="btn" onclick="make('folder')">📁 +Folder</button>
+          <button class="btn" onclick="make('file')">📄 +File</button>
+        </div>
+
+        <div class="grid icons" id="grid"></div>
+
+        <div id="content-window">
+          <div style="height:40px; background:#eee; display:flex; align-items:center; justify-content:space-between; padding:0 15px;">
+            <span id="content-title">Viewer</span>
+            <button class="btn" onclick="closeContent()">✕ Close</button>
+          </div>
+          <div id="content-stage" style="flex-grow:1; display:flex; align-items:center; justify-content:center; background:#111; color:#fff; overflow:auto; padding:20px;"></div>
+        </div>
+
+        <div class="status-bar">
+          <span id="status-log">System Stable.</span>
+          <span id="history-detail">Log: No Blind Spots Detected</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function makeLetterRolls(prefix = 'A_.00', suffix = 'rolls') {
+      const out = {};
+      for (let i = 0; i < 26; i++) {
+        const ch = String.fromCharCode(97 + i);
+        out[`${prefix} ${ch} ${suffix}`] = { type: 'folder', contents: {} };
+      }
+      return out;
+    }
+
+    function fileNode(name, content = '') {
+      return { type: 'file', name, content };
+    }
+
+    const FS = {
+      'portable-c': {
+        '0. Start': { type: 'folder', contents: {} },
+        'A. activities': { type: 'folder', contents: { ...makeLetterRolls() } },
+        'B. posts': { type: 'folder', contents: { ...makeLetterRolls() } },
+        'C. OPERATIONS': {
+          type: 'folder',
+          orange: true,
+          contents: {
+            '$ (others)': {
+              type: 'folder',
+              contents: {
+                '$hiddenfolders': { type: 'folder', contents: {} }
+              }
+            },
+            '-0 price': {
+              type: 'folder',
+              contents: {
+                '--Prices Circle': {
+                  type: 'folder',
+                  contents: {
+                    '(+) A_rolls': { type: 'folder', contents: {} },
+                    '(+) B_rolls': { type: 'folder', contents: {} },
+                    '(+) C_rolls': { type: 'folder', contents: {} },
+                    '(+) Category': { type: 'folder', contents: {} },
+                    '(+) NAV': { type: 'folder', contents: {} },
+                    '(+) NAV CIRCLE': { type: 'folder', contents: {} },
+                    'A_.00 1 MORGUE': { type: 'folder', contents: {} },
+                    'A_.00 1 ROLLS': { type: 'folder', contents: {} },
+                    'A_.00 acting rolls': { type: 'folder', contents: {} },
+                    ...makeLetterRolls()
+                  }
+                }
+              }
+            }
+          }
+        },
+        'D. Morse': { type: 'folder', contents: {} },
+        'E. Experiments': { type: 'folder', contents: {} },
+        'F. Something': { type: 'folder', contents: {} },
+        'G. Something': { type: 'folder', contents: {} },
+        'I. Games': {
+          type: 'folder',
+          contents: {
+            'Launcher.txt': fileNode('Launcher.txt', 'Game launcher registry initialized. No executable payload attached.'),
+            'Arcade': { type: 'folder', contents: {} }
+          }
+        },
+        'Notes.txt': fileNode('Notes.txt', 'DOASHOW workstation initialized. Ready for indexing.'),
+        'Readme.md': fileNode('Readme.md', '# DOASHOW\n\nThis is a simulated workstation file browser built in pure HTML, CSS, and JavaScript.')
+      },
+      'storage-d': {
+        'Archive': { type: 'folder', contents: {} },
+        'Exports': { type: 'folder', contents: {} },
+        'Upload staging': { type: 'folder', contents: {} },
+        'Report.txt': fileNode('Report.txt', 'Storage drive mounted successfully.')
+      },
+      'device-a': {
+        'Camera Roll': { type: 'folder', contents: {} },
+        'Messages': { type: 'folder', contents: {} },
+        'Contacts.csv': fileNode('Contacts.csv', 'name,phone\nAlex,+1-555-000-1111\nJordan,+1-555-000-2222')
+      }
+    };
+
+    const appShell = document.getElementById('app-shell');
+    const grid = document.getElementById('grid');
+    const addrBar = document.getElementById('addr-bar');
+    const statusLog = document.getElementById('status-log');
+    const historyDetail = document.getElementById('history-detail');
+    const tabBar = document.getElementById('tab-bar');
+    const bmList = document.getElementById('bm-list');
+    const pinnedList = document.getElementById('pinned-list');
+    const freqList = document.getElementById('freq-list');
+    const searchBox = document.getElementById('search-box');
+    const contentWindow = document.getElementById('content-window');
+    const contentTitle = document.getElementById('content-title');
+    const contentStage = document.getElementById('content-stage');
+
+    let bookmarks = [
+      { label: 'Portable (C:)', path: ['portable-c'] },
+      { label: 'Storage (D:)', path: ['storage-d'] },
+      { label: 'Operations', path: ['portable-c', 'C. OPERATIONS'] }
+    ];
+
+    let pinned = [
+      { label: 'Portable (C:)', path: ['portable-c'] },
+      { label: 'Storage (D:)', path: ['storage-d'] },
+      { label: 'Games', path: ['portable-c', 'I. Games'] }
+    ];
+
+    const frequency = new Map();
+    let currentView = 'icons';
+    let currentSort = 'asc';
+
+    let tabs = [
+      { id: crypto.randomUUID(), title: 'Portable (C:)', path: ['portable-c'] }
+    ];
+    let activeTabId = tabs[0].id;
+
+    function getActiveTab() {
+      return tabs.find(t => t.id === activeTabId);
+    }
+
+    function setActiveTabPath(path) {
+      const tab = getActiveTab();
+      if (!tab) return;
+      tab.path = [...path];
+      if (!tab.customTitle) {
+        tab.title = path[path.length - 1] || 'Explorer';
+      }
+      incrementFrequency(path);
+      renderTabs();
+      renderGrid();
+      renderSidebars();
+    }
+
+    function incrementFrequency(path) {
+      const key = path.join('/');
+      frequency.set(key, (frequency.get(key) || 0) + 1);
+    }
+
+    function getNode(path) {
+      if (!Array.isArray(path) || !path.length) return null;
+      let node = FS[path[0]];
+      if (!node) return null;
+      for (let i = 1; i < path.length; i++) {
+        if (!node || node.type !== 'folder') return null;
+        node = node.contents[path[i]];
+      }
+      return node;
+    }
+
+    function ensureFolder(path) {
+      const node = getNode(path);
+      return node && node.type === 'folder' ? node : null;
+    }
+
+    function getFolderEntries(path) {
+      const folder = ensureFolder(path);
+      if (!folder) return [];
+      return Object.entries(folder.contents || {}).map(([name, value]) => ({ name, ...value }));
+    }
+
+    function notify(msg, detail = '') {
+      statusLog.textContent = msg;
+      historyDetail.textContent = detail || `Log: ${new Date().toLocaleTimeString()}`;
+    }
+
+    function openApp(name) {
+      if (name === 'explorer') {
+        appShell.classList.remove('hidden');
+        appShell.classList.remove('minimized');
+        notify('DOASHOW explorer ready.', 'Log: Shell restored');
+        renderAll();
+      }
+    }
+
+    function winMode(mode) {
+      if (mode === 'min') {
+        appShell.classList.toggle('minimized');
+        notify(appShell.classList.contains('minimized') ? 'Window minimized.' : 'Window restored.');
+      }
+      if (mode === 'cls') {
+        appShell.classList.add('hidden');
+        notify('Window closed. Click DOASHOW on desktop to reopen.', 'Log: Explorer hidden');
+      }
+    }
+
+    function editTicker() {
+      const current = document.getElementById('ticker-text').textContent;
+      const next = prompt('Edit ticker text', current);
+      if (next !== null && next.trim()) {
+        document.getElementById('ticker-text').textContent = next.trim();
+        notify('Ticker updated.');
+      }
+    }
+
+    function renderTabs() {
+      const plusBtn = tabBar.querySelector('button');
+      tabBar.querySelectorAll('.tab').forEach(t => t.remove());
+
+      tabs.forEach(tab => {
+        const el = document.createElement('div');
+        el.className = `tab ${tab.id === activeTabId ? 'active' : ''}`;
+        el.onclick = () => {
+          activeTabId = tab.id;
+          renderAll();
+        };
+        el.innerHTML = `<span>${escapeHtml(tab.title)}</span><small>${escapeHtml(tab.path.join(' / '))}</small><span class="tab-close" title="Close">✕</span>`;
+        el.querySelector('.tab-close').onclick = (e) => {
+          e.stopPropagation();
+          closeTab(tab.id);
+        };
+        tabBar.appendChild(el);
+      });
+
+      if (plusBtn) tabBar.appendChild(plusBtn);
+    }
+
+    function addTab(path = ['portable-c']) {
+      const title = path[path.length - 1] || 'New Tab';
+      const tab = { id: crypto.randomUUID(), title, path: [...path] };
+      tabs.push(tab);
+      activeTabId = tab.id;
+      notify('New tab created.', `Log: ${title}`);
+      renderAll();
+    }
+
+    function closeTab(id) {
+      if (tabs.length === 1) {
+        notify('At least one tab must remain open.');
+        return;
+      }
+      const index = tabs.findIndex(t => t.id === id);
+      if (index === -1) return;
+      tabs.splice(index, 1);
+      if (!tabs.some(t => t.id === activeTabId)) {
+        activeTabId = tabs[Math.max(0, index - 1)].id;
+      }
+      notify('Tab closed.');
+      renderAll();
+    }
+
+    function nameTab() {
+      const tab = getActiveTab();
+      if (!tab) return;
+      const next = prompt('Tab name', tab.title);
+      if (next !== null && next.trim()) {
+        tab.title = next.trim();
+        tab.customTitle = true;
+        renderTabs();
+        notify('Tab renamed.', `Log: ${tab.title}`);
+      }
+    }
+
+    function addBookmark() {
+      const tab = getActiveTab();
+      if (!tab) return;
+      const label = prompt('Bookmark label', tab.title || tab.path[tab.path.length - 1]);
+      if (!label || !label.trim()) return;
+      bookmarks.push({ label: label.trim(), path: [...tab.path] });
+      renderBookmarks();
+      notify('Bookmark added.', `Log: ${label.trim()}`);
+    }
+
+    function renderBookmarks() {
+      bmList.innerHTML = '';
+      bookmarks.forEach((bm) => {
+        const el = document.createElement('div');
+        el.className = 'bm-item';
+        el.title = bm.path.join(' / ');
+        el.innerHTML = `⭐ <span>${escapeHtml(bm.label)}</span>`;
+        el.onclick = () => nav(bm.path);
+        bmList.appendChild(el);
+      });
+    }
+
+    function renderSidebars() {
+      pinnedList.innerHTML = '';
+      pinned.forEach((item, idx) => {
+        const row = document.createElement('div');
+        row.className = 'side-row';
+        row.innerHTML = `<div class="side-left">📌 <span>${escapeHtml(item.label)}</span></div><span class="pin-mini" title="Unpin">✕</span>`;
+        row.querySelector('.side-left').onclick = () => nav(item.path);
+        row.querySelector('.pin-mini').onclick = (e) => {
+          e.stopPropagation();
+          pinned.splice(idx, 1);
+          renderSidebars();
+          notify('Item unpinned.');
+        };
+        pinnedList.appendChild(row);
+      });
+
+      freqList.innerHTML = '';
+      const sortedFreq = [...frequency.entries()]
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 8);
+
+      if (!sortedFreq.length) {
+        freqList.innerHTML = '<div class="side-row"><div class="side-left">🕘 No recent activity</div></div>';
+      } else {
+        sortedFreq.forEach(([key, count]) => {
+          const path = key.split('/');
+          const row = document.createElement('div');
+          row.className = 'side-row';
+          row.innerHTML = `<div class="side-left">🗂️ <span>${escapeHtml(path[path.length - 1])}</span></div><span>${count}</span>`;
+          row.onclick = () => nav(path);
+          freqList.appendChild(row);
+        });
+      }
+    }
+
+    function nav(path) {
+      if (!getNode(path)) {
+        notify('Path not found.', `Log: ${path.join(' / ')}`);
+        return;
+      }
+      closeContent();
+      searchBox.value = '';
+      setActiveTabPath(path);
+      notify('Navigated successfully.', `Log: ${path.join(' / ')}`);
+    }
+
+    function goUp() {
+      const tab = getActiveTab();
+      if (!tab || tab.path.length <= 1) {
+        notify('Already at top level.');
+        return;
+      }
+      const next = tab.path.slice(0, -1);
+      nav(next);
+    }
+
+    function sort(order) {
+      currentSort = order === 'desc' ? 'desc' : 'asc';
+      renderGrid();
+      notify(`Sort: ${currentSort.toUpperCase()}`);
+    }
+
+    function setView(mode) {
+      currentView = mode === 'list' ? 'list' : 'icons';
+      renderGrid();
+      notify(`View mode: ${currentView}`);
+    }
+
+    function getSortedEntries(entries) {
+      const copy = [...entries];
+      copy.sort((a, b) => {
+        if (a.type !== b.type) return a.type === 'folder' ? -1 : 1;
+        return currentSort === 'asc'
+          ? a.name.localeCompare(b.name)
+          : b.name.localeCompare(a.name);
+      });
+      return copy;
+    }
+
+    function renderGrid(entriesOverride = null) {
+      const tab = getActiveTab();
+      if (!tab) return;
+      const path = tab.path;
+      const entries = entriesOverride || getFolderEntries(path);
+      grid.className = `grid ${currentView}`;
+      addrBar.textContent = path.join(' / ');
+      grid.innerHTML = '';
+
+      if (!entries.length) {
+        grid.innerHTML = '<div class="empty-state">This folder is empty.<br>Create files or folders to begin.</div>';
+        return;
+      }
+
+      getSortedEntries(entries).forEach(item => {
+        const card = document.createElement('div');
+        card.className = `item ${item.orange ? 'orange' : ''}`;
+        const icon = item.type === 'folder' ? '📁' : detectFileIcon(item.name);
+
+        if (currentView === 'list') {
+          card.innerHTML = `
+            <span class="i-icon">${icon}</span>
+            <div class="item-text">
+              <span class="i-name">${escapeHtml(item.name)}</span>
+              <span class="item-meta">${item.type === 'folder' ? 'Folder' : 'File'}</span>
+            </div>
+          `;
+        } else {
+          card.innerHTML = `
+            <span class="i-icon">${icon}</span>
+            <span class="i-name">${escapeHtml(item.name)}</span>
+          `;
+        }
+
+        card.ondblclick = () => openItem(item.name, item.type);
+        card.onclick = () => notify(`${item.type === 'folder' ? 'Folder' : 'File'} selected.`, `Log: ${item.name}`);
+        grid.appendChild(card);
+      });
+    }
+
+    function openItem(name, type) {
+      const tab = getActiveTab();
+      if (!tab) return;
+      const nextPath = [...tab.path, name];
+      const node = getNode(nextPath);
+      if (!node) return;
+      if (type === 'folder') {
+        nav(nextPath);
+      } else {
+        viewFile(name, node);
+      }
+    }
+
+    function viewFile(name, node) {
+      contentWindow.style.display = 'flex';
+      contentTitle.textContent = `Viewer — ${name}`;
+      contentStage.innerHTML = '';
+      const lower = name.toLowerCase();
+
+      if (node.mime && node.mime.startsWith('image/')) {
+        const img = document.createElement('img');
+        img.className = 'viewer-image';
+        img.src = node.content;
+        img.alt = name;
+        contentStage.appendChild(img);
+      } else {
+        const pre = document.createElement('div');
+        pre.className = 'viewer-text';
+        pre.textContent = node.content || '(empty file)';
+        contentStage.appendChild(pre);
+      }
+      notify('File opened.', `Log: ${name}`);
+    }
+
+    function closeContent() {
+      contentWindow.style.display = 'none';
+      contentStage.innerHTML = '';
+    }
+
+    function doSearch() {
+      const tab = getActiveTab();
+      if (!tab) return;
+      const q = searchBox.value.trim().toLowerCase();
+      const entries = getFolderEntries(tab.path);
+      if (!q) {
+        renderGrid(entries);
+        notify('Search cleared.');
+        return;
+      }
+      const filtered = entries.filter(entry => entry.name.toLowerCase().includes(q));
+      renderGrid(filtered);
+      notify(`Search results: ${filtered.length}`, `Log: query="${q}"`);
+    }
+
+    function make(kind) {
+      const tab = getActiveTab();
+      if (!tab) return;
+      const folder = ensureFolder(tab.path);
+      if (!folder) return;
+      const label = prompt(`New ${kind} name`, kind === 'folder' ? 'New Folder' : 'New File.txt');
+      if (!label || !label.trim()) return;
+      const name = label.trim();
+      if (folder.contents[name]) {
+        notify('An item with that name already exists.');
+        return;
+      }
+
+      if (kind === 'folder') {
+        folder.contents[name] = { type: 'folder', contents: {} };
+      } else {
+        const content = prompt('Initial file content', '');
+        folder.contents[name] = {
+          type: 'file',
+          content: content || ''
+        };
+      }
+      renderGrid();
+      notify(`${kind === 'folder' ? 'Folder' : 'File'} created.`, `Log: ${name}`);
+    }
+
+    function upload(input) {
+      const tab = getActiveTab();
+      if (!tab || !input.files || !input.files.length) return;
+      const folder = ensureFolder(tab.path);
+      if (!folder) return;
+
+      [...input.files].forEach(file => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          folder.contents[file.name] = {
+            type: 'file',
+            content: e.target.result,
+            mime: file.type || 'text/plain',
+            size: file.size
+          };
+          renderGrid();
+          notify('Upload complete.', `Log: ${file.name}`);
+        };
+
+        if (file.type.startsWith('image/')) {
+          reader.readAsDataURL(file);
+        } else {
+          reader.readAsText(file);
+        }
+      });
+
+      input.value = '';
+    }
+
+    function detectFileIcon(name) {
+      const lower = name.toLowerCase();
+      if (lower.endsWith('.txt') || lower.endsWith('.md')) return '📄';
+      if (lower.endsWith('.csv')) return '📊';
+      if (lower.endsWith('.png') || lower.endsWith('.jpg') || lower.endsWith('.jpeg') || lower.endsWith('.gif') || lower.endsWith('.webp')) return '🖼️';
+      if (lower.endsWith('.mp3') || lower.endsWith('.wav')) return '🎵';
+      if (lower.endsWith('.mp4') || lower.endsWith('.mov')) return '🎬';
+      return '📄';
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+    }
+
+    function renderAll() {
+      renderTabs();
+      renderBookmarks();
+      renderSidebars();
+      renderGrid();
+    }
+
+    // initialize
+    incrementFrequency(['portable-c']);
+    renderAll();
+  </script>
+</body>
+</html>
