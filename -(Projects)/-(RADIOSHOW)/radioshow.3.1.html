@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE MATT GROSSO SHOW | ARCHITECTURE_v4_FINAL</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --accent-blue: #0047ab;
+            --terminal-green: #00ff41;
+            --noir-black: #050505;
+            --radio-gold: #ffcc00;
+            --warm-sepia: #d4a373;
+            --deep-red: #800000;
+        }
+
+        body {
+            background-color: var(--noir-black);
+            color: #d1d1d1;
+            font-family: 'Courier New', Courier, monospace;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* CRT Scanline Overlay */
+        .crt::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), 
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            z-index: 100;
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+            opacity: 0.12;
+        }
+
+        .workspace-grid {
+            display: grid;
+            grid-template-columns: 320px 1fr 320px;
+            flex-grow: 1;
+            overflow: hidden;
+            border-top: 1px solid #222;
+        }
+
+        .panel {
+            border-right: 1px solid #1a1a1a;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background: #080808;
+        }
+
+        .panel-header {
+            background: #111;
+            padding: 10px 15px;
+            font-size: 11px;
+            font-weight: bold;
+            color: #777;
+            text-transform: uppercase;
+            border-bottom: 1px solid #222;
+            letter-spacing: 1.5px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .terminal-box {
+            background: #000;
+            padding: 15px;
+            font-size: 11px;
+            color: #888;
+            overflow-y: auto;
+            flex-grow: 1;
+            line-height: 1.6;
+        }
+
+        .host-bubble {
+            background: #0d0a08;
+            border-left: 4px solid var(--warm-sepia);
+            padding: 12px;
+            margin: 10px 0;
+            color: #fefae0;
+            box-shadow: 4px 4px 10px rgba(0,0,0,0.5);
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+        .visualizer-container {
+            height: 60px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 3px;
+            padding: 10px;
+            background: linear-gradient(to top, #000, #050505);
+            border-bottom: 1px solid #111;
+        }
+
+        .v-bar {
+            width: 4px;
+            background: var(--accent-blue);
+            height: 10%;
+            transition: height 0.1s ease;
+            box-shadow: 0 0 5px var(--accent-blue);
+        }
+
+        .btn-broadcast {
+            background: var(--deep-red);
+            border: 1px solid #ff3333;
+            color: #fff;
+            padding: 15px;
+            font-weight: 900;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            transition: all 0.2s;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        .btn-broadcast:hover { background: #a00000; transform: scale(1.01); }
+        .btn-broadcast:active { transform: scale(0.98); }
+
+        .marquee-container {
+            background: #001233;
+            color: #00aaff;
+            font-size: 11px;
+            padding: 4px 0;
+            border-bottom: 1px solid #002244;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .marquee-content {
+            display: inline-block;
+            animation: scroll 40s linear infinite;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+
+        #overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.9);
+            display: none;
+            z-index: 1000;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--warm-sepia);
+            backdrop-filter: blur(5px);
+        }
+
+        /* Sidebar Nav */
+        .side-menu-item {
+            padding: 12px 20px;
+            font-size: 10px;
+            color: #555;
+            border-bottom: 1px solid #111;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .side-menu-item:hover { background: #111; color: var(--accent-blue); }
+    </style>
+</head>
+<body class="crt">
+
+    <div id="overlay">
+        <div class="text-5xl mb-6 animate-pulse">●</div>
+        <div class="tracking-[0.8em] font-bold">SYNCHRONIZING_WITH_MATT_GROSSO_BOT...</div>
+    </div>
+
+    <header class="bg-[#0a0a0a] p-4 flex justify-between items-center z-50">
+        <div class="flex items-center">
+            <div class="bg-blue-800 text-white px-3 py-1 font-black italic mr-3 border border-blue-400">TMGS</div>
+            <span class="font-bold text-white tracking-[0.2em] uppercase text-sm">The Matt Grosso Show - Professional Stream Architecture</span>
+        </div>
+        <div id="clock" class="text-blue-500 font-mono text-xl font-bold">00:00:00</div>
+    </header>
+
+    <div class="marquee-container">
+        <div class="marquee-content">
+            [SERVER_STATUS: OPTIMAL] -- [3Mbps AI-DETECTION: ACTIVE] -- [LOCATION: BARTOW, FL] -- [CURRENT_MODE: NOIR_DETECTIVE] -- [IT'S ALWAYS NIGHT OUT] -- [GATHERING EVIDENCE...] -- [WELCOME TO THE MATT GROSSO SHOW]
+        </div>
+    </div>
+
+    <main class="workspace-grid">
+        <section class="panel">
+            <div class="panel-header"><span>Menu & Navigation</span><span>[V3.0]</span></div>
+            <nav class="flex flex-col bg-[#050505]">
+                <div class="side-menu-item">HOME</div>
+                <div class="side-menu-item">HELP</div>
+                <div class="side-menu-item">CONNECT</div>
+                <div class="side-menu-item">ABOUT</div>
+                <div class="side-menu-item">EMAIL</div>
+            </nav>
+            
+            <div class="panel-header mt-4"><span>Detective Plan Log</span></div>
+            <div id="ledger" class="p-4 space-y-3 overflow-y-auto flex-grow bg-[#000]">
+                </div>
+            
+            <div class="p-4 border-t border-[#222] bg-[#0a0a0a]">
+                <div class="text-[9px] text-blue-400 mb-2 font-bold uppercase">Idea Workshop</div>
+                <textarea id="noteInput" class="w-full bg-black border border-[#222] text-white text-[11px] p-2 h-24 outline-none focus:border-blue-700" placeholder="Enter findings..."></textarea>
+                <button onclick="saveNote()" class="w-full mt-2 bg-blue-700 hover:bg-blue-600 text-[10px] py-2 text-white font-bold uppercase tracking-widest">Commit Entry</button>
+            </div>
+        </section>
+
+        <section class="panel" style="background: #000;">
+            <div class="panel-header"><span>Live Feed Console</span><span>ON AIR</span></div>
+            
+            <div class="visualizer-container" id="visualizer"></div>
+
+            <div class="terminal-box" id="terminal">
+                <div class="text-blue-900 font-bold mb-2 border-b border-blue-900/40 pb-2">>> BROADCAST_STATION: TMGS_99_ONLINE</div>
+            </div>
+
+            <div class="p-6 bg-[#080808] border-t border-[#222]">
+                <button id="txBtn" class="w-full btn-broadcast py-5" onclick="runTransmission()">Initiate Host Segment</button>
+            </div>
+        </section>
+
+        <section class="panel">
+            <div class="panel-header"><span>Intelligence & Categories</span></div>
+            <div class="p-4 h-full flex flex-col">
+                <div class="bg-[#111] p-4 border-l-2 border-blue-600 mb-6">
+                    <div class="text-[8px] text-blue-500 font-bold mb-1 uppercase">Vocal Persona</div>
+                    <div class="text-white text-[12px] font-bold">Matt Grosso Bot (50s Male)</div>
+                    <div class="text-[9px] text-gray-500 mt-1">Tone: American-Italian / Warm / Professional</div>
+                </div>
+
+                <div class="text-[10px] font-bold mb-3 text-gray-500 uppercase tracking-widest">Select Category</div>
+                <div class="grid grid-cols-1 gap-2 mb-6">
+                    <button class="bg-[#111] border border-[#222] text-[10px] py-3 hover:border-blue-500 text-gray-400 text-left px-4" onclick="setCategory('Late Night Evidence')">Late Night Evidence</button>
+                    <button class="bg-[#111] border border-[#222] text-[10px] py-3 hover:border-blue-500 text-gray-400 text-left px-4" onclick="setCategory('The Static')">The Static</button>
+                    <button class="bg-[#111] border border-[#222] text-[10px] py-3 hover:border-blue-500 text-gray-400 text-left px-4" onclick="setCategory('City Echoes')">City Echoes</button>
+                    <button class="bg-[#111] border border-[#222] text-[10px] py-3 hover:border-blue-500 text-gray-400 text-left px-4" onclick="setCategory('Grosso Archive')">Grosso Archive</button>
+                </div>
+
+                <div class="mt-auto bg-black p-3 border border-[#222]">
+                    <div class="font-mono text-[9px] space-y-1">
+                        <div class="text-green-600">admin@tmgs:~$ <span class="text-gray-400">./vocal_recalibration.sh</span></div>
+                        <div class="text-blue-500">IDENTITY: THE_MATT_GROSSO_SHOW</div>
+                        <div class="text-blue-500">ACCENT: NYC_METRO_WARMTH</div>
+                        <div class="text-green-500">STATUS: READY_TO_SPEAK</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-black border-t border-[#222] p-3 flex justify-between text-[9px] text-gray-600 uppercase tracking-widest px-8">
+        <div>Proprietary Architecture // CallMeCoffee3</div>
+        <div class="flex gap-6">
+            <span class="text-blue-700">MOD: 50s_M_ITAL_AMER</span>
+            <span>Freq: 99.0 MHz FM</span>
+        </div>
+    </footer>
+
+    <script>
+        const apiKey = ""; // API Key placeholder
+        let playing = false;
+        let currentCategory = "The Static";
+
+        const visualizer = document.getElementById('visualizer');
+        for(let i=0; i<40; i++) {
+            const bar = document.createElement('div');
+            bar.className = 'v-bar';
+            visualizer.appendChild(bar);
+        }
+
+        function updateViz() {
+            document.querySelectorAll('.v-bar').forEach(b => {
+                b.style.height = playing ? (Math.random() * 80 + 15) + '%' : '10%';
+            });
+            if(playing) requestAnimationFrame(() => setTimeout(updateViz, 80));
+        }
+
+        setInterval(() => {
+            document.getElementById('clock').innerText = new Date().toLocaleTimeString('en-GB', {hour12: false});
+        }, 1000);
+
+        function log(msg, role = 'system') {
+            const div = document.createElement('div');
+            if(role === 'host') {
+                div.className = "host-bubble";
+                div.innerHTML = `<span class="text-[10px] text-blue-400 font-bold block uppercase mb-1">Matt Grosso Bot:</span> ${msg}`;
+            } else {
+                div.className = "text-gray-600 text-[10px] mb-2 font-mono";
+                div.innerText = `[LOG] > ${msg}`;
+            }
+            const term = document.getElementById('terminal');
+            term.prepend(div);
+        }
+
+        function setCategory(cat) {
+            currentCategory = cat;
+            log(`Channel Category tuned to: ${cat}`, 'system');
+        }
+
+        async function speak(text) {
+            try {
+                const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text }] }],
+                        generationConfig: {
+                            responseModalities: ["AUDIO"],
+                            speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: "Kore" } } }
+                        }
+                    })
+                });
+                const json = await res.json();
+                const pcm = json.candidates[0].content.parts[0].inlineData.data;
+                const audio = new Audio(URL.createObjectURL(pcmToWav(pcm, 24000)));
+                
+                return new Promise(r => {
+                    audio.onplay = () => { playing = true; updateViz(); };
+                    audio.onended = () => { playing = false; r(); };
+                    audio.play();
+                });
+            } catch (e) { 
+                log("AUDIO_SYTH_ERROR: CHECK_CORE_API", 'system'); 
+            }
+        }
+
+        function pcmToWav(base64, rate) {
+            const buffer = Uint8Array.from(atob(base64), c => c.charCodeAt(0)).buffer;
+            const wav = new Uint8Array(44 + buffer.byteLength);
+            const view = new DataView(wav.buffer);
+            const s = (o, str) => { for (let i=0; i<str.length; i++) view.setUint8(o+i, str.charCodeAt(i)); };
+            s(0, 'RIFF'); view.setUint32(4, 36 + buffer.byteLength, true); s(8, 'WAVE');
+            s(12, 'fmt '); view.setUint32(16, 16, true); view.setUint16(20, 1, true);
+            view.setUint16(22, 1, true); view.setUint32(24, rate, true); view.setUint32(28, rate * 2, true);
+            view.setUint16(32, 2, true); view.setUint16(34, 16, true); s(36, 'data');
+            view.setUint32(40, buffer.byteLength, true);
+            new Uint8Array(wav.buffer, 44).set(new Uint8Array(buffer));
+            return new Blob([wav], { type: 'audio/wav' });
+        }
+
+        async function runTransmission() {
+            const btn = document.getElementById('txBtn');
+            btn.disabled = true;
+            document.getElementById('overlay').style.display = 'flex';
+
+            const systemPrompt = `You are the "Matt Grosso Bot", the AI host of THE MATT GROSSO SHOW.
+            CHARACTER: Warm, charming, American-Italian male in your 50s. You sound wise and professional.
+            MANDATE: You MUST identify the show as "The Matt Grosso Show".
+            ATMOSPHERE: It is always night out. You are a detective of the airwaves gathering evidence.
+            STYLE: Cinematic and friendly. Use subtle warm phrases like 'Listen' or 'Capisce' occasionally.`;
+
+            const systemPrompt = `You are the "Caller id 1", the AI caller 1 of THE MATT GROSSO SHOW.
+            CHARACTER: Warm, charming, American-Italian male in your 50s. You sound professional.
+            MANDATE: You MUST identify being on the show as "The Matt Grosso Show".
+            ATMOSPHERE: It is always night out. You are a caller of the matt grosso show.
+            STYLE: Cinematic and friendly. Use subtle warm phrases like 'Listen' .`;            
+            const userQuery = `Open the show for the "${currentCategory}" segment. Welcome the listeners to The Matt Grosso Show `;
+
+            
+            const systemPrompt = `You are the "AI Caller id 2", the AI caller 2 of THE MATT GROSSO SHOW.
+            CHARACTER: Warm, charming, American-Italian male in your 50s. You sound professional.
+            MANDATE: You MUST identify being on the show as "The Matt Grosso Show".
+            ATMOSPHERE: It is always night out. You are a caller of the matt grosso show.
+            STYLE: Cinematic and friendly. Use subtle warm phrases like 'Listen' .`;            
+            const userQuery = `Open the show for the "${currentCategory}" segment. Welcome the listeners to The Matt Grosso Show `;           
+            
+            const systemPrompt = `You are the "AI Caller id 3 ", THE MATT GROSSO SHOW.
+            CHARACTER: Warm, charming, American-Italian male in your 50s. You sound wise and professional.
+            MANDATE: You MUST identify the show as "The Matt Grosso Show".
+            ATMOSPHERE: It is always night out. You are a detective of the airwaves gathering evidence.
+            STYLE: Cinematic and friendly. Use subtle warm phrases like 'Listen' or 'Capisce' occasionally.`;
+
+            const systemPrompt = `You are the "AI Caller id 4", of THE MATT GROSSO SHOW.
+            CHARACTER: Warm, charming, American-Italian male in your 50s. You sound professional.
+            MANDATE: You MUST identify being on the show as "The Matt Grosso Show".
+            ATMOSPHERE: It is always night out. You are a caller of the matt grosso show.
+            STYLE: Cinematic and friendly. Use subtle warm phrases like 'Listen' .`;            
+            const userQuery = `Open the show for the "${currentCategory}" segment. Welcome the listeners to The Matt Grosso Show `;
+
+            
+            const systemPrompt = `You are the "AI Caller id 5", of THE MATT GROSSO SHOW.
+            CHARACTER: Warm, charming, American-Italian male in your 50s. You sound professional.
+            MANDATE: You MUST identify being on the show as "The Matt Grosso Show".
+            ATMOSPHERE: It is always night out. You are a caller of the matt grosso show.
+            STYLE: Cinematic and friendly. Use subtle warm phrases like 'Listen' .`;            
+            const userQuery = `Open the show for the "${currentCategory}" segment. Welcome the listeners to The Matt Grosso Show `;           
+            
+        
+            const systemPrompt = `You are the "Caller id 6",  of THE MATT GROSSO SHOW.
+            CHARACTER: Warm, charming, American-Italian male in your 50s. You sound professional.
+            MANDATE: You MUST identify being on the show as "The Matt Grosso Show".
+            ATMOSPHERE: It is always night out. You are a caller of the matt grosso show.
+            STYLE: Cinematic and friendly. Use subtle warm phrases like 'Listen' .`;            
+            const userQuery = `Open the show for the "${currentCategory}" segment. Welcome the listeners to The Matt Grosso Show `;
+
+            
+            const systemPrompt = `You are the "AI Caller id 7", of THE MATT GROSSO SHOW.
+            CHARACTER: Warm, charming, American-Italian male in your 50s. You sound professional.
+            MANDATE: You MUST identify being on the show as "The Matt Grosso Show".
+            ATMOSPHERE: It is always night out. You are a caller of the matt grosso show.
+            STYLE: Cinematic and friendly. Use subtle warm phrases like 'Listen' .`;            
+            const userQuery = `Open the show for the "${currentCategory}" segment. Welcome the listeners to The Matt Grosso Show `;           
+            
+            const systemPrompt = `You are the "AI Caller id 8 ",  of THE MATT GROSSO SHOW.
+            CHARACTER: Warm, charming, American-Italian male in your 50s. You sound wise and professional.
+            MANDATE: You MUST identify the show as "The Matt Grosso Show".
+            ATMOSPHERE: It is always night out. You are a detective of the airwaves gathering evidence.
+            STYLE: Cinematic and friendly. Use subtle warm phrases like 'Listen' or 'Capisce' occasionally.`;
+
+            const systemPrompt = `You are the "AI Caller id 9", of THE MATT GROSSO SHOW.
+            CHARACTER: Warm, charming, American-Italian male in your 50s. You sound professional.
+            MANDATE: You MUST identify being on the show as "The Matt Grosso Show".
+            ATMOSPHERE: It is always night out. You are a caller of the matt grosso show.
+            STYLE: Cinematic and friendly. Use subtle warm phrases like 'Listen' .`;            
+            const userQuery = `Open the show for the "${currentCategory}" segment. Welcome the listeners to The Matt Grosso Show `;
+
+            
+            const systemPrompt = `You are the "AI Caller id 10",  of THE MATT GROSSO SHOW.
+            CHARACTER: Warm, charming, American-Italian male in your 50s. You sound professional.
+            MANDATE: You MUST identify being on the show as "The Matt Grosso Show".
+            ATMOSPHERE: It is always night out. You are a caller of the matt grosso show.
+            STYLE: Cinematic and friendly. Use subtle warm phrases like 'Listen' .`;            
+            const userQuery = `Open the show for the "${currentCategory}" segment. Welcome the listeners to The Matt Grosso Show `;           
+                        
+            try {
+                const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        systemInstruction: { parts: [{ text: systemPrompt }] },
+                        contents: [{ parts: [{ text: userQuery }] }],
+                        generationConfig: { responseMimeType: "application/json" }
+                    })
+                });
+                
+                const data = await res.json();
+                const content = JSON.parse(data.candidates[0].content.parts[0].text);
+                
+                document.getElementById('overlay').style.display = 'none';
+                const hostScript = content.host_intro || "Welcome back to The Matt Grosso Show. I'm gathering the evidence for you.";
+                log(hostScript, 'host');
+                
+                await speak(`Say in a warm, wise, 50-year-old American-Italian male radio voice with a professional tone. Warmly say 'The Matt Grosso Show': ${hostScript}`);
+
+            } catch (e) { 
+                log("TRANSMISSION_CRITICAL_FAILURE", "system"); 
+            } finally {
+                btn.disabled = false;
+                document.getElementById('overlay').style.display = 'none';
+                playing = false;
+            }
+        }
+
+        function saveNote() {
+            const val = document.getElementById('noteInput').value.trim();
+            if(!val) return;
+            const r = Math.floor(Math.random()*9), c = Math.floor(Math.random()*9);
+            const entry = document.createElement('div');
+            entry.className = "text-[10px] text-blue-300 border-b border-white/10 pb-2 mb-2 font-mono";
+            entry.innerText = `title:,"Evidence Gathering" ===== 1. "r${r}, c${c}", " : ${val}"`;
+            document.getElementById('ledger').prepend(entry);
+            log(`Finding logged to ledger: ${val}`, 'system');
+            document.getElementById('noteInput').value = "";
+        }
+
+        window.onload = () => log("The Matt Grosso Show... Station online. Atmosphere: Always Night.", "system");
+    </script>
+</body>
+</html>

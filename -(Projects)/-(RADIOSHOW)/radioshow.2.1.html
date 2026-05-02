@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE MATT GROSSO SHOW | TMGS 99 FM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --accent-blue: #0047ab;
+            --terminal-green: #00ff41;
+            --noir-black: #050505;
+            --radio-gold: #ffcc00;
+            --alert-red: #800000;
+        }
+
+        body {
+            background-color: var(--noir-black);
+            color: #d1d1d1;
+            font-family: 'Courier New', Courier, monospace;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* CRT Scanning Effect */
+        .crt::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), 
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            z-index: 10;
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+        }
+
+        .header-bar {
+            background: #111;
+            border-bottom: 2px solid var(--accent-blue);
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0, 71, 171, 0.3);
+        }
+
+        .marquee-container {
+            background: #001122;
+            color: var(--terminal-green);
+            border-bottom: 1px solid #222;
+            padding: 4px 0;
+            font-size: 12px;
+            overflow: hidden;
+        }
+
+        .marquee-content {
+            display: inline-block;
+            white-space: nowrap;
+            animation: marquee 25s linear infinite;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .main-workspace {
+            display: grid;
+            grid-template-columns: 350px 1fr 300px;
+            flex-grow: 1;
+            overflow: hidden;
+        }
+
+        .deck {
+            border-right: 1px solid #222;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            background: #0a0a0a;
+        }
+
+        .terminal-box {
+            background: #000;
+            border: 1px solid #333;
+            padding: 10px;
+            font-size: 11px;
+            color: #888;
+            height: 250px;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        .broadcast-btn {
+            background: var(--alert-red);
+            color: white;
+            padding: 12px;
+            text-align: center;
+            font-weight: bold;
+            cursor: pointer;
+            border: 1px solid #f00;
+            transition: 0.3s;
+            text-transform: uppercase;
+        }
+
+        .broadcast-btn:hover {
+            background: #b30000;
+            box-shadow: 0 0 10px #f00;
+        }
+
+        .avatar-disk {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid var(--accent-blue);
+            margin: 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: radial-gradient(circle, #111 0%, #000 100%);
+        }
+
+        .pulse {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 2px solid var(--accent-blue);
+            animation: pulse-ring 2s infinite ease-out;
+        }
+
+        @keyframes pulse-ring {
+            0% { transform: scale(0.8); opacity: 1; }
+            100% { transform: scale(1.5); opacity: 0; }
+        }
+
+        .caller-card {
+            background: #151515;
+            border-left: 4px solid var(--radio-gold);
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .matt-code-text {
+            color: var(--accent-blue);
+        }
+
+    </style>
+</head>
+<body class="crt">
+
+    <header class="header-bar">
+        <div>
+            <span class="text-xl font-black italic tracking-tighter text-white">TMGS 99 FM</span>
+            <span class="ml-4 text-[10px] text-gray-500 uppercase tracking-widest">The Matt Grosso Show - Live Transmission</span>
+        </div>
+        <div class="flex items-center gap-6">
+            <div id="status-light" class="w-3 h-3 rounded-full bg-green-500 shadow-[0_0_8px_#00ff00]"></div>
+            <div id="clock" class="text-sm font-mono text-blue-400">00:00:00</div>
+        </div>
+    </header>
+
+    <div class="marquee-container">
+        <div class="marquee-content">
+            STATION NEWS: 3Mbps AI-DETECTION ACTIVE... WELCOME TO THE MATT GROSSO SHOW ON TMGS 99 FM... IT'S ALWAYS NIGHT OUT... REFRESH FOR SERVER STATUS...
+        </div>
+    </div>
+
+    <main class="main-workspace">
+        <!-- Control Deck -->
+        <section class="deck">
+            <h2 class="text-xs font-bold text-gray-500 uppercase">Production_Core</h2>
+            <div class="broadcast-btn" onclick="triggerStationID()">Trigger Station ID</div>
+            
+            <div class="bg-[#111] p-3 border border-[#222]">
+                <label class="text-[10px] text-gray-500 uppercase">Idea Workshop</label>
+                <textarea id="ideaInput" class="w-full bg-black border border-[#333] text-sm p-2 mt-2 h-24 text-blue-200 resize-none outline-none" placeholder="Enter detective notes..."></textarea>
+                <button class="w-full mt-2 bg-blue-900 text-[10px] py-1 uppercase" onclick="saveNote()">Log Evidence</button>
+            </div>
+
+            <div class="mt-auto">
+                <div class="text-[10px] text-gray-600 mb-2">STATION_MAP: 99.0 MHz</div>
+                <div class="grid grid-cols-4 gap-1">
+                    <div class="h-1 bg-blue-600"></div>
+                    <div class="h-1 bg-blue-800"></div>
+                    <div class="h-1 bg-blue-900"></div>
+                    <div class="h-1 bg-gray-800"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Air Deck (Visualizer & Logs) -->
+        <section class="deck" style="background: #050505;">
+            <div class="avatar-disk">
+                <div class="pulse"></div>
+                <span class="text-blue-500 font-bold text-xs">HOST_01</span>
+            </div>
+            
+            <div class="terminal-box" id="mainTerminal">
+                <div class="text-blue-400">INITIALIZING TMGS_99_FM...</div>
+                <div class="text-gray-600 italic">"It's a long night in the city. Keep your eyes open."</div>
+            </div>
+
+            <div class="h-32 bg-black border border-[#222] flex items-end justify-around p-2">
+                <!-- Simple Audio Visualizer Bars -->
+                <div class="w-4 bg-blue-900 h-1/2 animate-bounce"></div>
+                <div class="w-4 bg-blue-700 h-3/4 animate-pulse"></div>
+                <div class="w-4 bg-blue-500 h-1/4 animate-bounce" style="animation-delay: 0.2s"></div>
+                <div class="w-4 bg-blue-700 h-2/3 animate-pulse"></div>
+                <div class="w-4 bg-blue-900 h-full animate-bounce"></div>
+            </div>
+        </section>
+
+        <!-- Phone Deck -->
+        <section class="deck" style="border-right: none;">
+            <h2 class="text-xs font-bold text-gray-500 uppercase">Incoming_Lines</h2>
+            
+            <div id="callerArea">
+                <div class="caller-card">
+                    <div class="text-[10px] text-yellow-500">LINE 01: ACTIVE</div>
+                    <div class="font-bold text-sm">Unknown Ghost</div>
+                    <div class="text-[9px] text-gray-500 italic mt-1">"I have information about the sector 7 blackout..."</div>
+                </div>
+            </div>
+
+            <div class="mt-auto border-t border-[#222] pt-4">
+                <h3 class="text-[10px] text-gray-500 uppercase mb-2">Detective's Log</h3>
+                <div id="noteHistory" class="text-[9px] text-gray-400 space-y-2">
+                    <!-- Logs will appear here -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Clock Functionality
+        setInterval(() => {
+            const now = new Date();
+            document.getElementById('clock').innerText = now.toLocaleTimeString('en-GB', {hour12: false});
+        }, 1000);
+
+        function addLog(msg, type = 'system') {
+            const term = document.getElementById('mainTerminal');
+            const entry = document.createElement('div');
+            const time = new Date().toLocaleTimeString('en-GB', {hour12: false});
+            
+            if(type === 'matt-code') {
+                entry.innerHTML = `<span class="matt-code-text">title:,"?" ===== 1. "r0, c${Math.floor(Math.random()*9)}", " : ${msg}"</span>`;
+            } else {
+                entry.innerHTML = `<span class="text-gray-600">[${time}]</span> <span class="text-green-600">SYS:</span> ${msg}`;
+            }
+            
+            term.prepend(entry);
+        }
+
+        function triggerStationID() {
+            const idMessage = "You're listening to The Matt Grosso Show on TMGS 99 FM. Don't touch that dial.";
+            addLog(idMessage, 'system');
+            // Logic for triggering audio or character response would go here
+        }
+
+        function saveNote() {
+            const input = document.getElementById('ideaInput');
+            if(!input.value) return;
+
+            const noteList = document.getElementById('noteHistory');
+            const note = document.createElement('div');
+            note.className = "border-l border-blue-500 pl-2 py-1 bg-[#111]";
+            note.innerText = input.value;
+            
+            noteList.prepend(note);
+            addLog(`Evidence Logged: ${input.value.substring(0, 20)}...`, 'matt-code');
+            input.value = "";
+        }
+
+        // Initialize
+        window.onload = () => {
+            addLog("Signal Acquired. TMGS 99 FM is live.", 'system');
+        };
+    </script>
+</body>
+</html>

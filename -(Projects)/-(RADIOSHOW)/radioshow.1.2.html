@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TMGS 99 FM - AI STUDIO</title>
+    <style>
+        :root { --neon: #00ff41; --noir: #0a0a0a; --caller: #00bcff; }
+        body { background: var(--noir); color: var(--neon); font-family: 'Courier New', monospace; margin: 0; overflow: hidden; }
+        #marquee { background: #111; border-bottom: 2px solid var(--neon); padding: 5px; }
+        .canvas-grid { display: grid; grid-template-columns: 250px 1fr 300px; height: 100vh; }
+        .panel { border: 1px solid #333; padding: 15px; background: rgba(10, 10, 10, 0.9); }
+        #on-air-status { font-size: 1.5em; text-align: center; padding: 10px; border: 1px solid var(--neon); margin-bottom: 10px; }
+        .on-air { color: red; border-color: red; animation: blink 1s infinite; }
+        #transcript { height: 300px; overflow-y: scroll; background: #000; padding: 10px; border: 1px solid #222; }
+        .host-msg { color: #f0e68c; margin-bottom: 10px; }
+        .caller-msg { color: var(--caller); margin-bottom: 10px; }
+        button { background: var(--neon); color: #000; border: none; padding: 10px; cursor: pointer; font-weight: bold; width: 100%; }
+        @keyframes blink { 50% { opacity: 0; } }
+    </style>
+</head>
+<body>
+
+<div id="marquee"><marquee>Tuned in to The Matt Grosso Show | TMGS 99 FM | AI-DETECTION: 3Mbps | Night: Always.</marquee></div>
+
+<div class="canvas-grid">
+    <div class="panel">
+        <h3>STATION MENU</h3>
+        <p>Home</p><p>Help</p><p>Connect</p><p>Email</p>
+        <hr>
+        <h4>LYRIA 3 TRACKER</h4>
+        <div id="music-status" style="font-size: 0.8em;">Generating: Noir_Jazz_30s...</div>
+    </div>
+
+    <div class="panel">
+        <div id="on-air-status">HOST IDLE</div>
+        <div id="transcript"></div>
+        <div style="margin-top: 20px;">
+            <input type="text" id="pa-input" style="width: 70%; background: #000; color: var(--neon); border: 1px solid var(--neon); padding: 10px;" placeholder="PA Override Speech...">
+            <button onclick="togglePA()" style="width: 25%;">PA MIC</button>
+        </div>
+    </div>
+
+    <div class="panel">
+        <h3>CALLER BOTS</h3>
+        <div id="caller-queue" style="font-size: 0.8em;">
+            [BOT_101]: Skeptical<br>
+            [BOT_202]: Fanatic<br>
+            [BOT_303]: Cryptic
+        </div>
+        <hr>
+        <h3>IDEA WORKSHOP</h3>
+        <p>Use C-Engine for ALSA routing on Chromebook Dev Mode.</p>
+    </div>
+</div>
+
+<script>
+    const synth = window.speechSynthesis;
+    const transcript = document.getElementById('transcript');
+    const status = document.getElementById('on-air-status');
+
+    function speak(text, type) {
+        const utter = new SpeechSynthesisUtterance(text);
+        // Host gets a deeper, slower voice; Callers get varied pitches
+        utter.pitch = type === 'host' ? 0.7 : 1.2;
+        utter.rate = 0.9;
+        
+        const div = document.createElement('div');
+        div.className = type === 'host' ? 'host-msg' : 'caller-msg';
+        div.innerHTML = `[${type.toUpperCase()}]: ${text}`;
+        transcript.appendChild(div);
+        transcript.scrollTop = transcript.scrollHeight;
+
+        synth.speak(utter);
+    }
+
+    function runShow() {
+        status.innerText = "HOST BROADCASTING...";
+        speak("Tuned in to The Matt Grosso Show, TMGS 99 FM. I'm your host, Ghost. The rain is hitting the pavement like static.", 'host');
+        
+        setTimeout(() => {
+            speak("Ghost, are you real or just a shadow in my speakers?", 'caller');
+        }, 8000);
+
+        setTimeout(() => {
+            speak("On TMGS 99 FM, there's no difference between a shadow and a soul. Stay tuned for a station break.", 'host');
+        }, 15000);
+    }
+
+    function togglePA() {
+        const input = document.getElementById('pa-input').value;
+        status.innerText = "PA MIC LIVE";
+        status.classList.add('on-air');
+        speak(input, 'host');
+        setTimeout(() => {
+            status.innerText = "HOST BROADCASTING...";
+            status.classList.remove('on-air');
+        }, 5000);
+    }
+
+    // Start show loop
+    setInterval(runShow, 25000);
+    runShow();
+</script>
+</body>
+</html>
+
+#include <stdio.h>
+#include <string.h>
+
+/* TMGS 99 FM - LOW LEVEL AUDIO ROUTER */
+void route_audio(int channel_id, const char* content) {
+    // 0 = AI Host, 1 = Caller Bot, 2 = User PA (Priority)
+    if (channel_id == 2) {
+        printf("[PRIORITY] PA SYSTEM ACTIVE: %s\n", content);
+    } else {
+        printf("[STREAM] Channel %d: %s\n", channel_id, content);
+    }
+}
+
+int main() {
+    printf("TMGS_99_CORE: Initializing Neural Voice Drivers...\n");
+    route_audio(0, "Tuned in to The Matt Grosso Show...");
+    return 0;
+}
+
+#!/bin/bash
+# TMGS Director - Track & Caller Logic
+
+GENERATE_LYRIA_TRACK() {
+    echo "[MUSIC_GEN] Prompting Lyria 3: 'Dark Ambient Noir, 30s, Bartow Rain'..."
+    # Logic to trigger 30s track generation
+}
+
+GENERATE_CALLER_POV() {
+    local POVS=("The AI is watching us" "I love the show" "Bartow is quiet tonight")
+    echo "[CALLER_GEN] ${POVS[$RANDOM % 3]}"
+}
+
+# Main radio cycle
+while true; do
+    echo "[SYSTEM] Syncing with TMGS 99 FM frequency..."
+    GENERATE_LYRIA_TRACK
+    sleep 15
+    GENERATE_CALLER_POV
+    sleep 15
+done

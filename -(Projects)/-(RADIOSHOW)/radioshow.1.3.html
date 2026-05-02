@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TMGS 99 FM - AI STUDIO</title>
+    <style>
+        :root { --neon: #00ff41; --noir: #0a0a0a; --caller: #00bcff; }
+        body { background: var(--noir); color: var(--neon); font-family: 'Courier New', monospace; margin: 0; overflow: hidden; }
+        #marquee { background: #111; border-bottom: 2px solid var(--neon); padding: 5px; }
+        .canvas-grid { display: grid; grid-template-columns: 250px 1fr 300px; height: 100vh; }
+        .panel { border: 1px solid #333; padding: 15px; background: rgba(10, 10, 10, 0.9); }
+        #on-air-status { font-size: 1.5em; text-align: center; padding: 10px; border: 1px solid var(--neon); margin-bottom: 10px; }
+        .on-air { color: #ff0000; border-color: #ff0000 !important; animation: blink 1s infinite; }
+        #transcript { height: 300px; overflow-y: scroll; background: #000; padding: 10px; border: 1px solid #222; }
+        .host-msg { color: #f0e68c; margin-bottom: 10px; }
+        .caller-msg { color: var(--caller); margin-bottom: 10px; }
+        button { background: var(--neon); color: #000; border: none; padding: 10px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 5px; }
+        input[type="text"] { width: 70%; background: #000; color: var(--neon); border: 1px solid var(--neon); padding: 10px; }
+        @keyframes blink { 50% { opacity: 0; } }
+    </style>
+</head>
+<body>
+
+<div id="marquee"><marquee>Tuned in to The Matt Grosso Show | TMGS 99 FM | AI-DETECTION: 3Mbps | Night: Always.</marquee></div>
+
+<div class="canvas-grid">
+    <div class="panel">
+        <h3>STATION MENU</h3>
+        <p>Home</p><p>Help</p><p>Connect</p><p>Email</p>
+        <hr>
+        <button id="start-btn" onclick="initializeStation()" style="background: gold;">START BROADCAST</button>
+    </div>
+
+    <div class="panel">
+        <div id="on-air-status">STATION STANDBY</div>
+        <div id="transcript"></div>
+        <div style="margin-top: 20px;">
+            <input type="text" id="pa-input" placeholder="PA Override Speech...">
+            <button onclick="togglePA()" style="width: 25%;">PA MIC</button>
+        </div>
+    </div>
+
+    <div class="panel">
+        <h3>CALLER BOTS</h3>
+        <div id="caller-queue">
+            [BOT_101]: Skeptical<br>
+            [BOT_202]: Fanatic
+        </div>
+    </div>
+</div>
+
+<script>
+    const synth = window.speechSynthesis;
+    const transcript = document.getElementById('transcript');
+    const status = document.getElementById('on-air-status');
+    let showInterval;
+
+    // Critical: Chrome needs voices to load before they can be used
+    let voices = [];
+    window.speechSynthesis.onvoiceschanged = () => {
+        voices = window.speechSynthesis.getVoices();
+    };
+
+    function speak(text, type) {
+        if (synth.speaking) { synth.cancel(); } // Clear existing speech to prevent overlap
+        
+        const utter = new SpeechSynthesisUtterance(text);
+        
+        // Voice Selection
+        utter.pitch = type === 'host' ? 0.6 : 1.3;
+        utter.rate = 0.85;
+        
+        // Add text to screen
+        const div = document.createElement('div');
+        div.className = type === 'host' ? 'host-msg' : 'caller-msg';
+        div.innerHTML = `[${type.toUpperCase()}]: ${text}`;
+        transcript.appendChild(div);
+        transcript.scrollTop = transcript.scrollHeight;
+
+        synth.speak(utter);
+    }
+
+    function runShow() {
+        status.innerText = "HOST BROADCASTING...";
+        status.classList.remove('on-air');
+        
+        speak("Tuned in to The Matt Grosso Show, TMGS 99 FM. I'm your host, Ghost. The shadows in Bartow are growing long tonight.", 'host');
+        
+        setTimeout(() => {
+            speak("Ghost, I'm calling from Church Street. Why is the AI the only thing making sense tonight?", 'caller');
+        }, 9000);
+    }
+
+    function togglePA() {
+        const input = document.getElementById('pa-input').value;
+        if(!input) return;
+        
+        status.innerText = "PA MIC LIVE";
+        status.classList.add('on-air');
+        speak(input, 'host');
+        
+        setTimeout(() => {
+            status.innerText = "HOST BROADCASTING...";
+            status.classList.remove('on-air');
+        }, 5000);
+    }
+
+    function initializeStation() {
+        document.getElementById('start-btn').style.display = 'none';
+        runShow();
+        showInterval = setInterval(runShow, 25000);
+    }
+</script>
+</body>
+</html>

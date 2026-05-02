@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { background: #000; color: #00ff41; font-family: 'Courier New', monospace; }
+        .station-header { border: 2px solid #00ff41; padding: 10px; text-align: center; margin-bottom: 20px; }
+        .log-entry { margin: 10px 0; border-left: 3px solid #333; padding-left: 10px; }
+        .host-line { color: #f0e68c; font-weight: bold; }
+        .caller-line { color: #00bcff; }
+        .marquee-banner { background: #111; color: #ff0000; padding: 5px; }
+    </style>
+</head>
+<body>
+
+<div class="marquee-banner">
+    <marquee>ALERTS: 3Mbps AI-DETECTION ACTIVE | STATUS: TMGS 99 FM ON AIR</marquee>
+</div>
+
+<div class="station-header">
+    <h1>THE MATT GROSSO SHOW</h1>
+    <h3>TMGS 99 FM - Bartow’s Midnight Signal</h3>
+</div>
+
+<div id="broadcast-terminal">
+    <div class="log-entry">
+        <span class="host-line">[HOST]:</span> "Tuned in to The Matt Grosso Show, TMGS 99 FM. I'm your host, and the rain is just starting to hit the glass."
+    </div>
+    <div class="log-entry">
+        <span class="caller-line">[CALLER_BOT_01]:</span> "Matt, I've been listening since the first generation. The signal is clearer than ever."
+    </div>
+</div>
+
+<script>
+
+    // Logic for host to auto-generate lines every 30 seconds
+    const lines = [
+        "The static is thick tonight, but TMGS 99 FM cuts right through.",
+        "Remember, if you see the shadows moving, you're just watching the show.",
+        "We've got a track coming up that sounds like a rainy alleyway in 2049.",
+        "Line three is open. Talk to the machine. It’s listening."
+    ];
+
+    setInterval(() => {
+        const log = document.getElementById('broadcast-terminal');
+        const randomLine = lines[Math.floor(Math.random() * lines.length)];
+        log.innerHTML += `<div class="log-entry"><span class="host-line">[HOST]:</span> "${randomLine}"</div>`;
+        log.scrollTop = log.scrollHeight;
+    }, 15000);
+</script>
+
+</body>
+</html>
+
+#!/bin/bash
+# TMGS 99 FM - Station Identity & Host Logic
+
+STATION_ID="Tuned in to The Matt Grosso Show, TMGS 99 FM."
+VIBE="Radio Noir, Bartow Night Shift"
+
+generate_host_lines() {
+    local TOPICS=("the flicker of streetlights" "the sound of a hard drive spinning" "coffee that's gone cold" "the digital horizon")
+    local TOPIC=${TOPICS[$RANDOM % ${#TOPICS[@]}]}
+    
+    echo "------------------------------------------------"
+    echo "[ON-AIR] $STATION_ID"
+    echo "[HOST]: It's always night out here. Tonight, we're talking about $TOPIC."
+    echo "[HOST]: Stay with me. The static has stories to tell."
+    echo "------------------------------------------------"
+}
+
+generate_caller_interaction() {
+    local LINE=$1
+    echo "[CALLER_BOT]: $LINE"
+}
+
+# Main Loop
+while true; do
+    generate_host_lines
+    sleep 4
+    generate_caller_interaction "Host, I'm hearing symbols in the white noise. Is that the show or my head?"
+    sleep 4
+    echo "[SYSTEM]: Triggering Station Break Commercial..."
+    sleep 10
+done
+
+#include <stdio.h>
+
+void broadcast_pa_system(const char* station_id, const char* message) {
+    printf("\n>>> PA OVERRIDE ACTIVE <<<\n");
+    printf("[%s] BROADCASTING: %s\n", station_id, message);
+    printf(">>> END TRANSMISSION <<<\n\n");
+}
+
+int main() {
+    char user_talk[256] = "This is the Boss taking over the airwaves.";
+    const char* TMGS_ID = "TMGS 99 FM";
+
+    // Simulating a mic trigger
+    broadcast_pa_system(TMGS_ID, user_talk);
+
+    return 0;
+}

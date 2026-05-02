@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TMGS 99 FM - STUDIO PRO</title>
+    <style>
+        :root { --neon: #00ff41; --noir: #0a0a0a; --caller: #00bcff; --mint: #47d7ac; --warn: #ffcc00; }
+        body { background: var(--noir); color: var(--neon); font-family: 'Courier New', monospace; margin: 0; height: 100vh; overflow: hidden; }
+        
+        /* Streaming Banner */
+        header { background: #111; border-bottom: 2px solid var(--neon); padding: 5px; }
+        .marquee-text { font-weight: bold; color: var(--neon); }
+
+        /* Workstation Layout */
+        .workstation { display: grid; grid-template-columns: 220px 1fr 300px; height: calc(100vh - 40px); }
+        .panel { border: 1px solid #222; padding: 15px; background: rgba(5, 5, 5, 0.95); overflow-y: auto; }
+        
+        /* Studio Visuals */
+        .studio-visual { 
+            background: #000; border: 2px solid #333; height: 120px; 
+            display: flex; align-items: center; justify-content: space-around;
+            padding: 10px; margin-bottom: 15px;
+        }
+        .mic-icon { width: 35px; height: 60px; background: #333; border-radius: 15px; transition: 0.2s; }
+        .mic-icon.active { background: #ff0000; box-shadow: 0 0 15px #ff0000; border: 2px solid #fff; }
+        .vu-meter { width: 12px; height: 80px; background: #111; position: relative; border: 1px solid #333; }
+        .vu-bar { width: 100%; position: absolute; bottom: 0; background: var(--neon); transition: height 0.05s; }
+
+        /* Output Logs */
+        #transcript { height: 280px; background: #000; border: 1px solid #222; padding: 10px; font-size: 0.85em; overflow-y: scroll; border-radius: 4px; }
+        .host { color: #f0e68c; font-weight: bold; }
+        .caller { color: var(--caller); }
+        .ad { color: var(--mint); font-style: italic; border-left: 3px solid var(--mint); padding-left: 8px; margin: 5px 0; }
+        .system { color: #666; font-size: 0.8em; }
+        
+        /* Controls */
+        .controls { margin-top: 15px; display: flex; gap: 8px; flex-wrap: wrap; }
+        input { flex-grow: 1; background: #000; border: 1px solid var(--neon); color: var(--neon); padding: 12px; font-family: inherit; }
+        button { background: var(--neon); color: #000; border: none; padding: 10px 15px; cursor: pointer; font-weight: bold; text-transform: uppercase; }
+        .btn-mint { background: var(--mint); }
+        #init-btn { background: var(--warn); width: 100%; font-size: 1.2em; padding: 20px; border: 2px solid #fff; }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-thumb { background: #333; }
+    </style>
+</head>
+<body>
+
+<header>
+    <marquee class="marquee-text">TMGS 99 FM | 3Mbps AI-Detection: ACTIVE | SERVER: MATT GROSSO STREAMING PRO | BARTOW, FL | IT'S ALWAYS NIGHT OUT.</marquee>
+</header>
+
+<div class="workstation">
+    <!-- Nav Sidebar -->
+    <nav class="panel">
+        <h3>STATION MENU</h3>
+        <ul style="list-style: none; padding: 0;">
+            <li onclick="location.reload()">[01] HOME</li>
+            <li>[02] HELP</li>
+            <li>[03] CONNECT</li>
+            <li>[04] ABOUT</li>
+            <li>[05] EMAIL</li>
+        </ul>
+        <hr color="#222">
+        <div id="status-box">
+            <p style="font-size: 10px;">VOICE ENGINE: <span id="v-status" style="color:red;">OFFLINE</span></p>
+            <p style="font-size: 10px;">OUTPUT: <span id="v-name" style="color:var(--caller);">WAITING...</span></p>
+        </div>
+    </nav>
+
+    <!-- Studio Deck -->
+    <main class="panel">
+        <button id="init-btn" onclick="initializeStudio()">INITIALIZE STUDIO (CLICK FOR SOUND)</button>
+        
+        <div id="on-air-status" style="text-align: center; margin: 10px 0; font-weight: bold; letter-spacing: 2px;">STANDBY</div>
+        
+        <div class="studio-visual">
+            <div class="vu-meter"><div id="vu-l" class="vu-bar" style="height: 0%;"></div></div>
+            <div id="mic-viz" class="mic-icon"></div>
+            <div class="vu-meter"><div id="vu-r" class="vu-bar" style="height: 0%;"></div></div>
+        </div>
+
+        <div id="transcript">
+            <p class="system">[SYSTEM]: Awaiting hardware handshake. Click the yellow button above to bridge the signal.</p>
+        </div>
+
+        <div class="controls" id="studio-controls" style="display:none;">
+            <input type="text" id="pa-input" placeholder="Neural Host PA Override...">
+            <button onclick="paOverride()">SPEAK</button>
+            <button class="btn-mint" onclick="triggerMintAd()">MINT AD</button>
+        </div>
+    </main>
+
+    <!-- Idea Workshop -->
+    <aside class="panel">
+        <h3>IDEA WORKSHOP</h3>
+        <div style="font-size: 0.8em; border: 1px solid #333; padding: 10px;">
+            <strong>MINT SUITE:</strong><br>
+            - Ad 1: Standard<br>
+            - Ad 2: Ryan Reynolds AI<br>
+            - Ad 3: The Ghost Break
+        </div>
+        <hr color="#222">
+        <h4>CALLER QUEUE</h4>
+        <div id="callers" style="font-size: 0.8em; color: var(--caller);">
+            [ID_119] Signal: 98%<br>
+            [ID_202] Signal: 45% (Static)
+        </div>
+    </aside>
+</div>
+
+<script>
+    const synth = window.speechSynthesis;
+    const log = document.getElementById('transcript');
+    const mic = document.getElementById('mic-viz');
+    const status = document.getElementById('on-air-status');
+    let voices = [];
+    let adIndex = 0;
+
+    // Load voices and update UI
+    function loadVoices() {
+        voices = synth.getVoices();
+        const preferred = voices.find(v => v.name.includes('Male') || v.lang === 'en-US') || voices[0];
+        if (voices.length > 0) {
+            document.getElementById('v-status').innerText = "READY";
+            document.getElementById('v-status').style.color = "var(--neon)";
+            document.getElementById('v-name').innerText = preferred.name.split(' ')[0];
+        }
+    }
+
+    // Chromebooks need this event listener
+    if (speechSynthesis.onvoiceschanged !== undefined) {
+        speechSynthesis.onvoiceschanged = loadVoices;
+    }
+
+    // VU Meter Animation Logic
+    setInterval(() => {
+        if(synth.speaking) {
+            let level = Math.random() * 95;
+            document.getElementById('vu-l').style.height = level + '%';
+            document.getElementById('vu-r').style.height = (level * 0.9) + '%';
+        } else {
+            document.getElementById('vu-l').style.height = '2%';
+            document.getElementById('vu-r').style.height = '2%';
+        }
+    }, 80);
+
+    function logToScreen(text, type) {
+        const div = document.createElement('div');
+        div.className = type;
+        div.innerHTML = `[${type.toUpperCase()}]: ${text}`;
+        log.appendChild(div);
+        log.scrollTop = log.scrollHeight;
+    }
+
+    function speak(text, type) {
+        if (synth.speaking) synth.cancel();
+        
+        const utter = new SpeechSynthesisUtterance(text);
+        const preferredVoice = voices.find(v => v.name.includes('Male') || v.lang === 'en-US') || voices[0];
+        utter.voice = preferredVoice;
+
+        // Custom Neural Profiles
+        if (type === 'host') {
+            utter.pitch = 0.55; // Deep Italian-American warmth
+            utter.rate = 0.85;  // Deliberate noir pacing
+        } else if (type === 'ad') {
+            utter.pitch = 1.0; 
+            utter.rate = 1.15; // Fast-paced commercial
+        } else {
+            utter.pitch = 1.2;
+            utter.rate = 1.0;
+        }
+
+        logToScreen(text, type);
+
+        mic.classList.add('active');
+        utter.onend = () => mic.classList.remove('active');
+        
+        synth.speak(utter);
+    }
+
+    function initializeStudio() {
+        // Essential for Chrome/Chromebook sound activation
+        loadVoices();
+        
+        document.getElementById('init-btn').style.display = 'none';
+        document.getElementById('studio-controls').style.display = 'flex';
+        status.innerText = "ON AIR: TMGS 99 FM";
+        status.style.color = "red";
+
+        speak("Signal established. This is The Matt Grosso Show, broadcasting on TMGS 99 FM. I can hear you now, Matt. Can you hear the night?", 'host');
+        
+        // Start Background Loop
+        setInterval(() => {
+            if(!synth.speaking) {
+                const thoughts = [
+                    "Bartow is quiet tonight, but the airwaves are screaming.",
+                    "TMGS 99 FM. The only station that stays awake with you.",
+                    "Check the levels. The static is crawling in from the edges."
+                ];
+                speak(thoughts[Math.floor(Math.random() * thoughts.length)], 'host');
+            }
+        }, 30000);
+    }
+
+    function triggerMintAd() {
+        const ads = [
+            "Mint Ad 1: Tired of the big wireless static? Switch to Mint Mobile. Premium wireless for just fifteen dollars a month. Fifteen bucks. That's it.",
+            "Mint Ad 2: Ryan Reynolds' AI assistant here. Don't let your phone bill haunt you. Mint Mobile is fifteen dollars a month. It's the only logical choice.",
+            "Mint Ad 3: The world is loud, but your bill should be quiet. Mint Mobile. Fifteen dollars. Premium service. Clear signal."
+        ];
+        status.innerText = "COMMERCIAL BREAK";
+        status.style.color = "var(--mint)";
+        
+        speak(ads[adIndex], 'ad');
+        adIndex = (adIndex + 1) % ads.length;
+        
+        setTimeout(() => { 
+            status.innerText = "ON AIR: TMGS 99 FM"; 
+            status.style.color = "red";
+        }, 12000);
+    }
+
+    function paOverride() {
+        const val = document.getElementById('pa-input').value;
+        if(!val) return;
+        speak(val, 'host');
+        document.getElementById('pa-input').value = "";
+    }
+</script>
+</body>
+</html>
