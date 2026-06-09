@@ -1,0 +1,18 @@
+###/### Act # Pg ##/track1/videoclip1
+MS: [Scene name/theme/pg/act]
+Clip: #1 = 30
+MP3: #1 = 35
+INT/EXT: [Location] - [DAY/NIGHT]
+IN: [Character enters/starts with...]
+Beat: [Action or line]
+Beat: [Response/reaction]
+TURN: [Realization/reversal/escalation]
+OUT: "[Last line or action]"
+EMO: [Start emotion] → [End emotion]
+SHOT: [Coverage: wide, 2-shot, CU, etc.]
+Sounds: [Ambient noise, background noise, theme]
+Visual Efx: [booms/explosions/blood/bullets]
+Sound fxs: [booms/ explosions/ blood / bullets]
+MP3: [ boom/ bullets/bang/animal/human/ship]
+Syfy: [computers/science/virus/]
+Characters: [c1, c2, c3 , c4]
