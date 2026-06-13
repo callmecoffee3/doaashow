@@ -1,0 +1,2983 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SceneCard Pro - Writer's Index Card System v2.3</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Special+Elite&family=Kalam:wght@300;400;700&family=Courier+Prime:wght@400;700&display=swap');
+        
+        :root {
+            --card-white: #fffdf7;
+            --card-aged: #f7f3e8;
+            --card-line: #c9b8a0;
+            --card-shadow: rgba(101, 67, 33, 0.25);
+            --ink-blue: #1e3a8a;
+            --ink-red: #991b1b;
+            --wood-dark: #3e2723;
+            --focus-ring: #3b82f6;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier Prime', monospace;
+            background: #7a5d3f;
+            background-image: 
+                repeating-linear-gradient(90deg, transparent, transparent 100px, rgba(0,0,0,.04) 100px, rgba(0,0,0,.04) 101px),
+                repeating-linear-gradient(0deg, transparent, transparent 100px, rgba(0,0,0,.04) 100px, rgba(0,0,0,.04) 101px),
+                radial-gradient(ellipse at top, #a0826d, transparent),
+                radial-gradient(ellipse at bottom, #4e342e, transparent);
+            min-height: 100vh;
+            color: #1c120d;
+        }
+
+        .font-typewriter {
+            font-family: 'Special Elite', 'Courier Prime', monospace;
+        }
+
+        .font-handwritten {
+            font-family: 'Kalam', cursive;
+        }
+
+        .index-card {
+            background: var(--card-white);
+            background-image: 
+                repeating-linear-gradient(0deg, transparent, transparent 25px, rgba(201, 184, 160, 0.35) 25px, rgba(201, 184, 160, 0.35) 26px),
+                linear-gradient(180deg, var(--card-white) 0%, var(--card-aged) 100%);
+            border-radius: 4px;
+            box-shadow: 
+                0 1px 1px rgba(0,0,0,0.15),
+                0 2px 2px rgba(0,0,0,0.15),
+                0 4px 4px rgba(0,0,0,0.15),
+                0 8px 8px rgba(0,0,0,0.15);
+            position: relative;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .index-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 38px;
+            bottom: 0;
+            width: 1px;
+            background: rgba(153, 27, 27, 0.5);
+        }
+
+        .index-card:hover {
+            transform: translateY(-2px) rotate(-0.3deg);
+            box-shadow: 
+                0 2px 2px rgba(0,0,0,0.2),
+                0 4px 4px rgba(0,0,0,0.2),
+                0 8px 8px rgba(0,0,0,0.2),
+                0 16px 16px rgba(0,0,0,0.2);
+        }
+
+        .index-card:focus-within {
+            outline: 2px solid var(--focus-ring);
+            outline-offset: 2px;
+        }
+
+        .card-stack-btn {
+            background: var(--card-white);
+            border: 1px solid rgba(139, 111, 71, 0.4);
+            border-radius: 3px;
+            position: relative;
+            padding: 4px 6px;
+            min-height: 56px;
+            cursor: pointer;
+            font-family: 'Special Elite', monospace;
+            font-size: 9px;
+            transition: all 0.15s ease;
+            box-shadow: 
+                1px 1px 0 rgba(0,0,0,0.1),
+                2px 2px 0 rgba(0,0,0,0.08);
+        }
+
+        .card-stack-btn:hover {
+            transform: translate(-1px, -1px);
+            box-shadow: 2px 2px 0 rgba(0,0,0,0.15), 4px 4px 6px rgba(0,0,0,0.2);
+            z-index: 5;
+        }
+
+        .card-stack-btn:focus {
+            outline: 2px solid var(--focus-ring);
+            outline-offset: 1px;
+            z-index: 10;
+        }
+
+        .card-stack-btn.filled {
+            background: linear-gradient(135deg, var(--card-white) 0%, #ede4d3 100%);
+            border-color: #16a34a;
+        }
+
+        .card-stack-btn.filled::before {
+            content: '●';
+            position: absolute;
+            top: 1px;
+            right: 2px;
+            color: #16a34a;
+            font-size: 8px;
+        }
+
+        .card-stack-btn.draft::after {
+            content: 'D';
+            position: absolute;
+            bottom: 1px;
+            right: 2px;
+            color: #ca8a04;
+            font-size: 7px;
+            font-weight: bold;
+        }
+
+        .card-stack-btn.revised::after {
+            content: 'R';
+            position: absolute;
+            bottom: 1px;
+            right: 2px;
+            color: #2563eb;
+            font-size: 7px;
+            font-weight: bold;
+        }
+
+        .card-stack-btn.locked::after {
+            content: 'L';
+            position: absolute;
+            bottom: 1px;
+            right: 2px;
+            color: #991b1b;
+            font-size: 7px;
+            font-weight: bold;
+        }
+
+        .card-stack-btn.shot::after {
+            content: '✓';
+            position: absolute;
+            bottom: 1px;
+            right: 2px;
+            color: #15803d;
+            font-size: 9px;
+            font-weight: bold;
+        }
+
+        .card-stack-btn.active {
+            background: #fef3c7;
+            box-shadow: 0 0 0 2px #f59e0b, 2px 2px 0 rgba(245, 158, 11, 0.3);
+            transform: translate(-1px, -1px);
+            z-index: 10;
+        }
+
+        .wood-panel {
+            background: linear-gradient(135deg, #5d4037 0%, #3e2723 100%);
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.3), 0 4px 8px rgba(0,0,0,0.4);
+            border: 1px solid #2d1810;
+        }
+
+        .cork-board {
+            background: #c9a574;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(139, 111, 71, 0.3) 0%, transparent 50%),
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,.02) 2px, rgba(0,0,0,.02) 4px);
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.3);
+            border: 8px solid #4e342e;
+            border-radius: 4px;
+        }
+
+        .paper-input {
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid rgba(201, 184, 160, 0.6);
+            font-family: 'Special Elite', monospace;
+            font-size: 12px;
+            color: var(--ink-blue);
+            padding: 2px 0;
+            margin-bottom: 0;
+            line-height: 22px;
+            min-height: 22px;
+        }
+
+        .paper-input:focus {
+            outline: none;
+            border-bottom: 2px solid var(--focus-ring);
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        .paper-input:invalid {
+            border-bottom-color: #dc2626;
+        }
+
+        .paper-input::placeholder {
+            color: rgba(30, 58, 138, 0.35);
+            font-style: italic;
+        }
+
+        .char-count {
+            font-size: 9px;
+            color: #78716c;
+            text-align: right;
+            margin-top: -2px;
+        }
+
+        .char-count.over {
+            color: #dc2626;
+            font-weight: bold;
+        }
+
+        .paper-textarea {
+            background: transparent;
+            border: 1px solid rgba(201, 184, 160, 0.5);
+            font-family: 'Special Elite', monospace;
+            font-size: 11px;
+            color: var(--ink-blue);
+            line-height: 1.6;
+            resize: vertical;
+            padding: 6px 8px;
+            border-radius: 3px;
+        }
+
+        .paper-textarea:focus {
+            outline: 2px solid var(--focus-ring);
+            outline-offset: 0;
+            border-color: transparent;
+            background: rgba(59, 130, 246, 0.02);
+        }
+
+        .rich-editor {
+            background: rgba(255,253,247,0.7);
+            border: 1px solid rgba(201, 184, 160, 0.6);
+            border-radius: 3px;
+            min-height: 200px;
+            padding: 8px;
+            font-family: 'Special Elite', monospace;
+            font-size: 11px;
+            color: var(--ink-blue);
+        }
+
+        .rich-editor:focus {
+            outline: 2px solid var(--focus-ring);
+            outline-offset: 0;
+        }
+
+        .btn-typewriter {
+            background: #2d1810;
+            color: var(--card-white);
+            font-family: 'Special Elite', monospace;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 8px 16px;
+            border-radius: 3px;
+            border: 2px solid #1a0e08;
+            box-shadow: 0 3px 0 #1a0e08, 0 4px 6px rgba(0,0,0,0.3);
+            transition: all 0.1s ease;
+            cursor: pointer;
+        }
+
+        .btn-typewriter:active {
+            transform: translateY(2px);
+            box-shadow: 0 1px 0 #1a0e08, 0 2px 3px rgba(0,0,0,0.3);
+        }
+
+        .btn-typewriter:focus {
+            outline: 2px solid var(--focus-ring);
+            outline-offset: 2px;
+        }
+
+        .btn-paper {
+            background: var(--card-white);
+            color: #2d1810;
+            font-family: 'Kalam', cursive;
+            padding: 6px 12px;
+            border-radius: 3px;
+            border: 1px solid rgba(139, 111, 71, 0.5);
+            box-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+            transition: all 0.15s ease;
+            cursor: pointer;
+            font-size: 11px;
+        }
+
+        .btn-paper:hover {
+            transform: translateY(-1px);
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+        }
+
+        .btn-paper:focus {
+            outline: 2px solid var(--focus-ring);
+            outline-offset: 1px;
+        }
+
+        .btn-sm {
+            padding: 4px 8px;
+            font-size: 10px;
+        }
+
+        .field-label {
+            font-family: 'Special Elite', monospace;
+            font-size: 10px;
+            color: var(--ink-red);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 1px;
+            font-weight: 700;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .error-msg {
+            color: #dc2626;
+            font-size: 9px;
+            font-family: 'Kalam', cursive;
+        }
+
+        .ledger-table {
+            background: var(--card-white);
+            font-family: 'Courier Prime', monospace;
+            font-size: 11px;
+            width: 100%;
+        }
+
+        .ledger-table th {
+            background: #fef3c7;
+            border-bottom: 2px solid var(--card-line);
+            padding: 5px;
+            text-align: left;
+            font-weight: 700;
+            color: #78350f;
+        }
+
+        .ledger-table td {
+            border-bottom: 1px solid rgba(201, 184, 160, 0.3);
+            padding: 4px 5px;
+            color: var(--ink-blue);
+        }
+
+        .ledger-table tr:hover {
+            background: rgba(251, 191, 36, 0.08);
+        }
+
+        .shot-table {
+            background: rgba(255,253,247,0.8);
+            font-family: 'Courier Prime', monospace;
+            font-size: 10px;
+            width: 100%;
+            border: 1px solid rgba(201, 184, 160, 0.5);
+        }
+
+        .shot-table th {
+            background: #e0f2fe;
+            border-bottom: 1px solid var(--card-line);
+            padding: 4px;
+            text-align: left;
+            font-weight: 700;
+            color: #0c4a6e;
+            font-size: 9px;
+        }
+
+        .shot-table td {
+            border-bottom: 1px solid rgba(201, 184, 160, 0.3);
+            padding: 3px 4px;
+            color: var(--ink-blue);
+        }
+
+        .shot-table input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            font-family: inherit;
+            font-size: inherit;
+            color: inherit;
+        }
+
+        .shot-table input:focus {
+            outline: 1px solid var(--focus-ring);
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        .toolbar {
+            background: rgba(255,253,247,0.9);
+            border-bottom: 1px solid rgba(201, 184, 160, 0.5);
+            padding: 6px 8px;
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .toolbar-btn {
+            padding: 4px 8px;
+            background: var(--card-white);
+            border: 1px solid rgba(201, 184, 160, 0.6);
+            border-radius: 2px;
+            font-size: 10px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .toolbar-btn:hover {
+            background: #fef3c7;
+            border-color: #f59e0b;
+        }
+
+        .toolbar-btn:focus {
+            outline: 2px solid var(--focus-ring);
+            outline-offset: 1px;
+        }
+
+        .tab-btn {
+            padding: 8px 14px;
+            background: rgba(255,253,247,0.7);
+            border: 1px solid rgba(139, 111, 71, 0.4);
+            border-bottom: none;
+            border-radius: 5px 5px 0 0;
+            font-family: 'Special Elite', monospace;
+            font-size: 11px;
+            color: #78350f;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .tab-btn.active {
+            background: var(--card-white);
+            border-bottom: 2px solid var(--card-white);
+            color: var(--ink-red);
+            font-weight: 700;
+            transform: translateY(-1px);
+        }
+
+        .tab-btn:hover:not(.active) {
+            background: rgba(255,253,247,0.95);
+        }
+
+        .tab-btn:focus {
+            outline: 2px solid var(--focus-ring);
+            outline-offset: -2px;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .roll-section {
+            background: rgba(255,253,247,0.6);
+            border-left: 3px solid;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 3px;
+        }
+
+        .roll-section[data-roll="A"] { border-color: #dc2626; }
+        .roll-section[data-roll="B"] { border-color: #2563eb; }
+        .roll-section[data-roll="C"] { border-color: #16a34a; }
+        .roll-section[data-roll="D"] { border-color: #ca8a04; }
+        .roll-section[data-roll="E"] { border-color: #9333ea; }
+        .roll-section[data-roll="F"] { border-color: #0891b2; }
+
+        .preview-html {
+            background: white;
+            border: 1px solid var(--card-line);
+            border-radius: 3px;
+            padding: 16px;
+            font-family: 'Courier Prime', monospace;
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        @media print {
+            .preview-html {
+                border: none;
+                box-shadow: none;
+            }
+        }
+
+        .stats-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 8px;
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 10px;
+            font-family: 'Special Elite', monospace;
+            font-size: 10px;
+            color: #15803d;
+        }
+
+        .save-status {
+            font-family: 'Kalam', cursive;
+            font-size: 10px;
+            color: #d97706;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .save-status.saved {
+            color: #16a34a;
+        }
+
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--card-white);
+            border-radius: 6px;
+            padding: 24px;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.5);
+        }
+
+        .kbd {
+            display: inline-block;
+            padding: 2px 6px;
+            background: #e5e7eb;
+            border: 1px solid #9ca3af;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 10px;
+            box-shadow: 0 1px 0 rgba(0,0,0,0.2);
+        }
+
+        .status-tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 9px;
+            font-family: 'Special Elite', monospace;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .status-tag.draft { background: #fef3c7; color: #92400e; border: 1px solid #f59e0b; }
+        .status-tag.revised { background: #dbeafe; color: #1e40af; border: 1px solid #3b82f6; }
+        .status-tag.locked { background: #fee2e2; color: #991b1b; border: 1px solid #ef4444; }
+        .status-tag.shot { background: #dcfce7; color: #166534; border: 1px solid #22c55e; }
+
+        .search-bar {
+            width: 100%;
+            padding: 8px 12px;
+            border: 2px solid rgba(201, 184, 160, 0.6);
+            border-radius: 4px;
+            font-family: 'Special Elite', monospace;
+            font-size: 11px;
+            background: var(--card-white);
+        }
+
+        .search-bar:focus {
+            outline: none;
+            border-color: var(--focus-ring);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .split-view {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .split-pane {
+            background: rgba(255,253,247,0.6);
+            border: 1px solid rgba(201, 184, 160, 0.5);
+            border-radius: 4px;
+            padding: 10px;
+        }
+
+        .split-pane h4 {
+            font-family: 'Special Elite', monospace;
+            font-size: 11px;
+            color: var(--ink-red);
+            margin-bottom: 8px;
+            padding-bottom: 4px;
+            border-bottom: 1px solid rgba(201, 184, 160, 0.4);
+        }
+
+        .shot-dropdown {
+            position: relative;
+        }
+
+        .shot-presets {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--card-white);
+            border: 1px solid rgba(201, 184, 160, 0.6);
+            border-radius: 3px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 50;
+            max-height: 300px;
+            overflow-y: auto;
+            display: none;
+            margin-top: 2px;
+        }
+
+        .shot-presets.show {
+            display: block;
+        }
+
+        .shot-preset-item {
+            padding: 5px 8px;
+            font-family: 'Courier Prime', monospace;
+            font-size: 10px;
+            cursor: pointer;
+            border-bottom: 1px solid rgba(201, 184, 160, 0.2);
+            transition: all 0.1s ease;
+        }
+
+        .shot-preset-item:hover {
+            background: #fef3c7;
+            color: #78350f;
+        }
+
+        .character-block {
+            display: flex;
+            align-items: center;
+            padding: 3px 6px;
+            background: rgba(255,253,247,0.5);
+            border: 1px solid rgba(201, 184, 160, 0.4);
+            border-radius: 3px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            font-size: 10px;
+        }
+
+        .character-block:hover {
+            background: rgba(255,253,247,0.8);
+            border-color: #f59e0b;
+        }
+
+        .character-block.active {
+            background: #fef3c7;
+            border-color: #f59e0b;
+        }
+
+        .checkbox-paper {
+            width: 14px;
+            height: 14px;
+            border: 2px solid #78350f;
+            border-radius: 2px;
+            appearance: none;
+            cursor: pointer;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .checkbox-paper:checked {
+            background: #78350f;
+        }
+
+        .checkbox-paper:checked::after {
+            content: '✓';
+            position: absolute;
+            color: white;
+            font-size: 10px;
+            top: -2px;
+            left: 1px;
+        }
+
+        .checkbox-paper:focus {
+            outline: 2px solid var(--focus-ring);
+            outline-offset: 1px;
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(93, 64, 55, 0.2);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #5d4037;
+            border-radius: 5px;
+            border: 2px solid #8b6f47;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4e342e;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        #snapshotCanvas {
+            display: none;
+        }
+
+        @media (max-width: 1024px) {
+            .card-stack-btn {
+                min-height: 44px;
+                font-size: 8px;
+            }
+            .split-view {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="wood-panel sticky top-0 z-50 px-4 py-2.5">
+        <div class="max-w-[1900px] mx-auto flex items-center justify-between flex-wrap gap-2">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded bg-amber-100 flex items-center justify-center shadow-md">
+                    <i class="fa-solid fa-file-lines text-xl text-amber-900"></i>
+                </div>
+                <div>
+                    <h1 class="font-typewriter text-xl text-amber-50 tracking-wide">SceneCard Pro v2.3</h1>
+                    <p class="font-handwritten text-[10px] text-amber-200">Professional Production Card System</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-1.5 flex-wrap">
+                <span id="saveStatus" class="save-status">
+                    <i class="fa-solid fa-circle text-[5px]"></i>
+                    <span id="saveStatusText">Not saved</span>
+                </span>
+                <button id="snapshotBtn" class="btn-typewriter text-[10px] py-1.5 px-2.5 bg-purple-900" title="Create Card Snapshot (Ctrl+P)">
+                    <i class="fa-solid fa-camera mr-1"></i>SNAPSHOT
+                </button>
+                <button id="copyImageBtn" class="btn-typewriter text-[10px] py-1.5 px-2.5 bg-indigo-900" title="Copy Card as Image">
+                    <i class="fa-solid fa-images mr-1"></i>COPY IMG
+                </button>
+                <div class="w-px h-6 bg-amber-600 mx-1"></div>
+                <button id="undoBtn" class="btn-typewriter text-[10px] py-1.5 px-2.5" title="Undo (Ctrl+Z)">
+                    <i class="fa-solid fa-rotate-left"></i>
+                </button>
+                <button id="redoBtn" class="btn-typewriter text-[10px] py-1.5 px-2.5" title="Redo (Ctrl+Y)">
+                    <i class="fa-solid fa-rotate-right"></i>
+                </button>
+                <button id="shortcutsBtn" class="btn-typewriter text-[10px] py-1.5 px-2.5 bg-blue-900" title="Keyboard Shortcuts (?)">
+                    <i class="fa-solid fa-keyboard"></i>
+                </button>
+                <div class="w-px h-6 bg-amber-600 mx-1"></div>
+                <button id="saveProjectBtn" class="btn-typewriter text-[10px] bg-green-900">
+                    <i class="fa-solid fa-database mr-1"></i>SAVE
+                </button>
+                <button id="loadProjectBtn" class="btn-typewriter text-[10px]">
+                    <i class="fa-solid fa-folder-open mr-1"></i>LOAD
+                </button>
+                <button id="clearProjectBtn" class="btn-typewriter text-[10px] bg-red-900">
+                    <i class="fa-solid fa-trash mr-1"></i>CLEAR
+                </button>
+                <button id="exportProjectBtn" class="btn-typewriter text-[10px] bg-amber-900">
+                    <i class="fa-solid fa-file-export mr-1"></i>EXPORT
+                </button>
+                <button id="importProjectBtn" class="btn-typewriter text-[10px]">
+                    <i class="fa-solid fa-file-import mr-1"></i>IMPORT
+                </button>
+                <input type="file" id="importFileInput" accept=".json" style="display: none;">
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-[1900px] mx-auto p-3 lg:p-4">
+        <div class="grid grid-cols-1 xl:grid-cols-5 gap-4">
+            
+            <!-- Left: Card Matrix Grid with Search -->
+            <div class="xl:col-span-2">
+                <div class="cork-board p-3 h-[calc(100vh-170px)] flex flex-col">
+                    <div class="mb-3">
+                        <div class="flex items-center justify-between gap-2 mb-2">
+                            <h2 class="font-typewriter text-base text-amber-900">
+                                <i class="fa-solid fa-layer-group mr-1"></i>Card Stack
+                            </h2>
+                            <div class="flex gap-1.5">
+                                <span class="stats-badge">
+                                    <i class="fa-solid fa-square-check"></i>
+                                    <span id="cardCount">0</span>
+                                </span>
+                                <span class="stats-badge empty">
+                                    <i class="fa-solid fa-square"></i>
+                                    <span id="emptyCount">112</span>
+                                </span>
+                            </div>
+                        </div>
+                        <input type="text" id="searchInput" class="search-bar" placeholder="🔍 Search by title, character, or keyword..." tabindex="1">
+                    </div>
+                    <div id="cardMatrix" class="grid grid-cols-8 gap-1.5 overflow-y-auto flex-1 pr-1"></div>
+                </div>
+            </div>
+
+            <!-- Center: Tabbed Editor -->
+            <div class="xl:col-span-2">
+                <div class="index-card" id="mainCardContainer">
+                    <div class="flex gap-0.5 px-3 pt-3 overflow-x-auto border-b border-amber-600/30">
+                        <button class="tab-btn active" data-tab="main" tabindex="2">
+                            <i class="fa-solid fa-file-lines mr-1"></i>Main
+                        </button>
+                        <button class="tab-btn" data-tab="memory" tabindex="3">
+                            <i class="fa-solid fa-brain mr-1"></i>Memory
+                        </button>
+                        <button class="tab-btn" data-tab="rolls" tabindex="4">
+                            <i class="fa-solid fa-film mr-1"></i>Rolls A-F
+                        </button>
+                        <button class="tab-btn" data-tab="quote" tabindex="5">
+                            <i class="fa-solid fa-dollar-sign mr-1"></i>Quote
+                        </button>
+                        <button class="tab-btn" data-tab="preview" tabindex="6">
+                            <i class="fa-solid fa-eye mr-1"></i>Preview
+                        </button>
+                        <button class="tab-btn" data-tab="download" tabindex="7">
+                            <i class="fa-solid fa-download mr-1"></i>Export
+                        </button>
+                    </div>
+
+                    <div class="p-4 pt-3 max-h-[calc(100vh-250px)] overflow-y-auto">
+                        
+                        <!-- Main Card Tab -->
+                        <div class="tab-content active" data-tab-content="main">
+                            <div class="mb-3 pb-2 border-b-2 border-red-600/30">
+                                <div class="flex items-center justify-between mb-1">
+                                    <span class="font-typewriter text-xs text-red-700">SCENE CARD #<span id="cardNumber">001</span></span>
+                                    <div class="flex items-center gap-2">
+                                        <select id="cardStatus" class="status-tag draft" tabindex="8">
+                                            <option value="draft">DRAFT</option>
+                                            <option value="revised">REVISED</option>
+                                            <option value="locked">LOCKED</option>
+                                            <option value="shot">SHOT</option>
+                                        </select>
+                                        <span class="font-handwritten text-[10px] text-slate-600" id="lastSaved">Not saved</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Professional Toolbar -->
+                            <div class="toolbar mb-3">
+                                <button id="generateSluglineBtn" class="toolbar-btn" tabindex="9">
+                                    <i class="fa-solid fa-wand-magic-sparkles mr-1 text-blue-600"></i>GENERATE SLUGLINE
+                                </button>
+                                <button id="autoNumberBtn" class="toolbar-btn" tabindex="10">
+                                    <i class="fa-solid fa-hashtag mr-1 text-green-600"></i>AUTO-NUMBER
+                                </button>
+                                <button id="validateCardBtn" class="toolbar-btn" tabindex="11">
+                                    <i class="fa-solid fa-check-double mr-1 text-purple-600"></i>VALIDATE
+                                </button>
+                            </div>
+
+                            <div class="space-y-1.5">
+                                <div>
+                                    <label class="field-label">
+                                        Scene Title
+                                        <span id="titleCount" class="char-count">0/60</span>
+                                    </label>
+                                    <input type="text" id="sceneTitle" class="paper-input w-full font-bold text-blue-800" placeholder="Scene Title - Brief Description" maxlength="60" tabindex="12">
+                                    <div id="titleError" class="error-msg hidden"></div>
+                                </div>
+
+                                <div>
+                                    <label class="field-label">
+                                        Act/Timeline Header
+                                        <button id="formatHeaderBtn" class="text-[9px] text-blue-600 hover:underline" tabindex="13">Auto-Format</button>
+                                    </label>
+                                    <input type="text" id="actHeader" class="paper-input w-full" placeholder="001/112 Act 1 Pg 05/track1/videoclip1" pattern="\d{3}\/\d{3} Act \d+ Pg \d+" tabindex="14">
+                                    <div id="headerError" class="error-msg hidden"></div>
+                                </div>
+
+                                <div>
+                                    <label class="field-label">Title/Project</label>
+                                    <input type="text" id="titleProject" class="paper-input w-full" placeholder="##title/project/" tabindex="15">
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-2">
+                                    <div>
+                                        <label class="field-label">Type</label>
+                                        <input type="text" id="type" class="paper-input w-full" placeholder="##type/" tabindex="16">
+                                    </div>
+                                    <div>
+                                        <label class="field-label">##date/</label>
+                                        <input type="date" id="dateField" class="paper-input w-full" tabindex="17">
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="field-label">Story Mapping Guide</label>
+                                    <input type="text" id="storyMap" class="paper-input w-full" placeholder="MS: [Clip/Scene/theme/pg/act]" tabindex="18">
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-2">
+                                    <div>
+                                        <label class="field-label">Clip</label>
+                                        <input type="text" id="clip" class="paper-input w-full" placeholder="#1 = 30" tabindex="19">
+                                    </div>
+                                    <div>
+                                        <label class="field-label">MP3</label>
+                                        <input type="text" id="mp3" class="paper-input w-full" placeholder="#1 = 35" tabindex="20">
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="field-label">
+                                        INT/EXT - Location - Time
+                                        <button id="sluglineHelpBtn" class="text-[9px] text-blue-600 hover:underline" tabindex="21">Format Guide</button>
+                                    </label>
+                                    <input type="text" id="intExtLocation" class="paper-input w-full font-bold" placeholder="INT: [Location] - [DAY/NIGHT]" tabindex="22">
+                                </div>
+
+                                <div>
+                                    <label class="field-label">Location Detail</label>
+                                    <input type="text" id="locationDetail" class="paper-input w-full" placeholder="Warehouse floor, parking lot, etc." tabindex="23">
+                                </div>
+
+                                <div>
+                                    <label class="field-label">Time of Day</label>
+                                    <input type="text" id="timeOfDay" class="paper-input w-full" placeholder="DAY, NIGHT, DAWN, DUSK, etc." tabindex="24">
+                                </div>
+
+                                <div>
+                                    <label class="field-label">
+                                        IN
+                                        <span id="inCount" class="char-count">0/100</span>
+                                    </label>
+                                    <input type="text" id="inPoint" class="paper-input w-full" placeholder="Character enters/starts with..." maxlength="100" tabindex="25">
+                                </div>
+
+                                <div>
+                                    <label class="field-label">
+                                        BEAT 1
+                                        <span id="beat1Count" class="char-count">0/100</span>
+                                    </label>
+                                    <input type="text" id="beat1" class="paper-input w-full" placeholder="Action or line" maxlength="100" tabindex="26">
+                                </div>
+
+                                <div>
+                                    <label class="field-label">
+                                        BEAT 2
+                                        <span id="beat2Count" class="char-count">0/100</span>
+                                    </label>
+                                    <input type="text" id="beat2" class="paper-input w-full" placeholder="Response/reaction" maxlength="100" tabindex="27">
+                                </div>
+
+                                <div>
+                                    <label class="field-label">
+                                        TURN
+                                        <span id="turnCount" class="char-count">0/100</span>
+                                    </label>
+                                    <input type="text" id="turn" class="paper-input w-full" placeholder="Realization/reversal/escalation" maxlength="100" tabindex="28">
+                                </div>
+
+                                <div>
+                                    <label class="field-label">
+                                        OUT
+                                        <span id="outCount" class="char-count">0/100</span>
+                                    </label>
+                                    <input type="text" id="outPoint" class="paper-input w-full" placeholder="Last line or action" maxlength="100" tabindex="29">
+                                </div>
+
+                                <div>
+                                    <label class="field-label">EMO</label>
+                                    <input type="text" id="emo" class="paper-input w-full" placeholder="[Start emotion] → [End emotion]" tabindex="30">
+                                </div>
+
+                                <div class="shot-dropdown">
+                                    <label class="field-label">SHOT</label>
+                                    <div class="flex gap-1">
+                                        <input type="text" id="shot" class="paper-input flex-1" placeholder="Coverage: wide, 2-shot, CU, etc." tabindex="31">
+                                        <button id="shotPresetBtn" class="btn-paper btn-sm" type="button" tabindex="32">
+                                            <i class="fa-solid fa-chevron-down"></i>
+                                        </button>
+                                    </div>
+                                    <div id="shotPresets" class="shot-presets"></div>
+                                </div>
+
+                                <div>
+                                    <label class="field-label">SOUNDS</label>
+                                    <input type="text" id="sounds" class="paper-input w-full" placeholder="Ambient noise, background noise, theme" tabindex="33">
+                                </div>
+
+                                <div>
+                                    <label class="field-label">VISUAL EFX</label>
+                                    <input type="text" id="visualEfx" class="paper-input w-full" placeholder="booms/explosions/blood/bullets" tabindex="34">
+                                </div>
+
+                                <div>
+                                    <label class="field-label">SOUND FXS</label>
+                                    <input type="text" id="soundFxs" class="paper-input w-full" placeholder="booms/ explosions/ blood / bullets" tabindex="35">
+                                </div>
+
+                                <div>
+                                    <label class="field-label">MP3 FX</label>
+                                    <input type="text" id="mp3fx" class="paper-input w-full" placeholder="boom/ bullets/bang/animal/human/ship" tabindex="36">
+                                </div>
+
+                                <div>
+                                    <label class="field-label">SYFY</label>
+                                    <input type="text" id="syfy" class="paper-input w-full" placeholder="computers/science/virus/" tabindex="37">
+                                </div>
+                            </div>
+
+                            <!-- Characters -->
+                            <div class="mt-3 pt-2 border-t-2 border-red-600/30">
+                                <label class="field-label mb-1.5 block">CHARACTERS</label>
+                                <div class="grid grid-cols-2 gap-1.5 mb-2">
+                                    <label class="character-block" data-char="c1" tabindex="38">
+                                        <input type="checkbox" class="checkbox-paper mr-1.5" data-char="c1">
+                                        <span>C1</span>
+                                        <input type="text" class="paper-input w-full mt-0.5 text-[9px]" placeholder="Character name" data-char-name="c1" tabindex="39">
+                                    </label>
+                                    <label class="character-block" data-char="c2" tabindex="40">
+                                        <input type="checkbox" class="checkbox-paper mr-1.5" data-char="c2">
+                                        <span>C2</span>
+                                        <input type="text" class="paper-input w-full mt-0.5 text-[9px]" placeholder="Character name" data-char-name="c2" tabindex="41">
+                                    </label>
+                                    <label class="character-block" data-char="c3" tabindex="42">
+                                        <input type="checkbox" class="checkbox-paper mr-1.5" data-char="c3">
+                                        <span>C3</span>
+                                        <input type="text" class="paper-input w-full mt-0.5 text-[9px]" placeholder="Character name" data-char-name="c3" tabindex="43">
+                                    </label>
+                                    <label class="character-block" data-char="c4" tabindex="44">
+                                        <input type="checkbox" class="checkbox-paper mr-1.5" data-char="c4">
+                                        <span>C4</span>
+                                        <input type="text" class="paper-input w-full mt-0.5 text-[9px]" placeholder="Character name" data-char-name="c4" tabindex="45">
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="mt-3 grid grid-cols-3 gap-2">
+                                <button id="clearCardBtn" class="btn-paper" tabindex="46">
+                                    <i class="fa-solid fa-eraser mr-1"></i>Clear
+                                </button>
+                                <button id="duplicateCardBtn" class="btn-paper bg-amber-100" tabindex="47">
+                                    <i class="fa-solid fa-clone mr-1"></i>Duplicate
+                                </button>
+                                <button id="copyCardBtn" class="btn-paper text-[10px]" tabindex="48">
+                                    <i class="fa-solid fa-copy mr-1"></i>Copy Text
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Memory Tab -->
+                        <div class="tab-content" data-tab-content="memory">
+                            <div class="mb-3">
+                                <label class="field-label mb-1.5 block">MEMORY SECTION - Rich Text Editor</label>
+                                <p class="font-handwritten text-[10px] text-amber-700 mb-2">Notes, callbacks, setups, and payoffs for this scene</p>
+                                
+                                <div class="toolbar mb-2">
+                                    <button id="boldBtn" class="toolbar-btn" title="Bold">
+                                        <i class="fa-solid fa-bold"></i>
+                                    </button>
+                                    <button id="italicBtn" class="toolbar-btn" title="Italic">
+                                        <i class="fa-solid fa-italic"></i>
+                                    </button>
+                                    <button id="underlineBtn" class="toolbar-btn" title="Underline">
+                                        <i class="fa-solid fa-underline"></i>
+                                    </button>
+                                    <div class="w-px h-5 bg-gray-300"></div>
+                                    <button id="bulletBtn" class="toolbar-btn" title="Bullet List">
+                                        <i class="fa-solid fa-list-ul"></i>
+                                    </button>
+                                    <button id="numberBtn" class="toolbar-btn" title="Numbered List">
+                                        <i class="fa-solid fa-list-ol"></i>
+                                    </button>
+                                    <div class="w-px h-5 bg-gray-300"></div>
+                                    <button id="addTimestampBtn" class="toolbar-btn" title="Add Timestamp">
+                                        <i class="fa-solid fa-clock"></i> Time
+                                    </button>
+                                    <button id="addCallbackBtn" class="toolbar-btn" title="Add Callback Reference">
+                                        <i class="fa-solid fa-link"></i> CALLBACK
+                                    </button>
+                                </div>
+
+                                <div id="memoryEditor" class="rich-editor" contenteditable="true" tabindex="49"></div>
+                                <textarea id="memory" style="display: none;"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Rolls A-F Tab -->
+                        <div class="tab-content" data-tab-content="rolls">
+                            <div class="mb-3">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h3 class="font-typewriter text-xs text-red-700">SHOT LIST - ROLLS A-F</h3>
+                                    <span class="text-[10px] text-amber-700">Total Shots: <span id="totalShots">0</span></span>
+                                </div>
+                                <p class="font-handwritten text-[10px] text-amber-700 mb-3">Organize shots by camera roll with auto-numbering</p>
+                                
+                                <div class="roll-section" data-roll="A">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="field-label text-red-700">A ROLL - Primary Action</label>
+                                        <button class="btn-paper btn-sm add-shot-btn" data-roll="A" tabindex="50">
+                                            <i class="fa-solid fa-plus mr-1"></i>ADD SHOT
+                                        </button>
+                                    </div>
+                                    <table class="shot-table mb-2">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 40px;">Shot#</th>
+                                                <th>Description</th>
+                                                <th style="width: 60px;">Lens</th>
+                                                <th style="width: 60px;">Duration</th>
+                                                <th>Notes</th>
+                                                <th style="width: 30px;"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="shotsA"></tbody>
+                                    </table>
+                                </div>
+
+                                <div class="roll-section" data-roll="B">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="field-label text-blue-700">B ROLL - Secondary/Cutaways</label>
+                                        <button class="btn-paper btn-sm add-shot-btn" data-roll="B" tabindex="51">
+                                            <i class="fa-solid fa-plus mr-1"></i>ADD SHOT
+                                        </button>
+                                    </div>
+                                    <table class="shot-table mb-2">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 40px;">Shot#</th>
+                                                <th>Description</th>
+                                                <th style="width: 60px;">Lens</th>
+                                                <th style="width: 60px;">Duration</th>
+                                                <th>Notes</th>
+                                                <th style="width: 30px;"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="shotsB"></tbody>
+                                    </table>
+                                </div>
+
+                                <div class="roll-section" data-roll="C">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="field-label text-green-700">C ROLL - Alternate Angles</label>
+                                        <button class="btn-paper btn-sm add-shot-btn" data-roll="C" tabindex="52">
+                                            <i class="fa-solid fa-plus mr-1"></i>ADD SHOT
+                                        </button>
+                                    </div>
+                                    <table class="shot-table mb-2">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 40px;">Shot#</th>
+                                                <th>Description</th>
+                                                <th style="width: 60px;">Lens</th>
+                                                <th style="width: 60px;">Duration</th>
+                                                <th>Notes</th>
+                                                <th style="width: 30px;"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="shotsC"></tbody>
+                                    </table>
+                                </div>
+
+                                <div class="roll-section" data-roll="D">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="field-label text-yellow-700">D ROLL - VFX Plates</label>
+                                        <button class="btn-paper btn-sm add-shot-btn" data-roll="D" tabindex="53">
+                                            <i class="fa-solid fa-plus mr-1"></i>ADD SHOT
+                                        </button>
+                                    </div>
+                                    <table class="shot-table mb-2">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 40px;">Shot#</th>
+                                                <th>Description</th>
+                                                <th style="width: 60px;">Lens</th>
+                                                <th style="width: 60px;">Duration</th>
+                                                <th>Notes</th>
+                                                <th style="width: 30px;"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="shotsD"></tbody>
+                                    </table>
+                                </div>
+
+                                <div class="roll-section" data-roll="E">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="field-label text-purple-700">E ROLL - SFX/Atmosphere</label>
+                                        <button class="btn-paper btn-sm add-shot-btn" data-roll="E" tabindex="54">
+                                            <i class="fa-solid fa-plus mr-1"></i>ADD SHOT
+                                        </button>
+                                    </div>
+                                    <table class="shot-table mb-2">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 40px;">Shot#</th>
+                                                <th>Description</th>
+                                                <th style="width: 60px;">Lens</th>
+                                                <th style="width: 60px;">Duration</th>
+                                                <th>Notes</th>
+                                                <th style="width: 30px;"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="shotsE"></tbody>
+                                    </table>
+                                </div>
+
+                                <div class="roll-section" data-roll="F">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="field-label text-cyan-700">F ROLL - Pickups/Reshoots</label>
+                                        <button class="btn-paper btn-sm add-shot-btn" data-roll="F" tabindex="55">
+                                            <i class="fa-solid fa-plus mr-1"></i>ADD SHOT
+                                        </button>
+                                    </div>
+                                    <table class="shot-table mb-2">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 40px;">Shot#</th>
+                                                <th>Description</th>
+                                                <th style="width: 60px;">Lens</th>
+                                                <th style="width: 60px;">Duration</th>
+                                                <th>Notes</th>
+                                                <th style="width: 30px;"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="shotsF"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Price Quote Tab -->
+                        <div class="tab-content" data-tab-content="quote">
+                            <div class="mb-3">
+                                <h3 class="font-typewriter text-xs text-red-700 mb-2">PRICE QUOTE & BUDGET</h3>
+                                
+                                <div class="grid grid-cols-2 gap-3 mb-3">
+                                    <div>
+                                        <label class="field-label">Rate Per Clip ($)</label>
+                                        <input type="number" id="priceRate" class="paper-input w-full" placeholder="0.00" step="0.01" tabindex="56">
+                                    </div>
+                                    <div>
+                                        <label class="field-label">Clip Cost Total</label>
+                                        <input type="number" id="priceTotal" class="paper-input w-full bg-yellow-50" placeholder="0.00" readonly>
+                                    </div>
+                                </div>
+
+                                <div class="mt-4 pt-2 border-t-2 border-red-600/30">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="field-label">LINE ITEMS - Quantity × Rate</label>
+                                        <button id="addLineItemBtn" class="btn-paper btn-sm" tabindex="57">
+                                            <i class="fa-solid fa-plus mr-1"></i>ADD LINE ITEM
+                                        </button>
+                                    </div>
+                                    <table class="ledger-table w-full">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 60px;">Acct #</th>
+                                                <th>Description</th>
+                                                <th style="width: 50px;">Qty</th>
+                                                <th style="width: 70px;">Rate</th>
+                                                <th style="width: 80px;" class="text-right">Total</th>
+                                                <th style="width: 30px;"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="lineItemsBody"></tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td colspan="4" class="text-right font-bold text-amber-900">Subtotal:</td>
+                                                <td class="text-right font-bold text-blue-700">$<span id="lineItemsSubtotal">0.00</span></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4" class="text-right font-bold text-amber-900">Tax (8.5%):</td>
+                                                <td class="text-right font-bold text-blue-700">$<span id="lineItemsTax">0.00</span></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4" class="text-right font-bold text-amber-900">TOTAL:</td>
+                                                <td class="text-right font-bold text-green-700">$<span id="lineItemsTotal">0.00</span></td>
+                                                <td></td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                    <button id="exportInvoiceBtn" class="btn-paper mt-2 w-full" tabindex="58">
+                                        <i class="fa-solid fa-file-pdf mr-1 text-red-600"></i>EXPORT AS INVOICE PDF
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Preview Tab -->
+                        <div class="tab-content" data-tab-content="preview">
+                            <div class="mb-3">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h3 class="font-typewriter text-xs text-red-700">CARD PREVIEW</h3>
+                                    <div class="flex gap-1.5">
+                                        <button id="snapshotPreviewBtn" class="btn-paper btn-sm bg-purple-50" title="Snapshot this preview">
+                                            <i class="fa-solid fa-camera mr-1"></i>SNAPSHOT
+                                        </button>
+                                        <button id="copyImagePreviewBtn" class="btn-paper btn-sm bg-indigo-50" title="Copy image to clipboard">
+                                            <i class="fa-solid fa-images mr-1"></i>COPY IMAGE
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label class="field-label mb-1 block">HTML Preview (Print-Ready CSS)</label>
+                                    <div id="htmlPreview" class="preview-html"></div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <div class="flex items-center justify-between mb-1">
+                                        <label class="field-label">Text Preview</label>
+                                        <select id="textFormatSelect" class="btn-paper btn-sm" tabindex="59">
+                                            <option value="standard">Standard Format</option>
+                                            <option value="fdx">Final Draft FDX</option>
+                                        </select>
+                                    </div>
+                                    <pre id="textPreview" class="paper-textarea w-full h-48 whitespace-pre-wrap text-[10px]"></pre>
+                                </div>
+
+                                <div>
+                                    <label class="field-label mb-1 block">Artifact Preview - Split View</label>
+                                    <div class="split-view">
+                                        <div class="split-pane">
+                                            <h4>Card Front</h4>
+                                            <pre id="cardFrontPreview" class="text-[9px] whitespace-pre-wrap"></pre>
+                                        </div>
+                                        <div class="split-pane">
+                                            <h4>Card Back</h4>
+                                            <pre id="cardBackPreview" class="text-[9px] whitespace-pre-wrap"></pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Download Tab -->
+                        <div class="tab-content" data-tab-content="download">
+                            <div class="mb-3">
+                                <h3 class="font-typewriter text-xs text-red-700 mb-2">EXPORT OPTIONS</h3>
+                                <p class="font-handwritten text-[10px] text-amber-700 mb-3">Download this card or entire project</p>
+                                
+                                <div class="grid grid-cols-1 gap-2">
+                                    <button id="snapshotDownloadBtn" class="btn-paper text-left bg-purple-50" tabindex="60">
+                                        <i class="fa-solid fa-camera mr-1.5 text-purple-600"></i>
+                                        <strong>Instant Picture - PNG Snapshot</strong>
+                                        <p class="text-[9px] text-slate-600 mt-0.5">Canvas render with typewriter layout + watermark</p>
+                                    </button>
+
+                                    <button id="downloadTxtBtn" class="btn-paper text-left" tabindex="61">
+                                        <i class="fa-solid fa-file-lines mr-1.5 text-blue-600"></i>
+                                        <strong>Download as .TXT</strong>
+                                        <p class="text-[9px] text-slate-600 mt-0.5">Plain text format matching template</p>
+                                    </button>
+
+                                    <button id="downloadHtmlBtn" class="btn-paper text-left" tabindex="62">
+                                        <i class="fa-solid fa-code mr-1.5 text-orange-600"></i>
+                                        <strong>Download as .HTML</strong>
+                                        <p class="text-[9px] text-slate-600 mt-0.5">Formatted HTML with print CSS</p>
+                                    </button>
+
+                                    <button id="downloadFdxBtn" class="btn-paper text-left" tabindex="63">
+                                        <i class="fa-solid fa-film mr-1.5 text-purple-600"></i>
+                                        <strong>Download as .FDX (Final Draft)</strong>
+                                        <p class="text-[9px] text-slate-600 mt-0.5">Industry standard script format</p>
+                                    </button>
+
+                                    <button id="downloadJsonBtn" class="btn-paper text-left" tabindex="64">
+                                        <i class="fa-solid fa-file-code mr-1.5 text-green-600"></i>
+                                        <strong>Download as .JSON</strong>
+                                        <p class="text-[9px] text-slate-600 mt-0.5">Raw data for backup/import</p>
+                                    </button>
+
+                                    <button id="downloadCsvBtn" class="btn-paper text-left" tabindex="65">
+                                        <i class="fa-solid fa-table mr-1.5 text-cyan-600"></i>
+                                        <strong>Download as .CSV (Spreadsheet)</strong>
+                                        <p class="text-[9px] text-slate-600 mt-0.5">Excel/Google Sheets compatible</p>
+                                    </button>
+
+                                    <button id="downloadAllJsonBtn" class="btn-paper text-left bg-amber-50" tabindex="66">
+                                        <i class="fa-solid fa-archive mr-1.5 text-red-600"></i>
+                                        <strong>Download All Cards as .JSON</strong>
+                                        <p class="text-[9px] text-slate-600 mt-0.5">Export entire 112-card project</p>
+                                    </button>
+
+                                    <button id="downloadZipBtn" class="btn-paper text-left bg-blue-50" tabindex="67">
+                                        <i class="fa-solid fa-file-zipper mr-1.5 text-blue-600"></i>
+                                        <strong>Batch Export All Cards as .ZIP</strong>
+                                        <p class="text-[9px] text-slate-600 mt-0.5">All formats in one archive</p>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Live Mirror -->
+            <div class="xl:col-span-1">
+                <div class="sticky top-20">
+                    <div class="mb-2 flex items-center justify-between">
+                        <h2 class="font-typewriter text-base text-amber-50">
+                            <i class="fa-solid fa-scroll mr-1"></i>Live Mirror
+                        </h2>
+                        <button id="copyMirrorBtn" class="btn-paper btn-sm" tabindex="68">
+                            <i class="fa-solid fa-copy mr-1"></i>Copy
+                        </button>
+                    </div>
+                    <div class="index-card p-3 h-[calc(100vh-220px)] overflow-y-auto">
+                        <pre id="mirrorOutput" class="paper-textarea w-full h-full whitespace-pre-wrap text-[10px]"></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Hidden Canvas for Snapshots -->
+    <canvas id="snapshotCanvas"></canvas>
+
+    <!-- Toast -->
+    <div id="toast" class="fixed bottom-6 right-6 index-card px-5 py-3 flex items-center gap-2.5 transform translate-y-32 opacity-0 transition-all duration-300 z-50" style="min-width: 260px;">
+        <i class="fa-solid fa-check-circle text-xl text-green-600"></i>
+        <div>
+            <p class="font-typewriter text-xs font-bold text-amber-900" id="toastTitle">Success!</p>
+            <p class="font-handwritten text-[10px] text-amber-700" id="toastMsg">Action completed</p>
+        </div>
+    </div>
+
+    <!-- Shortcuts Modal -->
+    <div id="shortcutsModal" class="modal">
+        <div class="modal-content">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="font-typewriter text-lg text-red-700">Keyboard Shortcuts</h2>
+                <button id="closeShortcutsBtn" class="text-gray-500 hover:text-gray-700">
+                    <i class="fa-solid fa-times text-xl"></i>
+                </button>
+            </div>
+            <div class="space-y-3 text-xs">
+                <div class="grid grid-cols-2 gap-2">
+                    <div><kbd>Ctrl+S</kbd> Save Project</div>
+                    <div><kbd>Ctrl+P</kbd> Snapshot Card</div>
+                    <div><kbd>Ctrl+Z</kbd> Undo</div>
+                    <div><kbd>Ctrl+Y</kbd> Redo</div>
+                    <div><kbd>Ctrl+D</kbd> Duplicate Card</div>
+                    <div><kbd>Ctrl+→</kbd> Next Card</div>
+                    <div><kbd>Ctrl+←</kbd> Previous Card</div>
+                    <div><kbd>Tab</kbd> Next Field</div>
+                    <div><kbd>Shift+Tab</kbd> Previous Field</div>
+                    <div><kbd>?</kbd> Show Shortcuts</div>
+                    <div><kbd>Esc</kbd> Close Modals</div>
+                </div>
+                <div class="mt-4 pt-3 border-t">
+                    <h3 class="font-typewriter text-sm text-amber-900 mb-2">Focus Indicators</h3>
+                    <p class="text-[10px] text-gray-600">All interactive elements show blue outline when focused for accessibility.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // State Management
+        const TOTAL_CARDS = 112;
+        const STORAGE_KEY = 'scenecard_project_data';
+        const AUTOSAVE_DELAY = 2000;
+        let cards = {};
+        let activeCard = 1;
+        let autoSaveTimeout = null;
+        let lastSaveTime = null;
+        let undoStack = [];
+        let redoStack = [];
+        const MAX_UNDO = 50;
+
+        const SHOT_PRESETS = [
+            'WIDE', 'MEDIUM', 'CLOSE-UP', 'CU', '2-SHOT', 'OTS', 
+            'POV', 'INSERT', 'ESTABLISHING', 'TRACKING', 'CRANE', 
+            'DOLLY', 'HANDHELD', 'MASTER', 'EXTREME CLOSE-UP', 'ECU',
+            'MEDIUM CLOSE-UP', 'MCU', 'AMERICAN SHOT', 'OVERHEAD', 'LOW ANGLE', 'HIGH ANGLE'
+        ];
+
+        // Initialize
+        function init() {
+            if (!loadFromLocalStorage()) {
+                initEmptyCards();
+                initSampleCard();
+            }
+            initShotPresets();
+            initTabs();
+            initRichEditor();
+            renderMatrix();
+            loadCard(activeCard);
+            updateCardCount();
+            updateSaveStatus();
+            saveUndoState();
+        }
+
+        function initEmptyCards() {
+            for (let i = 1; i <= TOTAL_CARDS; i++) {
+                cards[i] = createEmptyCard();
+            }
+        }
+
+        function createEmptyCard() {
+            return {
+                sceneTitle: '',
+                actHeader: '',
+                titleProject: '',
+                type: '',
+                dateField: '',
+                storyMap: '',
+                clip: '',
+                mp3: '',
+                intExtLocation: '',
+                locationDetail: '',
+                timeOfDay: '',
+                inPoint: '',
+                beat1: '',
+                beat2: '',
+                turn: '',
+                outPoint: '',
+                emo: '',
+                shot: '',
+                sounds: '',
+                visualEfx: '',
+                soundFxs: '',
+                mp3fx: '',
+                syfy: '',
+                characters: {
+                    c1: { active: false, name: '' },
+                    c2: { active: false, name: '' },
+                    c3: { active: false, name: '' },
+                    c4: { active: false, name: '' }
+                },
+                memory: '',
+                shotsA: [],
+                shotsB: [],
+                shotsC: [],
+                shotsD: [],
+                shotsE: [],
+                shotsF: [],
+                priceRate: 0,
+                priceTotal: 0,
+                lineItems: [],
+                status: 'draft',
+                callbacks: []
+            };
+        }
+
+        function initSampleCard() {
+            cards[50] = createEmptyCard();
+            cards[50].sceneTitle = 'WAREHOUSE CHASE SEQUENCE';
+            cards[50].actHeader = '050/112 Act 2 Pg 15/track1/videoclip1';
+            cards[50].titleProject = '##title/project/ NEON CITY BLUES';
+            cards[50].type = '##type/ Thriller';
+            cards[50].dateField = '2024-10-15';
+            cards[50].storyMap = 'MS: Scene 12 - Tech Noir Chase /pg15/act2';
+            cards[50].clip = '#12 = 45';
+            cards[50].mp3 = '#8 = 35';
+            cards[50].intExtLocation = 'EXT: ABANDONED WAREHOUSE - NIGHT';
+            cards[50].locationDetail = 'Rooftop and fire escape';
+            cards[50].timeOfDay = 'NIGHT';
+            cards[50].inPoint = 'JACK sprints through broken doorway, blood on shirt';
+            cards[50].beat1 = 'Gunshots ring out behind him. He ducks behind crate.';
+            cards[50].beat2 = 'CHASE lights up the space with muzzle flash. "Give up!"';
+            cards[50].turn = 'JACK spots the fire escape. One chance to live.';
+            cards[50].outPoint = 'Jack vaults over railing into darkness below.';
+            cards[50].emo = '[Desperate] → [Determined]';
+            cards[50].shot = 'Handheld, Wide tracking shot, CU on blood, POV escape';
+            cards[50].sounds = 'Rain on metal roof, distant sirens, industrial hum';
+            cards[50].visualEfx = 'Muzzle flashes, sparks, blood splatter, rain streaks';
+            cards[50].soundFxs = 'Gunshots echo, metal impacts, heavy breathing';
+            cards[50].mp3fx = 'bullets ricochet / metal bang / human grunts';
+            cards[50].syfy = 'neural implant HUD flickers / tracking virus active';
+            cards[50].characters = {
+                c1: { active: true, name: 'JACK' },
+                c2: { active: true, name: 'CHASE' },
+                c3: { active: false, name: '' },
+                c4: { active: false, name: '' }
+            };
+            cards[50].memory = '<p><strong>Callback:</strong> Jack shot in Act 1.</p><p><strong>Payoff:</strong> Virus mentioned in Scene 3 now active.</p>';
+            cards[50].shotsA = [
+                { id: 1, description: 'Jack running - handheld tracking', lens: '35mm', duration: '00:15', notes: 'Lead shot' },
+                { id: 2, description: 'Wide warehouse establish', lens: '18mm', duration: '00:08', notes: 'Crane up' }
+            ];
+            cards[50].shotsB = [
+                { id: 3, description: 'CU blood on shirt', lens: '85mm', duration: '00:03', notes: 'Insert' }
+            ];
+            cards[50].priceRate = 150.00;
+            cards[50].priceTotal = 150.00;
+            cards[50].lineItems = [
+                { account: '3001', description: 'Location Rental', quantity: 1, rate: 2500.00, total: 2500.00 },
+                { account: '4501', description: 'Practical SFX', quantity: 1, rate: 800.00, total: 800.00 },
+                { account: '5101', description: 'Stunt Coordinator', quantity: 1, rate: 1200.00, total: 1200.00 }
+            ];
+            cards[50].status = 'revised';
+            activeCard = 50;
+        }
+
+        function saveUndoState() {
+            undoStack.push(JSON.stringify(cards[activeCard]));
+            if (undoStack.length > MAX_UNDO) undoStack.shift();
+            redoStack = [];
+        }
+
+        function undo() {
+            if (undoStack.length > 1) {
+                redoStack.push(undoStack.pop());
+                cards[activeCard] = JSON.parse(undoStack[undoStack.length - 1]);
+                loadCard(activeCard);
+                showToast('Undo', 'Previous state restored');
+            }
+        }
+
+        function redo() {
+            if (redoStack.length > 0) {
+                const state = redoStack.pop();
+                cards[activeCard] = JSON.parse(state);
+                undoStack.push(state);
+                loadCard(activeCard);
+                showToast('Redo', 'Change restored');
+            }
+        }
+
+        document.getElementById('undoBtn').addEventListener('click', undo);
+        document.getElementById('redoBtn').addEventListener('click', redo);
+
+        function saveToLocalStorage() {
+            try {
+                const projectData = {
+                    cards: cards,
+                    activeCard: activeCard,
+                    lastSaved: new Date().toISOString(),
+                    version: '2.3'
+                };
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(projectData));
+                lastSaveTime = new Date();
+                updateSaveStatus(true);
+                return true;
+            } catch (e) {
+                console.error('Failed to save to localStorage:', e);
+                showToast('Save Failed', 'Browser storage full or disabled', true);
+                return false;
+            }
+        }
+
+        function loadFromLocalStorage() {
+            try {
+                const saved = localStorage.getItem(STORAGE_KEY);
+                if (saved) {
+                    const projectData = JSON.parse(saved);
+                    cards = projectData.cards;
+                    // Migrate old cards to new structure
+                    Object.keys(cards).forEach(key => {
+                        if (!cards[key].lineItems) cards[key].lineItems = [];
+                        if (!cards[key].shotsA) cards[key].shotsA = [];
+                        if (!cards[key].shotsB) cards[key].shotsB = [];
+                        if (!cards[key].shotsC) cards[key].shotsC = [];
+                        if (!cards[key].shotsD) cards[key].shotsD = [];
+                        if (!cards[key].shotsE) cards[key].shotsE = [];
+                        if (!cards[key].shotsF) cards[key].shotsF = [];
+                        if (!cards[key].status) cards[key].status = 'draft';
+                        if (!cards[key].callbacks) cards[key].callbacks = [];
+                        if (!cards[key].locationDetail) cards[key].locationDetail = '';
+                        if (!cards[key].timeOfDay) cards[key].timeOfDay = '';
+                    });
+                    activeCard = projectData.activeCard || 1;
+                    lastSaveTime = projectData.lastSaved ? new Date(projectData.lastSaved) : null;
+                    return true;
+                }
+            } catch (e) {
+                console.error('Failed to load from localStorage:', e);
+            }
+            return false;
+        }
+
+        function clearLocalStorage() {
+            localStorage.removeItem(STORAGE_KEY);
+            lastSaveTime = null;
+            updateSaveStatus();
+        }
+
+        function autoSaveData() {
+            clearTimeout(autoSaveTimeout);
+            autoSaveTimeout = setTimeout(() => {
+                saveToLocalStorage();
+            }, AUTOSAVE_DELAY);
+        }
+
+        function updateSaveStatus(saved = false) {
+            const statusEl = document.getElementById('saveStatus');
+            const textEl = document.getElementById('saveStatusText');
+            
+            if (saved && lastSaveTime) {
+                statusEl.classList.add('saved');
+                textEl.textContent = `Last saved: ${lastSaveTime.toLocaleTimeString()}`;
+            } else if (lastSaveTime) {
+                statusEl.classList.add('saved');
+                textEl.textContent = `Last saved: ${lastSaveTime.toLocaleTimeString()}`;
+            } else {
+                statusEl.classList.remove('saved');
+                textEl.textContent = 'Not saved';
+            }
+        }
+
+        function initTabs() {
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const tabName = btn.dataset.tab;
+                    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                    btn.classList.add('active');
+                    document.querySelector(`.tab-content[data-tab-content="${tabName}"]`).classList.add('active');
+                    
+                    if (tabName === 'preview') {
+                        updatePreviews();
+                    }
+                });
+            });
+        }
+
+        function initShotPresets() {
+            const container = document.getElementById('shotPresets');
+            SHOT_PRESETS.forEach(preset => {
+                const item = document.createElement('div');
+                item.className = 'shot-preset-item';
+                item.textContent = preset;
+                item.addEventListener('click', () => {
+                    const shotInput = document.getElementById('shot');
+                    const currentValue = shotInput.value.trim();
+                    if (currentValue && !currentValue.endsWith(',')) {
+                        shotInput.value = currentValue + ', ' + preset;
+                    } else if (currentValue) {
+                        shotInput.value = currentValue + ' ' + preset;
+                    } else {
+                        shotInput.value = preset;
+                    }
+                    container.classList.remove('show');
+                    saveCardData();
+                    autoSaveData();
+                });
+                container.appendChild(item);
+            });
+
+            document.getElementById('shotPresetBtn').addEventListener('click', (e) => {
+                e.stopPropagation();
+                container.classList.toggle('show');
+            });
+
+            document.addEventListener('click', () => {
+                container.classList.remove('show');
+            });
+        }
+
+        function initRichEditor() {
+            const editor = document.getElementById('memoryEditor');
+            const hidden = document.getElementById('memory');
+
+            document.getElementById('boldBtn').addEventListener('click', () => document.execCommand('bold'));
+            document.getElementById('italicBtn').addEventListener('click', () => document.execCommand('italic'));
+            document.getElementById('underlineBtn').addEventListener('click', () => document.execCommand('underline'));
+            document.getElementById('bulletBtn').addEventListener('click', () => document.execCommand('insertUnorderedList'));
+            document.getElementById('numberBtn').addEventListener('click', () => document.execCommand('insertOrderedList'));
+            document.getElementById('addTimestampBtn').addEventListener('click', () => {
+                const time = new Date().toLocaleTimeString();
+                document.execCommand('insertText', false, `[${time}] `);
+            });
+            document.getElementById('addCallbackBtn').addEventListener('click', () => {
+                const ref = prompt('Enter card reference (e.g., Card #025):');
+                if (ref) {
+                    cards[activeCard].callbacks.push(ref);
+                    document.execCommand('insertHTML', false, `<span style="background: #fef3c7; padding: 1px 4px; border-radius: 2px;">[CALLBACK: ${ref}]</span> `);
+                }
+            });
+
+            editor.addEventListener('input', () => {
+                hidden.value = editor.innerHTML;
+                saveCardData();
+                autoSaveData();
+            });
+        }
+
+        function renderMatrix() {
+            const matrix = document.getElementById('cardMatrix');
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            matrix.innerHTML = '';
+            
+            for (let i = 1; i <= TOTAL_CARDS; i++) {
+                const card = cards[i];
+                const matchesSearch = !searchTerm || 
+                    card.sceneTitle.toLowerCase().includes(searchTerm) ||
+                    Object.values(card.characters).some(c => c.name.toLowerCase().includes(searchTerm)) ||
+                    card.intExtLocation.toLowerCase().includes(searchTerm);
+
+                if (!matchesSearch) continue;
+
+                const btn = document.createElement('button');
+                btn.className = 'card-stack-btn';
+                btn.dataset.cardNum = i;
+                btn.setAttribute('aria-label', `Card ${i}: ${card.sceneTitle || 'Empty'}`);
+                
+                const isFilled = isCardFilled(i);
+                if (isFilled) btn.classList.add('filled');
+                else btn.classList.add('empty');
+                
+                if (card.status) btn.classList.add(card.status);
+                if (i === activeCard) btn.classList.add('active');
+
+                const displayTitle = card.sceneTitle ? card.sceneTitle.substring(0, 12) : 'Empty';
+                const fullTitle = card.sceneTitle || 'Untitled Scene';
+
+                btn.innerHTML = `
+                    <div class="font-typewriter text-[9px] font-bold text-amber-900">#${String(i).padStart(3, '0')}</div>
+                    <div class="text-[7px] text-blue-800 truncate">${displayTitle}</div>
+                `;
+                btn.title = `#${String(i).padStart(3, '0')} - ${fullTitle} [${card.status.toUpperCase()}]`;
+                
+                btn.addEventListener('click', () => {
+                    saveUndoState();
+                    loadCard(i);
+                });
+                matrix.appendChild(btn);
+            }
+        }
+
+        function isCardFilled(cardNum) {
+            const card = cards[cardNum];
+            return card.sceneTitle || card.actHeader || card.titleProject || card.inPoint || 
+                   card.lineItems.length > 0 || card.memory || card.shotsA.length > 0;
+        }
+
+        function loadCard(num) {
+            activeCard = num;
+            const card = cards[num];
+            
+            document.getElementById('cardNumber').textContent = String(num).padStart(3, '0');
+            document.getElementById('sceneTitle').value = card.sceneTitle || '';
+            document.getElementById('actHeader').value = card.actHeader || '';
+            document.getElementById('titleProject').value = card.titleProject || '';
+            document.getElementById('type').value = card.type || '';
+            document.getElementById('dateField').value = card.dateField || '';
+            document.getElementById('storyMap').value = card.storyMap || '';
+            document.getElementById('clip').value = card.clip || '';
+            document.getElementById('mp3').value = card.mp3 || '';
+            document.getElementById('intExtLocation').value = card.intExtLocation || '';
+            document.getElementById('locationDetail').value = card.locationDetail || '';
+            document.getElementById('timeOfDay').value = card.timeOfDay || '';
+            document.getElementById('inPoint').value = card.inPoint || '';
+            document.getElementById('beat1').value = card.beat1 || '';
+            document.getElementById('beat2').value = card.beat2 || '';
+            document.getElementById('turn').value = card.turn || '';
+            document.getElementById('outPoint').value = card.outPoint || '';
+            document.getElementById('emo').value = card.emo || '';
+            document.getElementById('shot').value = card.shot || '';
+            document.getElementById('sounds').value = card.sounds || '';
+            document.getElementById('visualEfx').value = card.visualEfx || '';
+            document.getElementById('soundFxs').value = card.soundFxs || '';
+            document.getElementById('mp3fx').value = card.mp3fx || '';
+            document.getElementById('syfy').value = card.syfy || '';
+            document.getElementById('memory').value = card.memory || '';
+            document.getElementById('memoryEditor').innerHTML = card.memory || '';
+            document.getElementById('priceRate').value = card.priceRate || 0;
+            document.getElementById('priceTotal').value = card.priceTotal || 0;
+            document.getElementById('cardStatus').value = card.status || 'draft';
+            document.getElementById('cardStatus').className = `status-tag ${card.status || 'draft'}`;
+
+            updateCharCounts();
+
+            ['c1', 'c2', 'c3', 'c4'].forEach(char => {
+                const charData = card.characters[char];
+                const block = document.querySelector(`.character-block[data-char="${char}"]`);
+                const checkbox = block.querySelector('input[type="checkbox"]');
+                const nameInput = block.querySelector('input[data-char-name]');
+                
+                checkbox.checked = charData.active;
+                nameInput.value = charData.name || '';
+                
+                if (charData.active) block.classList.add('active');
+                else block.classList.remove('active');
+            });
+
+            renderLineItems();
+            renderShotTables();
+            updateMirror();
+            updatePreviews();
+            renderMatrix();
+            updateCardCount();
+            updateTotalShots();
+        }
+
+        function updateCharCounts() {
+            const fields = ['sceneTitle', 'inPoint', 'beat1', 'beat2', 'turn', 'outPoint'];
+            fields.forEach(field => {
+                const input = document.getElementById(field);
+                const count = document.getElementById(field + 'Count');
+                if (input && count) {
+                    const len = input.value.length;
+                    const max = input.maxLength || 100;
+                    count.textContent = `${len}/${max}`;
+                    if (len > max * 0.9) count.classList.add('over');
+                    else count.classList.remove('over');
+                }
+            });
+        }
+
+        function saveCardData() {
+            const card = cards[activeCard];
+            card.sceneTitle = document.getElementById('sceneTitle').value;
+            card.actHeader = document.getElementById('actHeader').value;
+            card.titleProject = document.getElementById('titleProject').value;
+            card.type = document.getElementById('type').value;
+            card.dateField = document.getElementById('dateField').value;
+            card.storyMap = document.getElementById('storyMap').value;
+            card.clip = document.getElementById('clip').value;
+            card.mp3 = document.getElementById('mp3').value;
+            card.intExtLocation = document.getElementById('intExtLocation').value;
+            card.locationDetail = document.getElementById('locationDetail').value;
+            card.timeOfDay = document.getElementById('timeOfDay').value;
+            card.inPoint = document.getElementById('inPoint').value;
+            card.beat1 = document.getElementById('beat1').value;
+            card.beat2 = document.getElementById('beat2').value;
+            card.turn = document.getElementById('turn').value;
+            card.outPoint = document.getElementById('outPoint').value;
+            card.emo = document.getElementById('emo').value;
+            card.shot = document.getElementById('shot').value;
+            card.sounds = document.getElementById('sounds').value;
+            card.visualEfx = document.getElementById('visualEfx').value;
+            card.soundFxs = document.getElementById('soundFxs').value;
+            card.mp3fx = document.getElementById('mp3fx').value;
+            card.syfy = document.getElementById('syfy').value;
+            card.memory = document.getElementById('memory').value;
+            card.priceRate = parseFloat(document.getElementById('priceRate').value) || 0;
+            card.priceTotal = parseFloat(document.getElementById('priceTotal').value) || 0;
+            card.status = document.getElementById('cardStatus').value;
+
+            ['c1', 'c2', 'c3', 'c4'].forEach(char => {
+                const block = document.querySelector(`.character-block[data-char="${char}"]`);
+                const checkbox = block.querySelector('input[type="checkbox"]');
+                const nameInput = block.querySelector('input[data-char-name]');
+                
+                card.characters[char].active = checkbox.checked;
+                card.characters[char].name = nameInput.value;
+                
+                if (checkbox.checked) block.classList.add('active');
+                else block.classList.remove('active');
+            });
+
+            updateCharCounts();
+            document.getElementById('lastSaved').textContent = new Date().toLocaleTimeString();
+            updateMirror();
+            updatePreviews();
+            renderMatrix();
+            updateCardCount();
+            updateTotalShots();
+        }
+
+        function validateCard() {
+            const errors = [];
+            const card = cards[activeCard];
+            
+            if (!card.sceneTitle.trim()) errors.push('Scene Title is required');
+            if (!card.actHeader.trim()) errors.push('Act/Timeline Header is required');
+            if (card.actHeader && !/^\d{3}\/\d{3} Act \d+ Pg \d+/.test(card.actHeader)) {
+                errors.push('Act Header should follow format: 001/112 Act 1 Pg 05');
+            }
+            if (!card.intExtLocation.trim()) errors.push('INT/EXT Location is required');
+            
+            ['inPoint', 'beat1', 'beat2', 'turn', 'outPoint'].forEach(field => {
+                if (card[field] && card[field].length > 100) {
+                    errors.push(`${field} exceeds 100 character limit`);
+                }
+            });
+
+            if (errors.length > 0) {
+                showToast('Validation Failed', errors.join('; '), true);
+                return false;
+            }
+            showToast('Validation Passed', 'All fields valid');
+            return true;
+        }
+
+        document.getElementById('validateCardBtn').addEventListener('click', validateCard);
+
+        document.getElementById('generateSluglineBtn').addEventListener('click', () => {
+            const location = document.getElementById('locationDetail').value.trim();
+            const time = document.getElementById('timeOfDay').value.trim();
+            const intExt = location.toLowerCase().includes('exterior') || location.toLowerCase().includes('outside') ? 'EXT' : 'INT';
+            const slugline = `${intExt}: ${location || '[Location]'} - ${time || '[Time]'}`;
+            document.getElementById('intExtLocation').value = slugline;
+            saveCardData();
+            autoSaveData();
+            saveUndoState();
+            showToast('Slugline Generated', 'From location and time fields');
+        });
+
+        document.getElementById('autoNumberBtn').addEventListener('click', () => {
+            const currentHeader = document.getElementById('actHeader').value;
+            const cardNum = String(activeCard).padStart(3, '0');
+            const total = String(TOTAL_CARDS).padStart(3, '0');
+            
+            if (currentHeader) {
+                const formatted = currentHeader.replace(/^\d{3}\/\d{3}/, `${cardNum}/${total}`);
+                document.getElementById('actHeader').value = formatted;
+            } else {
+                document.getElementById('actHeader').value = `${cardNum}/${total} Act 1 Pg 01`;
+            }
+            saveCardData();
+            autoSaveData();
+            saveUndoState();
+            showToast('Auto-Numbered', 'Act header updated');
+        });
+
+        document.getElementById('formatHeaderBtn').addEventListener('click', () => {
+            const input = document.getElementById('actHeader');
+            const cardNum = String(activeCard).padStart(3, '0');
+            const total = String(TOTAL_CARDS).padStart(3, '0');
+            
+            if (!/^\d{3}\/\d{3} Act \d+ Pg \d+/.test(input.value)) {
+                input.value = `${cardNum}/${total} Act 1 Pg 01`;
+                saveCardData();
+                autoSaveData();
+                showToast('Formatted', 'Standard header applied');
+            }
+        });
+
+        document.getElementById('cardStatus').addEventListener('change', (e) => {
+            e.target.className = `status-tag ${e.target.value}`;
+            saveCardData();
+            autoSaveData();
+            saveUndoState();
+        });
+
+        document.getElementById('priceRate').addEventListener('input', (e) => {
+            const rate = parseFloat(e.target.value) || 0;
+            document.getElementById('priceTotal').value = rate.toFixed(2);
+            saveCardData();
+            autoSaveData();
+        });
+
+        document.getElementById('addLineItemBtn').addEventListener('click', () => {
+            cards[activeCard].lineItems.push({ account: '', description: '', quantity: 1, rate: 0, total: 0 });
+            renderLineItems();
+            saveCardData();
+            autoSaveData();
+            saveUndoState();
+        });
+
+        function renderLineItems() {
+            const tbody = document.getElementById('lineItemsBody');
+            const items = cards[activeCard].lineItems;
+            tbody.innerHTML = '';
+            
+            let subtotal = 0;
+            items.forEach((item, idx) => {
+                item.total = (item.quantity || 0) * (item.rate || 0);
+                subtotal += item.total;
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><input type="text" value="${item.account}" data-idx="${idx}" data-field="account" placeholder="0000" tabindex="${70 + idx * 5}"></td>
+                    <td><input type="text" value="${item.description}" data-idx="${idx}" data-field="description" placeholder="Item" tabindex="${71 + idx * 5}"></td>
+                    <td><input type="number" value="${item.quantity}" data-idx="${idx}" data-field="quantity" min="1" step="1" tabindex="${72 + idx * 5}"></td>
+                    <td><input type="number" value="${item.rate}" data-idx="${idx}" data-field="rate" step="0.01" tabindex="${73 + idx * 5}"></td>
+                    <td class="text-right">$${item.total.toFixed(2)}</td>
+                    <td class="text-center"><button class="text-red-600 hover:text-red-800" data-del="${idx}" tabindex="${74 + idx * 5}"><i class="fa-solid fa-times"></i></button></td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            const tax = subtotal * 0.085;
+            const total = subtotal + tax;
+            document.getElementById('lineItemsSubtotal').textContent = subtotal.toFixed(2);
+            document.getElementById('lineItemsTax').textContent = tax.toFixed(2);
+            document.getElementById('lineItemsTotal').textContent = total.toFixed(2);
+
+            tbody.querySelectorAll('input').forEach(input => {
+                input.addEventListener('input', (e) => {
+                    const idx = parseInt(e.target.dataset.idx);
+                    const field = e.target.dataset.field;
+                    const value = field === 'quantity' || field === 'rate' ? parseFloat(e.target.value) || 0 : e.target.value;
+                    cards[activeCard].lineItems[idx][field] = value;
+                    renderLineItems();
+                    saveCardData();
+                    autoSaveData();
+                });
+            });
+
+            tbody.querySelectorAll('button[data-del]').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const idx = parseInt(e.currentTarget.dataset.del);
+                    cards[activeCard].lineItems.splice(idx, 1);
+                    renderLineItems();
+                    saveCardData();
+                    autoSaveData();
+                    saveUndoState();
+                });
+            });
+        }
+
+        document.querySelectorAll('.add-shot-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const roll = e.currentTarget.dataset.roll;
+                const shots = cards[activeCard][`shots${roll}`];
+                const newShot = {
+                    id: shots.length + 1,
+                    description: '',
+                    lens: '35mm',
+                    duration: '00:05',
+                    notes: ''
+                };
+                shots.push(newShot);
+                renderShotTables();
+                saveCardData();
+                autoSaveData();
+                saveUndoState();
+            });
+        });
+
+        function renderShotTables() {
+            ['A', 'B', 'C', 'D', 'E', 'F'].forEach(roll => {
+                const tbody = document.getElementById(`shots${roll}`);
+                const shots = cards[activeCard][`shots${roll}`];
+                tbody.innerHTML = '';
+                
+                shots.forEach((shot, idx) => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td><input type="text" value="${shot.id}" data-roll="${roll}" data-idx="${idx}" data-field="id" readonly></td>
+                        <td><input type="text" value="${shot.description}" data-roll="${roll}" data-idx="${idx}" data-field="description" placeholder="Shot description"></td>
+                        <td><input type="text" value="${shot.lens}" data-roll="${roll}" data-idx="${idx}" data-field="lens" placeholder="Lens"></td>
+                        <td><input type="text" value="${shot.duration}" data-roll="${roll}" data-idx="${idx}" data-field="duration" placeholder="00:00"></td>
+                        <td><input type="text" value="${shot.notes}" data-roll="${roll}" data-idx="${idx}" data-field="notes" placeholder="Notes"></td>
+                        <td class="text-center"><button class="text-red-600 hover:text-red-800" data-roll="${roll}" data-del="${idx}"><i class="fa-solid fa-times text-[10px]"></i></button></td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+
+                tbody.querySelectorAll('input').forEach(input => {
+                    input.addEventListener('input', (e) => {
+                        const roll = e.target.dataset.roll;
+                        const idx = parseInt(e.target.dataset.idx);
+                        const field = e.target.dataset.field;
+                        cards[activeCard][`shots${roll}`][idx][field] = e.target.value;
+                        saveCardData();
+                        autoSaveData();
+                    });
+                });
+
+                tbody.querySelectorAll('button[data-del]').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const roll = e.currentTarget.dataset.roll;
+                        const idx = parseInt(e.currentTarget.dataset.del);
+                        cards[activeCard][`shots${roll}`].splice(idx, 1);
+                        // Renumber
+                        cards[activeCard][`shots${roll}`].forEach((s, i) => s.id = i + 1);
+                        renderShotTables();
+                        saveCardData();
+                        autoSaveData();
+                        saveUndoState();
+                    });
+                });
+            });
+            updateTotalShots();
+        }
+
+        function updateTotalShots() {
+            const card = cards[activeCard];
+            const total = ['A', 'B', 'C', 'D', 'E', 'F'].reduce((sum, roll) => sum + card[`shots${roll}`].length, 0);
+            document.getElementById('totalShots').textContent = total;
+        }
+
+        function generateCardText(card, includeAll = true, format = 'standard') {
+            const chars = [];
+            ['c1', 'c2', 'c3', 'c4'].forEach(c => {
+                if (card.characters[c].active) {
+                    chars.push(card.characters[c].name || c.toUpperCase());
+                }
+            });
+            
+            if (format === 'fdx') {
+                return generateFDXFormat(card);
+            }
+            
+            let output = '';
+            if (card.sceneTitle) {
+                output += `SCENE TITLE: ${card.sceneTitle}\n`;
+                output += `${'═'.repeat(60)}\n`;
+            }
+            output += `${card.actHeader || '###/### Act # Pg ##/track1/videoclip1'}\n`;
+            output += `${card.titleProject || '##title/project/'}\n`;
+            output += `${card.type || '##type/'}\n`;
+            output += `##date/ ${card.dateField || ''}\n`;
+            output += `Story mapping guide\n`;
+            output += `${card.storyMap || 'MS: [Clip/Scene/Scene name/theme/pg/act]'}\n`;
+            output += `Clip: ${card.clip || '#1 = 30'}\n`;
+            output += `MP3: ${card.mp3 || '#1 = 35'}\n`;
+            output += `INT/EXT: ${card.intExtLocation || '[Location] - [DAY/NIGHT]'}\n`;
+            output += `IN: ${card.inPoint || '[Character enters/starts with...]'}\n`;
+            output += `Beat: ${card.beat1 || '[Action or line]'}\n`;
+            output += `Beat: ${card.beat2 || '[Response/reaction]'}\n`;
+            output += `TURN: ${card.turn || '[Realization/reversal/escalation]'}\n`;
+            output += `OUT: "${card.outPoint || '[Last line or action]'}"\n`;
+            output += `EMO: ${card.emo || '[Start emotion] → [End emotion]'}\n`;
+            output += `SHOT: ${card.shot || '[Coverage: wide, 2-shot, CU, etc.]'}\n`;
+            output += `Sounds: ${card.sounds || '[Ambient noise, background noise, theme]'}\n`;
+            output += `Visual Efx: ${card.visualEfx || '[booms/explosions/blood/bullets]'}\n`;
+            output += `Sound fxs: ${card.soundFxs || '[booms/ explosions/ blood / bullets]'}\n`;
+            output += `MP3: ${card.mp3fx || '[ boom/ bullets/bang/animal/human/ship]'}\n`;
+            output += `Syfy: ${card.syfy || '[computers/science/virus/]'}\n`;
+            output += `Characters: [${chars.length > 0 ? chars.join(', ') : 'c1, c2, c3, c4'}]\n`;
+            output += `Status: [${card.status.toUpperCase()}]\n`;
+            
+            if (includeAll) {
+                if (card.memory) {
+                    output += `\nMEMORY:\n${card.memory.replace(/<[^>]*>/g, '')}\n`;
+                }
+                
+                const hasShots = ['A', 'B', 'C', 'D', 'E', 'F'].some(r => card[`shots${r}`].length > 0);
+                if (hasShots) {
+                    output += `\nSHOT LISTS:\n`;
+                    ['A', 'B', 'C', 'D', 'E', 'F'].forEach(roll => {
+                        if (card[`shots${roll}`].length > 0) {
+                            output += `${roll} Roll:\n`;
+                            card[`shots${roll}`].forEach(s => {
+                                output += `  Shot ${s.id}: ${s.description} | ${s.lens} | ${s.duration} | ${s.notes}\n`;
+                            });
+                        }
+                    });
+                }
+                
+                if (card.priceRate > 0) {
+                    output += `\nQUOTE: Rate $${card.priceRate.toFixed(2)} | Total $${card.priceTotal.toFixed(2)}\n`;
+                }
+                
+                if (card.lineItems.length > 0) {
+                    output += `\n────────────────────────────────────────\n`;
+                    output += `LINE ITEMS:\n`;
+                    card.lineItems.forEach(item => {
+                        output += `  ${item.account.padEnd(8)} ${item.description.padEnd(25)} ${item.quantity}x $${item.rate.toFixed(2)} = $${item.total.toFixed(2)}\n`;
+                    });
+                    const subtotal = card.lineItems.reduce((sum, item) => sum + item.total, 0);
+                    output += `────────────────────────────────────────\n`;
+                    output += `  Subtotal: $${subtotal.toFixed(2)}\n`;
+                    output += `  Tax (8.5%): $${(subtotal * 0.085).toFixed(2)}\n`;
+                    output += `  TOTAL: $${(subtotal * 1.085).toFixed(2)}\n`;
+                }
+            }
+            
+            return output;
+        }
+
+        function generateFDXFormat(card) {
+            let fdx = '<FinalDraft Document>\n';
+            fdx += `<Title>${card.sceneTitle}</Title>\n`;
+            fdx += `<Scene Heading>${card.intExtLocation}</Scene Heading>\n`;
+            fdx += `<Action>${card.inPoint}</Action>\n`;
+            if (card.beat1) fdx += `<Action>${card.beat1}</Action>\n`;
+            if (card.beat2) fdx += `<Action>${card.beat2}</Action>\n`;
+            if (card.turn) fdx += `<Action>${card.turn}</Action>\n`;
+            fdx += `<Action>${card.outPoint}</Action>\n`;
+            fdx += '</FinalDraft Document>';
+            return fdx;
+        }
+
+        function updateMirror() {
+            document.getElementById('mirrorOutput').textContent = generateCardText(cards[activeCard], true);
+        }
+
+        function updatePreviews() {
+            const card = cards[activeCard];
+            const format = document.getElementById('textFormatSelect').value;
+            
+            document.getElementById('textPreview').textContent = generateCardText(card, false, format);
+            
+            const htmlContent = `
+<div style="font-family: 'Courier Prime', monospace; background: #fffdf7; padding: 20px; border: 1px solid #c9b8a0; border-radius: 3px;">
+    <div style="border-bottom: 2px solid #991b1b; margin-bottom: 10px; padding-bottom: 8px;">
+        <h1 style="color: #991b1b; font-size: 14px; margin: 0;">SCENE CARD #${String(activeCard).padStart(3, '0')}</h1>
+        <span style="font-size: 10px; background: #fef3c7; padding: 2px 6px; border-radius: 8px; color: #92400e;">${card.status.toUpperCase()}</span>
+    </div>
+    ${card.sceneTitle ? `<h2 style="color: #1e3a8a; font-size: 13px; margin: 8px 0;">${card.sceneTitle}</h2>` : ''}
+    <div style="line-height: 1.8; font-size: 11px;">
+        <p><strong style="color: #1e3a8a;">Header:</strong> ${card.actHeader}</p>
+        <p><strong style="color: #1e3a8a;">Project:</strong> ${card.titleProject}</p>
+        <p><strong style="color: #1e3a8a;">Type:</strong> ${card.type}</p>
+        <p><strong style="color: #1e3a8a;">Date:</strong> ${card.dateField}</p>
+        <p><strong style="color: #1e3a8a;">Location:</strong> ${card.intExtLocation}</p>
+        <p><strong style="color: #1e3a8a;">IN:</strong> ${card.inPoint}</p>
+        <p><strong style="color: #1e3a8a;">OUT:</strong> ${card.outPoint}</p>
+        <p><strong style="color: #1e3a8a;">Shot:</strong> ${card.shot}</p>
+    </div>
+</div>`;
+            document.getElementById('htmlPreview').innerHTML = htmlContent;
+            
+            // Split view: Card Front/Back
+            const frontText = generateCardText(card, false);
+            const backText = `MEMORY:\n${card.memory.replace(/<[^>]*>/g, '')}\n\nSHOT LISTS:\n${['A','B','C','D','E','F'].map(r => card[`shots${r}`].length > 0 ? `${r} Roll: ${card[`shots${r}`].length} shots` : '').filter(Boolean).join('\n')}`;
+            document.getElementById('cardFrontPreview').textContent = frontText;
+            document.getElementById('cardBackPreview').textContent = backText || 'No additional data';
+        }
+
+        document.getElementById('textFormatSelect').addEventListener('change', updatePreviews);
+
+        function updateCardCount() {
+            const filled = Object.keys(cards).filter(i => isCardFilled(i)).length;
+            const empty = TOTAL_CARDS - filled;
+            document.getElementById('cardCount').textContent = filled;
+            document.getElementById('emptyCount').textContent = empty;
+        }
+
+        function downloadFile(content, filename, type) {
+            const blob = new Blob([content], { type });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // Snapshot/ Canvas Rendering Functions
+        function drawIndexCardToCanvas() {
+            const canvas = document.getElementById('snapshotCanvas');
+            const card = cards[activeCard];
+            const width = 1600;
+            const height = 2400;
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+
+            // Background - aged paper texture
+            const bgGradient = ctx.createLinearGradient(0, 0, 0, height);
+            bgGradient.addColorStop(0, '#fffdf7');
+            bgGradient.addColorStop(1, '#f7f3e8');
+            ctx.fillStyle = bgGradient;
+            ctx.fillRect(0, 0, width, height);
+
+            // Add paper texture noise
+            ctx.globalAlpha = 0.03;
+            for (let i = 0; i < 5000; i++) {
+                ctx.fillStyle = Math.random() > 0.5 ? '#c9b8a0' : '#8b6f47';
+                ctx.fillRect(Math.random() * width, Math.random() * height, 1, 1);
+            }
+            ctx.globalAlpha = 1;
+
+            // Ruled lines
+            ctx.strokeStyle = 'rgba(201, 184, 160, 0.35)';
+            ctx.lineWidth = 2;
+            for (let y = 60; y < height; y += 50) {
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(width, y);
+                ctx.stroke();
+            }
+
+            // Red margin line
+            ctx.strokeStyle = 'rgba(153, 27, 0.5)';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(80, 0);
+            ctx.lineTo(80, height);
+            ctx.stroke();
+
+            // Header border
+            ctx.strokeStyle = '#991b1b';
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+            ctx.moveTo(0, 120);
+            ctx.lineTo(width, 120);
+            ctx.stroke();
+
+            // Card ID and Status
+            ctx.font = 'bold 36px "Special Elite", monospace';
+            ctx.fillStyle = '#991b1b';
+            ctx.fillText(`SCENE CARD #${String(activeCard).padStart(3, '0')}`, 100, 80);
+
+            // Status badge
+            const statusColors = {
+                draft: { bg: '#fef3c7', text: '#92400e', border: '#f59e0b' },
+                revised: { bg: '#dbeafe', text: '#1e40af', border: '#3b82f6' },
+                locked: { bg: '#fee2e2', text: '#991b1b', border: '#ef4444' },
+                shot: { bg: '#dcfce7', text: '#166534', border: '#22c55e' }
+            };
+            const statusColor = statusColors[card.status] || statusColors.draft;
+            ctx.fillStyle = statusColor.bg;
+            ctx.strokeStyle = statusColor.border;
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.roundRect(500, 50, 200, 50, 25);
+            ctx.fill();
+            ctx.stroke();
+            ctx.font = 'bold 24px "Special Elite", monospace';
+            ctx.fillStyle = statusColor.text;
+            ctx.fillText(card.status.toUpperCase(), 570, 85);
+
+            // Timestamp watermark
+            const timestamp = new Date().toLocaleString();
+            ctx.font = '20px "Kalam", cursive';
+            ctx.fillStyle = 'rgba(121, 85, 72, 0.4)';
+            ctx.save();
+            ctx.translate(width - 100, height - 100);
+            ctx.rotate(-Math.PI / 6);
+            ctx.fillText(`Generated: ${timestamp}`, 0, 0);
+            ctx.restore();
+
+            // Main content
+            let y = 180;
+            const lineHeight = 50;
+            const leftMargin = 100;
+            const rightMargin = width - 100;
+            const maxWidth = rightMargin - leftMargin;
+
+            ctx.font = '28px "Special Elite", monospace';
+            ctx.fillStyle = '#1e3a8a';
+
+            const drawField = (label, value, isBold = false, color = '#1e3a8a') => {
+                if (y > height - 100) return;
+                ctx.font = (isBold ? 'bold ' : '') + '28px "Special Elite", monospace';
+                ctx.fillStyle = '#991b1b';
+                ctx.fillText(label, leftMargin, y);
+                ctx.fillStyle = color;
+                const valueY = y + lineHeight;
+                wrapText(ctx, value || '', leftMargin, valueY, maxWidth, lineHeight);
+                y += lineHeight * 3;
+            };
+
+            if (card.sceneTitle) {
+                ctx.font = 'bold 42px "Special Elite", monospace';
+                ctx.fillStyle = '#1e3a8a';
+                wrapText(ctx, card.sceneTitle, leftMargin, y, maxWidth, 55);
+                y += 80;
+            }
+
+            drawField('Act/Header:', card.actHeader);
+            drawField('Project:', card.titleProject);
+            drawField('Type:', card.type);
+            drawField('Date:', card.dateField);
+            drawField('Story Map:', card.storyMap);
+            drawField('Clip:', card.clip);
+            drawField('MP3:', card.mp3);
+            drawField('INT/EXT:', card.intExtLocation, true);
+            drawField('Location:', card.locationDetail);
+            drawField('Time:', card.timeOfDay);
+            drawField('IN:', card.inPoint);
+            drawField('Beat 1:', card.beat1);
+            drawField('Beat 2:', card.beat2);
+            drawField('Turn:', card.turn);
+            drawField('OUT:', card.outPoint);
+            drawField('Emotion:', card.emo);
+            drawField('Shot:', card.shot);
+            drawField('Sounds:', card.sounds);
+            drawField('Visual FX:', card.visualEfx);
+            drawField('Sound FX:', card.soundFxs);
+            drawField('MP3 FX:', card.mp3fx);
+            drawField('Sci-Fi:', card.syfy);
+
+            // Characters
+            const activeChars = [];
+            ['c1', 'c2', 'c3', 'c4'].forEach(c => {
+                if (card.characters[c].active) {
+                    activeChars.push(card.characters[c].name || c.toUpperCase());
+                }
+            });
+            if (activeChars.length > 0) {
+                drawField('Characters:', activeChars.join(', '));
+            }
+
+            return canvas;
+        }
+
+        function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
+            const words = text.split(' ');
+            let line = '';
+            let currentY = y;
+
+            for (let n = 0; n < words.length; n++) {
+                const testLine = line + words[n] + ' ';
+                const metrics = ctx.measureText(testLine);
+                const testWidth = metrics.width;
+                if (testWidth > maxWidth && n > 0) {
+                    ctx.fillText(line, x, currentY);
+                    line = words[n] + ' ';
+                    currentY += lineHeight;
+                } else {
+                    line = testLine;
+                }
+            }
+            ctx.fillText(line, x, currentY);
+        }
+
+        // Snapshot button handlers
+        document.getElementById('snapshotBtn').addEventListener('click', () => {
+            saveCardData();
+            const canvas = drawIndexCardToCanvas();
+            canvas.toBlob((blob) => {
+                const url = URL.createObjectURL(blob);
+                const projectName = (cards[activeCard].titleProject || 'UNKNOWN').replace(/[^A-Z0-9]/gi, '_').substring(0, 20);
+                const sceneTitle = (cards[activeCard].sceneTitle || 'UNTITLED').replace(/[^A-Z0-9]/gi, '_').substring(0, 30);
+                const filename = `Card_${String(activeCard).padStart(3, '0')}_${projectName}${sceneTitle ? '_' + sceneTitle : ''}.png`;
+                
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = filename;
+                a.click();
+                URL.revokeObjectURL(url);
+                showToast('Snapshot Saved', 'Card image downloaded as PNG');
+            }, 'image/png');
+        });
+
+        document.getElementById('copyImageBtn').addEventListener('click', async () => {
+            saveCardData();
+            const canvas = drawIndexCardToCanvas();
+            try {
+                canvas.toBlob(async (blob) => {
+                    try {
+                        await navigator.clipboard.write([
+                            new ClipboardItem({ 'image/png': blob })
+                        ]);
+                        showToast('Copied!', 'Card image copied to clipboard');
+                    } catch (err) {
+                        console.error('Clipboard write failed:', err);
+                        showToast('Copy Failed', 'Browser may not support clipboard API', true);
+                    }
+                }, 'image/png');
+            } catch (err) {
+                showToast('Copy Failed', 'Unable to copy image', true);
+            }
+        });
+
+        document.getElementById('snapshotPreviewBtn').addEventListener('click', () => {
+            document.getElementById('snapshotBtn').click();
+        });
+
+        document.getElementById('copyImagePreviewBtn').addEventListener('click', () => {
+            document.getElementById('copyImageBtn').click();
+        });
+
+        document.getElementById('snapshotDownloadBtn').addEventListener('click', () => {
+            document.getElementById('snapshotBtn').click();
+        });
+
+        document.getElementById('downloadTxtBtn').addEventListener('click', () => {
+            const text = generateCardText(cards[activeCard], true);
+            downloadFile(text, `scene_card_${String(activeCard).padStart(3, '0')}.txt`, 'text/plain');
+            showToast('Downloaded', 'Card saved as TXT');
+        });
+
+        document.getElementById('downloadHtmlBtn').addEventListener('click', () => {
+            const card = cards[activeCard];
+            const html = `<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Scene Card #${String(activeCard).padStart(3, '0')} - ${card.sceneTitle || 'Untitled'}</title>
+    <style>
+        @media print {
+            @page { margin: 0.5in; }
+            body { font-family: 'Courier New', monospace; background: white; }
+        }
+        body { font-family: 'Courier New', monospace; background: #f7f3e8; padding: 20px; color: #1c120d; }
+        .card { background: #fffdf7; padding: 30px; border: 2px solid #c9b8a0; max-width: 600px; margin: 0 auto; }
+        h1 { color: #991b1b; border-bottom: 2px solid #991b1b; padding-bottom: 10px; font-size: 16px; }
+        h2 { color: #1e3a8a; font-size: 14px; margin-top: 10px; }
+        p { margin: 6px 0; line-height: 1.6; font-size: 11px; }
+        strong { color: #1e3a8a; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>SCENE CARD #${String(activeCard).padStart(3, '0')}</h1>
+        ${card.sceneTitle ? `<h2>${card.sceneTitle}</h2>` : ''}
+        ${generateCardText(card, true).replace(/\n/g, '<br>')}
+    </div>
+<script>(function(){document.addEventListener("click",function(e){var a=e.target.closest("[data-product-id]");if(!a)return;e.preventDefault();var pid=a.getAttribute("data-product-id");if(pid)parent.postMessage({type:"ecto-artifact-link-click",productId:pid},"*")})})();</script>
+</body>
+</html>`;
+            downloadFile(html, `scene_card_${String(activeCard).padStart(3, '0')}.html`, 'text/html');
+            showToast('Downloaded', 'Card saved as HTML');
+        });
+
+        document.getElementById('downloadFdxBtn').addEventListener('click', () => {
+            const fdx = generateCardText(cards[activeCard], true, 'fdx');
+            downloadFile(fdx, `scene_card_${String(activeCard).padStart(3, '0')}.fdx`, 'application/xml');
+            showToast('Downloaded', 'Card saved as Final Draft FDX');
+        });
+
+        document.getElementById('downloadJsonBtn').addEventListener('click', () => {
+            const json = JSON.stringify(cards[activeCard], null, 2);
+            downloadFile(json, `scene_card_${String(activeCard).padStart(3, '0')}.json`, 'application/json');
+            showToast('Downloaded', 'Card saved as JSON');
+        });
+
+        document.getElementById('downloadCsvBtn').addEventListener('click', () => {
+            const card = cards[activeCard];
+            let csv = 'Field,Value\n';
+            csv += `"Scene Title","${card.sceneTitle}"\n`;
+            csv += `"Act Header","${card.actHeader}"\n`;
+            csv += `"Project","${card.titleProject}"\n`;
+            csv += `"Type","${card.type}"\n`;
+            csv += `"Date","${card.dateField}"\n`;
+            csv += `"Location","${card.intExtLocation}"\n`;
+            csv += `"IN","${card.inPoint}"\n`;
+            csv += `"OUT","${card.outPoint}"\n`;
+            csv += `"Shot","${card.shot}"\n`;
+            csv += `"Status","${card.status}"\n`;
+            downloadFile(csv, `scene_card_${String(activeCard).padStart(3, '0')}.csv`, 'text/csv');
+            showToast('Downloaded', 'Card saved as CSV');
+        });
+
+        document.getElementById('downloadAllJsonBtn').addEventListener('click', () => {
+            const projectData = {
+                cards: cards,
+                activeCard: activeCard,
+                lastSaved: new Date().toISOString(),
+                version: '2.3'
+            };
+            const json = JSON.stringify(projectData, null, 2);
+            downloadFile(json, `scenecards_project_${Date.now()}.json`, 'application/json');
+            showToast('Downloaded', 'All cards exported as JSON');
+        });
+
+        document.getElementById('downloadZipBtn').addEventListener('click', async () => {
+            showToast('Processing', 'Creating ZIP archive...');
+            const zip = new JSZip();
+            
+            // Add all formats for each card
+            Object.keys(cards).forEach(key => {
+                if (isCardFilled(key)) {
+                    const card = cards[key];
+                    const num = String(key).padStart(3, '0');
+                    zip.file(`card_${num}.txt`, generateCardText(card, true));
+                    zip.file(`card_${num}.json`, JSON.stringify(card, null, 2));
+                    zip.file(`card_${num}.fdx`, generateCardText(card, true, 'fdx'));
+                }
+            });
+
+            // Add master project file
+            const projectData = {
+                cards: cards,
+                activeCard: activeCard,
+                lastSaved: new Date().toISOString(),
+                version: '2.3'
+            };
+            zip.file('project_master.json', JSON.stringify(projectData, null, 2));
+
+            const blob = await zip.generateAsync({type: 'blob'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `scenecards_batch_${Date.now()}.zip`;
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast('Downloaded', 'Batch ZIP created successfully');
+        });
+
+        document.getElementById('exportInvoiceBtn').addEventListener('click', () => {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            const card = cards[activeCard];
+            
+            doc.setFontSize(18);
+            doc.text('PRODUCTION INVOICE', 14, 20);
+            doc.setFontSize(11);
+            doc.text(`Scene Card #${String(activeCard).padStart(3, '0')}`, 14, 28);
+            doc.text(`Title: ${card.sceneTitle || 'Untitled'}`, 14, 35);
+            doc.text(`Date: ${new Date().toLocaleDateString()}`, 14, 42);
+            
+            const tableData = card.lineItems.map(item => [
+                item.account,
+                item.description,
+                item.quantity,
+                `$${item.rate.toFixed(2)}`,
+                `$${item.total.toFixed(2)}`
+            ]);
+            
+            doc.autoTable({
+                startY: 50,
+                head: [['Account', 'Description', 'Qty', 'Rate', 'Total']],
+                body: tableData,
+                theme: 'grid',
+                headStyles: { fillColor: [254, 243, 199] }
+            });
+            
+            const subtotal = card.lineItems.reduce((sum, item) => sum + item.total, 0);
+            const tax = subtotal * 0.085;
+            const total = subtotal + tax;
+            
+            const finalY = doc.lastAutoTable.finalY + 10;
+            doc.text(`Subtotal: $${subtotal.toFixed(2)}`, 140, finalY);
+            doc.text(`Tax (8.5%): $${tax.toFixed(2)}`, 140, finalY + 7);
+            doc.setFontSize(12);
+            doc.text(`TOTAL: $${total.toFixed(2)}`, 140, finalY + 14);
+            
+            doc.save(`invoice_card_${String(activeCard).padStart(3, '0')}.pdf`);
+            showToast('Invoice Exported', 'PDF generated successfully');
+        });
+
+        document.getElementById('saveProjectBtn').addEventListener('click', () => {
+            saveCardData();
+            if (saveToLocalStorage()) {
+                showToast('Project Saved', 'All cards saved to browser storage');
+            }
+        });
+
+        document.getElementById('loadProjectBtn').addEventListener('click', () => {
+            if (loadFromLocalStorage()) {
+                loadCard(activeCard);
+                showToast('Project Loaded', `Restored from ${lastSaveTime ? lastSaveTime.toLocaleString() : 'storage'}`);
+            } else {
+                showToast('No Save Found', 'No saved project in browser storage', true);
+            }
+        });
+
+        document.getElementById('clearProjectBtn').addEventListener('click', () => {
+            if (confirm('⚠️ Clear entire project? This will delete all 112 cards from browser storage. This cannot be undone!')) {
+                clearLocalStorage();
+                initEmptyCards();
+                initSampleCard();
+                renderMatrix();
+                loadCard(50);
+                undoStack = [];
+                redoStack = [];
+                saveUndoState();
+                showToast('Project Cleared', 'All data deleted from storage');
+            }
+        });
+
+        document.getElementById('exportProjectBtn').addEventListener('click', () => {
+            const projectData = {
+                cards: cards,
+                activeCard: activeCard,
+                lastSaved: new Date().toISOString(),
+                version: '2.3'
+            };
+            const json = JSON.stringify(projectData, null, 2);
+            downloadFile(json, `scenecard_project_${Date.now()}.json`, 'application/json');
+            showToast('Project Exported', 'JSON file downloaded');
+        });
+
+        document.getElementById('importProjectBtn').addEventListener('click', () => {
+            document.getElementById('importFileInput').click();
+        });
+
+        document.getElementById('importFileInput').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                try {
+                    const projectData = JSON.parse(event.target.result);
+                    if (projectData.cards) {
+                        if (confirm('Import this project? This will overwrite current cards.')) {
+                            cards = projectData.cards;
+                            // Migrate old cards
+                            Object.keys(cards).forEach(key => {
+                                if (!cards[key].lineItems) cards[key].lineItems = [];
+                                if (!cards[key].shotsA) cards[key].shotsA = [];
+                                if (!cards[key].shotsB) cards[key].shotsB = [];
+                                if (!cards[key].shotsC) cards[key].shotsC = [];
+                                if (!cards[key].shotsD) cards[key].shotsD = [];
+                                if (!cards[key].shotsE) cards[key].shotsE = [];
+                                if (!cards[key].shotsF) cards[key].shotsF = [];
+                                if (!cards[key].status) cards[key].status = 'draft';
+                                if (!cards[key].callbacks) cards[key].callbacks = [];
+                                if (!cards[key].locationDetail) cards[key].locationDetail = '';
+                                if (!cards[key].timeOfDay) cards[key].timeOfDay = '';
+                            });
+                            activeCard = projectData.activeCard || 1;
+                            saveToLocalStorage();
+                            renderMatrix();
+                            loadCard(activeCard);
+                            undoStack = [];
+                            redoStack = [];
+                            saveUndoState();
+                            showToast('Project Imported', 'Cards restored successfully');
+                        }
+                    } else {
+                        showToast('Invalid File', 'JSON file does not contain valid project data', true);
+                    }
+                } catch (err) {
+                    showToast('Import Failed', 'Invalid JSON file', true);
+                }
+            };
+            reader.readAsText(file);
+            e.target.value = '';
+        });
+
+        document.getElementById('searchInput').addEventListener('input', () => {
+            renderMatrix();
+        });
+
+        document.getElementById('sluglineHelpBtn').addEventListener('click', () => {
+            alert('SLUGLINE FORMAT GUIDE:\n\nINT: INTERIOR LOCATION - TIME OF DAY\nEXT: EXTERIOR LOCATION - TIME OF DAY\n\nExamples:\nINT: ABANDONED WAREHOUSE - NIGHT\nEXT: CITY STREET - DAWN\nINT./EXT: CAR - DAY\n\nUse [GENERATE SLUGLINE] to auto-build from Location Detail + Time of Day fields.');
+        });
+
+        const allInputs = [
+            'sceneTitle', 'actHeader', 'titleProject', 'type', 'dateField', 'storyMap', 'clip', 'mp3',
+            'intExtLocation', 'locationDetail', 'timeOfDay', 'inPoint', 'beat1', 'beat2', 'turn', 'outPoint', 'emo',
+            'shot', 'sounds', 'visualEfx', 'soundFxs', 'mp3fx', 'syfy', 'priceRate'
+        ];
+        
+        allInputs.forEach(id => {
+            document.getElementById(id).addEventListener('input', () => {
+                saveCardData();
+                autoSaveData();
+            });
+        });
+
+        document.getElementById('clearCardBtn').addEventListener('click', () => {
+            if (confirm('Clear all fields on this card?')) {
+                saveUndoState();
+                cards[activeCard] = createEmptyCard();
+                loadCard(activeCard);
+                autoSaveData();
+                showToast('Card Cleared', 'All fields reset');
+            }
+        });
+
+        document.getElementById('duplicateCardBtn').addEventListener('click', () => {
+            saveCardData();
+            const nextEmpty = Object.keys(cards).find(i => !isCardFilled(i) && parseInt(i) !== activeCard);
+            if (nextEmpty) {
+                const emptyNum = parseInt(nextEmpty);
+                cards[emptyNum] = JSON.parse(JSON.stringify(cards[activeCard]));
+                saveUndoState();
+                loadCard(emptyNum);
+                autoSaveData();
+                showToast('Card Duplicated', `Copied to Scene #${String(emptyNum).padStart(3, '0')}`);
+            } else {
+                showToast('MATRIX FULL', 'No empty card slots available', true);
+            }
+        });
+
+        document.getElementById('copyCardBtn').addEventListener('click', () => {
+            const text = generateCardText(cards[activeCard], false);
+            navigator.clipboard.writeText(text);
+            showToast('Copied', 'Card content copied to clipboard');
+        });
+
+        document.getElementById('copyMirrorBtn').addEventListener('click', () => {
+            const text = document.getElementById('mirrorOutput').textContent;
+            navigator.clipboard.writeText(text);
+            showToast('Copied', 'Scene card copied to clipboard');
+        });
+
+        document.getElementById('shortcutsBtn').addEventListener('click', () => {
+            document.getElementById('shortcutsModal').classList.add('show');
+        });
+
+        document.getElementById('closeShortcutsBtn').addEventListener('click', () => {
+            document.getElementById('shortcutsModal').classList.remove('show');
+        });
+
+        document.getElementById('shortcutsModal').addEventListener('click', (e) => {
+            if (e.target.id === 'shortcutsModal') {
+                document.getElementById('shortcutsModal').classList.remove('show');
+            }
+        });
+
+        function showToast(title, msg, isError = false) {
+            const toast = document.getElementById('toast');
+            const icon = toast.querySelector('i');
+            document.getElementById('toastTitle').textContent = title;
+            document.getElementById('toastMsg').textContent = msg;
+            
+            if (isError) {
+                icon.className = 'fa-solid fa-exclamation-circle text-xl text-red-600';
+            } else {
+                icon.className = 'fa-solid fa-check-circle text-xl text-green-600';
+            }
+            
+            toast.classList.remove('translate-y-32', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-32', 'opacity-0');
+            }, 3000);
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.getElementById('shortcutsModal').classList.remove('show');
+                saveCardData();
+                saveToLocalStorage();
+                showToast('Autosaved', 'Card data saved');
+            }
+            if (e.key === '?') {
+                e.preventDefault();
+                document.getElementById('shortcutsModal').classList.add('show');
+            }
+            if (e.ctrlKey || e.metaKey) {
+                if (e.key === 's') {
+                    e.preventDefault();
+                    saveCardData();
+                    saveToLocalStorage();
+                    showToast('Saved', 'Card data saved to storage');
+                }
+                if (e.key === 'p') {
+                    e.preventDefault();
+                    document.getElementById('snapshotBtn').click();
+                }
+                if (e.key === 'd') {
+                    e.preventDefault();
+                    document.getElementById('duplicateCardBtn').click();
+                }
+                if (e.key === 'z' && !e.shiftKey) {
+                    e.preventDefault();
+                    undo();
+                }
+                if ((e.key === 'y') || (e.key === 'z' && e.shiftKey)) {
+                    e.preventDefault();
+                    redo();
+                }
+                if (e.key === 'ArrowRight') {
+                    e.preventDefault();
+                    if (activeCard < TOTAL_CARDS) {
+                        saveUndoState();
+                        loadCard(activeCard + 1);
+                    }
+                }
+                if (e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    if (activeCard > 1) {
+                        saveUndoState();
+                        loadCard(activeCard - 1);
+                    }
+                }
+            }
+        });
+
+        // Character checkboxes
+        document.querySelectorAll('.character-block input[type="checkbox"]').forEach(cb => {
+            cb.addEventListener('change', () => {
+                saveCardData();
+                autoSaveData();
+            });
+        });
+
+        document.querySelectorAll('.character-block input[data-char-name]').forEach(input => {
+            input.addEventListener('input', () => {
+                saveCardData();
+                autoSaveData();
+            });
+        });
+
+        // Initialize on load
+        init();
+    </script>
+</body>
+</html>
