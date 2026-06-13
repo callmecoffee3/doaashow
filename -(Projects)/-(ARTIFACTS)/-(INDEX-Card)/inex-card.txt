@@ -1,0 +1,84 @@
+
+SceneCard Pro v2.2
+Professional Production Card System
+
+Not saved
+
+
+
+
+SAVE
+LOAD
+CLEAR
+EXPORT
+IMPORT
+Card Stack
+
+0
+
+112
+Main
+Memory
+Rolls A-F
+Quote
+Preview
+Export
+SCENE CARD #001
+                                            DRAFT
+                                            REVISED
+                                            LOCKED
+                                            SHOT
+                                        
+Not saved
+GENERATE SLUGLINE
+AUTO-NUMBER
+VALIDATE
+SCENE TITLE
+0/60
+ACT/TIMELINE HEADER
+Auto-Format
+TITLE/PROJECT
+TYPE
+##DATE/
+STORY MAPPING GUIDE
+CLIP
+MP3
+INT/EXT - LOCATION - TIME
+Format Guide
+LOCATION DETAIL
+TIME OF DAY
+IN
+0/100
+BEAT 1
+0/100
+BEAT 2
+0/100
+TURN
+0/100
+OUT
+0/100
+EMO
+SHOT
+
+
+
+SOUNDS
+VISUAL EFX
+SOUND FXS
+MP3 FX
+SYFY
+CHARACTERS
+C1
+C2
+C3
+C4
+Clear
+Duplicate
+Copy Text
+Live Mirror
+Copy
+
+
+Success!
+Action completed
+`; downloadFile(html, `scene_card_${String(activeCard).padStart(3, '0')}.html`, 'text/html'); showToast('Downloaded', 'Card saved as HTML'); }); document.getElementById('downloadFdxBtn').addEventListener('click', () => { const fdx = generateCardText(cards[activeCard], true, 'fdx'); downloadFile(fdx, `scene_card_${String(activeCard).padStart(3, '0')}.fdx`, 'application/xml'); showToast('Downloaded', 'Card saved as Final Draft FDX'); }); document.getElementById('downloadJsonBtn').addEventListener('click', () => { const json = JSON.stringify(cards[activeCard], null, 2); downloadFile(json, `scene_card_${String(activeCard).padStart(3, '0')}.json`, 'application/json'); showToast('Downloaded', 'Card saved as JSON'); }); document.getElementById('downloadCsvBtn').addEventListener('click', () => { const card = cards[activeCard]; let csv = 'Field,Value\n'; csv += `"Scene Title","${card.sceneTitle}"\n`; csv += `"Act Header","${card.actHeader}"\n`; csv += `"Project","${card.titleProject}"\n`; csv += `"Type","${card.type}"\n`; csv += `"Date","${card.dateField}"\n`; csv += `"Location","${card.intExtLocation}"\n`; csv += `"IN","${card.inPoint}"\n`; csv += `"OUT","${card.outPoint}"\n`; csv += `"Shot","${card.shot}"\n`; csv += `"Status","${card.status}"\n`; downloadFile(csv, `scene_card_${String(activeCard).padStart(3, '0')}.csv`, 'text/csv'); showToast('Downloaded', 'Card saved as CSV'); }); document.getElementById('downloadAllJsonBtn').addEventListener('click', () => { const projectData = { cards: cards, activeCard: activeCard, lastSaved: new Date().toISOString(), version: '2.2' }; const json = JSON.stringify(projectData, null, 2); downloadFile(json, `scenecards_project_${Date.now()}.json`, 'application/json'); showToast('Downloaded', 'All cards exported as JSON'); }); document.getElementById('downloadZipBtn').addEventListener('click', async () => { showToast('Processing', 'Creating ZIP archive...'); const zip = new JSZip(); // Add all formats for each card Object.keys(cards).forEach(key => { if (isCardFilled(key)) { const card = cards[key]; const num = String(key).padStart(3, '0'); zip.file(`card_${num}.txt`, generateCardText(card, true)); zip.file(`card_${num}.json`, JSON.stringify(card, null, 2)); zip.file(`card_${num}.fdx`, generateCardText(card, true, 'fdx')); } }); // Add master project file const projectData = { cards: cards, activeCard: activeCard, lastSaved: new Date().toISOString(), version: '2.2' }; zip.file('project_master.json', JSON.stringify(projectData, null, 2)); const blob = await zip.generateAsync({type: 'blob'}); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = `scenecards_batch_${Date.now()}.zip`; a.click(); URL.revokeObjectURL(url); showToast('Downloaded', 'Batch ZIP created successfully'); }); document.getElementById('exportInvoiceBtn').addEventListener('click', () => { const { jsPDF } = window.jspdf; const doc = new jsPDF(); const card = cards[activeCard]; doc.setFontSize(18); doc.text('PRODUCTION INVOICE', 14, 20); doc.setFontSize(11); doc.text(`Scene Card #${String(activeCard).padStart(3, '0')}`, 14, 28); doc.text(`Title: ${card.sceneTitle || 'Untitled'}`, 14, 35); doc.text(`Date: ${new Date().toLocaleDateString()}`, 14, 42); const tableData = card.lineItems.map(item => [ item.account, item.description, item.quantity, `$${item.rate.toFixed(2)}`, `$${item.total.toFixed(2)}` ]); doc.autoTable({ startY: 50, head: [['Account', 'Description', 'Qty', 'Rate', 'Total']], body: tableData, theme: 'grid', headStyles: { fillColor: [254, 243, 199] } }); const subtotal = card.lineItems.reduce((sum, item) => sum + item.total, 0); const tax = subtotal * 0.085; const total = subtotal + tax; const finalY = doc.lastAutoTable.finalY + 10; doc.text(`Subtotal: $${subtotal.toFixed(2)}`, 140, finalY); doc.text(`Tax (8.5%): $${tax.toFixed(2)}`, 140, finalY + 7); doc.setFontSize(12); doc.text(`TOTAL: $${total.toFixed(2)}`, 140, finalY + 14); doc.save(`invoice_card_${String(activeCard).padStart(3, '0')}.pdf`); showToast('Invoice Exported', 'PDF generated successfully'); }); document.getElementById('saveProjectBtn').addEventListener('click', () => { saveCardData(); if (saveToLocalStorage()) { showToast('Project Saved', 'All cards saved to browser storage'); } }); document.getElementById('loadProjectBtn').addEventListener('click', () => { if (loadFromLocalStorage()) { loadCard(activeCard); showToast('Project Loaded', `Restored from ${lastSaveTime ? lastSaveTime.toLocaleString() : 'storage'}`); } else { showToast('No Save Found', 'No saved project in browser storage', true); } }); document.getElementById('clearProjectBtn').addEventListener('click', () => { if (confirm('⚠️ Clear entire project? This will delete all 112 cards from browser storage. This cannot be undone!')) { clearLocalStorage(); initEmptyCards(); initSampleCard(); renderMatrix(); loadCard(50); undoStack = []; redoStack = []; saveUndoState(); showToast('Project Cleared', 'All data deleted from storage'); } }); document.getElementById('exportProjectBtn').addEventListener('click', () => { const projectData = { cards: cards, activeCard: activeCard, lastSaved: new Date().toISOString(), version: '2.2' }; const json = JSON.stringify(projectData, null, 2); downloadFile(json, `scenecard_project_${Date.now()}.json`, 'application/json'); showToast('Project Exported', 'JSON file downloaded'); }); document.getElementById('importProjectBtn').addEventListener('click', () => { document.getElementById('importFileInput').click(); }); document.getElementById('importFileInput').addEventListener('change', (e) => { const file = e.target.files[0]; if (!file) return; const reader = new FileReader(); reader.onload = (event) => { try { const projectData = JSON.parse(event.target.result); if (projectData.cards) { if (confirm('Import this project? This will overwrite current cards.')) { cards = projectData.cards; // Migrate old cards Object.keys(cards).forEach(key => { if (!cards[key].lineItems) cards[key].lineItems = []; if (!cards[key].shotsA) cards[key].shotsA = []; if (!cards[key].shotsB) cards[key].shotsB = []; if (!cards[key].shotsC) cards[key].shotsC = []; if (!cards[key].shotsD) cards[key].shotsD = []; if (!cards[key].shotsE) cards[key].shotsE = []; if (!cards[key].shotsF) cards[key].shotsF = []; if (!cards[key].status) cards[key].status = 'draft'; if (!cards[key].callbacks) cards[key].callbacks = []; if (!cards[key].locationDetail) cards[key].locationDetail = ''; if (!cards[key].timeOfDay) cards[key].timeOfDay = ''; }); activeCard = projectData.activeCard || 1; saveToLocalStorage(); renderMatrix(); loadCard(activeCard); undoStack = []; redoStack = []; saveUndoState(); showToast('Project Imported', 'Cards restored successfully'); } } else { showToast('Invalid File', 'JSON file does not contain valid project data', true); } } catch (err) { showToast('Import Failed', 'Invalid JSON file', true); } }; reader.readAsText(file); e.target.value = ''; }); document.getElementById('searchInput').addEventListener('input', () => { renderMatrix(); }); document.getElementById('sluglineHelpBtn').addEventListener('click', () => { alert('SLUGLINE FORMAT GUIDE:\n\nINT: INTERIOR LOCATION - TIME OF DAY\nEXT: EXTERIOR LOCATION - TIME OF DAY\n\nExamples:\nINT: ABANDONED WAREHOUSE - NIGHT\nEXT: CITY STREET - DAWN\nINT./EXT: CAR - DAY\n\nUse [GENERATE SLUGLINE] to auto-build from Location Detail + Time of Day fields.'); }); const allInputs = [ 'sceneTitle', 'actHeader', 'titleProject', 'type', 'dateField', 'storyMap', 'clip', 'mp3', 'intExtLocation', 'locationDetail', 'timeOfDay', 'inPoint', 'beat1', 'beat2', 'turn', 'outPoint', 'emo', 'shot', 'sounds', 'visualEfx', 'soundFxs', 'mp3fx', 'syfy', 'priceRate' ]; allInputs.forEach(id => { document.getElementById(id).addEventListener('input', () => { saveCardData(); autoSaveData(); }); }); document.getElementById('clearCardBtn').addEventListener('click', () => { if (confirm('Clear all fields on this card?')) { saveUndoState(); cards[activeCard] = createEmptyCard(); loadCard(activeCard); autoSaveData(); showToast('Card Cleared', 'All fields reset'); } }); document.getElementById('duplicateCardBtn').addEventListener('click', () => { saveCardData(); const nextEmpty = Object.keys(cards).find(i => !isCardFilled(i) && parseInt(i) !== activeCard); if (nextEmpty) { const emptyNum = parseInt(nextEmpty); cards[emptyNum] = JSON.parse(JSON.stringify(cards[activeCard])); saveUndoState(); loadCard(emptyNum); autoSaveData(); showToast('Card Duplicated', `Copied to Scene #${String(emptyNum).padStart(3, '0')}`); } else { showToast('MATRIX FULL', 'No empty card slots available', true); } }); document.getElementById('copyCardBtn').addEventListener('click', () => { const text = generateCardText(cards[activeCard], false); navigator.clipboard.writeText(text); showToast('Copied', 'Card content copied to clipboard'); }); document.getElementById('copyMirrorBtn').addEventListener('click', () => { const text = document.getElementById('mirrorOutput').textContent; navigator.clipboard.writeText(text); showToast('Copied', 'Scene card copied to clipboard'); }); document.getElementById('shortcutsBtn').addEventListener('click', () => { document.getElementById('shortcutsModal').classList.add('show'); }); document.getElementById('closeShortcutsBtn').addEventListener('click', () => { document.getElementById('shortcutsModal').classList.remove('show'); }); document.getElementById('shortcutsModal').addEventListener('click', (e) => { if (e.target.id === 'shortcutsModal') { document.getElementById('shortcutsModal').classList.remove('show'); } }); function showToast(title, msg, isError = false) { const toast = document.getElementById('toast'); const icon = toast.querySelector('i'); document.getElementById('toastTitle').textContent = title; document.getElementById('toastMsg').textContent = msg; if (isError) { icon.className = 'fa-solid fa-exclamation-circle text-xl text-red-600'; } else { icon.className = 'fa-solid fa-check-circle text-xl text-green-600'; } toast.classList.remove('translate-y-32', 'opacity-0'); setTimeout(() => { toast.classList.add('translate-y-32', 'opacity-0'); }, 3000); } document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { document.getElementById('shortcutsModal').classList.remove('show'); saveCardData(); saveToLocalStorage(); showToast('Autosaved', 'Card data saved'); } if (e.key === '?') { e.preventDefault(); document.getElementById('shortcutsModal').classList.add('show'); } if (e.ctrlKey || e.metaKey) { if (e.key === 's') { e.preventDefault(); saveCardData(); saveToLocalStorage(); showToast('Saved', 'Card data saved to storage'); } if (e.key === 'd') { e.preventDefault(); document.getElementById('duplicateCardBtn').click(); } if (e.key === 'z' && !e.shiftKey) { e.preventDefault(); undo(); } if ((e.key === 'y') || (e.key === 'z' && e.shiftKey)) { e.preventDefault(); redo(); } if (e.key === 'ArrowRight') { e.preventDefault(); if (activeCard < TOTAL_CARDS) { saveUndoState(); loadCard(activeCard + 1); } } if (e.key === 'ArrowLeft') { e.preventDefault(); if (activeCard > 1) { saveUndoState(); loadCard(activeCard - 1); } } } }); // Character checkboxes document.querySelectorAll('.character-block input[type="checkbox"]').forEach(cb => { cb.addEventListener('change', () => { saveCardData(); autoSaveData(); }); }); document.querySelectorAll('.character-block input[data-char-name]').forEach(input => { input.addEventListener('input', () => { saveCardData(); autoSaveData(); }); }); // Initialize on load init();
