@@ -1,0 +1,285 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Story Mapping Guide</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+body{
+    display:flex;
+    background:#111;
+    color:white;
+}
+.sidebar{
+    width:250px;
+    background:#1b1b1b;
+    height:100vh;
+    overflow:auto;
+    padding:10px;
+}
+.sidebar h2{
+    text-align:center;
+    margin-bottom:10px;
+}
+.card-btn{
+    display:block;
+    width:100%;
+    margin:3px 0;
+    padding:8px;
+    background:#222;
+    color:white;
+    border:none;
+    cursor:pointer;
+}
+.card-btn:hover{
+    background:#444;
+}
+.main{
+    flex:1;
+    padding:20px;
+}
+.section{
+    background:#1c1c1c;
+    padding:15px;
+    margin-bottom:15px;
+    border-radius:8px;
+}
+input,textarea,select{
+    width:100%;
+    padding:8px;
+    margin-top:5px;
+    margin-bottom:10px;
+    background:#222;
+    color:white;
+    border:1px solid #555;
+}
+.preview{
+    height:150px;
+    border:1px solid #555;
+    background:#000;
+    padding:10px;
+}
+.download-btn{
+    padding:10px 15px;
+    margin:5px;
+    background:#0a84ff;
+    color:white;
+    border:none;
+    cursor:pointer;
+}
+.mobile-menu{
+    display:none;
+}
+
+@media(max-width:768px){
+    .sidebar{
+        position:fixed;
+        left:-250px;
+        top:0;
+        transition:.3s;
+        z-index:1000;
+    }
+    .sidebar.open{
+        left:0;
+    }
+    .mobile-menu{
+        display:block;
+        position:fixed;
+        top:10px;
+        left:10px;
+        z-index:1100;
+        padding:10px;
+    }
+    .main{
+        width:100%;
+        padding-top:60px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<button class="mobile-menu" onclick="toggleMenu()">☰ Cards</button>
+
+<div class="sidebar" id="sidebar">
+    <h2>Cards 1-100</h2>
+
+    <div id="cardList"></div>
+</div>
+
+<div class="main">
+
+<div class="section">
+<h2>Project Information</h2>
+
+<label>Act</label>
+<input type="text">
+
+<label>Page</label>
+<input type="text">
+
+<label>Track</label>
+<input type="text">
+
+<label>Video Clip</label>
+<input type="text">
+
+<label>Title</label>
+<input type="text">
+
+<label>Project</label>
+<input type="text">
+
+<label>Type</label>
+<input type="text">
+
+<label>Date</label>
+<input type="date">
+
+<label>
+<input type="checkbox"> Add White Noise
+</label>
+</div>
+
+<div class="section">
+<h2>Story Matrix Slot</h2>
+
+<input placeholder="Clip">
+<input placeholder="Scene">
+<input placeholder="Scene Name">
+<input placeholder="Theme">
+<input placeholder="Page">
+<input placeholder="Act">
+</div>
+
+<div class="section">
+<h2>Scene Details</h2>
+
+<select>
+<option>INT</option>
+<option>EXT</option>
+</select>
+
+<input placeholder="Location">
+<input placeholder="Day / Night">
+
+<textarea placeholder="IN"></textarea>
+<textarea placeholder="Beat 1"></textarea>
+<textarea placeholder="Beat 2"></textarea>
+<textarea placeholder="TURN"></textarea>
+<textarea placeholder="OUT"></textarea>
+
+<input placeholder="Emotion Start">
+<input placeholder="Emotion End">
+
+<input placeholder="Shot Type">
+</div>
+
+<div class="section">
+<h2>Characters</h2>
+
+<select>
+<option>Character 1</option>
+<option>Character 2</option>
+<option>Character 3</option>
+<option>Character 4</option>
+</select>
+
+<input placeholder="Add Character Name">
+<button class="download-btn">Add Character</button>
+
+<h3>Memory Notes</h3>
+<textarea></textarea>
+</div>
+
+<div class="section">
+<h2>Audio & Effects</h2>
+
+<textarea placeholder="Sounds"></textarea>
+<textarea placeholder="Sound FX"></textarea>
+<textarea placeholder="MP3 Assets"></textarea>
+<textarea placeholder="Sci-Fi Elements"></textarea>
+</div>
+
+<div class="section">
+<h2>A Roll - F Roll</h2>
+
+<textarea placeholder="A Roll"></textarea>
+<textarea placeholder="B Roll"></textarea>
+<textarea placeholder="C Roll"></textarea>
+<textarea placeholder="D Roll"></textarea>
+<textarea placeholder="E Roll"></textarea>
+<textarea placeholder="F Roll"></textarea>
+</div>
+
+<div class="section">
+<h2>Price Quote</h2>
+
+<input id="hours" placeholder="Hours">
+<input id="rate" placeholder="Rate Per Hour">
+
+<button class="download-btn" onclick="calculateQuote()">
+Calculate
+</button>
+
+<div id="quoteTotal">Total: $0</div>
+</div>
+
+<div class="section">
+<h2>HTML Preview</h2>
+<div class="preview"></div>
+
+<h2>Text Preview</h2>
+<div class="preview"></div>
+
+<h2>Artifact Preview</h2>
+<div class="preview"></div>
+</div>
+
+<div class="section">
+<h2>Downloads</h2>
+
+<button class="download-btn">TXT</button>
+<button class="download-btn">HTML</button>
+<button class="download-btn">PDF</button>
+<button class="download-btn">JSON</button>
+</div>
+
+</div>
+
+<script>
+
+for(let i=1;i<=100;i++){
+    let btn=document.createElement("button");
+    btn.className="card-btn";
+    btn.innerHTML="Card "+i;
+    document.getElementById("cardList").appendChild(btn);
+}
+
+function toggleMenu(){
+    document.getElementById("sidebar")
+    .classList.toggle("open");
+}
+
+function calculateQuote(){
+    let h=parseFloat(document.getElementById("hours").value)||0;
+    let r=parseFloat(document.getElementById("rate").value)||0;
+
+    document.getElementById("quoteTotal").innerHTML=
+    "Total: $" + (h*r).toFixed(2);
+}
+
+</script>
+
+</body>
+</html>
+```
