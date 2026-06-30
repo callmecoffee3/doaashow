@@ -1,1 +1,4 @@
 the main screen that has this name on it
+that has the date on it
+has calender
+has recorder
