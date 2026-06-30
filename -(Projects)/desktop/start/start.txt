@@ -1,1 +1,5 @@
-
+add search bar
+add category
+add orientation
+add color modes
+add pop up start window launcher
