@@ -21,7 +21,14 @@ This project is “something to play with” — a sandbox for experimenting wit
 
 ## 🚀 What Is Matt Code?
 Matt Code is a **coordinate‑based system** that organizes features using a grid:
-
+it can also be used to make a desktop verson mad by matt grosso 2026
+have menu open and close
+have taskbar, start, and clock
+have ai make apps on screen
+have setting
+have options
+let user enter own desktop verson name
+let user make desktop, scocial internet, or web baised
 
 Each **column (c)** represents a category.  
 Each **row (r)** represents an item inside that category.
@@ -301,3 +308,4 @@ export default function App() {
     </div>
   );
 }
+have AI generate a demo page!!
