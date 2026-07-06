@@ -171,3 +171,133 @@ If you want, I can also generate:
 - a **live demo page**  
 
 Just tell me what you want added next.
+doaashow/
+  README.md
+  package.json
+  /src
+    /mattcode
+      mattcode.js
+      engine.js
+    /ui
+      App.js
+      Layout.js
+      Nav.js
+    /features
+      MainContent.js
+      Social.js
+      Media.js
+      Marketplace.js
+      Chatbot.js
+      Settings.js
+  /public
+    index.html
+export const mattCode = {
+  c0: { r0: { name: "Doaashow", notes: "Matt Code platform", project: "doaashow" } },
+  c1: { r0: "Design & Displays", r1: "Logo", r2: "Navigation", r3: "Color Scheme" },
+  c2: { r0: "Main Content", r1: "Home", r2: "About", r3: "Contact" },
+  c3: { r0: "User Interactions", r1: "Login", r2: "Register", r3: "Forgot Password" },
+  c4: { r0: "Game / Features", r1: "Start", r2: "Pause", r3: "Settings" },
+  c5: {
+    r0: "Settings",
+    r1: "Display Options",
+    r2: "Audio Options",
+    r3: "Video Options",
+    r4: "Accessibility Options",
+    r5: "Help",
+    r6: "Feedback",
+    r7: "Setting Options",
+    r8: "Notification Settings",
+    r9: "Account Settings",
+    r10: "Security Settings",
+    r11: "Advanced Settings"
+  },
+  // ...c6–c16 same as your spec
+};
+
+export const vars = {
+  header: { c: 0, r: 0 },
+  menu: { c: 10, r: 0 },
+  settings: { c: 5, r: 0 },
+  fullScreenOption: { c: 5, r: 4 }
+};
+
+export function mc(c, r) {
+  const col = mattCode[`c${c}`];
+  return col ? col[`r${r}`] ?? null : null;
+}
+import { mattCode } from "./mattcode.js";
+
+export class MattEngine {
+  constructor(code = mattCode) {
+    this.code = code;
+  }
+
+  get(c, r) {
+    return this.code[`c${c}`]?.[`r${r}`] ?? null;
+  }
+
+  listColumn(c) {
+    const col = this.code[`c${c}`];
+    if (!col) return [];
+    return Object.entries(col).map(([row, value]) => ({ c, r: Number(row.slice(1)), value }));
+  }
+
+  search(term) {
+    const q = term.toLowerCase();
+    const results = [];
+    for (const [cKey, col] of Object.entries(this.code)) {
+      for (const [rKey, value] of Object.entries(col)) {
+        const text = JSON.stringify(value).toLowerCase();
+        if (text.includes(q)) {
+          results.push({ c: Number(cKey.slice(1)), r: Number(rKey.slice(1)), value });
+        }
+      }
+    }
+    return results;
+  }
+}
+import React, { useState } from "react";
+import { MattEngine } from "../mattcode/engine.js";
+
+const engine = new MattEngine();
+
+export default function App() {
+  const [query, setQuery] = useState("");
+  const results = query ? engine.search(query) : [];
+
+  return (
+    <div style={{ padding: 20, fontFamily: "system-ui", color: "#e5e7eb", background: "#020617", minHeight: "100vh" }}>
+      <h1>Doaashow · Matt Code Platform</h1>
+      <p>Everything you see is driven by (cX, rY) coordinates.</p>
+
+      <section style={{ marginTop: 20 }}>
+        <h2>Main Content (c2)</h2>
+        <ul>
+          {engine.listColumn(2).map(item => (
+            <li key={item.r}>
+              <code>(c2, r{item.r})</code> — {item.value}
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section style={{ marginTop: 20 }}>
+        <h2>Search & Filter (c10)</h2>
+        <input
+          value={query}
+          onChange={e => setQuery(e.target.value)}
+          placeholder="Search Matt Code..."
+          style={{ padding: 8, width: "100%", maxWidth: 400 }}
+        />
+        <div style={{ marginTop: 10 }}>
+          {results.map((res, i) => (
+            <div key={i}>
+              <code>(c{res.c}, r{res.r})</code> — {JSON.stringify(res.value)}
+            </div>
+          ))}
+          {!results.length && query && <div>No matches.</div>}
+        </div>
+      </section>
+    </div>
+  );
+}
