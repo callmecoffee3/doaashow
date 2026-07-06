@@ -29,6 +29,8 @@ have setting
 have options
 let user enter own desktop verson name
 let user make desktop, scocial internet, or web baised
+let user download version
+let user import, export photos videos 
 
 Each **column (c)** represents a category.  
 Each **row (r)** represents an item inside that category.
