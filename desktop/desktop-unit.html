@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Basic Desktop Unit</title>
+<title>CALLMECOFFEE3 2026 Desktop</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
@@ -54,12 +54,44 @@
         color: var(--text-primary);
     }
 
+    .desktop-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 60px;
+        background: linear-gradient(90deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.1) 100%);
+        backdrop-filter: blur(10px);
+        display: flex;
+        align-items: center;
+        padding: 0 24px;
+        z-index: 9999;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .desktop-header h1 {
+        margin: 0;
+        font-size: 24px;
+        font-weight: 700;
+        color: white;
+        text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        letter-spacing: 1px;
+    }
+
+    .desktop-header .year {
+        margin-left: 12px;
+        font-size: 18px;
+        color: #60a5fa;
+        font-weight: 600;
+    }
+
     .desktop {
         position: relative;
         width: 100%;
-        height: calc(100vh - 48px);
+        height: calc(100vh - 108px);
         overflow: hidden;
         padding: 16px;
+        margin-top: 60px;
     }
 
     .desktop-icon {
@@ -518,7 +550,75 @@
         text-align: center;
     }
 
+    .workstation-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        margin-top: 12px;
+    }
+
+    .workstation-card {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        padding: 16px;
+        background: var(--window-header);
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        border: 2px solid transparent;
+        min-height: 120px;
+        justify-content: space-between;
+    }
+
+    .workstation-card:hover {
+        transform: translateY(-4px);
+        background: var(--border);
+        border-color: var(--accent);
+    }
+
+    .workstation-icon {
+        font-size: 28px;
+    }
+
+    .workstation-name {
+        font-weight: 600;
+        font-size: 14px;
+        color: var(--text-primary);
+    }
+
+    .workstation-status {
+        font-size: 11px;
+        color: var(--text-secondary);
+    }
+
+    .status-online {
+        color: #10b981;
+    }
+
+    .status-offline {
+        color: #ef4444;
+    }
+
     @media (max-width: 480px) {
+        .desktop-header {
+            height: 50px;
+        }
+
+        .desktop-header h1 {
+            font-size: 18px;
+        }
+
+        .desktop-header .year {
+            font-size: 14px;
+        }
+
+        .desktop {
+            height: calc(100vh - 98px);
+            margin-top: 50px;
+        }
+
         .desktop-icon {
             width: 70px;
         }
@@ -541,11 +641,14 @@
         .user-grid {
             grid-template-columns: repeat(1, 1fr);
         }
+        .workstation-grid {
+            grid-template-columns: repeat(1, 1fr);
+        }
     }
 
     .notification {
         position: fixed;
-        top: 20px;
+        top: 80px;
         right: 20px;
         background: var(--window-bg);
         padding: 12px 16px;
@@ -573,6 +676,10 @@
 </style>
 </head>
 <body>
+    <div class="desktop-header">
+        <h1>CALLMECOFFEE3<span class="year">2026</span></h1>
+    </div>
+
     <div class="desktop" id="desktop">
         <div class="desktop-icon" data-app="computer">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -620,10 +727,16 @@
 
     <div class="start-menu" id="startMenu">
         <div class="start-menu-header">
-            <h3 class="font-semibold text-lg">Basic Desktop Unit</h3>
+            <h3 class="font-semibold text-lg">Desktop Menu</h3>
             <p class="text-sm opacity-90" id="currentUser">User</p>
         </div>
         <div class="start-menu-content">
+            <div class="start-menu-item" data-action="workstations">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
+                </svg>
+                <span>Workstations</span>
+            </div>
             <div class="start-menu-item" data-action="apps">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
@@ -709,6 +822,15 @@
         { name: 'Diana', color: '#f59e0b', initial: 'D' }
     ];
 
+    const workstations = [
+        { name: 'Workstation 1', icon: '💻', status: 'online', ip: '192.168.1.101' },
+        { name: 'Workstation 2', icon: '💻', status: 'online', ip: '192.168.1.102' },
+        { name: 'Workstation 3', icon: '💻', status: 'offline', ip: '192.168.1.103' },
+        { name: 'Workstation 4', icon: '🖥️', status: 'online', ip: '192.168.1.104' },
+        { name: 'Workstation 5', icon: '💻', status: 'online', ip: '192.168.1.105' },
+        { name: 'Workstation 6', icon: '🖥️', status: 'offline', ip: '192.168.1.106' }
+    ];
+
     // Clock
     function updateClock() {
         const now = new Date();
@@ -742,6 +864,9 @@
             startButton.classList.remove('active');
             
             switch(action) {
+                case 'workstations':
+                    openWorkstations();
+                    break;
                 case 'apps':
                     showNotification('All apps view coming soon');
                     break;
@@ -827,9 +952,9 @@
         
         const isMobile = window.innerWidth < 768;
         const width = isMobile ? window.innerWidth - 32 : 600;
-        const height = isMobile ? window.innerHeight - 100 : 400;
+        const height = isMobile ? window.innerHeight - 200 : 400;
         const x = isMobile ? 16 : 100 + (windows.length * 30);
-        const y = isMobile ? 16 : 50 + (windows.length * 30);
+        const y = isMobile ? 80 : 80 + (windows.length * 30);
         
         win.style.width = width + 'px';
         win.style.height = height + 'px';
@@ -908,7 +1033,7 @@
             const dx = touch.clientX - startX;
             const dy = touch.clientY - startY;
             win.style.left = (initialX + dx) + 'px';
-            win.style.top = Math.max(0, initialY + dy) + 'px';
+            win.style.top = Math.max(60, initialY + dy) + 'px';
         }
 
         document.addEventListener('mouseup', stopDrag);
@@ -999,9 +1124,9 @@
             win.element.dataset.oldLeft = win.element.style.left;
             win.element.dataset.oldTop = win.element.style.top;
             win.element.style.width = '100%';
-            win.element.style.height = 'calc(100% - 48px)';
+            win.element.style.height = `calc(100% - 108px)`;
             win.element.style.left = '0';
-            win.element.style.top = '0';
+            win.element.style.top = '60px';
             win.element.dataset.maximized = 'true';
         }
     }
@@ -1039,6 +1164,35 @@
 
     function getNotesContent() {
         return `<textarea class="notes-textarea" placeholder="Start typing your notes..."></textarea>`;
+    }
+
+    function openWorkstations() {
+        const existing = windows.find(w => w.type === 'workstations');
+        if (existing) {
+            activateWindow(existing.id);
+            return;
+        }
+
+        const content = `
+            <div style="padding: 8px">
+                <h3 style="font-weight: 600; margin-bottom: 16px; color: var(--text-primary)">Available Workstations</h3>
+                <div class="workstation-grid">
+                    ${workstations.map(ws => `
+                        <div class="workstation-card">
+                            <div class="workstation-icon">${ws.icon}</div>
+                            <div>
+                                <div class="workstation-name">${ws.name}</div>
+                                <div class="workstation-status ${ws.status === 'online' ? 'status-online' : 'status-offline'}">
+                                    ● ${ws.status.charAt(0).toUpperCase() + ws.status.slice(1)} - ${ws.ip}
+                                </div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+
+        createWindow('Workstations', 'workstations', content);
     }
 
     function openUsers() {
