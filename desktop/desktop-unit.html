@@ -470,6 +470,54 @@
         border-color: var(--accent);
     }
 
+    .user-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        margin-top: 12px;
+    }
+
+    .user-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        padding: 16px;
+        background: var(--window-header);
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        border: 2px solid transparent;
+    }
+
+    .user-card:hover {
+        transform: translateY(-2px);
+        background: var(--border);
+    }
+
+    .user-card.active {
+        border-color: var(--accent);
+        background: var(--border);
+    }
+
+    .user-avatar {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        font-size: 20px;
+        color: white;
+    }
+
+    .user-name {
+        font-weight: 500;
+        font-size: 13px;
+        text-align: center;
+    }
+
     @media (max-width: 480px) {
         .desktop-icon {
             width: 70px;
@@ -489,6 +537,9 @@
         }
         .wallpaper-grid {
             grid-template-columns: repeat(2, 1fr);
+        }
+        .user-grid {
+            grid-template-columns: repeat(1, 1fr);
         }
     }
 
@@ -570,7 +621,7 @@
     <div class="start-menu" id="startMenu">
         <div class="start-menu-header">
             <h3 class="font-semibold text-lg">Basic Desktop Unit</h3>
-            <p class="text-sm opacity-90">User</p>
+            <p class="text-sm opacity-90" id="currentUser">User</p>
         </div>
         <div class="start-menu-content">
             <div class="start-menu-item" data-action="apps">
@@ -579,6 +630,13 @@
                     <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
                 </svg>
                 <span>All Apps</span>
+            </div>
+            <div class="start-menu-item" data-action="users">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/>
+                    <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
+                </svg>
+                <span>Users</span>
             </div>
             <div class="start-menu-item" data-action="settings">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -627,11 +685,13 @@
     const contextMenu = document.getElementById('contextMenu');
     const clock = document.getElementById('clock');
     const taskbarApps = document.getElementById('taskbarApps');
+    const currentUserDisplay = document.getElementById('currentUser');
     
     let windows = [];
     let zIndexCounter = 100;
     let windowIdCounter = 0;
     let activeWindow = null;
+    let currentUser = 'User';
 
     const wallpapers = [
         'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
@@ -640,6 +700,13 @@
         'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
         'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
         'linear-gradient(135deg, #30cfd0 0%, #330867 100%)'
+    ];
+
+    const users = [
+        { name: 'Alice', color: '#3b82f6', initial: 'A' },
+        { name: 'Bob', color: '#ef4444', initial: 'B' },
+        { name: 'Charlie', color: '#10b981', initial: 'C' },
+        { name: 'Diana', color: '#f59e0b', initial: 'D' }
     ];
 
     // Clock
@@ -677,6 +744,9 @@
             switch(action) {
                 case 'apps':
                     showNotification('All apps view coming soon');
+                    break;
+                case 'users':
+                    openUsers();
                     break;
                 case 'settings':
                     openSettings();
@@ -971,6 +1041,48 @@
         return `<textarea class="notes-textarea" placeholder="Start typing your notes..."></textarea>`;
     }
 
+    function openUsers() {
+        const existing = windows.find(w => w.type === 'users');
+        if (existing) {
+            activateWindow(existing.id);
+            return;
+        }
+
+        const content = `
+            <div style="padding: 8px">
+                <h3 style="font-weight: 600; margin-bottom: 16px; color: var(--text-primary)">Select User</h3>
+                <div class="user-grid">
+                    ${users.map(user => `
+                        <div class="user-card ${user.name === currentUser ? 'active' : ''}" data-user="${user.name}">
+                            <div class="user-avatar" style="background: ${user.color}">${user.initial}</div>
+                            <div class="user-name">${user.name}</div>
+                        </div>
+                    `).join('')}
+                </div>
+                <div style="margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border)">
+                    <p style="font-size: 12px; color: var(--text-secondary)">Current user: <strong>${currentUser}</strong></p>
+                </div>
+            </div>
+        `;
+
+        const win = createWindow('Users', 'users', content);
+        
+        // Add user selection logic
+        setTimeout(() => {
+            const userCards = win.querySelectorAll('.user-card');
+            userCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const userName = card.dataset.user;
+                    currentUser = userName;
+                    currentUserDisplay.textContent = userName;
+                    userCards.forEach(c => c.classList.remove('active'));
+                    card.classList.add('active');
+                    showNotification(`Switched to ${userName}`);
+                });
+            });
+        }, 0);
+    }
+
     function openSettings() {
         const existing = windows.find(w => w.type === 'settings');
         if (existing) {
@@ -1003,67 +1115,52 @@
 
         const win = createWindow('Settings', 'settings', content);
         
-        const toggle = win.querySelector('#themeToggle');
-        toggle.addEventListener('click', () => {
-            toggle.classList.toggle('active');
-            document.body.classList.toggle('dark');
-        });
+        // Theme toggle
+        setTimeout(() => {
+            const themeToggle = win.querySelector('#themeToggle');
+            if (themeToggle) {
+                themeToggle.addEventListener('click', () => {
+                    document.body.classList.toggle('dark');
+                    themeToggle.classList.toggle('active');
+                });
+            }
 
-        win.querySelectorAll('.wallpaper-option').forEach(opt => {
-            opt.addEventListener('click', () => {
-                const index = parseInt(opt.dataset.wallpaper);
-                document.body.style.background = wallpapers[index];
-                win.querySelectorAll('.wallpaper-option').forEach(o => o.classList.remove('active'));
-                opt.classList.add('active');
+            // Wallpaper options
+            const wallpaperOptions = win.querySelectorAll('.wallpaper-option');
+            wallpaperOptions.forEach((option, i) => {
+                if (currentBg === wallpapers[i]) {
+                    option.classList.add('active');
+                }
+                option.addEventListener('click', () => {
+                    document.body.style.backgroundImage = wallpapers[i];
+                    wallpaperOptions.forEach(opt => opt.classList.remove('active'));
+                    option.classList.add('active');
+                    showNotification('Wallpaper changed');
+                });
             });
-        });
+        }, 0);
     }
 
     function createNewFolder() {
-        const folderNum = desktop.querySelectorAll('.desktop-icon[data-app="folder"]').length + 1;
-        const folder = document.createElement('div');
-        folder.className = 'desktop-icon';
-        folder.dataset.app = 'folder';
-        folder.innerHTML = `
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z" fill="#3b82f6" stroke="none"/>
-            </svg>
-            <span>New Folder ${folderNum}</span>
-        `;
-        desktop.appendChild(folder);
         showNotification('New folder created');
     }
 
-    function showNotification(msg) {
-        const notif = document.createElement('div');
-        notif.className = 'notification';
-        notif.innerHTML = `
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2">
-                <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
-                <polyline points="22 4 12 14.01 9 11.01"/>
+    function showNotification(message) {
+        const notification = document.createElement('div');
+        notification.className = 'notification';
+        notification.innerHTML = `
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
-            <span style="color: var(--text-primary); font-size: 13px">${msg}</span>
+            <span>${message}</span>
         `;
-        document.body.appendChild(notif);
+        document.body.appendChild(notification);
+        
         setTimeout(() => {
-            notif.style.opacity = '0';
-            notif.style.transform = 'translateX(400px)';
-            setTimeout(() => notif.remove(), 300);
-        }, 2500);
+            notification.style.animation = 'slideIn 0.3s ease reverse';
+            setTimeout(() => notification.remove(), 300);
+        }, 2000);
     }
-
-    // Initialize
-    window.addEventListener('resize', () => {
-        windows.forEach(win => {
-            const rect = win.element.getBoundingClientRect();
-            if (rect.right > window.innerWidth) {
-                win.element.style.left = (window.innerWidth - rect.width - 16) + 'px';
-            }
-            if (rect.bottom > window.innerHeight - 48) {
-                win.element.style.top = (window.innerHeight - 48 - rect.height - 16) + 'px';
-            }
-        });
-    });
 })();
 </script>
 </body>
