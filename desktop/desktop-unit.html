@@ -283,8 +283,10 @@
     .window-content {
         flex: 1;
         overflow: auto;
-        padding: 16px;
+        padding: 0;
         color: var(--text-primary);
+        display: flex;
+        flex-direction: column;
     }
 
     .resize-handle {
@@ -306,6 +308,171 @@
         border-right: 2px solid var(--text-secondary);
         border-bottom: 2px solid var(--text-secondary);
         opacity: 0.5;
+    }
+
+    /* Browser Tabbar Styles */
+    .browser-tabbar {
+        display: flex;
+        gap: 4px;
+        padding: 4px 8px;
+        background: var(--window-header);
+        border-bottom: 1px solid var(--border);
+        align-items: center;
+        overflow-x: auto;
+        scrollbar-width: thin;
+    }
+
+    .browser-tabbar::-webkit-scrollbar {
+        height: 4px;
+    }
+
+    .browser-tabbar::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .browser-tabbar::-webkit-scrollbar-thumb {
+        background: var(--border);
+        border-radius: 2px;
+    }
+
+    .browser-tab {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 12px;
+        background: var(--window-bg);
+        border: 1px solid var(--border);
+        border-radius: 6px 6px 0 0;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-size: 12px;
+        color: var(--text-secondary);
+        white-space: nowrap;
+        min-width: 100px;
+        justify-content: space-between;
+    }
+
+    .browser-tab:hover {
+        background: var(--border);
+        color: var(--text-primary);
+    }
+
+    .browser-tab.active {
+        background: var(--window-bg);
+        color: var(--text-primary);
+        border-bottom-color: var(--window-bg);
+        font-weight: 500;
+    }
+
+    .browser-tab-title {
+        flex: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .browser-tab-close {
+        width: 16px;
+        height: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        border-radius: 3px;
+        transition: all 0.2s ease;
+        flex-shrink: 0;
+    }
+
+    .browser-tab-close:hover {
+        background: rgba(239, 68, 68, 0.2);
+        color: #ef4444;
+    }
+
+    .browser-new-tab {
+        width: 28px;
+        height: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--window-header);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        color: var(--text-secondary);
+        font-size: 16px;
+        flex-shrink: 0;
+    }
+
+    .browser-new-tab:hover {
+        background: var(--border);
+        color: var(--accent);
+    }
+
+    .browser-url-bar {
+        display: flex;
+        gap: 8px;
+        padding: 8px;
+        background: var(--window-header);
+        border-bottom: 1px solid var(--border);
+    }
+
+    .browser-url-input {
+        flex: 1;
+        padding: 6px 12px;
+        border-radius: 20px;
+        border: 1px solid var(--border);
+        background: var(--window-bg);
+        color: var(--text-primary);
+        font-size: 13px;
+        outline: none;
+    }
+
+    .browser-content {
+        padding: 40px;
+        text-align: center;
+        color: var(--text-secondary);
+        flex: 1;
+        overflow: auto;
+    }
+
+    .file-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 12px;
+        padding: 16px;
+    }
+
+    .file-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        padding: 12px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        border: 2px solid transparent;
+    }
+
+    .file-item:hover {
+        background: var(--window-header);
+        transform: translateY(-2px);
+    }
+
+    .file-item.selected {
+        background: var(--border);
+        border-color: var(--accent);
+    }
+
+    .file-icon {
+        font-size: 32px;
+    }
+
+    .file-name {
+        font-size: 12px;
+        text-align: center;
+        word-break: break-word;
+        font-weight: 500;
     }
 
     .start-menu {
@@ -409,31 +576,7 @@
         line-height: 1.6;
         user-select: text;
         -webkit-user-select: text;
-    }
-
-    .browser-url-bar {
-        display: flex;
-        gap: 8px;
-        padding: 8px;
-        background: var(--window-header);
-        border-bottom: 1px solid var(--border);
-    }
-
-    .browser-url-input {
-        flex: 1;
-        padding: 6px 12px;
-        border-radius: 20px;
-        border: 1px solid var(--border);
-        background: var(--window-bg);
-        color: var(--text-primary);
-        font-size: 13px;
-        outline: none;
-    }
-
-    .browser-content {
-        padding: 40px;
-        text-align: center;
-        color: var(--text-secondary);
+        padding: 16px;
     }
 
     .setting-row {
@@ -644,6 +787,9 @@
         .workstation-grid {
             grid-template-columns: repeat(1, 1fr);
         }
+        .file-grid {
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+        }
     }
 
     .notification {
@@ -708,6 +854,24 @@
                 <path d="M14 2v6h6M10 13H8M16 13h-2M10 17H8M16 17h-4" stroke="#92400e" stroke-width="1.5"/>
             </svg>
             <span>Notes</span>
+        </div>
+        <div class="desktop-icon" data-app="projects">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z" fill="#a78bfa" stroke="none"/>
+            </svg>
+            <span>Projects</span>
+        </div>
+        <div class="desktop-icon" data-app="assets">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z" fill="#fb923c" stroke="none"/>
+            </svg>
+            <span>Assets</span>
+        </div>
+        <div class="desktop-icon" data-app="docs">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z" fill="#06b6d4" stroke="none"/>
+            </svg>
+            <span>Documents</span>
         </div>
     </div>
 
@@ -831,6 +995,24 @@
         { name: 'Workstation 6', icon: '🖥️', status: 'offline', ip: '192.168.1.106' }
     ];
 
+    const folders = {
+        projects: [
+            { name: 'Doaa Show', icon: '📁', type: 'folder' },
+            { name: 'Desktop UI', icon: '📁', type: 'folder' },
+            { name: 'Web App', icon: '📁', type: 'folder' }
+        ],
+        assets: [
+            { name: 'Images', icon: '🖼️', type: 'folder' },
+            { name: 'Videos', icon: '🎬', type: 'folder' },
+            { name: 'Audio', icon: '🎵', type: 'folder' }
+        ],
+        docs: [
+            { name: 'ReadMe.md', icon: '📄', type: 'file' },
+            { name: 'Changelog', icon: '📝', type: 'file' },
+            { name: 'Guidelines', icon: '📋', type: 'file' }
+        ]
+    };
+
     // Clock
     function updateClock() {
         const now = new Date();
@@ -940,7 +1122,38 @@
             case 'notes':
                 createWindow('Notes', 'notes', getNotesContent());
                 break;
+            case 'projects':
+                openFolder('Projects', 'projects');
+                break;
+            case 'assets':
+                openFolder('Assets', 'assets');
+                break;
+            case 'docs':
+                openFolder('Documents', 'docs');
+                break;
         }
+    }
+
+    function openFolder(name, type) {
+        const existing = windows.find(w => w.type === type);
+        if (existing) {
+            activateWindow(existing.id);
+            return;
+        }
+
+        const files = folders[type] || [];
+        const content = `
+            <div class="file-grid">
+                ${files.map((file, i) => `
+                    <div class="file-item" data-file-id="${i}">
+                        <div class="file-icon">${file.icon}</div>
+                        <div class="file-name">${file.name}</div>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+        
+        createWindow(name, type, content);
     }
 
     function createWindow(title, type, content) {
@@ -1001,7 +1214,91 @@
 
         win.addEventListener('mousedown', () => activateWindow(id));
         
+        // Setup browser tabs if this is a browser window
+        if (type === 'browser') {
+            setupBrowserTabs(id, win);
+        }
+        
         return win;
+    }
+
+    function setupBrowserTabs(windowId, winElement) {
+        let tabs = [{ id: 0, title: 'New Tab', url: 'https://desktop.local' }];
+        let activeTab = 0;
+
+        const windowContent = winElement.querySelector('.window-content');
+        
+        function renderTabs() {
+            const tabbar = winElement.querySelector('.browser-tabbar');
+            if (tabbar) tabbar.remove();
+            
+            const tabbarHtml = `
+                <div class="browser-tabbar">
+                    ${tabs.map((tab, idx) => `
+                        <div class="browser-tab ${idx === activeTab ? 'active' : ''}" data-tab-id="${idx}">
+                            <span class="browser-tab-title">${tab.title}</span>
+                            <span class="browser-tab-close">×</span>
+                        </div>
+                    `).join('')}
+                    <div class="browser-new-tab" title="New Tab">+</div>
+                </div>
+            `;
+            
+            windowContent.insertAdjacentHTML('afterbegin', tabbarHtml);
+            
+            // Tab click handlers
+            winElement.querySelectorAll('.browser-tab').forEach(tab => {
+                tab.addEventListener('click', (e) => {
+                    if (!e.target.classList.contains('browser-tab-close')) {
+                        activeTab = parseInt(tab.dataset.tabId);
+                        renderTabs();
+                        updateTabContent();
+                    }
+                });
+                
+                tab.querySelector('.browser-tab-close').addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const tabIdx = parseInt(tab.dataset.tabId);
+                    if (tabs.length > 1) {
+                        tabs.splice(tabIdx, 1);
+                        if (activeTab >= tabs.length) activeTab = tabs.length - 1;
+                        renderTabs();
+                        updateTabContent();
+                    }
+                });
+            });
+            
+            winElement.querySelector('.browser-new-tab').addEventListener('click', () => {
+                tabs.push({ id: tabs.length, title: 'New Tab', url: 'https://desktop.local' });
+                activeTab = tabs.length - 1;
+                renderTabs();
+                updateTabContent();
+            });
+        }
+
+        function updateTabContent() {
+            const content = windowContent.querySelector('.browser-content');
+            if (content) content.remove();
+            
+            const tab = tabs[activeTab];
+            const contentHtml = `
+                <div class="browser-url-bar">
+                    <input type="text" class="browser-url-input" placeholder="Search or enter URL" value="${tab.url}">
+                </div>
+                <div class="browser-content">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin: 0 auto 16px; opacity: 0.3">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
+                    </svg>
+                    <h3 style="font-size: 18px; font-weight: 600; margin-bottom: 8px; color: var(--text-primary)">${tab.title}</h3>
+                    <p style="font-size: 14px">Tab content for ${tab.url}</p>
+                </div>
+            `;
+            windowContent.insertAdjacentHTML('beforeend', contentHtml);
+        }
+
+        renderTabs();
+        updateTabContent();
     }
 
     function makeDraggable(win) {
@@ -1033,7 +1330,7 @@
             const dx = touch.clientX - startX;
             const dy = touch.clientY - startY;
             win.style.left = (initialX + dx) + 'px';
-            win.style.top = Math.max(60, initialY + dy) + 'px';
+            win.style.top = Math.max(0, initialY + dy) + 'px';
         }
 
         document.addEventListener('mouseup', stopDrag);
@@ -1124,9 +1421,9 @@
             win.element.dataset.oldLeft = win.element.style.left;
             win.element.dataset.oldTop = win.element.style.top;
             win.element.style.width = '100%';
-            win.element.style.height = `calc(100% - 108px)`;
+            win.element.style.height = 'calc(100% - 48px)';
             win.element.style.left = '0';
-            win.element.style.top = '60px';
+            win.element.style.top = '0';
             win.element.dataset.maximized = 'true';
         }
     }
@@ -1147,19 +1444,17 @@
     }
 
     function getBrowserContent() {
-        return `
-            <div class="browser-url-bar">
-                <input type="text" class="browser-url-input" placeholder="Search or enter URL" value="https://desktop.local">
-            </div>
-            <div class="browser-content">
-                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin: 0 auto 16px; opacity: 0.3">
-                    <circle cx="12" cy="12" r="10"/>
-                    <path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
-                </svg>
-                <h3 style="font-size: 18px; font-weight: 600; margin-bottom: 8px; color: var(--text-primary)">Welcome to Browser</h3>
-                <p style="font-size: 14px">Your web browsing experience starts here</p>
-            </div>
-        `;
+        return `<div class="browser-url-bar">
+                    <input type="text" class="browser-url-input" placeholder="Search or enter URL" value="https://desktop.local">
+                </div>
+                <div class="browser-content">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin: 0 auto 16px; opacity: 0.3">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
+                    </svg>
+                    <h3 style="font-size: 18px; font-weight: 600; margin-bottom: 8px; color: var(--text-primary)">Welcome to Browser</h3>
+                    <p style="font-size: 14px">Your web browsing experience starts here</p>
+                </div>`;
     }
 
     function getNotesContent() {
@@ -1174,24 +1469,24 @@
         }
 
         const content = `
-            <div style="padding: 8px">
-                <h3 style="font-weight: 600; margin-bottom: 16px; color: var(--text-primary)">Available Workstations</h3>
+            <div style="padding: 16px">
+                <div style="font-weight: 600; font-size: 16px; margin-bottom: 16px; color: var(--text-primary)">Network Workstations</div>
                 <div class="workstation-grid">
-                    ${workstations.map(ws => `
+                    ${workstations.map((ws, i) => `
                         <div class="workstation-card">
-                            <div class="workstation-icon">${ws.icon}</div>
-                            <div>
-                                <div class="workstation-name">${ws.name}</div>
-                                <div class="workstation-status ${ws.status === 'online' ? 'status-online' : 'status-offline'}">
-                                    ● ${ws.status.charAt(0).toUpperCase() + ws.status.slice(1)} - ${ws.ip}
+                            <div style="display: flex; align-items: center; gap: 8px; width: 100%;">
+                                <span class="workstation-icon">${ws.icon}</span>
+                                <div style="flex: 1;">
+                                    <div class="workstation-name">${ws.name}</div>
+                                    <div class="workstation-status ${ws.status === 'online' ? 'status-online' : 'status-offline'}">● ${ws.status.toUpperCase()}</div>
                                 </div>
                             </div>
+                            <div style="font-size: 11px; color: var(--text-secondary)">${ws.ip}</div>
                         </div>
                     `).join('')}
                 </div>
             </div>
         `;
-
         createWindow('Workstations', 'workstations', content);
     }
 
@@ -1203,38 +1498,33 @@
         }
 
         const content = `
-            <div style="padding: 8px">
-                <h3 style="font-weight: 600; margin-bottom: 16px; color: var(--text-primary)">Select User</h3>
+            <div style="padding: 16px">
+                <div style="font-weight: 600; font-size: 16px; margin-bottom: 16px; color: var(--text-primary)">User Profiles</div>
                 <div class="user-grid">
-                    ${users.map(user => `
-                        <div class="user-card ${user.name === currentUser ? 'active' : ''}" data-user="${user.name}">
+                    ${users.map((user, i) => `
+                        <div class="user-card ${user.name === currentUser ? 'active' : ''}">
                             <div class="user-avatar" style="background: ${user.color}">${user.initial}</div>
                             <div class="user-name">${user.name}</div>
                         </div>
                     `).join('')}
                 </div>
-                <div style="margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border)">
-                    <p style="font-size: 12px; color: var(--text-secondary)">Current user: <strong>${currentUser}</strong></p>
-                </div>
             </div>
         `;
-
+        
         const win = createWindow('Users', 'users', content);
         
-        // Add user selection logic
-        setTimeout(() => {
-            const userCards = win.querySelectorAll('.user-card');
-            userCards.forEach(card => {
-                card.addEventListener('click', () => {
-                    const userName = card.dataset.user;
-                    currentUser = userName;
-                    currentUserDisplay.textContent = userName;
-                    userCards.forEach(c => c.classList.remove('active'));
-                    card.classList.add('active');
-                    showNotification(`Switched to ${userName}`);
-                });
+        // Setup user selection
+        const userCards = win.querySelectorAll('.user-card');
+        userCards.forEach(card => {
+            card.addEventListener('click', () => {
+                userCards.forEach(c => c.classList.remove('active'));
+                card.classList.add('active');
+                const userName = card.querySelector('.user-name').textContent;
+                currentUser = userName;
+                currentUserDisplay.textContent = userName;
+                showNotification(`Switched to user: ${userName}`);
             });
-        }, 0);
+        });
     }
 
     function openSettings() {
@@ -1245,10 +1535,9 @@
         }
 
         const isDark = document.body.classList.contains('dark');
-        const currentBg = getComputedStyle(document.body).backgroundImage;
 
         const content = `
-            <div style="padding: 8px">
+            <div style="padding: 16px">
                 <div class="setting-row">
                     <div>
                         <div style="font-weight: 500; font-size: 14px; margin-bottom: 4px">Theme</div>
@@ -1266,33 +1555,27 @@
                 </div>
             </div>
         `;
-
+        
         const win = createWindow('Settings', 'settings', content);
         
         // Theme toggle
-        setTimeout(() => {
-            const themeToggle = win.querySelector('#themeToggle');
-            if (themeToggle) {
-                themeToggle.addEventListener('click', () => {
-                    document.body.classList.toggle('dark');
-                    themeToggle.classList.toggle('active');
-                });
+        const themeToggle = win.querySelector('#themeToggle');
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark');
+            themeToggle.classList.toggle('active');
+        });
+        
+        // Wallpaper selection
+        win.querySelectorAll('.wallpaper-option').forEach((option, i) => {
+            if (getComputedStyle(document.body).backgroundImage.includes(wallpapers[i])) {
+                option.classList.add('active');
             }
-
-            // Wallpaper options
-            const wallpaperOptions = win.querySelectorAll('.wallpaper-option');
-            wallpaperOptions.forEach((option, i) => {
-                if (currentBg === wallpapers[i]) {
-                    option.classList.add('active');
-                }
-                option.addEventListener('click', () => {
-                    document.body.style.backgroundImage = wallpapers[i];
-                    wallpaperOptions.forEach(opt => opt.classList.remove('active'));
-                    option.classList.add('active');
-                    showNotification('Wallpaper changed');
-                });
+            option.addEventListener('click', () => {
+                win.querySelectorAll('.wallpaper-option').forEach(o => o.classList.remove('active'));
+                option.classList.add('active');
+                document.body.style.background = wallpapers[i];
             });
-        }, 0);
+        });
     }
 
     function createNewFolder() {
@@ -1300,20 +1583,11 @@
     }
 
     function showNotification(message) {
-        const notification = document.createElement('div');
-        notification.className = 'notification';
-        notification.innerHTML = `
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>
-            <span>${message}</span>
-        `;
-        document.body.appendChild(notification);
-        
-        setTimeout(() => {
-            notification.style.animation = 'slideIn 0.3s ease reverse';
-            setTimeout(() => notification.remove(), 300);
-        }, 2000);
+        const notif = document.createElement('div');
+        notif.className = 'notification';
+        notif.innerHTML = `<span>${message}</span>`;
+        document.body.appendChild(notif);
+        setTimeout(() => notif.remove(), 3000);
     }
 })();
 </script>
