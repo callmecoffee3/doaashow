@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MicroDrama AI • Big Drama, Tiny Screen</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <style>
+    body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    .hero-bg {
+      background: linear-gradient(rgba(0,0,0,0.78), rgba(0,0,0,0.88)),
+                  url('https://picsum.photos/id/1015/1920/1080') center/cover no-repeat;
+    }
+    .drama-card {
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .drama-card:hover {
+      transform: translateY(-10px) scale(1.03);
+      box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.5);
+    }
+    .play-btn { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.65; }
+    }
+    .toast { animation: slideIn 0.3s ease-out; }
+    @keyframes slideIn {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .step-active { color: #ec4899; }
+    .step-done { color: #22c55e; }
+    .progress-bar {
+      transition: width 0.6s ease;
+    }
+  </style>
+</head>
+<body class="bg-zinc-950 text-white antialiased">
+
+  <!-- Navbar -->
+  <nav class="bg-black/90 backdrop-blur-md border-b border-zinc-800 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-5 sm:px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <span class="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 bg-clip-text text-transparent">μ</span>
+        <div>
+          <span class="text-2xl sm:text-3xl font-bold tracking-tight">MicroDrama</span>
+          <span class="text-[10px] tracking-widest text-pink-400 block -mt-1">AI</span>
+        </div>
+      </div>
+      <div class="hidden md:flex gap-8 text-sm font-medium">
+        <a href="#" class="hover:text-pink-400 transition-colors">Discover</a>
+        <a href="#studio" class="hover:text-pink-400 transition-colors">AI Studio</a>
+        <a href="#" class="hover:text-pink-400 transition-colors">Genres</a>
+        <a href="#" class="hover:text-pink-400 transition-colors">Trending</a>
+      </div>
+      <div class="flex items-center gap-3">
+        <button class="p-2.5 bg-zinc-900 hover:bg-zinc-800 rounded-xl transition" aria-label="Search">
+          <i class="fas fa-search text-sm"></i>
+        </button>
+        <button onclick="showToast('Login feature coming soon ✨')"
+                class="px-5 sm:px-6 py-2.5 bg-white text-black rounded-2xl font-semibold text-sm hover:bg-pink-500 hover:text-white transition">
+          Sign In
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero-bg min-h-[85vh] flex items-center relative">
+    <div class="max-w-5xl mx-auto text-center px-6 py-20">
+      <h1 class="text-5xl sm:text-6xl md:text-7xl font-bold leading-tight mb-6 tracking-tight">
+        Big Drama.<br>Small Screen.
+      </h1>
+      <p class="text-lg sm:text-xl md:text-2xl text-zinc-300 mb-10 max-w-2xl mx-auto leading-relaxed">
+        Watch thousands of micro dramas or create your own using AI in under 60 seconds.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <button onclick="document.getElementById('studio').scrollIntoView({behavior:'smooth'})"
+                class="px-8 sm:px-10 py-4 sm:py-5 bg-gradient-to-r from-pink-500 to-purple-600 rounded-2xl text-lg sm:text-xl font-bold flex items-center justify-center gap-3 hover:scale-[1.03] transition shadow-lg shadow-pink-500/20">
+          <i class="fas fa-bolt"></i> Create Your Drama Now
+        </button>
+        <button onclick="showToast('Opening trending section...')"
+                class="px-8 sm:px-10 py-4 sm:py-5 border-2 border-white/50 rounded-2xl text-lg sm:text-xl font-medium hover:bg-white/10 transition">
+          Browse Trending
+        </button>
+      </div>
+      <p class="mt-10 text-zinc-400 text-sm sm:text-base">❤️ 4.9M+ dramas created • Trusted by drama lovers worldwide</p>
+    </div>
+  </section>
+
+  <!-- Trending -->
+  <section class="max-w-7xl mx-auto px-5 sm:px-6 py-16 sm:py-20">
+    <h2 class="text-3xl sm:text-4xl font-bold mb-10 flex items-center gap-3">
+      🔥 Trending This Week
+    </h2>
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-8">
+      <div class="drama-card bg-zinc-900 rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer group" onclick="watchDrama('My Boss\'s Secret Wife')">
+        <div class="relative">
+          <img src="https://picsum.photos/id/201/600/900" alt="My Boss's Secret Wife" class="w-full aspect-[9/16] object-cover group-hover:brightness-90 transition">
+          <div class="absolute top-3 right-3 bg-black/75 backdrop-blur-sm px-2.5 py-1 text-xs rounded-full font-medium">2:45</div>
+        </div>
+        <div class="p-4 sm:p-5">
+          <div class="text-pink-400 text-xs sm:text-sm font-medium">Romance • 1.4M views</div>
+          <h3 class="font-bold text-base sm:text-lg mt-1.5 leading-snug">My Boss's Secret Wife</h3>
+        </div>
+      </div>
+      <div class="drama-card bg-zinc-900 rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer group" onclick="watchDrama('The Fake Heiress')">
+        <div class="relative">
+          <img src="https://picsum.photos/id/237/600/900" alt="The Fake Heiress" class="w-full aspect-[9/16] object-cover group-hover:brightness-90 transition">
+          <div class="absolute top-3 right-3 bg-black/75 backdrop-blur-sm px-2.5 py-1 text-xs rounded-full font-medium">3:12</div>
+        </div>
+        <div class="p-4 sm:p-5">
+          <div class="text-pink-400 text-xs sm:text-sm font-medium">Revenge • Trending</div>
+          <h3 class="font-bold text-base sm:text-lg mt-1.5 leading-snug">The Fake Heiress</h3>
+        </div>
+      </div>
+      <div class="drama-card bg-zinc-900 rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer group" onclick="watchDrama('Midnight Text')">
+        <div class="relative">
+          <img src="https://picsum.photos/id/180/600/900" alt="Midnight Text" class="w-full aspect-[9/16] object-cover group-hover:brightness-90 transition">
+          <div class="absolute top-3 right-3 bg-black/75 backdrop-blur-sm px-2.5 py-1 text-xs rounded-full font-medium">1:58</div>
+        </div>
+        <div class="p-4 sm:p-5">
+          <div class="text-pink-400 text-xs sm:text-sm font-medium">Thriller</div>
+          <h3 class="font-bold text-base sm:text-lg mt-1.5 leading-snug">Midnight Text</h3>
+        </div>
+      </div>
+      <div class="drama-card bg-zinc-900 rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer group" onclick="watchDrama('I Married My AI Boyfriend')">
+        <div class="relative">
+          <img src="https://picsum.photos/id/251/600/900" alt="I Married My AI Boyfriend" class="w-full aspect-[9/16] object-cover group-hover:brightness-90 transition">
+          <div class="absolute top-3 right-3 bg-black/75 backdrop-blur-sm px-2.5 py-1 text-xs rounded-full font-medium">2:30</div>
+        </div>
+        <div class="p-4 sm:p-5">
+          <div class="text-pink-400 text-xs sm:text-sm font-medium">Comedy</div>
+          <h3 class="font-bold text-base sm:text-lg mt-1.5 leading-snug">I Married My AI Boyfriend</h3>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI Studio -->
+  <section id="studio" class="bg-zinc-900/80 py-16 sm:py-24">
+    <div class="max-w-3xl mx-auto px-5 sm:px-6 text-center">
+      <h2 class="text-4xl sm:text-5xl font-bold mb-5 tracking-tight">AI Drama Studio</h2>
+      <p class="text-lg sm:text-xl text-zinc-400 mb-10">Tell the AI what you want. Get a full micro drama instantly.</p>
+
+      <div class="bg-black rounded-3xl p-6 sm:p-10 border border-zinc-800">
+        <textarea id="promptInput" rows="4"
+          class="w-full bg-zinc-950 border border-zinc-700 rounded-2xl p-5 sm:p-6 text-base sm:text-lg resize-none focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500/50 transition placeholder:text-zinc-600"
+          placeholder="A poor girl falls in love with a cold CEO who turns out to be her childhood savior..."></textarea>
+
+        <button id="generateBtn" onclick="generateDrama()"
+          class="mt-6 sm:mt-8 w-full py-5 text-lg sm:text-xl font-bold bg-gradient-to-r from-pink-500 to-violet-600 rounded-2xl hover:brightness-110 active:scale-[0.98] transition flex items-center justify-center gap-3 shadow-lg shadow-pink-500/20">
+          <i class="fas fa-magic play-btn"></i>
+          <span id="btnText">GENERATE MY MICRO DRAMA</span>
+        </button>
+        <p class="text-xs text-zinc-500 mt-4">First 3 generations are free • Takes ~30-60 seconds</p>
+      </div>
+
+      <!-- Generation Progress (hidden by default) -->
+      <div id="generationProgress" class="hidden mt-10 bg-black rounded-3xl p-8 border border-zinc-800 text-left">
+        <h3 class="text-xl font-bold mb-6 text-center">Creating your micro drama...</h3>
+        
+        <div class="space-y-5 mb-8">
+          <div id="step1" class="flex items-center gap-4 text-zinc-500">
+            <div class="w-8 h-8 rounded-full border-2 border-zinc-600 flex items-center justify-center text-sm font-bold">1</div>
+            <span>Writing script & dialogue</span>
+          </div>
+          <div id="step2" class="flex items-center gap-4 text-zinc-500">
+            <div class="w-8 h-8 rounded-full border-2 border-zinc-600 flex items-center justify-center text-sm font-bold">2</div>
+            <span>Casting AI actors</span>
+          </div>
+          <div id="step3" class="flex items-center gap-4 text-zinc-500">
+            <div class="w-8 h-8 rounded-full border-2 border-zinc-600 flex items-center justify-center text-sm font-bold">3</div>
+            <span>Filming scenes</span>
+          </div>
+          <div id="step4" class="flex items-center gap-4 text-zinc-500">
+            <div class="w-8 h-8 rounded-full border-2 border-zinc-600 flex items-center justify-center text-sm font-bold">4</div>
+            <span>Editing & rendering video</span>
+          </div>
+        </div>
+
+        <div class="w-full bg-zinc-800 rounded-full h-2.5 mb-2">
+          <div id="progressBar" class="progress-bar bg-gradient-to-r from-pink-500 to-violet-500 h-2.5 rounded-full" style="width: 0%"></div>
+        </div>
+        <p id="progressText" class="text-sm text-zinc-400 text-center">0%</p>
+      </div>
+
+      <!-- Video Result (hidden by default) -->
+      <div id="videoResult" class="hidden mt-10">
+        <div class="bg-black rounded-3xl overflow-hidden border border-zinc-800 shadow-2xl">
+          <div class="relative bg-black aspect-[9/16] max-h-[70vh] mx-auto">
+            <video id="dramaVideo" 
+                   class="w-full h-full object-cover"
+                   controls
+                   playsinline
+                   loop
+                   poster="https://picsum.photos/id/201/600/900">
+              <source src="https://cdn.truefilesize.com/mp4/sample-portrait.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <div class="absolute top-4 left-4 right-4 flex justify-between items-start pointer-events-none">
+              <div class="bg-black/70 backdrop-blur-md px-3 py-1.5 rounded-full text-xs font-medium">
+                MICRODRAMA AI
+              </div>
+              <div class="bg-pink-500/90 px-3 py-1.5 rounded-full text-xs font-bold">
+                NEW
+              </div>
+            </div>
+          </div>
+          <div class="p-6 text-left">
+            <h3 id="dramaTitle" class="text-xl font-bold mb-2 leading-snug">Your Custom Micro Drama</h3>
+            <p id="dramaPrompt" class="text-zinc-400 text-sm mb-5 line-clamp-2"></p>
+            <div class="flex gap-3">
+              <button onclick="document.getElementById('dramaVideo').play()" 
+                      class="flex-1 py-3 bg-pink-500 hover:bg-pink-600 rounded-xl font-semibold transition flex items-center justify-center gap-2">
+                <i class="fas fa-play"></i> Play Again
+              </button>
+              <button onclick="resetStudio()" 
+                      class="flex-1 py-3 bg-zinc-800 hover:bg-zinc-700 rounded-xl font-semibold transition">
+                Generate Another
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-black py-12 text-center text-zinc-500">
+    <p class="text-lg font-medium text-white mb-2">MicroDrama AI</p>
+    <p class="text-sm">© 2026 • Made for drama addicts by drama addicts</p>
+  </footer>
+
+  <!-- Toast -->
+  <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 hidden"></div>
+
+  <script>
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.innerHTML = `
+        <div class="toast bg-zinc-900 border border-zinc-700 text-white px-6 py-3.5 rounded-2xl shadow-xl text-sm font-medium max-w-sm text-center">
+          ${message}
+        </div>
+      `;
+      toast.classList.remove('hidden');
+      setTimeout(() => toast.classList.add('hidden'), 2800);
+    }
+
+    function watchDrama(title) {
+      // For trending cards we also open the player with a title
+      document.getElementById('dramaTitle').textContent = title;
+      document.getElementById('dramaPrompt').textContent = "Trending micro drama";
+      document.getElementById('videoResult').classList.remove('hidden');
+      document.getElementById('generationProgress').classList.add('hidden');
+      document.getElementById('studio').scrollIntoView({ behavior: 'smooth' });
+      
+      const video = document.getElementById('dramaVideo');
+      video.currentTime = 0;
+      video.play().catch(() => {});
+      showToast(`🎬 Now playing: "${title}"`);
+    }
+
+    function resetStudio() {
+      document.getElementById('videoResult').classList.add('hidden');
+      document.getElementById('generationProgress').classList.add('hidden');
+      document.getElementById('promptInput').value = '';
+      document.getElementById('generateBtn').disabled = false;
+      document.getElementById('btnText').textContent = 'GENERATE MY MICRO DRAMA';
+      document.getElementById('generateBtn').classList.remove('opacity-70', 'cursor-not-allowed');
+    }
+
+    function setStep(stepNum, status) {
+      const step = document.getElementById(`step${stepNum}`);
+      const circle = step.querySelector('div');
+      
+      step.classList.remove('text-zinc-500', 'step-active', 'step-done');
+      circle.classList.remove('border-zinc-600', 'border-pink-500', 'bg-pink-500', 'border-green-500', 'bg-green-500', 'text-white');
+      
+      if (status === 'active') {
+        step.classList.add('step-active');
+        circle.classList.add('border-pink-500', 'text-pink-400');
+      } else if (status === 'done') {
+        step.classList.add('step-done');
+        circle.classList.add('border-green-500', 'bg-green-500', 'text-white');
+        circle.innerHTML = '<i class="fas fa-check text-xs"></i>';
+      }
+    }
+
+    async function generateDrama() {
+      const prompt = document.getElementById("promptInput").value.trim();
+      const btn = document.getElementById("generateBtn");
+      const btnText = document.getElementById("btnText");
+      const progressBox = document.getElementById("generationProgress");
+      const videoResult = document.getElementById("videoResult");
+      const progressBar = document.getElementById("progressBar");
+      const progressText = document.getElementById("progressText");
+
+      // Reset previous
+      videoResult.classList.add('hidden');
+      progressBox.classList.remove('hidden');
+      
+      // Reset steps
+      for (let i = 1; i <= 4; i++) {
+        const step = document.getElementById(`step${i}`);
+        step.className = 'flex items-center gap-4 text-zinc-500';
+        const circle = step.querySelector('div');
+        circle.className = 'w-8 h-8 rounded-full border-2 border-zinc-600 flex items-center justify-center text-sm font-bold';
+        circle.textContent = i;
+      }
+      progressBar.style.width = '0%';
+      progressText.textContent = '0%';
+
+      btn.disabled = true;
+      btn.classList.add('opacity-70', 'cursor-not-allowed');
+      btnText.textContent = "Generating...";
+
+      // Simulated generation steps
+      const steps = [
+        { num: 1, delay: 1800, progress: 25 },
+        { num: 2, delay: 2200, progress: 50 },
+        { num: 3, delay: 2800, progress: 78 },
+        { num: 4, delay: 2500, progress: 100 }
+      ];
+
+      for (const step of steps) {
+        setStep(step.num, 'active');
+        await new Promise(r => setTimeout(r, step.delay));
+        setStep(step.num, 'done');
+        progressBar.style.width = step.progress + '%';
+        progressText.textContent = step.progress + '%';
+      }
+
+      // Show result
+      await new Promise(r => setTimeout(r, 600));
+      
+      progressBox.classList.add('hidden');
+      videoResult.classList.remove('hidden');
+
+      // Set title from prompt
+      const title = prompt 
+        ? (prompt.length > 55 ? prompt.substring(0, 55) + '...' : prompt)
+        : "Surprise Romantic Micro Drama";
+      
+      document.getElementById('dramaTitle').textContent = title;
+      document.getElementById('dramaPrompt').textContent = prompt || "A heart-warming AI-generated story of unexpected love.";
+
+      // Play the video
+      const video = document.getElementById('dramaVideo');
+      video.currentTime = 0;
+      video.muted = false;
+      video.play().catch(() => {
+        // Autoplay blocked → still show the player
+        showToast("Click play to start your drama 🎬");
+      });
+
+      btn.disabled = false;
+      btn.classList.remove('opacity-70', 'cursor-not-allowed');
+      btnText.textContent = "GENERATE MY MICRO DRAMA";
+
+      showToast("✅ Your micro drama is ready!");
+    }
+  </script>
+</body>
+</html>

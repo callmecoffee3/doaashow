@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MicroDrama AI • Big Drama, Tiny Screen</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <style>
+    body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    .hero-bg {
+      background: linear-gradient(rgba(0,0,0,0.78), rgba(0,0,0,0.88)),
+                  url('https://picsum.photos/id/1015/1920/1080') center/cover no-repeat;
+    }
+    .drama-card { transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1); }
+    .drama-card:hover {
+      transform: translateY(-10px) scale(1.03);
+      box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.5);
+    }
+    .play-btn { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.65; }
+    }
+    .toast { animation: slideIn 0.3s ease-out; }
+    @keyframes slideIn {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .step-active { color: #ec4899; }
+    .step-done { color: #22c55e; }
+    .progress-bar { transition: width 0.6s ease; }
+    .index-card { transition: all 0.2s ease; min-height: 140px; }
+    .index-card:hover { transform: translateY(-3px); }
+    .card-character { border-left: 4px solid #ec4899; }
+    .card-scene { border-left: 4px solid #8b5cf6; }
+    .card-prop { border-left: 4px solid #f59e0b; }
+    .card-animal { border-left: 4px solid #22c55e; }
+    .card-prompt { border-left: 4px solid #3b82f6; }
+    .page { display: none; }
+    .page.active { display: block; animation: fadeIn 0.25s ease; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .nav-link.active { color: #ec4899; }
+  </style>
+</head>
+<body class="bg-zinc-950 text-white antialiased min-h-screen">
+
+  <!-- NAVBAR -->
+  <nav class="bg-black/90 backdrop-blur-md border-b border-zinc-800 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-5 sm:px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3 cursor-pointer" onclick="navigate('home')">
+        <span class="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 bg-clip-text text-transparent">μ</span>
+        <div>
+          <span class="text-2xl sm:text-3xl font-bold tracking-tight">MicroDrama</span>
+          <span class="text-[10px] tracking-widest text-pink-400 block -mt-1">AI</span>
+        </div>
+      </div>
+      <div class="hidden md:flex gap-8 text-sm font-medium">
+        <button onclick="navigate('home')" class="nav-link hover:text-pink-400 transition-colors" data-page="home">Home</button>
+        <button onclick="navigate('workspace')" class="nav-link hover:text-pink-400 transition-colors" data-page="workspace">Workspace</button>
+        <button onclick="navigate('studio')" class="nav-link hover:text-pink-400 transition-colors" data-page="studio">AI Studio</button>
+        <button onclick="navigate('trending')" class="nav-link hover:text-pink-400 transition-colors" data-page="trending">Trending</button>
+      </div>
+      <div class="flex items-center gap-3">
+        <button class="p-2.5 bg-zinc-900 hover:bg-zinc-800 rounded-xl transition md:hidden" onclick="toggleMobileNav()">
+          <i class="fas fa-bars"></i>
+        </button>
+        <button onclick="showToast('Login feature coming soon ✨')"
+                class="px-5 sm:px-6 py-2.5 bg-white text-black rounded-2xl font-semibold text-sm hover:bg-pink-500 hover:text-white transition">
+          Sign In
+        </button>
+      </div>
+    </div>
+    <div id="mobileNav" class="hidden md:hidden border-t border-zinc-800 px-5 py-4 space-y-3">
+      <button onclick="navigate('home'); toggleMobileNav()" class="block w-full text-left py-2 hover:text-pink-400">Home</button>
+      <button onclick="navigate('workspace'); toggleMobileNav()" class="block w-full text-left py-2 hover:text-pink-400">Workspace</button>
+      <button onclick="navigate('studio'); toggleMobileNav()" class="block w-full text-left py-2 hover:text-pink-400">AI Studio</button>
+      <button onclick="navigate('trending'); toggleMobileNav()" class="block w-full text-left py-2 hover:text-pink-400">Trending</button>
+    </div>
+  </nav>
+
+  <!-- PAGE: HOME -->
+  <div id="page-home" class="page active">
+    <section class="hero-bg min-h-[85vh] flex items-center relative">
+      <div class="max-w-5xl mx-auto text-center px-6 py-20">
+        <h1 class="text-5xl sm:text-6xl md:text-7xl font-bold leading-tight mb-6 tracking-tight">
+          Big Drama.<br>Small Screen.
+        </h1>
+        <p class="text-lg sm:text-xl md:text-2xl text-zinc-300 mb-10 max-w-2xl mx-auto leading-relaxed">
+          Build characters, scenes, props & animals as index cards. Organize into decks & projects. Generate micro dramas with AI.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <button onclick="navigate('workspace')"
+                  class="px-8 sm:px-10 py-4 sm:py-5 bg-gradient-to-r from-pink-500 to-purple-600 rounded-2xl text-lg sm:text-xl font-bold flex items-center justify-center gap-3 hover:scale-[1.03] transition shadow-lg shadow-pink-500/20">
+            <i class="fas fa-layer-group"></i> Open Workspace
+          </button>
+          <button onclick="navigate('studio')"
+                  class="px-8 sm:px-10 py-4 sm:py-5 border-2 border-white/50 rounded-2xl text-lg sm:text-xl font-medium hover:bg-white/10 transition">
+            Quick Generate
+          </button>
+        </div>
+        <p class="mt-10 text-zinc-400 text-sm sm:text-base">❤️ 4.9M+ dramas created • Trusted by drama lovers worldwide</p>
+      </div>
+    </section>
+    <section class="max-w-7xl mx-auto px-6 py-20">
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="bg-zinc-900 rounded-3xl p-8 border border-zinc-800">
+          <div class="w-12 h-12 rounded-2xl bg-pink-500/20 flex items-center justify-center mb-5">
+            <i class="fas fa-clone text-pink-400 text-xl"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3">Index Cards</h3>
+          <p class="text-zinc-400">Create Characters, Scenes, Props, Animals and Prompts as reusable story building blocks.</p>
+        </div>
+        <div class="bg-zinc-900 rounded-3xl p-8 border border-zinc-800">
+          <div class="w-12 h-12 rounded-2xl bg-purple-500/20 flex items-center justify-center mb-5">
+            <i class="fas fa-layer-group text-purple-400 text-xl"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3">Decks & Projects</h3>
+          <p class="text-zinc-400">Organize cards into decks inside projects. Keep multiple stories cleanly separated.</p>
+        </div>
+        <div class="bg-zinc-900 rounded-3xl p-8 border border-zinc-800">
+          <div class="w-12 h-12 rounded-2xl bg-violet-500/20 flex items-center justify-center mb-5">
+            <i class="fas fa-magic text-violet-400 text-xl"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3">AI Generation</h3>
+          <p class="text-zinc-400">Feed your cards into the AI Studio and generate a full micro drama in under a minute.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- PAGE: WORKSPACE -->
+  <div id="page-workspace" class="page">
+    <div class="max-w-7xl mx-auto px-5 sm:px-6 py-10">
+      <!-- Breadcrumb -->
+      <div class="text-sm text-zinc-500 mb-6 flex items-center gap-2 flex-wrap">
+        <button onclick="wsShowProjects()" class="hover:text-pink-400">Workspace</button>
+        <span id="bcProject" class="hidden">/ <button onclick="wsShowProject()" class="hover:text-pink-400" id="bcProjectName"></button></span>
+        <span id="bcDeck" class="hidden">/ <span id="bcDeckName" class="text-zinc-300"></span></span>
+      </div>
+
+      <!-- SUBVIEW: Projects -->
+      <div id="ws-projects" class="ws-view">
+        <div class="flex items-center justify-between mb-8">
+          <h1 class="text-3xl sm:text-4xl font-bold">Projects</h1>
+          <button onclick="createProject()" class="px-5 py-2.5 bg-pink-500 hover:bg-pink-600 rounded-xl font-medium transition flex items-center gap-2">
+            <i class="fas fa-plus"></i> New Project
+          </button>
+        </div>
+        <div id="projectGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+      </div>
+
+      <!-- SUBVIEW: Project (Decks) -->
+      <div id="ws-project" class="ws-view hidden">
+        <div class="flex items-center justify-between mb-8">
+          <div>
+            <button onclick="wsShowProjects()" class="text-sm text-zinc-400 hover:text-pink-400 mb-2 flex items-center gap-1">
+              <i class="fas fa-arrow-left"></i> All Projects
+            </button>
+            <h1 id="projectTitle" class="text-3xl sm:text-4xl font-bold">Project</h1>
+          </div>
+          <button onclick="createDeck()" class="px-5 py-2.5 bg-purple-500 hover:bg-purple-600 rounded-xl font-medium transition flex items-center gap-2">
+            <i class="fas fa-plus"></i> New Deck
+          </button>
+        </div>
+        <div id="deckGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+      </div>
+
+      <!-- SUBVIEW: Deck (Cards) -->
+      <div id="ws-deck" class="ws-view hidden">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+          <div>
+            <button onclick="wsShowProject()" class="text-sm text-zinc-400 hover:text-pink-400 mb-2 flex items-center gap-1">
+              <i class="fas fa-arrow-left"></i> Back to Project
+            </button>
+            <h1 id="deckTitle" class="text-3xl sm:text-4xl font-bold">Deck</h1>
+          </div>
+          <div class="flex gap-2 flex-wrap">
+            <button onclick="openCardModal('character')" class="px-3 py-2 bg-pink-500/20 hover:bg-pink-500/30 text-pink-400 rounded-xl text-sm font-medium transition"><i class="fas fa-user"></i> Character</button>
+            <button onclick="openCardModal('scene')" class="px-3 py-2 bg-violet-500/20 hover:bg-violet-500/30 text-violet-400 rounded-xl text-sm font-medium transition"><i class="fas fa-film"></i> Scene</button>
+            <button onclick="openCardModal('prop')" class="px-3 py-2 bg-amber-500/20 hover:bg-amber-500/30 text-amber-400 rounded-xl text-sm font-medium transition"><i class="fas fa-cube"></i> Prop</button>
+            <button onclick="openCardModal('animal')" class="px-3 py-2 bg-green-500/20 hover:bg-green-500/30 text-green-400 rounded-xl text-sm font-medium transition"><i class="fas fa-paw"></i> Animal</button>
+            <button onclick="openCardModal('prompt')" class="px-3 py-2 bg-blue-500/20 hover:bg-blue-500/30 text-blue-400 rounded-xl text-sm font-medium transition"><i class="fas fa-lightbulb"></i> Prompt</button>
+          </div>
+        </div>
+        <div class="flex gap-6 border-b border-zinc-800 mb-6 overflow-x-auto">
+          <button onclick="filterCards('all')" class="pb-3 text-sm font-medium text-pink-400 border-b-2 border-pink-500 whitespace-nowrap" data-filter="all">All</button>
+          <button onclick="filterCards('character')" class="pb-3 text-sm font-medium text-zinc-400 hover:text-white whitespace-nowrap" data-filter="character">Characters</button>
+          <button onclick="filterCards('scene')" class="pb-3 text-sm font-medium text-zinc-400 hover:text-white whitespace-nowrap" data-filter="scene">Scenes</button>
+          <button onclick="filterCards('prop')" class="pb-3 text-sm font-medium text-zinc-400 hover:text-white whitespace-nowrap" data-filter="prop">Props</button>
+          <button onclick="filterCards('animal')" class="pb-3 text-sm font-medium text-zinc-400 hover:text-white whitespace-nowrap" data-filter="animal">Animals</button>
+          <button onclick="filterCards('prompt')" class="pb-3 text-sm font-medium text-zinc-400 hover:text-white whitespace-nowrap" data-filter="prompt">Prompts</button>
+        </div>
+        <div id="cardsGrid" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 min-h-[200px]"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE: AI STUDIO -->
+  <div id="page-studio" class="page">
+    <div class="max-w-3xl mx-auto px-5 sm:px-6 py-16 sm:py-20 text-center">
+      <h1 class="text-4xl sm:text-5xl font-bold mb-5 tracking-tight">AI Drama Studio</h1>
+      <p class="text-lg sm:text-xl text-zinc-400 mb-6">Generate from a free prompt or use your project cards</p>
+      <div class="flex items-center justify-center gap-3 mb-8">
+        <label class="flex items-center gap-2 cursor-pointer text-sm">
+          <input type="checkbox" id="useProjectCards" class="w-4 h-4 rounded accent-pink-500">
+          <span>Include active project cards in generation</span>
+        </label>
+      </div>
+      <div class="bg-black rounded-3xl p-6 sm:p-10 border border-zinc-800 text-left">
+        <textarea id="promptInput" rows="4"
+          class="w-full bg-zinc-950 border border-zinc-700 rounded-2xl p-5 sm:p-6 text-base sm:text-lg resize-none focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500/50 transition placeholder:text-zinc-600"
+          placeholder="A poor girl falls in love with a cold CEO who turns out to be her childhood savior..."></textarea>
+        <button id="generateBtn" onclick="generateDrama()"
+          class="mt-6 sm:mt-8 w-full py-5 text-lg sm:text-xl font-bold bg-gradient-to-r from-pink-500 to-violet-600 rounded-2xl hover:brightness-110 active:scale-[0.98] transition flex items-center justify-center gap-3 shadow-lg shadow-pink-500/20">
+          <i class="fas fa-magic play-btn"></i>
+          <span id="btnText">GENERATE MY MICRO DRAMA</span>
+        </button>
+        <p class="text-xs text-zinc-500 mt-4 text-center">First 3 generations are free • Takes ~30-60 seconds</p>
+      </div>
+      <div id="generationProgress" class="hidden mt-10 bg-black rounded-3xl p-8 border border-zinc-800 text-left">
+        <h3 class="text-xl font-bold mb-6 text-center">Creating your micro drama...</h3>
+        <div class="space-y-5 mb-8">
+          <div id="step1" class="flex items-center gap-4 text-zinc-500"><div class="w-8 h-8 rounded-full border-2 border-zinc-600 flex items-center justify-center text-sm font-bold">1</div><span>Writing script & dialogue</span></div>
+          <div id="step2" class="flex items-center gap-4 text-zinc-500"><div class="w-8 h-8 rounded-full border-2 border-zinc-600 flex items-center justify-center text-sm font-bold">2</div><span>Casting AI actors</span></div>
+          <div id="step3" class="flex items-center gap-4 text-zinc-500"><div class="w-8 h-8 rounded-full border-2 border-zinc-600 flex items-center justify-center text-sm font-bold">3</div><span>Filming scenes</span></div>
+          <div id="step4" class="flex items-center gap-4 text-zinc-500"><div class="w-8 h-8 rounded-full border-2 border-zinc-600 flex items-center justify-center text-sm font-bold">4</div><span>Editing & rendering video</span></div>
+        </div>
+        <div class="w-full bg-zinc-800 rounded-full h-2.5 mb-2">
+          <div id="progressBar" class="progress-bar bg-gradient-to-r from-pink-500 to-violet-500 h-2.5 rounded-full" style="width: 0%"></div>
+        </div>
+        <p id="progressText" class="text-sm text-zinc-400 text-center">0%</p>
+      </div>
+      <div id="videoResult" class="hidden mt-10">
+        <div class="bg-black rounded-3xl overflow-hidden border border-zinc-800 shadow-2xl">
+          <div class="relative bg-black aspect-[9/16] max-h-[70vh] mx-auto">
+            <video id="dramaVideo" class="w-full h-full object-cover" controls playsinline loop poster="https://picsum.photos/id/201/600/900">
+              <source src="https://cdn.truefilesize.com/mp4/sample-portrait.mp4" type="video/mp4">
+            </video>
+            <div class="absolute top-4 left-4 right-4 flex justify-between items-start pointer-events-none">
+              <div class="bg-black/70 backdrop-blur-md px-3 py-1.5 rounded-full text-xs font-medium">MICRODRAMA AI</div>
+              <div class="bg-pink-500/90 px-3 py-1.5 rounded-full text-xs font-bold">NEW</div>
+            </div>
+          </div>
+          <div class="p-6 text-left">
+            <h3 id="dramaTitle" class="text-xl font-bold mb-2 leading-snug">Your Custom Micro Drama</h3>
+            <p id="dramaPrompt" class="text-zinc-400 text-sm mb-5 line-clamp-3"></p>
+            <div class="flex gap-3">
+              <button onclick="document.getElementById('dramaVideo').play()" class="flex-1 py-3 bg-pink-500 hover:bg-pink-600 rounded-xl font-semibold transition flex items-center justify-center gap-2"><i class="fas fa-play"></i> Play Again</button>
+              <button onclick="resetStudio()" class="flex-1 py-3 bg-zinc-800 hover:bg-zinc-700 rounded-xl font-semibold transition">Generate Another</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE: TRENDING -->
+  <div id="page-trending" class="page">
+    <div class="max-w-7xl mx-auto px-5 sm:px-6 py-16">
+      <h1 class="text-3xl sm:text-4xl font-bold mb-10 flex items-center gap-3">🔥 Trending This Week</h1>
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-8">
+        <div class="drama-card bg-zinc-900 rounded-2xl overflow-hidden cursor-pointer group" onclick="watchDrama('My Boss\'s Secret Wife')">
+          <div class="relative"><img src="https://picsum.photos/id/201/600/900" class="w-full aspect-[9/16] object-cover group-hover:brightness-90 transition"><div class="absolute top-3 right-3 bg-black/75 px-2.5 py-1 text-xs rounded-full">2:45</div></div>
+          <div class="p-4"><div class="text-pink-400 text-xs font-medium">Romance • 1.4M views</div><h3 class="font-bold mt-1">My Boss's Secret Wife</h3></div>
+        </div>
+        <div class="drama-card bg-zinc-900 rounded-2xl overflow-hidden cursor-pointer group" onclick="watchDrama('The Fake Heiress')">
+          <div class="relative"><img src="https://picsum.photos/id/237/600/900" class="w-full aspect-[9/16] object-cover group-hover:brightness-90 transition"><div class="absolute top-3 right-3 bg-black/75 px-2.5 py-1 text-xs rounded-full">3:12</div></div>
+          <div class="p-4"><div class="text-pink-400 text-xs font-medium">Revenge</div><h3 class="font-bold mt-1">The Fake Heiress</h3></div>
+        </div>
+        <div class="drama-card bg-zinc-900 rounded-2xl overflow-hidden cursor-pointer group" onclick="watchDrama('Midnight Text')">
+          <div class="relative"><img src="https://picsum.photos/id/180/600/900" class="w-full aspect-[9/16] object-cover group-hover:brightness-90 transition"><div class="absolute top-3 right-3 bg-black/75 px-2.5 py-1 text-xs rounded-full">1:58</div></div>
+          <div class="p-4"><div class="text-pink-400 text-xs font-medium">Thriller</div><h3 class="font-bold mt-1">Midnight Text</h3></div>
+        </div>
+        <div class="drama-card bg-zinc-900 rounded-2xl overflow-hidden cursor-pointer group" onclick="watchDrama('I Married My AI')">
+          <div class="relative"><img src="https://picsum.photos/id/251/600/900" class="w-full aspect-[9/16] object-cover group-hover:brightness-90 transition"><div class="absolute top-3 right-3 bg-black/75 px-2.5 py-1 text-xs rounded-full">2:30</div></div>
+          <div class="p-4"><div class="text-pink-400 text-xs font-medium">Comedy</div><h3 class="font-bold mt-1">I Married My AI</h3></div>
+        </div>
+        <div class="drama-card bg-zinc-900 rounded-2xl overflow-hidden cursor-pointer group" onclick="watchDrama('The Last Message')">
+          <div class="relative"><img src="https://picsum.photos/id/1011/600/900" class="w-full aspect-[9/16] object-cover group-hover:brightness-90 transition"><div class="absolute top-3 right-3 bg-black/75 px-2.5 py-1 text-xs rounded-full">2:15</div></div>
+          <div class="p-4"><div class="text-pink-400 text-xs font-medium">Drama</div><h3 class="font-bold mt-1">The Last Message</h3></div>
+        </div>
+        <div class="drama-card bg-zinc-900 rounded-2xl overflow-hidden cursor-pointer group" onclick="watchDrama('Hidden Identity')">
+          <div class="relative"><img src="https://picsum.photos/id/64/600/900" class="w-full aspect-[9/16] object-cover group-hover:brightness-90 transition"><div class="absolute top-3 right-3 bg-black/75 px-2.5 py-1 text-xs rounded-full">3:40</div></div>
+          <div class="p-4"><div class="text-pink-400 text-xs font-medium">Mystery</div><h3 class="font-bold mt-1">Hidden Identity</h3></div>
+        </div>
+        <div class="drama-card bg-zinc-900 rounded-2xl overflow-hidden cursor-pointer group" onclick="watchDrama('Contract Love')">
+          <div class="relative"><img src="https://picsum.photos/id/338/600/900" class="w-full aspect-[9/16] object-cover group-hover:brightness-90 transition"><div class="absolute top-3 right-3 bg-black/75 px-2.5 py-1 text-xs rounded-full">2:05</div></div>
+          <div class="p-4"><div class="text-pink-400 text-xs font-medium">Romance</div><h3 class="font-bold mt-1">Contract Love</h3></div>
+        </div>
+        <div class="drama-card bg-zinc-900 rounded-2xl overflow-hidden cursor-pointer group" onclick="watchDrama('Revenge of the Maid')">
+          <div class="relative"><img src="https://picsum.photos/id/342/600/900" class="w-full aspect-[9/16] object-cover group-hover:brightness-90 transition"><div class="absolute top-3 right-3 bg-black/75 px-2.5 py-1 text-xs rounded-full">4:10</div></div>
+          <div class="p-4"><div class="text-pink-400 text-xs font-medium">Revenge</div><h3 class="font-bold mt-1">Revenge of the Maid</h3></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="bg-black py-12 text-center text-zinc-500 border-t border-zinc-900">
+    <p class="text-lg font-medium text-white mb-2">MicroDrama AI</p>
+    <p class="text-sm">© 2026 • Made for drama addicts by drama addicts</p>
+  </footer>
+
+  <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 hidden"></div>
+
+  <!-- Card Modal -->
+  <div id="cardModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-zinc-900 rounded-3xl border border-zinc-700 w-full max-w-md p-6 sm:p-8">
+      <h3 id="modalTitle" class="text-xl font-bold mb-6">Add Card</h3>
+      <input type="hidden" id="cardType">
+      <input type="hidden" id="editingCardId">
+      <div class="space-y-4">
+        <div>
+          <label class="text-sm text-zinc-400 mb-1 block">Title / Name</label>
+          <input id="cardTitle" type="text" class="w-full bg-zinc-950 border border-zinc-700 rounded-xl px-4 py-3 focus:outline-none focus:border-pink-500" placeholder="e.g. Cold CEO">
+        </div>
+        <div>
+          <label class="text-sm text-zinc-400 mb-1 block">Description</label>
+          <textarea id="cardDesc" rows="4" class="w-full bg-zinc-950 border border-zinc-700 rounded-xl px-4 py-3 focus:outline-none focus:border-pink-500 resize-none" placeholder="Details, personality, appearance, role..."></textarea>
+        </div>
+        <div id="extraFields"></div>
+      </div>
+      <div class="flex gap-3 mt-8">
+        <button onclick="closeCardModal()" class="flex-1 py-3 bg-zinc-800 hover:bg-zinc-700 rounded-xl font-medium transition">Cancel</button>
+        <button onclick="saveCard()" class="flex-1 py-3 bg-pink-500 hover:bg-pink-600 rounded-xl font-medium transition">Save Card</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ROUTING
+    function navigate(page) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      const el = document.getElementById('page-' + page);
+      if (el) el.classList.add('active');
+      document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+      document.querySelectorAll(`[data-page="${page}"]`).forEach(l => l.classList.add('active'));
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (page === 'workspace') {
+        if (state.activeDeckId && getActiveDeck()) wsShowDeck();
+        else if (state.activeProjectId && getActiveProject()) wsShowProject();
+        else wsShowProjects();
+      }
+    }
+    function toggleMobileNav() {
+      document.getElementById('mobileNav').classList.toggle('hidden');
+    }
+
+    // DATA
+    let state = { projects: [], activeProjectId: null, activeDeckId: null, currentFilter: 'all' };
+
+    function loadState() {
+      const saved = localStorage.getItem('microdrama_state');
+      if (saved) { state = JSON.parse(saved); }
+      else {
+        const projId = crypto.randomUUID();
+        const deckId = crypto.randomUUID();
+        state.projects = [{
+          id: projId, name: "Secret Wife Romance",
+          decks: [{
+            id: deckId, name: "Main Story Deck",
+            cards: [
+              { id: crypto.randomUUID(), type: 'character', title: 'Elena', desc: 'Poor but kind-hearted young woman working as a secretary. Soft-spoken, determined.', extra: 'Female, 24' },
+              { id: crypto.randomUUID(), type: 'character', title: 'Mr. Kane', desc: 'Cold, ruthless CEO of a tech empire. Hides a soft side from his past.', extra: 'Male, 32' },
+              { id: crypto.randomUUID(), type: 'scene', title: 'Office Confession', desc: 'Late night in the glass office. Rain outside. Elena confronts Kane about the marriage certificate.', extra: 'Night, Office' },
+              { id: crypto.randomUUID(), type: 'prop', title: 'Fake Marriage Certificate', desc: 'A forged document that starts the whole conflict.', extra: '' },
+              { id: crypto.randomUUID(), type: 'animal', title: 'Black Cat (Shadow)', desc: "Kane's quiet companion that only appears when he is vulnerable.", extra: 'Cat' },
+              { id: crypto.randomUUID(), type: 'prompt', title: 'Core Hook', desc: 'A poor girl is forced into a contract marriage with a cold CEO who turns out to be the boy who saved her life 10 years ago.', extra: '' }
+            ]
+          }]
+        }];
+        state.activeProjectId = projId;
+        state.activeDeckId = deckId;
+        saveState();
+      }
+    }
+    function saveState() { localStorage.setItem('microdrama_state', JSON.stringify(state)); }
+    function getActiveProject() { return state.projects.find(p => p.id === state.activeProjectId); }
+    function getActiveDeck() {
+      const proj = getActiveProject();
+      return proj ? proj.decks.find(d => d.id === state.activeDeckId) : null;
+    }
+
+    // WORKSPACE SUBVIEWS
+    function wsShowProjects() {
+      document.querySelectorAll('.ws-view').forEach(v => v.classList.add('hidden'));
+      document.getElementById('ws-projects').classList.remove('hidden');
+      document.getElementById('bcProject').classList.add('hidden');
+      document.getElementById('bcDeck').classList.add('hidden');
+      renderProjectGrid();
+    }
+    function wsShowProject() {
+      const proj = getActiveProject();
+      if (!proj) return wsShowProjects();
+      document.querySelectorAll('.ws-view').forEach(v => v.classList.add('hidden'));
+      document.getElementById('ws-project').classList.remove('hidden');
+      document.getElementById('projectTitle').textContent = proj.name;
+      document.getElementById('bcProject').classList.remove('hidden');
+      document.getElementById('bcProjectName').textContent = proj.name;
+      document.getElementById('bcDeck').classList.add('hidden');
+      renderDeckGrid();
+    }
+    function wsShowDeck() {
+      const deck = getActiveDeck();
+      const proj = getActiveProject();
+      if (!deck || !proj) return wsShowProjects();
+      document.querySelectorAll('.ws-view').forEach(v => v.classList.add('hidden'));
+      document.getElementById('ws-deck').classList.remove('hidden');
+      document.getElementById('deckTitle').textContent = deck.name;
+      document.getElementById('bcProject').classList.remove('hidden');
+      document.getElementById('bcProjectName').textContent = proj.name;
+      document.getElementById('bcDeck').classList.remove('hidden');
+      document.getElementById('bcDeckName').textContent = deck.name;
+      renderCards();
+    }
+    function openProject(id) {
+      state.activeProjectId = id;
+      state.activeDeckId = null;
+      saveState();
+      wsShowProject();
+    }
+    function openDeck(id) {
+      state.activeDeckId = id;
+      saveState();
+      wsShowDeck();
+    }
+
+    // RENDER
+    function renderProjectGrid() {
+      const grid = document.getElementById('projectGrid');
+      if (state.projects.length === 0) {
+        grid.innerHTML = `<div class="col-span-full text-center py-20 text-zinc-600"><i class="fas fa-folder-open text-5xl mb-4 opacity-40"></i><p class="mb-4">No projects yet</p><button onclick="createProject()" class="px-5 py-2.5 bg-pink-500 hover:bg-pink-600 rounded-xl font-medium">Create your first project</button></div>`;
+        return;
+      }
+      grid.innerHTML = state.projects.map(p => {
+        const cardCount = p.decks.reduce((s, d) => s + d.cards.length, 0);
+        return `<div onclick="openProject('${p.id}')" class="bg-zinc-900 rounded-2xl border border-zinc-800 p-6 cursor-pointer hover:border-pink-500/50 hover:bg-zinc-900/80 transition group">
+          <div class="flex items-start justify-between mb-4"><div class="w-12 h-12 rounded-xl bg-pink-500/20 flex items-center justify-center group-hover:bg-pink-500/30 transition"><i class="fas fa-folder text-pink-400 text-xl"></i></div><span class="text-xs text-zinc-500">${p.decks.length} deck${p.decks.length !== 1 ? 's' : ''}</span></div>
+          <h3 class="font-bold text-lg mb-1">${escapeHtml(p.name)}</h3><p class="text-sm text-zinc-500">${cardCount} index card${cardCount !== 1 ? 's' : ''}</p></div>`;
+      }).join('');
+    }
+    function renderDeckGrid() {
+      const proj = getActiveProject();
+      const grid = document.getElementById('deckGrid');
+      if (!proj || proj.decks.length === 0) {
+        grid.innerHTML = `<div class="col-span-full text-center py-20 text-zinc-600"><i class="fas fa-layer-group text-5xl mb-4 opacity-40"></i><p class="mb-4">No decks in this project</p><button onclick="createDeck()" class="px-5 py-2.5 bg-purple-500 hover:bg-purple-600 rounded-xl font-medium">Create a deck</button></div>`;
+        return;
+      }
+      grid.innerHTML = proj.decks.map(d => `<div onclick="openDeck('${d.id}')" class="bg-zinc-900 rounded-2xl border border-zinc-800 p-6 cursor-pointer hover:border-purple-500/50 hover:bg-zinc-900/80 transition group">
+        <div class="flex items-start justify-between mb-4"><div class="w-12 h-12 rounded-xl bg-purple-500/20 flex items-center justify-center group-hover:bg-purple-500/30 transition"><i class="fas fa-layer-group text-purple-400 text-xl"></i></div><span class="text-xs text-zinc-500">${d.cards.length} cards</span></div>
+        <h3 class="font-bold text-lg mb-1">${escapeHtml(d.name)}</h3><p class="text-sm text-zinc-500">Click to open</p></div>`).join('');
+    }
+    function renderCards() {
+      const grid = document.getElementById('cardsGrid');
+      const deck = getActiveDeck();
+      if (!deck) return;
+      let cards = deck.cards;
+      if (state.currentFilter !== 'all') cards = cards.filter(c => c.type === state.currentFilter);
+      if (cards.length === 0) {
+        grid.innerHTML = `<div class="col-span-full text-center text-zinc-600 py-16"><p>No ${state.currentFilter === 'all' ? '' : state.currentFilter} cards yet. Use the buttons above to add some.</p></div>`;
+        return;
+      }
+      const typeIcons = { character: 'fa-user text-pink-400', scene: 'fa-film text-violet-400', prop: 'fa-cube text-amber-400', animal: 'fa-paw text-green-400', prompt: 'fa-lightbulb text-blue-400' };
+      const typeLabels = { character: 'Character', scene: 'Scene', prop: 'Prop', animal: 'Animal', prompt: 'Prompt' };
+      grid.innerHTML = cards.map(c => `<div class="index-card bg-zinc-900 rounded-2xl border border-zinc-800 p-5 card-${c.type} relative group">
+        <div class="flex items-start justify-between mb-3"><span class="text-xs font-medium uppercase tracking-wider text-zinc-500 flex items-center gap-1.5"><i class="fas ${typeIcons[c.type]}"></i> ${typeLabels[c.type]}</span>
+        <div class="opacity-0 group-hover:opacity-100 transition flex gap-2">
+          <button onclick="event.stopPropagation(); editCard('${c.id}')" class="text-zinc-400 hover:text-white text-sm"><i class="fas fa-pen"></i></button>
+          <button onclick="event.stopPropagation(); deleteCard('${c.id}')" class="text-zinc-400 hover:text-red-400 text-sm"><i class="fas fa-trash"></i></button>
+        </div></div>
+        <h4 class="font-bold text-lg mb-2 leading-snug">${escapeHtml(c.title)}</h4>
+        <p class="text-sm text-zinc-400 line-clamp-3">${escapeHtml(c.desc)}</p>
+        ${c.extra ? `<p class="text-xs text-zinc-500 mt-3">${escapeHtml(c.extra)}</p>` : ''}
+      </div>`).join('');
+    }
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text || '';
+      return div.innerHTML;
+    }
+    function filterCards(type) {
+      state.currentFilter = type;
+      document.querySelectorAll('[data-filter]').forEach(btn => {
+        btn.classList.remove('text-pink-400', 'border-b-2', 'border-pink-500', 'text-zinc-400');
+        if (btn.dataset.filter === type) btn.classList.add('text-pink-400', 'border-b-2', 'border-pink-500');
+        else btn.classList.add('text-zinc-400');
+      });
+      renderCards();
+    }
+
+    // CRUD
+    function createProject() {
+      const name = prompt('Project name:');
+      if (!name || !name.trim()) return;
+      const id = crypto.randomUUID();
+      state.projects.push({ id, name: name.trim(), decks: [] });
+      state.activeProjectId = id;
+      state.activeDeckId = null;
+      saveState();
+      openProject(id);
+      showToast('Project created');
+    }
+    function createDeck() {
+      const proj = getActiveProject();
+      if (!proj) return;
+      const name = prompt('Deck name:');
+      if (!name || !name.trim()) return;
+      const id = crypto.randomUUID();
+      proj.decks.push({ id, name: name.trim(), cards: [] });
+      state.activeDeckId = id;
+      saveState();
+      openDeck(id);
+      showToast('Deck created');
+    }
+    function openCardModal(type, card = null) {
+      if (!getActiveDeck()) { showToast('Open a deck first'); return; }
+      document.getElementById('cardType').value = type;
+      document.getElementById('editingCardId').value = card ? card.id : '';
+      document.getElementById('cardTitle').value = card ? card.title : '';
+      document.getElementById('cardDesc').value = card ? card.desc : '';
+      const titles = { character: 'Character Card', scene: 'Scene Card', prop: 'Prop Card', animal: 'Animal Card', prompt: 'Prompt Card' };
+      document.getElementById('modalTitle').textContent = (card ? 'Edit ' : 'Add ') + titles[type];
+      const extra = document.getElementById('extraFields');
+      if (type === 'character') {
+        extra.innerHTML = `<div><label class="text-sm text-zinc-400 mb-1 block">Gender / Age / Role</label><input id="cardExtra" type="text" class="w-full bg-zinc-950 border border-zinc-700 rounded-xl px-4 py-3 focus:outline-none focus:border-pink-500" value="${card?.extra || ''}" placeholder="e.g. Female, 24, Secretary"></div>`;
+      } else if (type === 'scene') {
+        extra.innerHTML = `<div><label class="text-sm text-zinc-400 mb-1 block">Location / Time</label><input id="cardExtra" type="text" class="w-full bg-zinc-950 border border-zinc-700 rounded-xl px-4 py-3 focus:outline-none focus:border-pink-500" value="${card?.extra || ''}" placeholder="e.g. Night, Rooftop"></div>`;
+      } else if (type === 'animal') {
+        extra.innerHTML = `<div><label class="text-sm text-zinc-400 mb-1 block">Species</label><input id="cardExtra" type="text" class="w-full bg-zinc-950 border border-zinc-700 rounded-xl px-4 py-3 focus:outline-none focus:border-pink-500" value="${card?.extra || ''}" placeholder="e.g. Cat, Dog, Bird"></div>`;
+      } else {
+        extra.innerHTML = `<input type="hidden" id="cardExtra" value="">`;
+      }
+      document.getElementById('cardModal').classList.remove('hidden');
+    }
+    function closeCardModal() { document.getElementById('cardModal').classList.add('hidden'); }
+    function saveCard() {
+      const type = document.getElementById('cardType').value;
+      const id = document.getElementById('editingCardId').value;
+      const title = document.getElementById('cardTitle').value.trim();
+      const desc = document.getElementById('cardDesc').value.trim();
+      const extra = document.getElementById('cardExtra')?.value.trim() || '';
+      if (!title) { showToast('Title is required'); return; }
+      const deck = getActiveDeck();
+      if (!deck) return;
+      if (id) {
+        const card = deck.cards.find(c => c.id === id);
+        if (card) { card.title = title; card.desc = desc; card.extra = extra; }
+      } else {
+        deck.cards.push({ id: crypto.randomUUID(), type, title, desc, extra });
+      }
+      saveState();
+      closeCardModal();
+      renderCards();
+      showToast(id ? 'Card updated' : 'Card added');
+    }
+    function editCard(id) {
+      const deck = getActiveDeck();
+      const card = deck?.cards.find(c => c.id === id);
+      if (card) openCardModal(card.type, card);
+    }
+    function deleteCard(id) {
+      if (!confirm('Delete this card?')) return;
+      const deck = getActiveDeck();
+      if (!deck) return;
+      deck.cards = deck.cards.filter(c => c.id !== id);
+      saveState();
+      renderCards();
+      showToast('Card deleted');
+    }
+
+    // GENERATION
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.innerHTML = `<div class="toast bg-zinc-900 border border-zinc-700 text-white px-6 py-3.5 rounded-2xl shadow-xl text-sm font-medium max-w-sm text-center">${message}</div>`;
+      toast.classList.remove('hidden');
+      setTimeout(() => toast.classList.add('hidden'), 2800);
+    }
+    function watchDrama(title) {
+      navigate('studio');
+      document.getElementById('dramaTitle').textContent = title;
+      document.getElementById('dramaPrompt').textContent = "Trending micro drama";
+      document.getElementById('videoResult').classList.remove('hidden');
+      document.getElementById('generationProgress').classList.add('hidden');
+      const video = document.getElementById('dramaVideo');
+      video.currentTime = 0;
+      video.play().catch(() => {});
+      showToast(`🎬 Now playing: "${title}"`);
+    }
+    function resetStudio() {
+      document.getElementById('videoResult').classList.add('hidden');
+      document.getElementById('generationProgress').classList.add('hidden');
+      document.getElementById('promptInput').value = '';
+      document.getElementById('generateBtn').disabled = false;
+      document.getElementById('btnText').textContent = 'GENERATE MY MICRO DRAMA';
+      document.getElementById('generateBtn').classList.remove('opacity-70', 'cursor-not-allowed');
+    }
+    function setStep(stepNum, status) {
+      const step = document.getElementById(`step${stepNum}`);
+      const circle = step.querySelector('div');
+      step.classList.remove('text-zinc-500', 'step-active', 'step-done');
+      circle.classList.remove('border-zinc-600', 'border-pink-500', 'bg-pink-500', 'border-green-500', 'bg-green-500', 'text-white');
+      if (status === 'active') { step.classList.add('step-active'); circle.classList.add('border-pink-500', 'text-pink-400'); }
+      else if (status === 'done') { step.classList.add('step-done'); circle.classList.add('border-green-500', 'bg-green-500', 'text-white'); circle.innerHTML = '<i class="fas fa-check text-xs"></i>'; }
+    }
+    function buildEnrichedPrompt(basePrompt) {
+      if (!document.getElementById('useProjectCards').checked) return basePrompt;
+      const deck = getActiveDeck();
+      if (!deck || deck.cards.length === 0) return basePrompt;
+      const characters = deck.cards.filter(c => c.type === 'character');
+      const scenes = deck.cards.filter(c => c.type === 'scene');
+      const props = deck.cards.filter(c => c.type === 'prop');
+      const animals = deck.cards.filter(c => c.type === 'animal');
+      const prompts = deck.cards.filter(c => c.type === 'prompt');
+      let enriched = basePrompt || (prompts[0]?.desc || "A dramatic micro story");
+      if (characters.length) enriched += "\n\nCharacters: " + characters.map(c => `${c.title} (${c.extra || ''}) — ${c.desc}`).join('; ');
+      if (scenes.length) enriched += "\nScenes: " + scenes.map(c => `${c.title} [${c.extra}] — ${c.desc}`).join('; ');
+      if (props.length) enriched += "\nProps: " + props.map(c => c.title).join(', ');
+      if (animals.length) enriched += "\nAnimals: " + animals.map(c => `${c.title} (${c.extra})`).join(', ');
+      return enriched;
+    }
+    async function generateDrama() {
+      const rawPrompt = document.getElementById("promptInput").value.trim();
+      const fullPrompt = buildEnrichedPrompt(rawPrompt);
+      const btn = document.getElementById("generateBtn");
+      const btnText = document.getElementById("btnText");
+      const progressBox = document.getElementById("generationProgress");
+      const videoResult = document.getElementById("videoResult");
+      const progressBar = document.getElementById("progressBar");
+      const progressText = document.getElementById("progressText");
+      videoResult.classList.add('hidden');
+      progressBox.classList.remove('hidden');
+      for (let i = 1; i <= 4; i++) {
+        const step = document.getElementById(`step${i}`);
+        step.className = 'flex items-center gap-4 text-zinc-500';
+        const circle = step.querySelector('div');
+        circle.className = 'w-8 h-8 rounded-full border-2 border-zinc-600 flex items-center justify-center text-sm font-bold';
+        circle.textContent = i;
+      }
+      progressBar.style.width = '0%';
+      progressText.textContent = '0%';
+      btn.disabled = true;
+      btn.classList.add('opacity-70', 'cursor-not-allowed');
+      btnText.textContent = "Generating...";
+      const steps = [
+        { num: 1, delay: 1800, progress: 25 },
+        { num: 2, delay: 2200, progress: 50 },
+        { num: 3, delay: 2800, progress: 78 },
+        { num: 4, delay: 2500, progress: 100 }
+      ];
+      for (const step of steps) {
+        setStep(step.num, 'active');
+        await new Promise(r => setTimeout(r, step.delay));
+        setStep(step.num, 'done');
+        progressBar.style.width = step.progress + '%';
+        progressText.textContent = step.progress + '%';
+      }
+      await new Promise(r => setTimeout(r, 600));
+      progressBox.classList.add('hidden');
+      videoResult.classList.remove('hidden');
+      const title = rawPrompt ? (rawPrompt.length > 55 ? rawPrompt.substring(0, 55) + '...' : rawPrompt) : (getActiveDeck()?.cards.find(c => c.type === 'prompt')?.title || "Custom Micro Drama");
+      document.getElementById('dramaTitle').textContent = title;
+      document.getElementById('dramaPrompt').textContent = fullPrompt.substring(0, 300) + (fullPrompt.length > 300 ? '...' : '');
+      const video = document.getElementById('dramaVideo');
+      video.currentTime = 0;
+      video.play().catch(() => showToast("Click play to start your drama 🎬"));
+      btn.disabled = false;
+      btn.classList.remove('opacity-70', 'cursor-not-allowed');
+      btnText.textContent = "GENERATE MY MICRO DRAMA";
+      showToast("✅ Your micro drama is ready!");
+    }
+
+    // INIT
+    loadState();
+    navigate('home');
+  </script>
+</body>
+</html>
