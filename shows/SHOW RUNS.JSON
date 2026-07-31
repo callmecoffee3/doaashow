@@ -1,0 +1,86 @@
+{
+  "episodeDurationMinutes": 60,
+  "blockDurationMinutes": 10,
+  "contentDurationMinutes": 7,
+  "commercialDurationMinutes": 3,
+  "blocks": [
+    {
+      "blockNumber": 1,
+      "startMinute": 0,
+      "endMinute": 10,
+      "content": {
+        "startMinute": 0,
+        "endMinute": 7
+      },
+      "commercial": {
+        "startMinute": 7,
+        "endMinute": 10
+      }
+    },
+    {
+      "blockNumber": 2,
+      "startMinute": 10,
+      "endMinute": 20,
+      "content": {
+        "startMinute": 10,
+        "endMinute": 17
+      },
+      "commercial": {
+        "startMinute": 17,
+        "endMinute": 20
+      }
+    },
+    {
+      "blockNumber": 3,
+      "startMinute": 20,
+      "endMinute": 30,
+      "content": {
+        "startMinute": 20,
+        "endMinute": 27
+      },
+      "commercial": {
+        "startMinute": 27,
+        "endMinute": 30
+      }
+    },
+    {
+      "blockNumber": 4,
+      "startMinute": 30,
+      "endMinute": 40,
+      "content": {
+        "startMinute": 30,
+        "endMinute": 37
+      },
+      "commercial": {
+        "startMinute": 37,
+        "endMinute": 40
+      }
+    },
+    {
+      "blockNumber": 5,
+      "startMinute": 40,
+      "endMinute": 50,
+      "content": {
+        "startMinute": 40,
+        "endMinute": 47
+      },
+      "commercial": {
+        "startMinute": 47,
+        "endMinute": 50
+      }
+    },
+    {
+      "blockNumber": 6,
+      "startMinute": 50,
+      "endMinute": 60,
+      "content": {
+        "startMinute": 50,
+        "endMinute": 57
+      },
+      "commercial": {
+        "startMinute": 57,
+        "endMinute": 60
+      }
+    }
+  ]
+}
