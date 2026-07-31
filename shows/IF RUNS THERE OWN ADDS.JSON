@@ -1,0 +1,46 @@
+{
+  "AverageEpisode_PlatformControlledAds": {
+    "BroadcastTV": {
+      "contentMinutes": 43,
+      "adMinutes": 17,
+      "adControl": "Network controlled",
+      "insertionType": "Fixed scheduled breaks",
+      "blocks": "6-8"
+    },
+    "CableTV": {
+      "contentMinutes": 44,
+      "adMinutes": 16,
+      "adControl": "Network controlled",
+      "insertionType": "Fixed breaks",
+      "blocks": "6-8"
+    },
+    "StreamingWithAds": {
+      "contentMinutes": 50,
+      "adMinutes": 5,
+      "adControl": "Platform controlled",
+      "insertionType": "Dynamic ad insertion",
+      "blocks": "Variable"
+    },
+    "FASTStreaming": {
+      "contentMinutes": 42,
+      "adMinutes": 18,
+      "adControl": "Platform controlled",
+      "insertionType": "Dynamic ad insertion",
+      "blocks": "6-8 dynamic"
+    },
+    "SocialVideo": {
+      "contentMinutes": 3,
+      "adMinutes": 0,
+      "adControl": "Platform controlled",
+      "insertionType": "Pre-roll / mid-roll",
+      "blocks": "None"
+    },
+    "IndustryWeightedAverage": {
+      "contentMinutes": 45,
+      "adMinutes": 10,
+      "adControl": "Mixed",
+      "insertionType": "Dynamic + scheduled",
+      "totalMinutes": 55
+    }
+  }
+}
