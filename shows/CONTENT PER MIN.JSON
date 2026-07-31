@@ -1,0 +1,45 @@
+{
+  "AverageEpisodeAcrossPlatforms": {
+    "BroadcastTV": {
+      "contentMinutes": 43,
+      "adMinutes": 17,
+      "totalMinutes": 60,
+      "structure": "Segmented",
+      "blocks": "6-8"
+    },
+    "CableTV": {
+      "contentMinutes": 44,
+      "adMinutes": 16,
+      "totalMinutes": 60,
+      "structure": "Segmented",
+      "blocks": "6-8"
+    },
+    "StreamingNoAds": {
+      "contentMinutes": 55,
+      "adMinutes": 0,
+      "totalMinutes": 55,
+      "structure": "Continuous",
+      "blocks": "None"
+    },
+    "FASTStreaming": {
+      "contentMinutes": 42,
+      "adMinutes": 18,
+      "totalMinutes": 60,
+      "structure": "Dynamic",
+      "blocks": "6-8"
+    },
+    "SocialVideo": {
+      "contentMinutes": 3,
+      "adMinutes": 0,
+      "totalMinutes": 3,
+      "structure": "Shortform",
+      "blocks": "None"
+    },
+    "IndustryWeightedAverage": {
+      "contentMinutes": 45,
+      "adMinutes": 10,
+      "totalMinutes": 55,
+      "notes": "Weighted across TV, streaming, FAST, and social"
+    }
+  }
+}
