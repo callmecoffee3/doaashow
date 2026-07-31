@@ -1,0 +1,65 @@
+{
+  "CollaborationWithProductOwner": {
+    "parties": {
+      "platform": "PlatformName",
+      "productOwner": "BrandOrOwnerName"
+    },
+    "episodeStructure": {
+      "contentMinutes": 45,
+      "adMinutes": 10,
+      "totalMinutes": 55,
+      "adControl": "Shared",
+      "insertionType": "Co-managed dynamic insertion"
+    },
+    "collaborationTerms": {
+      "creativeControl": {
+        "platform": "Content placement, ad timing",
+        "productOwner": "Brand messaging, product integration"
+      },
+      "monetization": {
+        "adRevenueSplit": "50/50",
+        "productPlacementFee": "Negotiated",
+        "bonusIncentives": "Performance-based"
+      },
+      "rights": {
+        "distribution": "Platform",
+        "ownership": "Joint",
+        "licensing": "Allowed for both parties"
+      }
+    },
+    "integrationOptions": {
+      "adTypes": [
+        "Pre-roll",
+        "Mid-roll",
+        "Post-roll",
+        "Dynamic product placement",
+        "Overlay ads"
+      ],
+      "contentTieIns": [
+        "Storyline integration",
+        "Character usage",
+        "Scene-based product features"
+      ]
+    },
+    "workflow": {
+      "approvalStages": [
+        "Concept approval",
+        "Script approval",
+        "Brand compliance review",
+        "Final cut approval"
+      ],
+      "delivery": {
+        "assetsProvidedByProductOwner": [
+          "Logos",
+          "Product shots",
+          "Brand guidelines"
+        ],
+        "assetsProvidedByPlatform": [
+          "Episode master",
+          "Ad insertion points",
+          "Analytics dashboard"
+        ]
+      }
+    }
+  }
+}
