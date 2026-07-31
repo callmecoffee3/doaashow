@@ -1,0 +1,90 @@
+{
+  "ShowContent": {
+    "title": "Episode Title",
+    "season": 1,
+    "episode": 1,
+    "runtimeMinutes": 45,
+    "genre": "Drama",
+    "logline": "A short summary of what the episode is about.",
+    
+    "mainCharacters": [
+      {
+        "name": "Character A",
+        "role": "Protagonist",
+        "description": "Brief description of who they are."
+      },
+      {
+        "name": "Character B",
+        "role": "Supporting",
+        "description": "Their connection to the story."
+      }
+    ],
+
+    "episodeStructure": {
+      "acts": [
+        {
+          "actNumber": 1,
+          "durationMinutes": 15,
+          "summary": "What happens in Act 1.",
+          "scenes": [
+            {
+              "sceneNumber": 1,
+              "location": "Scene location",
+              "time": "Day/Night",
+              "description": "What happens in this scene."
+            },
+            {
+              "sceneNumber": 2,
+              "location": "Scene location",
+              "time": "Day/Night",
+              "description": "What happens in this scene."
+            }
+          ]
+        },
+        {
+          "actNumber": 2,
+          "durationMinutes": 15,
+          "summary": "What happens in Act 2.",
+          "scenes": [
+            {
+              "sceneNumber": 3,
+              "location": "Scene location",
+              "time": "Day/Night",
+              "description": "What happens in this scene."
+            }
+          ]
+        },
+        {
+          "actNumber": 3,
+          "durationMinutes": 15,
+          "summary": "What happens in Act 3.",
+          "scenes": [
+            {
+              "sceneNumber": 4,
+              "location": "Scene location",
+              "time": "Day/Night",
+              "description": "What happens in this scene."
+            }
+          ]
+        }
+      ]
+    },
+
+    "visualStyle": {
+      "colorPalette": "Dark / Warm / Neon / Natural",
+      "cameraStyle": "Handheld / Cinematic / Static / Documentary",
+      "tone": "Serious / Comedic / Suspenseful"
+    },
+
+    "audioStyle": {
+      "music": "Type of soundtrack",
+      "effects": "Key sound effects",
+      "dialogueStyle": "Fast / Slow / Natural / Stylized"
+    },
+
+    "continuity": {
+      "previousEpisodeConnections": "What carries over from earlier episodes.",
+      "nextEpisodeSetup": "What this episode sets up for the future."
+    }
+  }
+}
