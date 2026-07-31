@@ -1,0 +1,83 @@
+{
+  "TempScript": {
+    "title": "Episode Title",
+    "season": 1,
+    "episode": 1,
+    "runtimeMinutes": 45,
+    "genre": "Drama",
+
+    "logline": "One-sentence summary of the episode.",
+
+    "characters": [
+      {
+        "name": "Character A",
+        "role": "Protagonist",
+        "notes": "Motivation, personality, key traits."
+      },
+      {
+        "name": "Character B",
+        "role": "Antagonist",
+        "notes": "Conflict driver, relationship to protagonist."
+      }
+    ],
+
+    "script": {
+      "scenes": [
+        {
+          "sceneNumber": 1,
+          "location": "Interior - House",
+          "time": "Night",
+          "summary": "Short description of what happens.",
+          "beats": [
+            "Beat 1: Setup of conflict",
+            "Beat 2: Character enters",
+            "Beat 3: Rising tension"
+          ],
+          "dialogue": [
+            {
+              "character": "Character A",
+              "line": "Sample placeholder dialogue."
+            },
+            {
+              "character": "Character B",
+              "line": "Sample placeholder response."
+            }
+          ]
+        },
+        {
+          "sceneNumber": 2,
+          "location": "Exterior - Street",
+          "time": "Day",
+          "summary": "Short description of the next event.",
+          "beats": [
+            "Beat 1: Action begins",
+            "Beat 2: Twist or reveal"
+          ],
+          "dialogue": [
+            {
+              "character": "Character A",
+              "line": "Another placeholder line."
+            }
+          ]
+        }
+      ]
+    },
+
+    "visualNotes": {
+      "camera": "Handheld / Cinematic / Static",
+      "lighting": "Dark / Natural / Neon",
+      "tone": "Suspenseful / Comedic / Dramatic"
+    },
+
+    "audioNotes": {
+      "music": "Type of soundtrack",
+      "effects": "Key sound effects",
+      "dialogueStyle": "Fast / Slow / Natural"
+    },
+
+    "continuity": {
+      "previousEpisode": "What carries over.",
+      "nextEpisode": "What this episode sets up."
+    }
+  }
+}
