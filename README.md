@@ -16,7 +16,7 @@ I originally wanted it to be spelled doashow but missed spelled it
 # Doaashow — Matt Code System
 A prototype platform built using the **Matt Code Grid**, a universal blueprint for structuring apps, websites, OS interfaces, and feature systems.  
 This project is “something to play with” — a sandbox for experimenting with UI, logic, and modular feature design.
-
+I WANT THIS STUFF PUBLIC GET IT OUT THERE IT FUNN
 ---
 
 ## 🚀 What Is Matt Code?
