@@ -1,0 +1,31 @@
+[put in 30 tabs(items listed below)], [alerts]
+01: weather
+02: outbreks
+03: markets
+04: health
+05: local drought
+06: weather cast
+07: forest fires
+08: wild fires
+09: acceedent on roads
+10: accedent other places
+11: world 
+12: health care
+13: market
+14: politics
+15: crypto
+16: stocks
+17: futures
+18: hospital
+19: deaths
+20: trafic
+21: updates
+22: internet
+24: YouTube
+24: movies
+25: tv-shows
+26: theaters
+27: shorts
+28: drama
+29: microdrama
+30: jobs, producer, writing, dierector
