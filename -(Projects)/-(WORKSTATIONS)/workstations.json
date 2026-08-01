@@ -45,7 +45,7 @@
         "ip": "192.168.1.106"
       }
     ],
-    "basicTabs": [
+    "basicTabstoopen": [
       { "id": 1, "name": "weather" },
       { "id": 2, "name": "outbreaks" },
       { "id": 3, "name": "markets" },
