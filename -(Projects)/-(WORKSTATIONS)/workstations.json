@@ -1,0 +1,91 @@
+{
+  "repo": "callmecoffee3/doaashow",
+  "workstations": {
+    "networkWorkstations": [
+      {
+        "id": 1,
+        "name": "Workstation 1",
+        "icon": "💻",
+        "status": "online",
+        "ip": "192.168.1.101"
+      },
+      {
+        "id": 2,
+        "name": "Workstation 2",
+        "icon": "💻",
+        "status": "online",
+        "ip": "192.168.1.102"
+      },
+      {
+        "id": 3,
+        "name": "Workstation 3",
+        "icon": "💻",
+        "status": "offline",
+        "ip": "192.168.1.103"
+      },
+      {
+        "id": 4,
+        "name": "Workstation 4",
+        "icon": "🖥️",
+        "status": "online",
+        "ip": "192.168.1.104"
+      },
+      {
+        "id": 5,
+        "name": "Workstation 5",
+        "icon": "💻",
+        "status": "online",
+        "ip": "192.168.1.105"
+      },
+      {
+        "id": 6,
+        "name": "Workstation 6",
+        "icon": "🖥️",
+        "status": "offline",
+        "ip": "192.168.1.106"
+      }
+    ],
+    "alertTabs": [
+      { "id": 1, "name": "weather" },
+      { "id": 2, "name": "outbreaks" },
+      { "id": 3, "name": "markets" },
+      { "id": 4, "name": "health" },
+      { "id": 5, "name": "local drought" },
+      { "id": 6, "name": "weather cast" },
+      { "id": 7, "name": "forest fires" },
+      { "id": 8, "name": "wild fires" },
+      { "id": 9, "name": "accident on roads" },
+      { "id": 10, "name": "accident other places" },
+      { "id": 11, "name": "world" },
+      { "id": 12, "name": "health care" },
+      { "id": 13, "name": "market" },
+      { "id": 14, "name": "politics" },
+      { "id": 15, "name": "crypto" },
+      { "id": 16, "name": "stocks" },
+      { "id": 17, "name": "futures" },
+      { "id": 18, "name": "hospital" },
+      { "id": 19, "name": "deaths" },
+      { "id": 20, "name": "traffic" },
+      { "id": 21, "name": "updates" },
+      { "id": 22, "name": "internet" },
+      { "id": 23, "name": "YouTube" },
+      { "id": 24, "name": "movies" },
+      { "id": 25, "name": "tv-shows" },
+      { "id": 26, "name": "theaters" },
+      { "id": 27, "name": "shorts" },
+      { "id": 28, "name": "drama" },
+      { "id": 29, "name": "microdrama" },
+      { "id": 30, "name": "jobs, producer, writing, director" }
+    ],
+    "ui": {
+      "gridClass": "workstation-grid",
+      "cardClass": "workstation-card",
+      "statusClasses": {
+        "online": "status-online",
+        "offline": "status-offline"
+      },
+      "windowTitle": "Network Workstations",
+      "startMenuAction": "workstations"
+    }
+  }
+}
