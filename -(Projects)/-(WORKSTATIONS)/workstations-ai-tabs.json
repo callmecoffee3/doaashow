@@ -1,0 +1,214 @@
+{
+  "planName": "DoaShow 30-Tab AI Monitoring System",
+  "description": "Open 30 real-time alert tabs in Microsoft Edge and use Microsoft AI (Copilot + Bing) to summarize, prioritize, and surface important changes",
+  "target": {
+    "browser": "Microsoft Edge",
+    "ai": [
+      "Copilot in Edge",
+      "Bing Chat / Copilot",
+      "Azure OpenAI (optional)"
+    ]
+  },
+  "options": {
+    "newWindow": true,
+    "profile": "Default",
+    "pinTabs": false,
+    "muteAudio": true,
+    "enableCopilotSidebar": true,
+    "autoSummarizeOnOpen": true
+  },
+  "aiWorkflow": {
+    "onTabOpen": "Ask Copilot to summarize the page in 3 bullet points",
+    "continuousMonitoring": "Every 5 minutes ask Copilot: 'Any critical updates or alerts on this page?'",
+    "priorityAlert": "If Copilot detects keywords like emergency, outbreak, crash, fire, death, market crash → notify user",
+    "dailyDigest": "At end of day generate one combined AI summary of all 30 tabs"
+  },
+  "tabs": [
+    {
+      "id": 1,
+      "title": "Weather",
+      "url": "https://www.bing.com/search?q=current+weather+alerts+radar",
+      "copilotPrompt": "Summarize current severe weather alerts and any active warnings"
+    },
+    {
+      "id": 2,
+      "title": "Outbreaks",
+      "url": "https://www.bing.com/news/search?q=disease+outbreaks+epidemic",
+      "copilotPrompt": "List any active disease outbreaks and their severity"
+    },
+    {
+      "id": 3,
+      "title": "Markets",
+      "url": "https://www.bing.com/finance?q=stock+market+live",
+      "copilotPrompt": "Give a quick market overview and any major movers"
+    },
+    {
+      "id": 4,
+      "title": "Health",
+      "url": "https://www.bing.com/news/search?q=health+news+alerts",
+      "copilotPrompt": "Highlight the most important health news right now"
+    },
+    {
+      "id": 5,
+      "title": "Local Drought",
+      "url": "https://www.bing.com/search?q=drought+conditions+map+alerts",
+      "copilotPrompt": "Summarize current drought conditions and any new alerts"
+    },
+    {
+      "id": 6,
+      "title": "Weather Cast",
+      "url": "https://www.bing.com/weather",
+      "copilotPrompt": "Give today’s forecast and any severe weather watches"
+    },
+    {
+      "id": 7,
+      "title": "Forest Fires",
+      "url": "https://www.bing.com/news/search?q=forest+fires+wildfire+map",
+      "copilotPrompt": "List active forest fires and their status"
+    },
+    {
+      "id": 8,
+      "title": "Wild Fires",
+      "url": "https://firms.modaps.eosdis.nasa.gov/map/",
+      "copilotPrompt": "Describe any large active wildfire clusters visible on the map"
+    },
+    {
+      "id": 9,
+      "title": "Accident on Roads",
+      "url": "https://www.bing.com/maps?q=traffic+accidents+live",
+      "copilotPrompt": "Any major road accidents or closures right now?"
+    },
+    {
+      "id": 10,
+      "title": "Accident Other Places",
+      "url": "https://www.bing.com/news/search?q=major+accidents+incidents",
+      "copilotPrompt": "Summarize recent major accidents or incidents"
+    },
+    {
+      "id": 11,
+      "title": "World",
+      "url": "https://www.bing.com/news",
+      "copilotPrompt": "Top 5 world news stories right now"
+    },
+    {
+      "id": 12,
+      "title": "Health Care",
+      "url": "https://www.bing.com/news/search?q=healthcare+news",
+      "copilotPrompt": "Key healthcare news and policy updates"
+    },
+    {
+      "id": 13,
+      "title": "Market",
+      "url": "https://www.bing.com/finance",
+      "copilotPrompt": "Current market sentiment and key indices"
+    },
+    {
+      "id": 14,
+      "title": "Politics",
+      "url": "https://www.bing.com/news/search?q=politics+latest",
+      "copilotPrompt": "Most important political developments today"
+    },
+    {
+      "id": 15,
+      "title": "Crypto",
+      "url": "https://www.bing.com/search?q=cryptocurrency+prices+live",
+      "copilotPrompt": "Bitcoin and major crypto price movement summary"
+    },
+    {
+      "id": 16,
+      "title": "Stocks",
+      "url": "https://www.bing.com/finance?q=stocks",
+      "copilotPrompt": "Biggest stock movers and any breaking company news"
+    },
+    {
+      "id": 17,
+      "title": "Futures",
+      "url": "https://www.bing.com/finance?q=futures+market",
+      "copilotPrompt": "Futures market overview and notable changes"
+    },
+    {
+      "id": 18,
+      "title": "Hospital",
+      "url": "https://www.bing.com/search?q=hospital+status+emergency+alerts",
+      "copilotPrompt": "Any hospital capacity or emergency alerts?"
+    },
+    {
+      "id": 19,
+      "title": "Deaths",
+      "url": "https://www.bing.com/news/search?q=death+toll+casualties+reports",
+      "copilotPrompt": "Recent significant casualty or death toll reports"
+    },
+    {
+      "id": 20,
+      "title": "Traffic",
+      "url": "https://www.bing.com/maps/traffic",
+      "copilotPrompt": "Major traffic incidents or delays currently"
+    },
+    {
+      "id": 21,
+      "title": "Updates",
+      "url": "https://www.bing.com/news/search?q=breaking+news+alerts",
+      "copilotPrompt": "Any breaking news alerts right now?"
+    },
+    {
+      "id": 22,
+      "title": "Internet",
+      "url": "https://downdetector.com/",
+      "copilotPrompt": "Are there any major internet or service outages?"
+    },
+    {
+      "id": 23,
+      "title": "YouTube",
+      "url": "https://www.youtube.com/feed/trending",
+      "copilotPrompt": "What are the top trending videos right now?"
+    },
+    {
+      "id": 24,
+      "title": "Movies",
+      "url": "https://www.bing.com/search?q=new+movies+releases+trailers",
+      "copilotPrompt": "New movie releases and notable trailers"
+    },
+    {
+      "id": 25,
+      "title": "TV Shows",
+      "url": "https://www.bing.com/search?q=tv+shows+new+episodes",
+      "copilotPrompt": "New TV episodes or series premieres this week"
+    },
+    {
+      "id": 26,
+      "title": "Theaters",
+      "url": "https://www.bing.com/search?q=movie+theaters+showtimes+near+me",
+      "copilotPrompt": "Popular movies currently in theaters"
+    },
+    {
+      "id": 27,
+      "title": "Shorts",
+      "url": "https://www.youtube.com/shorts",
+      "copilotPrompt": "Trending short-form video topics"
+    },
+    {
+      "id": 28,
+      "title": "Drama",
+      "url": "https://www.bing.com/search?q=drama+series+new+releases",
+      "copilotPrompt": "New drama series and their reception"
+    },
+    {
+      "id": 29,
+      "title": "Microdrama",
+      "url": "https://www.bing.com/search?q=micro+drama+short+series",
+      "copilotPrompt": "Popular micro-drama or short series currently"
+    },
+    {
+      "id": 30,
+      "title": "Jobs Producer Writing Director",
+      "url": "https://www.bing.com/jobs/search?q=producer+writer+director+jobs",
+      "copilotPrompt": "Highlight interesting producer, writer, or director job openings"
+    }
+  ],
+  "howToRun": {
+    "manual": "Open Edge → enable Copilot sidebar → open all tabs → ask Copilot the prompts",
+    "powerAutomate": "Use Edge actions + Copilot Studio or AI Builder to loop through tabs and run the prompts",
+    "edgeCommand": "msedge --new-window --enable-features=msEdgeCopilot [list of urls]",
+    "future": "Can be turned into a Copilot Studio agent or Edge extension that auto-monitors all 30 tabs"
+  }
+}
