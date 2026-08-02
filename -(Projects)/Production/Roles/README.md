@@ -1,8 +1,42 @@
-# Production Roles
+# Production Roles / Crew
 
-Folders for key creative and production roles.
+Complete crew folder structure for film, TV, and media productions.
 
-- **Director/** – Director materials, notes, vision boards
-- **Executive/** – Executive producer / executive materials
-- **Producers/** – Producer documents, schedules, budgets
-- **Writers/** – Scripts, drafts, writer rooms, notes
+## Creative & Leadership
+- **Director/**
+- **Assistant-Director/**
+- **Executive/**
+- **Producers/**
+- **Line-Producer/**
+- **Writers/**
+
+## Camera & Lighting
+- **Director-of-Photography/**
+- **Camera-Operator/**
+- **Gaffer/**
+- **Key-Grip/**
+
+## Sound
+- **Sound-Mixer/**
+- **Boom-Operator/**
+
+## Art & Design
+- **Production-Designer/**
+- **Art-Director/**
+- **Costume-Designer/**
+- **Makeup-Artist/**
+- **Hair-Stylist/**
+
+## Post-Production
+- **Editor/**
+- **Colorist/**
+- **VFX-Supervisor/**
+- **Composer/**
+
+## Production Support
+- **Script-Supervisor/**
+- **Production-Manager/**
+- **Casting-Director/**
+- **Location-Manager/**
+- **Stunt-Coordinator/**
+- **Production-Assistant/**
