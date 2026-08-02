@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Folder Scanner</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+        form {
+            width: 50%;
+            margin: 40px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #337ab7;
+        }
+        input[type="file"] {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #3e8e41;
+        }
+        .header {
+            background-color: #337ab7;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            border-radius: 10px 10px 0 0;
+        }
+    </style>
+</head>
+<body>
+    <form id="folder-form">
+        <div class="header">
+            <h2>Folder Scanner</h2>
+        </div>
+        <label for="folder">Select Folder:</label>
+        <input type="file" id="folder" name="folder" webkitdirectory directory multiple>
+        <label for="output-file">Select Output File:</label>
+        <input type="file" id="output-file" name="output-file">
+        <label for="logo">Select Logo:</label>
+        <input type="file" id="logo" name="logo">
+        <label for="image">Upload Image:</label>
+        <input type="file" id="image" name="image">
+        <input type="submit" value="Scan Folder" style="background-color: #337ab7;">
+    </form>
+
+    <script>
+        const form = document.getElementById('folder-form');
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const folderInput = document.getElementById('folder');
+            const outputFileInput = document.getElementById('output-file');
+            const logoInput = document.getElementById('logo');
+            const imageInput = document.getElementById('image');
+
+            const folder = folderInput.files[0];
+            const outputFile = outputFileInput.files[0];
+            const logo = logoInput.files[0];
+            const image = imageInput.files[0];
+
+            if (folder && outputFile && logo && image) {
+                console.log('Folder scanned successfully!');
+            } else {
+                console.error('Please select all files.');
+            }
+        });
+    </script>
+</body>
+</html>

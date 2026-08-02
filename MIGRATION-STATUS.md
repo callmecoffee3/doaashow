@@ -8,13 +8,22 @@
 - [x] Added MIND-MAP.md
 - [x] Updated main README
 - [x] Mapped major file groups to their new homes
+- [x] **Physical copy started**
+  - [x] `desktop1.html` → `Systems/Desktop/`
+  - [x] `desktop2.html` → `Systems/Desktop/`
+  - [x] `desktop3.html` → `Systems/Desktop/`
+  - [x] `doashow terminal.html` → `Systems/Terminals/doashow-terminal.html`
+  - [x] `folderscanner.html` → `Systems/File-Tools/`
 
 ## In Progress
-- [ ] Physical relocation of individual files into new folders
+- [ ] More Desktop files (desktop folder contents, mhtml captures)
+- [ ] Menu .bat files → Systems/Menus/
+- [ ] More terminals (thefamterminal*.html)
+- [ ] More file tools
+- [ ] Images → Assets/Images/
 - [ ] Moving old -(Projects) genre folders into Legacy/Old-Projects
 - [ ] Cleaning root of loose files
 
 ## Notes
-Original files are still in place so nothing is lost.  
-The new folders are now the official homes.  
-Next commits will begin relocating actual file content.
+Original files remain in place so nothing is lost.  
+New copies now live in the official structure.

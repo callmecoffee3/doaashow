@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>[Desktop Name]</title>
+  <style>
+    /* Add your styles here */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .taskbar {
+      background-color: #333;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+    .search-bar {
+      width: 50%;
+      height: 30px;
+      font-size: 16px;
+      padding: 5px;
+    }
+    .bookmark-bar {
+      background-color: #444;
+      color: #fff;
+      padding: 5px;
+      text-align: center;
+    }
+    .address-bar {
+      width: 100%;
+      height: 30px;
+      font-size: 16px;
+      padding: 5px;
+    }
+    .clock {
+      float: right;
+      margin-right: 20px;
+    }
+    .icons {
+      margin: 20px;
+    }
+    .start-menu {
+      background-color: #333;
+      color: #fff;
+      padding: 10px;
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
+    .icon-launcher {
+      background-color: #444;
+      color: #fff;
+      padding: 5px;
+      text-align: center;
+    }
+    .file-manager {
+      margin: 20px;
+    }
+    .settings {
+      margin: 20px;
+    }
+    .options {
+      margin: 20px;
+    }
+    .full-screen {
+      margin: 20px;
+    }
+    .color-change {
+      margin: 20px;
+    }
+    .mode {
+      margin: 20px;
+    }
+    .sounds {
+      margin: 20px;
+    }
+    .notifications {
+      margin: 20px;
+    }
+    .memory {
+      margin: 20px;
+    }
+    .versions {
+      margin: 20px;
+    }
+    .os-name {
+      margin: 20px;
+    }
+    .operations {
+      margin: 20px;
+    }
+    .header {
+      background-color: #333;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+    }
+    .footer {
+      background-color: #333;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">[Desktop Name]</div>
+  <div class="taskbar">
+    <button class="start-menu">Start</button>
+    <input type="search" class="search-bar" placeholder="Search...">
+    <div class="clock">12:00 PM</div>
+  </div>
+  <div class="bookmark-bar">
+    <img src="profile-pic.jpg" alt="Profile Picture">
+    <!-- Bookmark links here -->
+  </div>
+  <div class="address-bar">
+    <input type="text" placeholder="Address...">
+  </div>
+  <div class="icons">
+    <!-- Icons here -->
+  </div>
+  <div class="icon-launcher">
+    <!-- Icon launcher here -->
+  </div>
+  <div class="file-manager">
+    <!-- File manager here -->
+  </div>
+  <div class="settings">
+    <!-- Settings here -->
+  </div>
+  <div class="options">
+    <!-- Options here -->
+  </div>
+  <div class="full-screen">
+    <!-- Full screen here -->
+  </div>
+  <div class="color-change">
+    <!-- Color change here -->
+  </div>
+  <div class="mode">
+    <!-- Mode here -->
+  </div>
+  <div class="sounds">
+    <!-- Sounds here -->
+  </div>
+  <div class="notifications">
+    <!-- Notifications here -->
+  </div>
+  <div class="memory">
+    <!-- Memory here -->
+  </div>
+  <div class="versions">
+    <!-- Versions here -->
+  </div>
+  <div class="os-name">
+    <!-- OS Name here -->
+  </div>
+  <div class="operations">
+    <!-- Operations here -->
+  </div>
+  <div class="footer">made by callmecoffee3</div>
+  <script>
+    // Add your JavaScript code here
+    // Switch between 12 to 24 hours clock
+    function updateClock() {
+      var now = new Date();
+      var hours = now.getHours();
+      var minutes = now.getMinutes();
+      var ampm = hours >= 12 ? 'PM' : 'AM';
+      hours = hours % 12;
+      hours = hours ? hours : 12; // the hour '0' should be '12'
+      minutes = minutes < 10 ? '0' + minutes : minutes;
+      var strTime = hours + ':' + minutes + ' ' + ampm;
+      document.querySelector('.clock').innerHTML = strTime;
+    }
+    setInterval(updateClock, 1000);
+  </script>
+</body>
+</html>

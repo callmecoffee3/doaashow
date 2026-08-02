@@ -1,0 +1,48 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>callmecoffee3 OS</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Desktop Screen -->
+    <div class="desktop">
+        <div class="header" id="header">Desktops Name</div>
+        <div class="clock" id="clock"></div>
+        <div class="search-bar">
+            <input type="search" id="search" placeholder="Search...">
+        </div>
+        <div class="profile-pic" id="profile-pic"></div>
+        <!-- Icons and Apps -->
+        <div class="icon-grid">
+            <!-- Icons will be generated dynamically -->
+        </div>
+        <div class="footer" id="footer">made by callmecoffee3</div>
+    </div>
+
+    <!-- Taskbar -->
+    <div class="taskbar">
+        <div class="start-menu" id="start-menu">Start</div>
+        <div class="icon-launcher" id="icon-launcher"></div>
+        <div class="clock-taskbar" id="clock-taskbar"></div>
+    </div>
+
+    <!-- App Window -->
+    <div class="app-window" id="app-window">
+        <div class="app-header">
+            <div class="app-title" id="app-title"></div>
+            <div class="app-controls">
+                <button id="minimize">-</button>
+                <button id="maximize">[]</button>
+                <button id="close">X</button>
+            </div>
+        </div>
+        <div class="app-content" id="app-content"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
