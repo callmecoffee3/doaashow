@@ -1,24 +1,25 @@
 # Migration Status
 
 ## Completed
-- [x] Created Production / Systems / Legacy / Assets structure
+- [x] Production / Systems / Legacy / Assets structure
 - [x] MIND-MAP.md + main README
-- [x] Physical copy Phase 1
-  - desktop1/2/3.html → Systems/Desktop/
-  - doashow-terminal.html → Systems/Terminals/
-  - folderscanner.html → Systems/File-Tools/
-- [x] **Physical copy Phase 2**
-  - doaashow.bat → Systems/Menus/
-  - filescanner.html → Systems/File-Tools/
-  - pre productions.txt → Production/Film-Projects/DoaShow/01-Development/
+- [x] Phase 1 physical copies (Desktop, Terminal, File-Tools)
+- [x] Phase 2 (Menus start, File-Tools, Production docs)
+- [x] **Phase 3 — ALL batches**
+  - [x] 3A Menus: THE-FAM.bat → Systems/Menus/
+  - [x] 3A/Apps: zombie-game.bat → Systems/Apps/
+  - [x] 3E Legacy: Old-Projects/INDEX.md created
+  - [x] 3F Production docs:
+    - 7-act-structure.txt → Film-Projects/DoaShow/01-Development/
+    - haunted-series.txt → Categories/Horror/
 
-## In Progress
-- [ ] thefamterminal*.html → Systems/Terminals/
-- [ ] More .bat menus → Systems/Menus/
-- [ ] More desktop / mhtml → Systems/Desktop/
+## Still pending (future phases)
+- [ ] Remaining .bat menus & apps
+- [ ] thefamterminal*.html series (large files)
+- [ ] desktop/ folder contents + mhtml captures
 - [ ] Images → Assets/Images/
-- [ ] Old -(Projects) genre folders → Legacy/Old-Projects/
-- [ ] Clean root loose files
+- [ ] Full root cleanup
 
 ## Notes
-Originals remain safe in root. New official copies live in the structured folders.
+Originals remain safe. Official copies now live in the structured folders.
+The personal dump is progressively becoming history.

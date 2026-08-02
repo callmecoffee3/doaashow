@@ -2,12 +2,12 @@
 
 All menu systems and batch menu experiments.
 
-## Source files
-- `doaashow menu.bat`, `doaashow.bat`, `DOASHOW - UPDATED.bat`
-- `main menu*` files
-- `menu bar`, `menu bars`, `menu for android`, `menu stuff.bat`
-- `latest main menu`, `new menu look`, `smarter menu`
-- `THE FAM*.bat`, `thefam*.bat`
-- Many other `.bat` menu files in root
+## Files now in this folder
+- `doaashow.bat`
+- `THE-FAM.bat`
 
-Official home for menu-related work going forward.
+## Still in root (candidates for next moves)
+- `doashow menu.bat`, `DOASHOW - UPDATED.bat`
+- `thefam.bat`, `thefam1.bat`, `thefam2.bat`
+- `THE FAM scocial network.bat`
+- Shopping menus, main menu variants, etc.

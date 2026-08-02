@@ -1,0 +1,34 @@
+//haunted series
+/suggestions for web or tv
+/story telling board
+
+:website name
+:full screen option
+:logo
+:name (click name then go back to home)
+:dark theme
+:on github.com/callmecoffee3 - doaashow
+:right column
+:search & button
+:quick search terms
+:quick search bar
+:display search results
+:add on / extension
+:time & date display
+:user notes (& save button, delete note option)
+:add chat bot
+:put save notes under user notes and display
+:generate story based on multiple clicks (in ai chat bot)
+:make story as a user pick game
+:display generated story as smart ai (clickable)
+:let users pick style of story
+:different story categories
+:different story options
+
+#categories include:
+- places, people, activities, area, things
+- appliances, clothes, electronics, toys, gadgets, tools
+- news, sports, film types, styles, formats
+- story choices (pick up, put down, drive, run, walk, etc.)
+
+Full original content remains in root: haunted series.txt
