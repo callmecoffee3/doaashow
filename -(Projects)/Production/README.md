@@ -1,8 +1,18 @@
-# Production Structure
+# Production
 
-Professional film / TV / media production folder system for DoaShow.
+This is the core of DoaShow.
 
-## Structure
+A clean, professional structure for creating movies, TV shows, microdrama, shorts, and media.
 
-- **Categories/** → Genre and content type organization
-- **Film-Projects/** → Individual productions with full production pipeline folders
+## Sections
+
+| Folder | Purpose |
+|--------|---------|
+| **Categories/** | All content organized by genre and format |
+| **Schools/** | School world and related content |
+| **Roles/** | Complete film & TV crew structure |
+| **Film-Projects/** | Individual productions with full pipelines |
+
+The old scattered folders still exist for reference, but **this is the official structure** going forward.
+
+Everything new should live here.
