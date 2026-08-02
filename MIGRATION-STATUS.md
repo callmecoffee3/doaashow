@@ -1,29 +1,24 @@
 # Migration Status
 
 ## Completed
-- [x] Created Production structure (Categories, Schools, Roles, Film-Projects)
-- [x] Created Systems structure (Desktop, Menus, Terminals, File-Tools, Apps)
-- [x] Created Legacy structure (Old-Projects, Root-Dump, Archives)
-- [x] Created Assets structure (Images, Audio, Video, Documents)
-- [x] Added MIND-MAP.md
-- [x] Updated main README
-- [x] Mapped major file groups to their new homes
-- [x] **Physical copy started**
-  - [x] `desktop1.html` → `Systems/Desktop/`
-  - [x] `desktop2.html` → `Systems/Desktop/`
-  - [x] `desktop3.html` → `Systems/Desktop/`
-  - [x] `doashow terminal.html` → `Systems/Terminals/doashow-terminal.html`
-  - [x] `folderscanner.html` → `Systems/File-Tools/`
+- [x] Created Production / Systems / Legacy / Assets structure
+- [x] MIND-MAP.md + main README
+- [x] Physical copy Phase 1
+  - desktop1/2/3.html → Systems/Desktop/
+  - doashow-terminal.html → Systems/Terminals/
+  - folderscanner.html → Systems/File-Tools/
+- [x] **Physical copy Phase 2**
+  - doaashow.bat → Systems/Menus/
+  - filescanner.html → Systems/File-Tools/
+  - pre productions.txt → Production/Film-Projects/DoaShow/01-Development/
 
 ## In Progress
-- [ ] More Desktop files (desktop folder contents, mhtml captures)
-- [ ] Menu .bat files → Systems/Menus/
-- [ ] More terminals (thefamterminal*.html)
-- [ ] More file tools
+- [ ] thefamterminal*.html → Systems/Terminals/
+- [ ] More .bat menus → Systems/Menus/
+- [ ] More desktop / mhtml → Systems/Desktop/
 - [ ] Images → Assets/Images/
-- [ ] Moving old -(Projects) genre folders into Legacy/Old-Projects
-- [ ] Cleaning root of loose files
+- [ ] Old -(Projects) genre folders → Legacy/Old-Projects/
+- [ ] Clean root loose files
 
 ## Notes
-Original files remain in place so nothing is lost.  
-New copies now live in the official structure.
+Originals remain safe in root. New official copies live in the structured folders.

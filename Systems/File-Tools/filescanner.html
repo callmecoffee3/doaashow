@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Folder Scanner</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+        form {
+            width: 50%;
+            margin: 40px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #337ab7;
+        }
+        input[type="file"] {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #3e8e41;
+        }
+    </style>
+</head>
+<body>
+    <form id="folder-form">
+        <label for="folder">Select Folder:</label>
+        <input type="file" id="folder" name="folder" webkitdirectory directory multiple>
+        <input type="submit" value="Scan Folder">
+    </form>
+    <div id="result"></div>
+
+    <script>
+        const form = document.getElementById('folder-form');
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const folderInput = document.getElementById('folder');
+            const result = document.getElementById('result');
+            if (folderInput.files.length > 0) {
+                let names = [];
+                for (let i = 0; i < folderInput.files.length; i++) {
+                    names.push(folderInput.files[i].name);
+                }
+                result.innerHTML = '<pre>' + names.join('\n') + '</pre>';
+            } else {
+                result.innerHTML = 'No folder selected.';
+            }
+        });
+    </script>
+</body>
+</html>
