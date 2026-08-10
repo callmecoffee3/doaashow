@@ -1,17 +1,6 @@
 # 02-Systems
 
-Technical tools and platform experiments.
+Number-first alias for Systems.
 
-> Same role as `Systems/` — number-first official name.
-
-## Subfolders
-
-| Folder | Purpose |
-|--------|--------|
-| `01-Desktop/` | Simulated desktop / OS UI |
-| `02-Menus/` | Batch & menu systems |
-| `03-Terminals/` | Terminal interfaces |
-| `04-File-Tools/` | Scanners, browsers, uploaders |
-| `05-Apps/` | Games, bots, small tools |
-
-Existing files also live under `Systems/` until fully consolidated.
+Full structure: `FOLDER-NUMBERS/02-Systems/`
+Active files: `Systems/`

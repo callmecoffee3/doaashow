@@ -1,14 +1,6 @@
 # 05-Trash
 
-Soft-delete zone. Prefer this over hard-deleting.
+Number-first alias for Trash.
 
-> Same role as `Trash/` — number-first official name.
-
-## Subfolders
-
-| Folder | Purpose |
-|--------|--------|
-| `01-from-root/` | Migrated root leftovers |
-| `02-from-projects/` | Archived project leftovers |
-
-See `Trash/INDEX.md` for the candidate list.
+Full structure: `FOLDER-NUMBERS/05-Trash/`
+Active files: `Trash/`

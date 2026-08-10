@@ -1,13 +1,6 @@
 # 04-Legacy
 
-Long-term archive of the old dump (reference only).
+Number-first alias for Legacy.
 
-> Same role as `Legacy/` — number-first official name.
-
-## Subfolders
-
-| Folder | Purpose |
-|--------|--------|
-| `01-Old-Projects/` | Original -(Projects) genre folders |
-| `02-Root-Dump/` | Former root clutter index |
-| `03-Archives/` | Zips, huge scans, exports |
+Full structure: `FOLDER-NUMBERS/04-Legacy/`
+Active files: `Legacy/`

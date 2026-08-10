@@ -1,14 +1,6 @@
 # 03-Assets
 
-Shared media.
+Number-first alias for Assets.
 
-> Same role as `Assets/` — number-first official name.
-
-## Subfolders
-
-| Folder | Purpose |
-|--------|--------|
-| `01-Images/` | PNG, JPG, screenshots |
-| `02-Audio/` | MP3, sound |
-| `03-Video/` | MP4, clips |
-| `04-Documents/` | Shared docs |
+Full structure: `FOLDER-NUMBERS/03-Assets/`
+Active files: `Assets/`

@@ -1,12 +1,10 @@
 # Legacy
 
-Archive of the old personal dump.
+Archive of the old personal dump. Reference only — not for new work.
 
-These folders and files are kept for reference only.
-All active work should happen in **Production/** and **Systems/**.
+## Folders
+- **Old-Projects/** — original genre folders
+- **Root-Dump/** — former root clutter index
+- **Archives/** — zips and large scans
 
-## Sections
-
-- **Old-Projects/** — Original genre and project folders from -(Projects)
-- **Root-Dump/** — Files that previously lived loose in the repository root
-- **Archives/** — Large zips, scans, and old exports
+Official numbered mirror: `FOLDER-NUMBERS/04-Legacy/`
