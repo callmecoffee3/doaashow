@@ -2,8 +2,15 @@
 
 Genres and formats for DoaShow content.
 
-## Subfolders
+## Present folders
 
-Horror and other genre folders live here as content is added.
+- Horror/
+- **Music/**
+- **Sound/**
+- **Video/**
+- **TV/**
+- **Radio/**
+- **Movies/**
+- **Theater/**
 
 Full numbered list: `FOLDER-NUMBERS/01-Production/01-Categories/`
