@@ -1,31 +1,23 @@
-# Migration Status — ALL PHASES COMPLETE
+# Migration Status — ALL PHASES COMPLETE + TRASH
 
-## Structure phases
-- [x] Production (Categories, Schools, Roles, Film-Projects + template pipeline)
-- [x] Systems (Desktop, Menus, Terminals, File-Tools, Apps)
-- [x] Legacy (Old-Projects, Root-Dump, Archives)
-- [x] Assets (Images, Audio, Video, Documents)
+## Structure
+- [x] Production / Systems / Legacy / Assets
 - [x] MIND-MAP.md + professional README
+- [x] **Trash/** soft-delete zone added
 
 ## Physical copy phases
-- [x] Phase 1 — Desktop HTML, terminal, file tools
-- [x] Phase 2 — Menus start, production docs
-- [x] Phase 3 — THE-FAM, zombie-game, horror/act structure, Legacy index
-- [x] **Phase 4+ (all remaining)**
-  - [x] doashow-menu.bat, shopping.bat, user-feed.bat → Systems/Menus/
-  - [x] virus-simulator.bat → Systems/Apps/
-  - [x] Full indexes for Menus, Apps, Desktop, Terminals, File-Tools
-  - [x] Assets mapping (Images/Audio/Video)
-  - [x] Legacy Root-Dump + Archives indexes
+- [x] Phase 1–4 (menus, apps, desktop, tools, production docs, indexes)
 
-## Policy going forward
-1. **New work** goes only in Production / Systems / Assets
-2. **Root originals** stay as safe reference (nothing deleted)
-3. **Legacy** = old dump, not active development
+## Trash policy
+- [x] `Trash/` created
+- [x] `Trash/INDEX.md` lists safe soft-delete candidates
+- [x] `Trash/from-root/` and `Trash/from-projects/` ready
+- [ ] Optional: physically copy/delete root duplicates into Trash (on request)
 
-## Optional future cleanup
-- Copy remaining large binaries (images, mp3, mp4, mhtml) if desired
-- Copy thefamterminal*.html series when needed
-- Optionally delete root duplicates after you confirm everything works
+## Rules
+1. New work → Production / Systems / Assets only
+2. Soft-delete → Trash (never hard-delete first)
+3. Long-term archive indexes → Legacy
+4. Root originals stay until you confirm Trash staging
 
-*The personal dump is history. DoaShow is now a structured production system.*
+*The personal dump is history. Trash is the safe exit path for leftovers.*
