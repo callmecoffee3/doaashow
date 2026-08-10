@@ -13,37 +13,40 @@ DoaShow
 │
 ├── Production/     → Living core (Categories, Schools, Roles, Film-Projects)
 ├── Systems/        → Technical tools (Desktop, Menus, Terminals, File-Tools, Apps)
-├── Legacy/         → Old dump archive (kept for reference only)
+├── Legacy/         → Old dump archive (reference only)
 ├── Assets/         → Shared media (Images, Audio, Video, Documents)
-└── MIND-MAP.md     → Visual overview of the entire system
+├── MIND-MAP.md     → Visual overview
+└── MIGRATION-STATUS.md
 ```
 
 ### Production
-The heart of DoaShow. All active creative work lives here.
-
-- **Categories/** — Genres & formats
+- **Categories/** — Genres & formats (including Horror/haunted-series)
 - **Schools/** — School universe
 - **Roles/** — Full professional crew
-- **Film-Projects/** — Shows with complete pipelines (Development → Delivery)
+- **Film-Projects/** — DoaShow + pipelines (Development → Delivery)
 
 ### Systems
-Technical experiments and tools that power the platform.
+- **Menus/** — doaashow, doashow-menu, THE-FAM, shopping, user-feed
+- **Apps/** — zombie-game, virus-simulator
+- **Desktop/** — desktop1–3 HTML
+- **Terminals/** — doashow-terminal
+- **File-Tools/** — scanners
 
 ### Legacy
-The old personal dump, preserved but no longer active.
+Old root dump and genre folders — kept for reference, not active work.
 
 ---
 
 ## How to start a new project
 
 1. Go to `Production/Film-Projects/`
-2. Copy the `_TEMPLATE` folder
-3. Rename it to your project name
-4. Work through the stages: Development → Pre-Production → Production → Post → Delivery
+2. Copy `_TEMPLATE`
+3. Rename it
+4. Work Development → Pre-Production → Production → Post → Delivery
 
 ---
 
-*The personal dump is history.  
-This is now a structured production system.*
+*All migration phases complete.  
+The personal dump is history.*
 
-See [MIND-MAP.md](MIND-MAP.md) for the full visual map.
+See [MIND-MAP.md](MIND-MAP.md) · [MIGRATION-STATUS.md](MIGRATION-STATUS.md)

@@ -1,6 +1,4 @@
 # Video
 
-Shared video assets.
-
-## Source examples
+## Source in root
 - `videoplayback.mp4`

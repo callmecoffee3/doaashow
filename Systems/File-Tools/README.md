@@ -2,13 +2,12 @@
 
 Folder scanners, file browsers, and uploaders.
 
-## Source files
-- `folderscanner.html` through `folderscanner8.html`, `folderscanner13.html`
-- `folderscnner12.html`, `filescanner.html`
-- `folder uploader.html`, `folder uploader to text.html`, `folder uploder 2.html`
-- `foldermaker1.html`, `foldermaker2.html`
+## Files in this folder
+- `folderscanner.html`
+- `filescanner.html`
+
+## Still in root
+- `folderscanner1.html` … `folderscanner8.html`, `folderscanner13.html`
+- `folder uploader*.html`, `foldermaker*.html`
 - `file-browser/` folder
 - `FolderScaner.java`
-- `folder_report1.html`
-
-Official home for file system tools.

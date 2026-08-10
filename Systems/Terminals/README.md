@@ -2,12 +2,10 @@
 
 Terminal-style interfaces.
 
-## Files now in this folder
-- `doashow-terminal.html` (copied)
+## Files in this folder
+- `doashow-terminal.html`
 
-## Still in root (to be moved next)
-- `thefamterminal.html` (large — main FamSocialNetwork terminal simulator)
-- `thefamterminal1.html` through `thefamterminal10.html`
+## Still in root (large files — keep as reference)
+- `thefamterminal.html` (main FamSocialNetwork terminal)
+- `thefamterminal1.html` … `thefamterminal10.html`
 - `thefamterminal5.1.html` … `thefamterminal5.4.html`
-
-Official home for terminal UI work.
