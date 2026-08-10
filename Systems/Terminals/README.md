@@ -1,9 +1,6 @@
 # Terminals
 
-Terminal-style interfaces.
+Terminal-style interfaces for DoaShow.
 
 ## Files
-- `doashow-terminal.html`
-
-## Still in root
-- `thefamterminal*.html` series
+- doashow-terminal.html

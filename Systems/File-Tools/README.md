@@ -1,7 +1,7 @@
 # File-Tools
 
-Folder scanners, file browsers, and uploaders.
+Folder scanners and file tools for DoaShow.
 
 ## Files
-- `folderscanner.html`
-- `filescanner.html`
+- folderscanner.html
+- filescanner.html

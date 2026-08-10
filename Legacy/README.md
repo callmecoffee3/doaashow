@@ -1,10 +1,9 @@
 # Legacy
 
-Archive of the old personal dump. Reference only — not for new work.
+Archive of the old DoaShow personal dump. **Reference only.**
 
-## Folders
-- **Old-Projects/** — original genre folders
-- **Root-Dump/** — former root clutter index
-- **Archives/** — zips and large scans
+## Subfolders
 
-Official numbered mirror: `FOLDER-NUMBERS/04-Legacy/`
+- Old-Projects/
+- Root-Dump/
+- Archives/

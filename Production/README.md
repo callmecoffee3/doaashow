@@ -1,12 +1,16 @@
 # Production
 
-Living core of DoaShow — all active creative work.
+Main living core of **DoaShow**.
 
-## Folders
+All active creative work belongs here.
 
-- **Categories/** — Genres and formats
-- **Film-Projects/** — Individual shows with full pipelines
-- **Schools/** — School universe (if present)
-- **Roles/** — Crew roles (if present)
+## Subfolders
 
-Official numbered mirror: `FOLDER-NUMBERS/01-Production/`
+| Folder | Purpose |
+|--------|--------|
+| Categories/ | Genres and formats |
+| Film-Projects/ | Individual productions |
+| Schools/ | School universe |
+| Roles/ | Film & TV crew roles |
+
+Numbered mirror: `FOLDER-NUMBERS/01-Production/`

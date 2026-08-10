@@ -1,7 +1,7 @@
 # 01-Development
 
-Development materials for DoaShow.
+Development stage for the main DoaShow project.
 
 ## Files
-- `7-act-structure.txt`
-- `pre-productions.txt`
+- `7-act-structure.txt` — seven-act story structure
+- `pre-productions.txt` — pre-production budget/price notes

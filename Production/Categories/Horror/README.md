@@ -1,6 +1,6 @@
 # Horror
 
-Horror genre projects and materials.
+Horror genre materials for DoaShow.
 
-## Files
-- `haunted-series.txt` — haunted series concepts and UI notes
+## Contents
+- `haunted-series.txt`

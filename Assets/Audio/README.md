@@ -1,3 +1,3 @@
 # Audio
 
-Shared audio assets (MP3, sound, voice).
+Shared audio for DoaShow (MP3, sound, voice).

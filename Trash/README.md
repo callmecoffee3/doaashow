@@ -1,11 +1,8 @@
 # Trash
 
-Soft-delete zone. Prefer this over hard-deleting.
+Soft-delete zone for DoaShow. Prefer this over hard-deleting.
 
-## Folders
-- **from-root/** — migrated root leftovers
-- **from-projects/** — archived project leftovers
+## Subfolders
 
-See `INDEX.md` for safe soft-delete candidates.
-
-Official numbered mirror: `FOLDER-NUMBERS/05-Trash/`
+- from-root/
+- from-projects/

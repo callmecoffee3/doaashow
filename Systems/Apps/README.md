@@ -1,7 +1,7 @@
 # Apps
 
-Small tools, bots, games, and utilities.
+Games, bots, and utilities for DoaShow.
 
 ## Files
-- `zombie-game.bat`
-- `virus-simulator.bat`
+- zombie-game.bat
+- virus-simulator.bat

@@ -1,11 +1,10 @@
 # Assets
 
-Shared media for DoaShow productions.
+Shared media for **DoaShow** productions.
 
-## Folders
-- **Images/**
-- **Audio/**
-- **Video/**
-- **Documents/**
+## Subfolders
 
-Official numbered mirror: `FOLDER-NUMBERS/03-Assets/`
+- Images/
+- Audio/
+- Video/
+- Documents/

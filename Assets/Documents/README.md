@@ -1,3 +1,3 @@
 # Documents
 
-Shared documents and text resources.
+Shared documents for DoaShow.

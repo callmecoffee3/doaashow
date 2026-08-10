@@ -1,3 +1,3 @@
 # Video
 
-Shared video assets (MP4, clips).
+Shared video for DoaShow (MP4, clips).

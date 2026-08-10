@@ -1,10 +1,10 @@
 # 01-Production
 
-Living core of DoaShow.
+Main production structure for **DoaShow** (number-first).
 
 ## Subfolders
 
-- `01-Categories/` — Genres & formats
-- `02-Schools/` — School universe
-- `03-Roles/` — Full film crew
-- `04-Film-Projects/` — Shows + pipelines
+- 01-Categories/
+- 02-Schools/
+- 03-Roles/
+- 04-Film-Projects/

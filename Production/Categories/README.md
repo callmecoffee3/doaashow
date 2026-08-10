@@ -1,9 +1,9 @@
 # Categories
 
-Content organized by genre and format.
+Genres and formats for DoaShow content.
 
-## Present
-- **Horror/** — includes haunted-series notes
+## Subfolders
 
-## Full category list (see FOLDER-NUMBERS)
-Action · Adventure · Animation · Comedy · Documentary · Drama · Experimental · Horror · Media · Microdrama · News-Media · Reality · Sci-Fi · Shorts
+Horror and other genre folders live here as content is added.
+
+Full numbered list: `FOLDER-NUMBERS/01-Production/01-Categories/`
