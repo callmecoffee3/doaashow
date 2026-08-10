@@ -2,51 +2,31 @@
 
 **Professional Media Production System**
 
-Creating media like movies, TV shows, microdrama, games and more — organized like a real production company.
-
 ---
 
-## Structure
+## Number-first folder layout
 
 ```
-DoaShow
-│
-├── Production/     → Living core (Categories, Schools, Roles, Film-Projects)
-├── Systems/        → Technical tools (Desktop, Menus, Terminals, File-Tools, Apps)
-├── Legacy/         → Old dump archive (reference only)
-├── Assets/         → Shared media (Images, Audio, Video, Documents)
-├── MIND-MAP.md     → Visual overview
-└── MIGRATION-STATUS.md
+01-Production/     → Living core (Categories, Schools, Roles, Film-Projects)
+02-Systems/        → Desktop, Menus, Terminals, File-Tools, Apps
+03-Assets/         → Images, Audio, Video, Documents
+04-Legacy/         → Old dump archive (reference only)
+05-Trash/          → Soft-delete zone
 ```
 
-### Production
-- **Categories/** — Genres & formats (including Horror/haunted-series)
-- **Schools/** — School universe
-- **Roles/** — Full professional crew
-- **Film-Projects/** — DoaShow + pipelines (Development → Delivery)
+See [FOLDER-NUMBERS.md](FOLDER-NUMBERS.md) for the full map.
 
-### Systems
-- **Menus/** — doaashow, doashow-menu, THE-FAM, shopping, user-feed
-- **Apps/** — zombie-game, virus-simulator
-- **Desktop/** — desktop1–3 HTML
-- **Terminals/** — doashow-terminal
-- **File-Tools/** — scanners
+### Also present (file content lives here until consolidated)
+- `Production/`, `Systems/`, `Assets/`, `Legacy/`, `Trash/`
 
-### Legacy
-Old root dump and genre folders — kept for reference, not active work.
-
----
-
-## How to start a new project
-
-1. Go to `Production/Film-Projects/`
+### How to start a new project
+1. Go to `Production/Film-Projects/` (or `01-Production/04-Film-Projects/`)
 2. Copy `_TEMPLATE`
 3. Rename it
-4. Work Development → Pre-Production → Production → Post → Delivery
+4. Use 01-Development → 05-Delivery
 
 ---
 
-*All migration phases complete.  
-The personal dump is history.*
+*Number first. Structure clear. Dump is history.*
 
-See [MIND-MAP.md](MIND-MAP.md) · [MIGRATION-STATUS.md](MIGRATION-STATUS.md)
+[MIND-MAP.md](MIND-MAP.md) · [MIGRATION-STATUS.md](MIGRATION-STATUS.md) · [FOLDER-NUMBERS.md](FOLDER-NUMBERS.md)
