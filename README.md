@@ -4,26 +4,23 @@
 
 ---
 
-## Official structure location
+## Where to work
 
-All numbered folders live here:
+| Location | Purpose |
+|----------|--------|
+| **[FOLDER-NUMBERS/](FOLDER-NUMBERS/)** | Official numbered structure (every folder has a README) |
+| **Production/** | Living creative files |
+| **Systems/** | Menus, apps, desktop, terminals, tools |
+| **Assets/** | Shared media |
+| **Legacy/** | Old dump indexes |
+| **Trash/** | Soft-delete zone |
+| **-(Projects)/** | Legacy genre placeholders (reference only) |
 
-### **[FOLDER-NUMBERS/](https://github.com/callmecoffee3/doaashow/tree/main/FOLDER-NUMBERS)**
+## Rule
 
-```
-FOLDER-NUMBERS/
-├── 01-Production/     → Categories, Schools, Roles, Film-Projects
-├── 02-Systems/        → Desktop, Menus, Terminals, File-Tools, Apps
-├── 03-Assets/         → Images, Audio, Video, Documents
-├── 04-Legacy/         → Old dump archive
-└── 05-Trash/          → Soft-delete zone
-```
+- **New work** → `FOLDER-NUMBERS/` or `Production/` / `Systems/` / `Assets/`
+- **Old dump** → keep as reference; do not expand
 
-Full tree: [FOLDER-NUMBERS/STRUCTURE.md](FOLDER-NUMBERS/STRUCTURE.md)
+Every major folder in this repo now includes a `README.md`.
 
-### Migrated file content (until consolidated)
-Still under: `Production/`, `Systems/`, `Assets/`, `Legacy/`, `Trash/`
-
----
-
-*Number first. Structure inside FOLDER-NUMBERS. Dump is history.*
+See [MIND-MAP.md](MIND-MAP.md) · [MIGRATION-STATUS.md](MIGRATION-STATUS.md) · [FOLDER-NUMBERS/STRUCTURE.md](FOLDER-NUMBERS/STRUCTURE.md)
