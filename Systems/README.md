@@ -11,5 +11,6 @@ Technical tools and platform experiments for **DoaShow**.
 | Terminals/ | Terminal interfaces |
 | File-Tools/ | Scanners, browsers, uploaders |
 | Apps/ | Games, bots, utilities |
+| **Dashboards/** | User, Experiences, Production dashboards |
 
 Numbered mirror: `FOLDER-NUMBERS/02-Systems/`
