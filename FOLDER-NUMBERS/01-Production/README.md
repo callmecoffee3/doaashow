@@ -4,7 +4,11 @@ Main production structure for **DoaShow** (number-first).
 
 ## Subfolders
 
-- 01-Categories/
-- 02-Schools/
-- 03-Roles/
-- 04-Film-Projects/
+| # | Folder | Purpose |
+|---|--------|--------|
+| 01 | Categories/ | Genres & formats (incl. Music, TV, Movies, Cast, Crew…) |
+| 02 | Schools/ | School universe |
+| 03 | Roles/ | Individual crew roles |
+| 04 | Film-Projects/ | Shows + pipelines |
+| 05 | Cast/ | Cast department |
+| 06 | Crew/ | Crew department |

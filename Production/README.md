@@ -2,15 +2,15 @@
 
 Main living core of **DoaShow**.
 
-All active creative work belongs here.
-
 ## Subfolders
 
 | Folder | Purpose |
 |--------|--------|
-| Categories/ | Genres and formats |
+| Categories/ | Genres & formats (Music, Sound, Video, TV, Radio, Movies, Theater, Cast, Crew…) |
 | Film-Projects/ | Individual productions |
 | Schools/ | School universe |
-| Roles/ | Film & TV crew roles |
+| Roles/ | Individual crew roles |
+| **Cast/** | Cast department |
+| **Crew/** | Crew department |
 
 Numbered mirror: `FOLDER-NUMBERS/01-Production/`
