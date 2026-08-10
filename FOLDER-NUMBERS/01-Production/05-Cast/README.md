@@ -2,8 +2,10 @@
 
 Cast department for DoaShow productions.
 
-## Use for
-- Actor lists
-- Character breakdowns
-- Casting sides
-- Talent contacts
+## Subfolders
+
+| # | Folder |
+|---|--------|
+| 01 | Tryouts/ |
+| 02 | Casting-Calls/ |
+| 03 | Call-Sheets/ |
