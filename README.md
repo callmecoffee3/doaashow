@@ -4,29 +4,26 @@
 
 ---
 
-## Number-first folder layout
+## Official structure location
+
+All numbered folders live here:
+
+### **[FOLDER-NUMBERS/](https://github.com/callmecoffee3/doaashow/tree/main/FOLDER-NUMBERS)**
 
 ```
-01-Production/     → Living core (Categories, Schools, Roles, Film-Projects)
-02-Systems/        → Desktop, Menus, Terminals, File-Tools, Apps
-03-Assets/         → Images, Audio, Video, Documents
-04-Legacy/         → Old dump archive (reference only)
-05-Trash/          → Soft-delete zone
+FOLDER-NUMBERS/
+├── 01-Production/     → Categories, Schools, Roles, Film-Projects
+├── 02-Systems/        → Desktop, Menus, Terminals, File-Tools, Apps
+├── 03-Assets/         → Images, Audio, Video, Documents
+├── 04-Legacy/         → Old dump archive
+└── 05-Trash/          → Soft-delete zone
 ```
 
-See [FOLDER-NUMBERS.md](FOLDER-NUMBERS.md) for the full map.
+Full tree: [FOLDER-NUMBERS/STRUCTURE.md](FOLDER-NUMBERS/STRUCTURE.md)
 
-### Also present (file content lives here until consolidated)
-- `Production/`, `Systems/`, `Assets/`, `Legacy/`, `Trash/`
-
-### How to start a new project
-1. Go to `Production/Film-Projects/` (or `01-Production/04-Film-Projects/`)
-2. Copy `_TEMPLATE`
-3. Rename it
-4. Use 01-Development → 05-Delivery
+### Migrated file content (until consolidated)
+Still under: `Production/`, `Systems/`, `Assets/`, `Legacy/`, `Trash/`
 
 ---
 
-*Number first. Structure clear. Dump is history.*
-
-[MIND-MAP.md](MIND-MAP.md) · [MIGRATION-STATUS.md](MIGRATION-STATUS.md) · [FOLDER-NUMBERS.md](FOLDER-NUMBERS.md)
+*Number first. Structure inside FOLDER-NUMBERS. Dump is history.*
