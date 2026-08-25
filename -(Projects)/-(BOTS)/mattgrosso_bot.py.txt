@@ -1,0 +1,1088 @@
+import discord
+from discord.ext import commands, tasks
+import json
+import os
+import random
+from datetime import datetime, timedelta
+from dotenv import load_dotenv
+
+load_dotenv()
+
+intents = discord.Intents.default()
+intents.message_content = True
+
+bot = commands.Bot(command_prefix="!", intents=intents, help_command=None)
+
+DATA_DIR = "data"
+os.makedirs(DATA_DIR, exist_ok=True)
+
+def load_data(guild_id):
+    path = f"{DATA_DIR}/{guild_id}.json"
+    if os.path.exists(path):
+        with open(path, "r") as f:
+            return json.load(f)
+    return {
+        "events": [], "reminders": [],
+        "onair": {}, "history": [],
+        "channels": {},
+        "walkie": {"active": False, "transmitter": None, "transmitter_name": None,
+                   "started": None, "log": [], "frequency": "📻 Main"},
+        "feed": {"posts": [], "next_id": 1, "reactions": {}, "comments": {}, "next_comment_id": 1},
+        "messages": {"threads": {}, "next_id": 1},
+        "pages": {"pages": {}, "next_id": 1},
+        "groups": {"groups": {}, "next_id": 1},
+        "cable": {"channels": {}, "guide": []},
+        "microdrama": {"scenes": {}, "next_id": 1},
+        # NEW: 6 more systems
+        "voicemail": {"messages": [], "next_id": 1},
+        "amfm": {"stations": {}, "current": {}},
+        "events_live": {"events": {}, "next_id": 1},
+        "shop": {"items": {}, "next_id": 1, "orders": []},
+        "library": {"books": {}, "next_id": 1},
+        "games": {"scores": {}, "active": {}},
+        "gallery": {"artworks": {}, "next_id": 1}
+    }
+
+def save_data(guild_id, data):
+    with open(f"{DATA_DIR}/{guild_id}.json", "w") as f:
+        json.dump(data, f, indent=2)
+
+DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+CHANNEL_TYPES = ["📺 TV", "📻 Radio", "🎙 Podcast", "🎬 Movie", "🎭 Theater", "📡 Stream", "🎪 Event", "🎤 Other"]
+WALKIE_FREQUENCIES = ["📻 Main", "📻 Channel 1", "📻 Channel 2", "📻 Channel 3", "📻 Channel 4", "🚨 Emergency"]
+SQELCH_SOUNDS = ["📡 *kzzzzh*", "📡 *click*", "📡 *static*", "📡 *beep boop*", "📡 *feedback squeal*"]
+CABLE_PROVIDERS = ["Comcast", "Spectrum", "Xfinity", "DirecTV", "Dish", "Cablevision", "Verizon FIOS", "Other"]
+DRAMA_GENRES = ["💀 Horror", "😂 Comedy", "💕 Romance", "🔍 Mystery", "⚔️ Drama", "🚀 Sci-Fi", "🎭 Tragedy", "😱 Thriller"]
+AMFM_BANDS = ["AM", "FM"]
+SHOP_CATEGORIES = ["👕 Apparel", "☕ Drinkware", "📚 Books", "🎨 Art", "🎵 Music", "🎬 Films", "🎁 Other"]
+GAME_TYPES = ["🃏 Cards", "🎲 Dice", "♟️ Strategy", "🧩 Puzzle", "🎯 Trivia", "⚔️ RPG"]
+
+# =====================================================
+# READY
+# =====================================================
+@bot.event
+async def on_ready():
+    print(f"🎬 mattgrosso is ON AIR! 14 systems online. Logged in as {bot.user}")
+    await bot.change_presence(activity=discord.Activity(
+        type=discord.ActivityType.streaming, name="The Matt Grosso Show"
+    ))
+    check_reminders.start()
+    auto_off_air.start()
+    auto_walkie_timeout.start()
+    update_bot_status.start()
+
+# =====================================================
+# HELP
+# =====================================================
+@bot.command(name="matt")
+async def help_cmd(ctx):
+    embed = discord.Embed(
+        title="🎬 The Matt Grosso Show — mattgrosso",
+        description="*callmecoffee3 — Wonders will happen*\n\n**14 systems, 24/7, 7 days a week.**",
+        color=0xFF6B35
+    )
+    embed.add_field(name="📞 VOICEMAIL", value=(
+        "`!vm leave @user <msg>` `!vm inbox`\n"
+        "`!vm listen <id>` `!vm delete <id>`"
+    ), inline=False)
+    embed.add_field(name="📻 AM/FM RADIO", value=(
+        "`!radio add <freq> <band> <name>`\n"
+        "`!radio stations` `!radio tune <freq>`\n"
+        "`!radio play <song>` `!radio now`"
+    ), inline=False)
+    embed.add_field(name="🎪 LIVE EVENTS", value=(
+        "`!event create <name> <date> <venue>`\n"
+        "`!event list` `!event rsvp <id>`\n"
+        "`!event info <id>` `!event checkin <id>`"
+    ), inline=False)
+    embed.add_field(name="🛍️ SHOP", value=(
+        "`!shop add <item> <price>`\n"
+        "`!shop list` `!shop buy <id>`\n"
+        "`!shop inventory` `!shop orders`"
+    ), inline=False)
+    embed.add_field(name="📚 LIBRARY", value=(
+        "`!library add <title> <author> <genre>`\n"
+        "`!library catalog` `!library search <query>`\n"
+        "`!library check <id> @user` `!library return <id>`"
+    ), inline=False)
+    embed.add_field(name="🎮 GAMES", value=(
+        "`!game start <type>` `!game score`\n"
+        "`!game leaderboard` `!game quit`"
+    ), inline=False)
+    embed.add_field(name="🎨 GALLERY", value=(
+        "`!gallery add <title> <url>`\n"
+        "`!gallery view` `!gallery like <id>`\n"
+        "`!gallery exhibit`"
+    ), inline=False)
+    embed.add_field(name="💬 MESSAGES / 📄 PAGES / 👥 GROUPS / 📺 CABLE / 🎬 DRAMA", value=(
+        "`!msg` `!page` `!group` `!cable` `!drama`"
+    ), inline=False)
+    embed.add_field(name="📰 FEED / 📻 WALKIE / 📡 CHANNELS", value=(
+        "`!feed` `!walkie` `!channel`"
+    ), inline=False)
+    embed.add_field(name="⏰ REMINDERS / 🤖 BOT", value="`!remind` `!bot` `!who` `!ping` `!status`", inline=False)
+    await ctx.send(embed=embed)
+
+# =====================================================
+# BOT IDENTITY
+# =====================================================
+@bot.command()
+async def bot(ctx):
+    await ctx.send("🤖 Yes. I am a bot. **14 systems.** 24/7. 7 days a week.")
+
+@bot.command()
+async def who(ctx):
+    await ctx.send("🤖 I'm **mattgrosso** — bot running 14 systems: voicemail, radio, events, shop, library, games, gallery, messages, pages, groups, cable, drama, feed, walkie, channels.")
+
+@bot.command()
+async def ping(ctx):
+    await ctx.send(f"🏓 Pong! {round(bot.latency * 1000)}ms. 14 systems online.")
+
+@bot.command()
+async def status(ctx):
+    data = load_data(ctx.guild.id)
+    embed = discord.Embed(title="🤖 mattgrosso — 14 Systems Status", color=0xFF6B35)
+    embed.add_field(name="📞 Voicemails", value=len(data["voicemail"]["messages"]), inline=True)
+    embed.add_field(name="📻 AM/FM Stations", value=len(data["amfm"]["stations"]), inline=True)
+    embed.add_field(name="🎪 Live Events", value=len(data["events_live"]["events"]), inline=True)
+    embed.add_field(name="🛍️ Shop Items", value=len(data["shop"]["items"]), inline=True)
+    embed.add_field(name="📚 Library Books", value=len(data["library"]["books"]), inline=True)
+    embed.add_field(name="🎮 Active Games", value=len(data["games"]["active"]), inline=True)
+    embed.add_field(name="🎨 Gallery Art", value=len(data["gallery"]["artworks"]), inline=True)
+    embed.add_field(name="💬 Threads", value=len(data["messages"]["threads"]), inline=True)
+    embed.add_field(name="📄 Pages", value=len(data["pages"]["pages"]), inline=True)
+    embed.add_field(name="👥 Groups", value=len(data["groups"]["groups"]), inline=True)
+    embed.add_field(name="📺 Cable", value=len(data["cable"]["channels"]), inline=True)
+    embed.add_field(name="🎬 Dramas", value=len(data["microdrama"]["scenes"]), inline=True)
+    embed.add_field(name="📰 Posts", value=len(data["feed"]["posts"]), inline=True)
+    embed.add_field(name="📡 Channels", value=len(data["channels"]), inline=True)
+    await ctx.send(embed=embed)
+
+# =====================================================
+# 📞 VOICEMAIL SYSTEM
+# =====================================================
+@bot.group(invoke_without_command=True)
+async def vm(ctx):
+    data = load_data(ctx.guild.id)
+    msgs = data["voicemail"]["messages"]
+    user_msgs = [m for m in msgs if m["to_id"] == str(ctx.author.id) and not m.get("deleted")]
+    if not user_msgs:
+        return await ctx.send("📞 No voicemails. Inbox empty.")
+    embed = discord.Embed(title=f"📞 {ctx.author.display_name}'s Voicemail Inbox", color=0xFF4500)
+    for m in user_msgs[-10:][::-1]:
+        embed.add_field(
+            name=f"📞 #{m['id']} • From: {m['from']} • {m['time']}",
+            value=f"💬 _{m['text'][:100]}_",
+            inline=False
+        )
+    await ctx.send(embed=embed)
+
+@vm.command()
+async def leave(ctx, user: discord.Member, *, text: str):
+    data = load_data(ctx.guild.id)
+    mid = data["voicemail"]["next_id"]
+    data["voicemail"]["next_id"] += 1
+    data["voicemail"]["messages"].append({
+        "id": mid, "from": str(ctx.author), "from_id": str(ctx.author.id),
+        "to": str(user), "to_id": str(user.id), "text": text,
+        "time": datetime.now().strftime("%Y-%m-%d %H:%M"),
+        "listened": False, "deleted": False
+    })
+    save_data(ctx.guild.id, data)
+    embed = discord.Embed(
+        title="📞 Voicemail Left",
+        description=f"💬 *\"{text}\"*",
+        color=0xFF4500
+    )
+    embed.add_field(name="To", value=user.mention, inline=True)
+    embed.add_field(name="From", value=ctx.author.mention, inline=True)
+    embed.set_footer(text=f"Voicemail #{mid}")
+    await ctx.send(embed=embed)
+
+@vm.command(name="inbox")
+async def vm_inbox(ctx):
+    await vm(ctx)
+
+@vm.command()
+async def listen(ctx, mid: int):
+    data = load_data(ctx.guild.id)
+    msg = next((m for m in data["voicemail"]["messages"] if m["id"] == mid), None)
+    if not msg or msg["to_id"] != str(ctx.author.id):
+        return await ctx.send("❌ Voicemail not found.")
+    msg["listened"] = True
+    save_data(ctx.guild.id, data)
+    embed = discord.Embed(
+        title=f"📞 Voicemail #{mid}",
+        description=f"💬 *\"{msg['text']}\"*",
+        color=0xFF4500
+    )
+    embed.add_field(name="From", value=msg['from'], inline=True)
+    embed.add_field(name="When", value=msg['time'], inline=True)
+    await ctx.send(embed=embed)
+
+@vm.command()
+async def delete(ctx, mid: int):
+    data = load_data(ctx.guild.id)
+    msg = next((m for m in data["voicemail"]["messages"] if m["id"] == mid), None)
+    if not msg or msg["to_id"] != str(ctx.author.id):
+        return await ctx.send("❌ Not found.")
+    msg["deleted"] = True
+    save_data(ctx.guild.id, data)
+    await ctx.send(f"🗑️ Voicemail #{mid} deleted.")
+
+# =====================================================
+# 📻 AM/FM RADIO
+# =====================================================
+@bot.group(invoke_without_command=True)
+async def radio(ctx):
+    data = load_data(ctx.guild.id)
+    if not data["amfm"]["stations"]:
+        return await ctx.send("📻 No stations. `!radio add <freq> <band> <name>`")
+    embed = discord.Embed(title="📻 AM/FM Stations", color=0xFF6B35)
+    for freq, s in data["amfm"]["stations"].items():
+        playing = "🔴 LIVE" if data["amfm"]["current"].get(freq) else "⚫ Off Air"
+        embed.add_field(
+            name=f"📻 {s['band']} {freq} — {s['name']}",
+            value=f"{playing}\n{', '.join(s.get('shows', [])) or 'No shows'}",
+            inline=False
+        )
+    await ctx.send(embed=embed)
+
+@radio.command()
+async def add(ctx, freq: str, band: str, *, name: str):
+    data = load_data(ctx.guild.id)
+    band = band.upper()
+    if band not in AMFM_BANDS:
+        return await ctx.send("❌ Band must be AM or FM.")
+    if freq in data["amfm"]["stations"]:
+        return await ctx.send("⚠️ Frequency taken.")
+    data["amfm"]["stations"][freq] = {
+        "freq": freq, "band": band, "name": name,
+        "shows": [], "added_by": str(ctx.author)
+    }
+    save_data(ctx.guild.id, data)
+    await ctx.send(f"📻 Added **{band} {freq}** — {name}")
+
+@radio.command()
+async def stations(ctx):
+    await radio(ctx)
+
+@radio.command()
+async def tune(ctx, freq: str):
+    data = load_data(ctx.guild.id)
+    s = data["amfm"]["stations"].get(freq)
+    if not s:
+        return await ctx.send("❌ Frequency not found.")
+    current = data["amfm"]["current"].get(freq, {})
+    embed = discord.Embed(
+        title=f"📻 {s['band']} {freq} — {s['name']}",
+        color=0xFF6B35
+    )
+    if current:
+        embed.add_field(name="🔴 Now Playing", value=f"🎵 **{current.get('song', 'Unknown')}**", inline=False)
+        embed.add_field(name="DJ", value=current.get('host', 'Auto'), inline=True)
+    else:
+        embed.add_field(name="📡 Status", value="⚫ Off Air", inline=False)
+    embed.add_field(name="Shows", value=", ".join(s.get("shows", [])) or "*None*", inline=False)
+    await ctx.send(embed=embed)
+
+@radio.command()
+async def play(ctx, freq: str, *, song: str):
+    data = load_data(ctx.guild.id)
+    if freq not in data["amfm"]["stations"]:
+        return await ctx.send("❌ Frequency not found.")
+    data["amfm"]["current"][freq] = {
+        "song": song, "host": str(ctx.author),
+        "started": datetime.now().isoformat()
+    }
+    save_data(ctx.guild.id, data)
+    embed = discord.Embed(
+        title=f"📻 Now Playing on {freq}",
+        description=f"🎵 **{song}**",
+        color=0x00AAFF
+    )
+    embed.add_field(name="DJ", value=ctx.author.mention)
+    await ctx.send(embed=embed)
+
+@radio.command()
+async def stop(ctx, freq: str):
+    data = load_data(ctx.guild.id)
+    if freq in data["amfm"]["current"]:
+        del data["amfm"]["current"][freq]
+        save_data(ctx.guild.id, data)
+        await ctx.send(f"📻 **{freq}** stopped.")
+
+@radio.command()
+async def now(ctx):
+    data = load_data(ctx.guild.id)
+    if not data["amfm"]["current"]:
+        return await ctx.send("📻 No radio playing.")
+    embed = discord.Embed(title="📻 Now Playing", color=0x00AAFF)
+    for freq, c in data["amfm"]["current"].items():
+        s = data["amfm"]["stations"].get(freq, {})
+        embed.add_field(
+            name=f"{s.get('band', '')} {freq} — {s.get('name', '?')}",
+            value=f"🎵 **{c['song']}** (DJ: {c['host']})",
+            inline=False
+        )
+    await ctx.send(embed=embed)
+
+# =====================================================
+# 🎪 LIVE EVENTS
+# =====================================================
+@bot.group(invoke_without_command=True)
+async def event(ctx):
+    data = load_data(ctx.guild.id)
+    events = data["events_live"]["events"]
+    if not events:
+        return await ctx.send("🎪 No events. `!event create <name> <date> <venue>`")
+    embed = discord.Embed(title="🎪 Upcoming Events", color=0x00CED1)
+    for e in events.values():
+        embed.add_field(
+            name=f"🎪 {e['name']} #{e['id']}",
+            value=f"📅 {e['date']} • 📍 {e['venue']}\n👥 {len(e.get('rsvps', []))} RSVPs",
+            inline=False
+        )
+    await ctx.send(embed=embed)
+
+@event.command()
+async def create(ctx, name: str, date: str, *, venue: str):
+    data = load_data(ctx.guild.id)
+    eid = data["events_live"]["next_id"]
+    data["events_live"]["next_id"] += 1
+    data["events_live"]["events"][str(eid)] = {
+        "id": eid, "name": name, "date": date, "venue": venue,
+        "host": str(ctx.author), "rsvps": [],
+        "checked_in": [], "created": datetime.now().isoformat()
+    }
+    save_data(ctx.guild.id, data)
+    await ctx.send(f"🎪 Event created: **{name}**\n📅 {date} • 📍 {venue}\n`!event rsvp {eid}` to RSVP")
+
+@event.command()
+async def list(ctx):
+    await event(ctx)
+
+@event.command()
+async def rsvp(ctx, eid: int):
+    data = load_data(ctx.guild.id)
+    e = data["events_live"]["events"].get(str(eid))
+    if not e:
+        return await ctx.send("❌ Event not found.")
+    if str(ctx.author) in e["rsvps"]:
+        return await ctx.send("🎪 Already RSVP'd.")
+    e["rsvps"].append(str(ctx.author))
+    save_data(ctx.guild.id, data)
+    await ctx.send(f"🎪 {ctx.author.mention} RSVP'd to **{e['name']}**!")
+
+@event.command()
+async def info(ctx, eid: int):
+    data = load_data(ctx.guild.id)
+    e = data["events_live"]["events"].get(str(eid))
+    if not e:
+        return await ctx.send("❌ Event not found.")
+    embed = discord.Embed(title=f"🎪 {e['name']}", color=0x00CED1)
+    embed.add_field(name="📅 Date", value=e['date'], inline=True)
+    embed.add_field(name="📍 Venue", value=e['venue'], inline=True)
+    embed.add_field(name="🎤 Host", value=e['host'], inline=True)
+    embed.add_field(name="👥 RSVPs", value=len(e['rsvps']), inline=True)
+    embed.add_field(name="✅ Checked In", value=len(e['checked_in']), inline=True)
+    if e['rsvps']:
+        embed.add_field(name="Going", value=", ".join(e['rsvps'][:10]), inline=False)
+    await ctx.send(embed=embed)
+
+@event.command()
+async def checkin(ctx, eid: int):
+    data = load_data(ctx.guild.id)
+    e = data["events_live"]["events"].get(str(eid))
+    if not e:
+        return await ctx.send("❌ Event not found.")
+    if str(ctx.author) not in e["rsvps"]:
+        e["rsvps"].append(str(ctx.author))
+    if str(ctx.author) not in e["checked_in"]:
+        e["checked_in"].append(str(ctx.author))
+        save_data(ctx.guild.id, data)
+        await ctx.send(f"✅ {ctx.author.mention} checked in to **{e['name']}**!")
+    else:
+        await ctx.send("Already checked in.")
+
+# =====================================================
+# 🛍️ SHOP
+# =====================================================
+@bot.group(invoke_without_command=True)
+async def shop(ctx):
+    data = load_data(ctx.guild.id)
+    items = data["shop"]["items"]
+    if not items:
+        return await ctx.send("🛍️ Shop empty. `!shop add <item> <price>`")
+    embed = discord.Embed(title="🛍️ The Matt Grosso Shop", color=0xFFD700)
+    for iid, i in items.items():
+        embed.add_field(
+            name=f"🛍️ {i['name']} — ${i['price']:.2f} `#{iid}`",
+            value=f"_{i['description'][:60]}_\nCategory: {i['category']} • Stock: {i['stock']}",
+            inline=False
+        )
+    await ctx.send(embed=embed)
+
+@shop.command()
+async def add(ctx, name: str, price: float, *, description: str = "Cool stuff"):
+    data = load_data(ctx.guild.id)
+    sid = data["shop"]["next_id"]
+    data["shop"]["next_id"] += 1
+    data["shop"]["items"][str(sid)] = {
+        "id": sid, "name": name, "price": price,
+        "description": description, "category": "🎁 Other",
+        "stock": 10, "added_by": str(ctx.author)
+    }
+    save_data(ctx.guild.id, data)
+    await ctx.send(f"🛍️ Listed: **{name}** — ${price:.2f} `#{sid}`")
+
+@shop.command()
+async def list(ctx):
+    await shop(ctx)
+
+@shop.command()
+async def buy(ctx, sid: int):
+    data = load_data(ctx.guild.id)
+    item = data["shop"]["items"].get(str(sid))
+    if not item:
+        return await ctx.send("❌ Item not found.")
+    if item["stock"] <= 0:
+        return await ctx.send("❌ Out of stock.")
+    item["stock"] -= 1
+    data["shop"]["orders"].append({
+        "item": item["name"], "buyer": str(ctx.author),
+        "price": item["price"], "time": datetime.now().strftime("%Y-%m-%d %H:%M")
+    })
+    save_data(ctx.guild.id, data)
+    await ctx.send(f"🛍️ **{ctx.author.display_name}** bought **{item['name']}** for ${item['price']:.2f}! 🎉")
+
+@shop.command()
+async def orders(ctx):
+    data = load_data(ctx.guild.id)
+    if not data["shop"]["orders"]:
+        return await ctx.send("🛍️ No orders yet.")
+    embed = discord.Embed(title="🛍️ Recent Orders", color=0xFFD700)
+    for o in data["shop"]["orders"][-10:][::-1]:
+        embed.add_field(name=f"🛍️ {o['item']} — ${o['price']:.2f}", value=f"By: {o['buyer']} • {o['time']}", inline=False)
+    await ctx.send(embed=embed)
+
+# =====================================================
+# 📚 LIBRARY
+# =====================================================
+@bot.group(invoke_without_command=True)
+async def library(ctx):
+    data = load_data(ctx.guild.id)
+    books = data["library"]["books"]
+    if not books:
+        return await ctx.send("📚 Library empty. `!library add <title> <author>`")
+    embed = discord.Embed(title="📚 The Library Catalog", color=0x8B4513)
+    for bid, b in books.items():
+        status = "📖 Checked out" if b.get("checked_out") else "✅ Available"
+        embed.add_field(
+            name=f"📚 {b['title']} — {b['author']} `#{bid}`",
+            value=f"Genre: {b['genre']} • {status}",
+            inline=False
+        )
+    await ctx.send(embed=embed)
+
+@library.command()
+async def add(ctx, title: str, author: str, *, genre: str = "General"):
+    data = load_data(ctx.guild.id)
+    bid = data["library"]["next_id"]
+    data["library"]["next_id"] += 1
+    data["library"]["books"][str(bid)] = {
+        "id": bid, "title": title, "author": author, "genre": genre,
+        "added_by": str(ctx.author), "checked_out": None
+    }
+    save_data(ctx.guild.id, data)
+    await ctx.send(f"📚 Added: **{title}** by {author} `#{bid}`")
+
+@library.command()
+async def catalog(ctx):
+    await library(ctx)
+
+@library.command()
+async def search(ctx, *, query: str):
+    data = load_data(ctx.guild.id)
+    results = [b for b in data["library"]["books"].values()
+               if query.lower() in b["title"].lower() or query.lower() in b["author"].lower()]
+    if not results:
+        return await ctx.send(f"📚 No matches for **{query}**")
+    embed = discord.Embed(title=f"📚 Search: {query}", color=0x8B4513)
+    for b in results:
+        embed.add_field(name=f"📚 {b['title']} — {b['author']} `#{b['id']}`", value=b['genre'], inline=False)
+    await ctx.send(embed=embed)
+
+@library.command()
+async def check(ctx, bid: int, user: discord.Member):
+    data = load_data(ctx.guild.id)
+    book = data["library"]["books"].get(str(bid))
+    if not book:
+        return await ctx.send("❌ Book not found.")
+    if book.get("checked_out"):
+        return await ctx.send(f"❌ Already checked out by {book['checked_out']}")
+    book["checked_out"] = {"user": str(user), "time": datetime.now().strftime("%Y-%m-%d")}
+    save_data(ctx.guild.id, data)
+    await ctx.send(f"📖 **{book['title']}** checked out to {user.mention}")
+
+@library.command()
+async def return_book(ctx, bid: int):
+    data = load_data(ctx.guild.id)
+    book = data["library"]["books"].get(str(bid))
+    if not book:
+        return await ctx.send("❌ Book not found.")
+    if not book.get("checked_out"):
+        return await ctx.send("📚 Not checked out.")
+    book["checked_out"] = None
+    save_data(ctx.guild.id, data)
+    await ctx.send(f"📚 **{book['title']}** returned. Thanks!")
+
+# =====================================================
+# 🎮 GAMES
+# =====================================================
+@bot.group(invoke_without_command=True)
+async def game(ctx):
+    data = load_data(ctx.guild.id)
+    if not data["games"]["active"]:
+        return await ctx.send("🎮 No active games. `!game start <type>`")
+    embed = discord.Embed(title="🎮 Active Games", color=0x9370DB)
+    for gid, g in data["games"]["active"].items():
+        players = ", ".join(g["players"].keys()) or "Waiting"
+        embed.add_field(
+            name=f"🎮 {g['type']} `#{gid}`",
+            value=f"Players: {players}\nStarted: {g['started']}",
+            inline=False
+        )
+    await ctx.send(embed=embed)
+
+@game.command()
+async def start(ctx, gtype: str):
+    data = load_data(ctx.guild.id)
+    matched = next((g for g in GAME_TYPES if g.split()[-1].lower() in gtype.lower()), f"🎲 {gtype}")
+    gid = str(len(data["games"]["active"]) + 1)
+    data["games"]["active"][gid] = {
+        "id": gid, "type": matched, "host": str(ctx.author),
+        "players": {str(ctx.author): 0}, "started": datetime.now().strftime("%H:%M:%S")
+    }
+    save_data(ctx.guild.id, data)
+    await ctx.send(f"🎮 New game: **{matched}** `#{gid}`\nOthers can join with `!game join {gid}`")
+
+@game.command()
+async def join(ctx, gid: str):
+    data = load_data(ctx.guild.id)
+    g = data["games"]["active"].get(gid)
+    if not g:
+        return await ctx.send("❌ Game not found.")
+    g["players"][str(ctx.author)] = 0
+    save_data(ctx.guild.id, data)
+    await ctx.send(f"🎮 {ctx.author.mention} joined game #{gid}")
+
+@game.command()
+async def score(ctx, gid: str, points: int):
+    data = load_data(ctx.guild.id)
+    g = data["games"]["active"].get(gid)
+    if not g:
+        return await ctx.send("❌ Game not found.")
+    if str(ctx.author) not in g["players"]:
+        return await ctx.send("❌ Join the game first.")
+    g["players"][str(ctx.author)] += points
+    save_data(ctx.guild.id, data)
+    await ctx.send(f"🎮 {ctx.author.display_name} +{points} (total: {g['players'][str(ctx.author)]})")
+
+@game.command()
+async def leaderboard(ctx):
+    data = load_data(ctx.guild.id)
+    all_players = {}
+    for g in data["games"]["active"].values():
+        for user, score in g["players"].items():
+            all_players[user] = all_players.get(user, 0) + score
+    if not all_players:
+        return await ctx.send("🎮 No scores yet.")
+    sorted_p = sorted(all_players.items(), key=lambda x: -x[1])
+    embed = discord.Embed(title="🎮 Leaderboard", color=0xFFD700)
+    for i, (user, score) in enumerate(sorted_p[:10], 1):
+        medal = ["🥇", "🥈", "🥉"][i-1] if i <= 3 else f"{i}."
+        embed.add_field(name=f"{medal} {user}", value=f"⭐ {score} pts", inline=False)
+    await ctx.send(embed=embed)
+
+@game.command()
+async def quit(ctx, gid: str):
+    data = load_data(ctx.guild.id)
+    g = data["games"]["active"].get(gid)
+    if not g:
+        return await ctx.send("❌ Not found.")
+    if str(ctx.author) == g["host"]:
+        del data["games"]["active"][gid]
+        save_data(ctx.guild.id, data)
+        await ctx.send(f"🎮 Game #{gid} ended by host.")
+    else:
+        if str(ctx.author) in g["players"]:
+            del g["players"][str(ctx.author)]
+            save_data(ctx.guild.id, data)
+            await ctx.send(f"🎮 {ctx.author.display_name} left game #{gid}.")
+
+# =====================================================
+# 🎨 GALLERY
+# =====================================================
+@bot.group(invoke_without_command=True)
+async def gallery(ctx):
+    data = load_data(ctx.guild.id)
+    art = data["gallery"]["artworks"]
+    if not art:
+        return await ctx.send("🎨 Gallery empty. `!gallery add <title> <url>`")
+    embed = discord.Embed(title="🎨 The Gallery", color=0xFF1493)
+    for aid, a in list(art.items())[-5:][::-1]:
+        embed.add_field(
+            name=f"🎨 {a['title']} `#{aid}`",
+            value=f"By: {a['artist']} • ❤️ {len(a.get('likes', []))}",
+            inline=False
+        )
+    await ctx.send(embed=embed)
+
+@gallery.command()
+async def add(ctx, title: str, url: str):
+    data = load_data(ctx.guild.id)
+    aid = data["gallery"]["next_id"]
+    data["gallery"]["next_id"] += 1
+    data["gallery"]["artworks"][str(aid)] = {
+        "id": aid, "title": title, "url": url,
+        "artist": str(ctx.author), "likes": [],
+        "time": datetime.now().strftime("%Y-%m-%d %H:%M")
+    }
+    save_data(ctx.guild.id, data)
+    embed = discord.Embed(title=f"🎨 {title}", color=0xFF1493)
+    embed.set_image(url=url)
+    embed.set_author(name=ctx.author.display_name)
+    await ctx.send(embed=embed)
+
+@gallery.command()
+async def view(ctx, aid: int = None):
+    data = load_data(ctx.guild.id)
+    if aid is None:
+        await gallery(ctx)
+        return
+    art = data["gallery"]["artworks"].get(str(aid))
+    if not art:
+        return await ctx.send("❌ Not found.")
+    embed = discord.Embed(title=f"🎨 {art['title']}", color=0xFF1493)
+    embed.set_image(url=art['url'])
+    embed.add_field(name="Artist", value=art['artist'], inline=True)
+    embed.add_field(name="❤️ Likes", value=len(art['likes']), inline=True)
+    await ctx.send(embed=embed)
+
+@gallery.command()
+async def like(ctx, aid: int):
+    data = load_data(ctx.guild.id)
+    art = data["gallery"]["artworks"].get(str(aid))
+    if not art:
+        return await ctx.send("❌ Not found.")
+    if str(ctx.author.id) in art["likes"]:
+        art["likes"].remove(str(ctx.author.id))
+        await ctx.send(f"💔 Removed like from #{aid}")
+    else:
+        art["likes"].append(str(ctx.author.id))
+        await ctx.send(f"❤️ Liked #{aid}!")
+    save_data(ctx.guild.id, data)
+
+@gallery.command()
+async def exhibit(ctx):
+    data = load_data(ctx.guild.id)
+    art = sorted(data["gallery"]["artworks"].values(), key=lambda x: -len(x.get("likes", [])))[:5]
+    if not art:
+        return await ctx.send("🎨 Gallery empty.")
+    embed = discord.Embed(title="🎨 Featured Exhibit — Top Liked", color=0xFF1493)
+    for a in art:
+        embed.add_field(
+            name=f"🎨 {a['title']} — {a['artist']}",
+            value=f"❤️ {len(a['likes'])} likes",
+            inline=False
+        )
+    await ctx.send(embed=embed)
+
+# =====================================================
+# 💬 MESSAGES
+# =====================================================
+@bot.group(invoke_without_command=True)
+async def msg(ctx):
+    data = load_data(ctx.guild.id)
+    threads = data["messages"]["threads"]
+    if not threads:
+        return await ctx.send("💬 No threads.")
+    embed = discord.Embed(title="💬 Threads", color=0x00CED1)
+    for t in list(threads.values())[-5:]:
+        last = t["messages"][-1] if t["messages"] else None
+        last_str = f"\"{last['text'][:30]}\"" if last else "*Empty*"
+        embed.add_field(name=f"💬 {t['name']} #{t['id']}", value=last_str, inline=False)
+    await ctx.send(embed=embed)
+
+@msg.command()
+async def new(ctx, user: discord.Member, *, text: str):
+    data = load_data(ctx.guild.id)
+    tid = data["messages"]["next_id"]
+    data["messages"]["next_id"] += 1
+    data["messages"]["threads"][str(tid)] = {
+        "id": tid, "name": f"DM: {user.display_name}",
+        "type": "dm", "messages": [{"user": str(ctx.author), "text": text, "time": datetime.now().strftime("%H:%M")}]
+    }
+    save_data(ctx.guild.id, data)
+    await ctx.send(f"💬 DM with {user.display_name} `#{tid}`")
+
+@msg.command()
+async def thread(ctx, *, name: str):
+    data = load_data(ctx.guild.id)
+    tid = data["messages"]["next_id"]
+    data["messages"]["next_id"] += 1
+    data["messages"]["threads"][str(tid)] = {
+        "id": tid, "name": name, "type": "group",
+        "messages": [], "participants": [str(ctx.author)]
+    }
+    save_data(ctx.guild.id, data)
+    await ctx.send(f"💬 Group thread: **{name}** `#{tid}`\n`!msg join {tid}`")
+
+@msg.command()
+async def send(ctx, tid: str, *, text: str):
+    data = load_data(ctx.guild.id)
+    t = data["messages"]["threads"].get(tid)
+    if not t:
+        return await ctx.send("❌ Not found.")
+    t["messages"].append({"user": str(ctx.author), "text": text, "time": datetime.now().strftime("%H:%M")})
+    save_data(ctx.guild.id, data)
+    embed = discord.Embed(title=f"💬 {t['name']}", description=text, color=0x00CED1)
+    embed.set_author(name=ctx.author.display_name)
+    await ctx.send(embed=embed)
+
+@msg.command()
+async def view(ctx, tid: str):
+    data = load_data(ctx.guild.id)
+    t = data["messages"]["threads"].get(tid)
+    if not t:
+        return await ctx.send("❌ Not found.")
+    if not t["messages"]:
+        return await ctx.send("💬 Empty.")
+    embed = discord.Embed(title=f"💬 {t['name']}", color=0x00CED1)
+    for m in t["messages"][-10:]:
+        embed.add_field(name=f"{m['user']} • {m['time']}", value=m['text'][:200], inline=False)
+    await ctx.send(embed=embed)
+
+# =====================================================
+# 📄 PAGES
+# =====================================================
+@bot.group(invoke_without_command=True)
+async def page(ctx):
+    data = load_data(ctx.guild.id)
+    pages = data["pages"]["pages"]
+    if not pages:
+        return await ctx.send("📄 No pages.")
+    embed = discord.Embed(title="📄 Pages", color=0x9B59B6)
+    for p in list(pages.values())[-5:]:
+        embed.add_field(name=f"📄 {p['title']} v{p['version']}", value=p['content'][:80], inline=False)
+    await ctx.send(embed=embed)
+
+@page.command()
+async def new(ctx, title: str, *, content: str):
+    data = load_data(ctx.guild.id)
+    if any(p["title"].lower() == title.lower() for p in data["pages"]["pages"].values()):
+        return await ctx.send("❌ Exists.")
+    pid = data["pages"]["next_id"]
+    data["pages"]["next_id"] += 1
+    data["pages"]["pages"][str(pid)] = {
+        "id": pid, "title": title, "content": content,
+        "author": str(ctx.author), "version": 1
+    }
+    save_data(ctx.guild.id, data)
+    await ctx.send(f"📄 Page **{title}** created `#{pid}`")
+
+@page.command()
+async def view(ctx, *, title: str):
+    data = load_data(ctx.guild.id)
+    p = next((p for p in data["pages"]["pages"].values() if p["title"].lower() == title.lower()), None)
+    if not p:
+        return await ctx.send("❌ Not found.")
+    embed = discord.Embed(title=f"📄 {p['title']}", description=p['content'], color=0x9B59B6)
+    embed.set_footer(text=f"v{p['version']} by {p['author']}")
+    await ctx.send(embed=embed)
+
+@page.command()
+async def edit(ctx, title: str, *, content: str):
+    data = load_data(ctx.guild.id)
+    for p in data["pages"]["pages"].values():
+        if p["title"].lower() == title.lower():
+            p["content"] = content
+            p["version"] += 1
+            save_data(ctx.guild.id, data)
+            await ctx.send(f"📄 Updated to v{p['version']}")
+            return
+    await ctx.send("❌ Not found.")
+
+@page.command()
+async def search(ctx, *, query: str):
+    data = load_data(ctx.guild.id)
+    results = [p for p in data["pages"]["pages"].values() if query.lower() in p["content"].lower()]
+    if not results:
+        return await ctx.send("❌ No results.")
+    embed = discord.Embed(title=f"📄 Search: {query}", color=0x9B59B6)
+    for p in results[:5]:
+        embed.add_field(name=p['title'], value=p['content'][:80], inline=False)
+    await ctx.send(embed=embed)
+
+# =====================================================
+# 👥 GROUPS
+# =====================================================
+@bot.group(invoke_without_command=True)
+async def group(ctx):
+    data = load_data(ctx.guild.id)
+    if not data["groups"]["groups"]:
+        return await ctx.send("👥 No groups.")
+    embed = discord.Embed(title="👥 Groups", color=0x32CD32)
+    for g in data["groups"]["groups"].values():
+        embed.add_field(name=f"👥 {g['name']}", value=f"{len(g['members'])} members", inline=True)
+    await ctx.send(embed=embed)
+
+@group.command()
+async def create(ctx, name: str, *, description: str):
+    data = load_data(ctx.guild.id)
+    if name in data["groups"]["groups"]:
+        return await ctx.send("❌ Exists.")
+    gid = data["groups"]["next_id"]
+    data["groups"]["next_id"] += 1
+    data["groups"]["groups"][name] = {
+        "id": gid, "name": name, "description": description,
+        "members": [str(ctx.author)], "posts": []
+    }
+    save_data(ctx.guild.id, data)
+    await ctx.send(f"👥 **{name}** created!")
+
+@group.command()
+async def join(ctx, *, name: str):
+    data = load_data(ctx.guild.id)
+    g = data["groups"]["groups"].get(name)
+    if not g:
+        return await ctx.send("❌ Not found.")
+    if str(ctx.author) not in g["members"]:
+        g["members"].append(str(ctx.author))
+        save_data(ctx.guild.id, data)
+    await ctx.send(f"👥 Joined **{name}**")
+
+@group.command()
+async def leave(ctx, *, name: str):
+    data = load_data(ctx.guild.id)
+    g = data["groups"]["groups"].get(name)
+    if g and str(ctx.author) in g["members"]:
+        g["members"].remove(str(ctx.author))
+        save_data(ctx.guild.id, data)
+    await ctx.send(f"👥 Left **{name}**")
+
+@group.command()
+async def post(ctx, name: str, *, text: str):
+    data = load_data(ctx.guild.id)
+    g = data["groups"]["groups"].get(name)
+    if not g or str(ctx.author) not in g["members"]:
+        return await ctx.send("❌ Join first.")
+    g["posts"].append({"user": str(ctx.author), "text": text, "time": datetime.now().strftime("%H:%M")})
+    save_data(ctx.guild.id, data)
+    await ctx.send(f"👥 Posted to **{name}**: {text}")
+
+@group.command()
+async def feed(ctx, *, name: str):
+    data = load_data(ctx.guild.id)
+    g = data["groups"]["groups"].get(name)
+    if not g:
+        return await ctx.send("❌ Not found.")
+    if not g["posts"]:
+        return await ctx.send("👥 No posts.")
+    embed = discord.Embed(title=f"👥 {name}", color=0x32CD32)
+    for p in g["posts"][-10:][::-1]:
+        embed.add_field(name=f"{p['user']} • {p['time']}", value=p['text'][:200], inline=False)
+    await ctx.send(embed=embed)
+
+# =====================================================
+# 📺 CABLE
+# =====================================================
+@bot.group(invoke_without_command=True)
+async def cable(ctx):
+    data = load_data(ctx.guild.id)
+    if not data["cable"]["channels"]:
+        return await ctx.send("📺 No cable channels.")
+    embed = discord.Embed(title="📺 Cable", color=0x1E90FF)
+    for n, c in data["cable"]["channels"].items():
+        embed.add_field(name=f"Ch #{c['number']} {c['name']}", value="🔴 LIVE" if c.get("on_air") else "⚫", inline=True)
+    await ctx.send(embed=embed)
+
+@cable.command()
+async def add(ctx, name: str, provider: str = "Other"):
+    data = load_data(ctx.guild.id)
+    matched = next((p for p in CABLE_PROVIDERS if p.lower() in provider.lower()), provider)
+    num = len(data["cable"]["channels"]) + 1
+    data["cable"]["channels"][name.lower()] = {
+        "name": name, "provider": matched, "number": num,
+        "schedule": [], "on_air": None
+    }
+    save_data(ctx.guild.id, data)
+    await ctx.send(f"📺 Ch #{num} {name} ({matched}) added.")
+
+@cable.command()
+async def onair(ctx, name: str, *, show: str):
+    data = load_data(ctx.guild.id)
+    if name.lower() not in data["cable"]["channels"]:
+        return await ctx.send("❌ Not found.")
+    data["cable"]["channels"][name.lower()]["on_air"] = {
+        "show": show, "started": datetime.now().strftime("%H:%M:%S")
+    }
+    save_data(ctx.guild.id, data)
+    await ctx.send(f"📺 **{name}** LIVE: {show}")
+
+@cable.command()
+async def offair(ctx, *, name: str):
+    data = load_data(ctx.guild.id)
+    if name.lower() in data["cable"]["channels"]:
+        data["cable"]["channels"][name.lower()]["on_air"] = None
+        save_data(ctx.guild.id, data)
+    await ctx.send(f"📴 **{name}** off.")
+
+@cable.command()
+async def status(ctx):
+    data = load_data(ctx.guild.id)
+    live = [(n, c) for n, c in data["cable"]["channels"].items() if c.get("on_air")]
+    if not live:
+        return await ctx.send("📺 None live.")
+    embed = discord.Embed(title="📺 Cable Live", color=0xFF0000)
+    for n, c in live:
+        embed.add_field(name=f"Ch #{c['number']} {c['name']}", value=c['on_air']['show'], inline=False)
+    await ctx.send(embed=embed)
+
+@cable.command()
+async def schedule(ctx, name: str, day: str, time_in: str, *, show: str):
+    data = load_data(ctx.guild.id)
+    if name.lower() not in data["cable"]["channels"]:
+        return await ctx.send("❌ Not found.")
+    data["cable"]["channels"][name.lower()]["schedule"].append({"day": day.capitalize(), "time": time_in, "show": show})
+    save_data(ctx.guild.id, data)
+    await ctx.send(f"📅 {name} — {day} {time_in}: {show}")
+
+@cable.command(name="guide")
+async def cable_guide(ctx, day: str = None):
+    data = load_data(ctx.guild.id)
+    if day is None:
+        day = DAYS[datetime.now().weekday()]
+    else:
+        day = day.capitalize()
+        if day not in DAYS:
+            return await ctx.send("❌ Invalid day.")
+    embed = discord.Embed(title=f"📺 Cable Guide — {day}", color=0x1E90FF)
+    for n, c in data["cable"]["channels"].items():
+        sched = sorted([s for s in c["schedule"] if s["day"] == day], key=lambda x: x["time"])
+        on = f"🔴 {c['on_air']['show']}\n" if c.get("on_air") else ""
+        embed.add_field(name=f"#{c['number']} {c['name']}", value=on + "\n".join([f"{s['time']} {s['show']}" for s in sched]) or "*None*", inline=False)
+    await ctx.send(embed=embed)
+
+# =====================================================
+# 🎬 MICRO DRAMA
+# =====================================================
+@bot.group(invoke_without_command=True)
+async def drama(ctx):
+    data = load_data(ctx.guild.id)
+    dramas = data["microdrama"]["scenes"]
+    if not dramas:
+        return await ctx.send("🎬 No dramas.")
+    embed = discord.Embed(title="🎬 Micro Dramas", color=0xFF1493)
+    for d in dramas.values():
+        embed.add_field(name=f"🎬 {d['title']} #{d['id']}", value=f"{d['genre']} • {len(d['scenes'])} lines", inline=False)
+    await ctx.send(embed=embed)
+
+@drama.command()
+async def new(ctx, title: str, *, genre: str = "Drama"):
+    data = load_data(ctx.guild.id)
+    matched = next((g for g in DRAMA_GENRES if g.split()[-1].lower() in genre.lower()), f"⚔️ {genre}")
+    did = data["microdrama"]["next_id"]
+    data["microdrama"]["next_id"] += 1
+    data["microdrama"]["scenes"][str(did)] = {
+        "id": did, "title": title, "genre": matched,
+        "scenes": [], "author": str(ctx.author)
+    }
+    save_data(ctx.guild.id, data)
+    await ctx.send(f"🎬 Created **{title}** ({matched}) `#{did}`")
+
+@drama.command()
+async def scene(ctx, did: str, character: str, *, line: str):
+    data = load_data(ctx.guild.id)
+    if did not in data["microdrama"]["scenes"]:
+        return await ctx.send("❌ Not found.")
+    n = len(data["microdrama"]["scenes"][did]["scenes"]) + 1
+    data["microdrama"]["scenes"][did]["scenes"].append({"scene": n, "character": character, "line": line})
+    save_data(ctx.guild.id, data)
+    await ctx.send(f"🎬 Scene {n} added.")
+
+@drama.command()
+async def view(ctx, did: str):
+    data = load_data(ctx.guild.id)
+    d = data["microdrama"]["scenes"].get(did)
+    if not d:
+        return await ctx.send("❌ Not found.")
+    if not d["scenes"]:
+        return await ctx.send("🎬 No scenes.")
+    embed = discord.Embed(title=f"🎬 {d['title']}", color=0xFF1493)
+    current = None
+    text = ""
+    for s in d["scenes"]:
+        if s["scene"] != current:
+            if current:
+                embed.add_field(name=f"Scene {current}", value=text, inline=False)
+            current = s["scene"]
+            text = ""
+        text += f"**{s['character']}:** {s['line']}\n"
+    if text:
+        embed.add_field(name=f"Scene {current}", value=text, inline=False)
+    await ctx.send(embed=embed)
+
+@drama.command()
+async def perform(ctx, did: str):
+    data = load_data(ctx.guild.id)
+    d = data["microdrama"]["scenes"].get(did)
+    if not d:
+        return await ctx.send("❌ Not found.")
+    await ctx.send(f"🎬 **PERFORMING: {d['title']}**")
+    current = None
+    for s in d["scenes"]:
+        if s["scene"] != current:
+            current = s["scene"]
+            await ctx.send(f"**── Scene {current} ──**")
+        await ctx.send(f"**{s['character']}:** _{s['line']}_")
+    await ctx.send("🎭 **THE END**")
+
+# =====================================================
+# 📰 FEED
+# =====================================================
+@bot.group(invoke_without_command=True)
+async def feed(ctx):
+    data = load_data(ctx.guild.id)
+    posts = data["feed"]["posts"]
+    if not posts:
+        return await ctx.send("📰 Empty.")
+    embed = discord.Embed(title="📰 Feed", color=0x00AAFF)
+    for p in posts[-5:][::-1]:
+        embed.add_field(name=f"#{p['id']} • {p['author']}", value=p['text'][:80], inline=False)
+    await ctx.send(embed=embed)
+
+@feed.command()
+async def post(ctx, *, text: str):
+    data = load_data(ctx.guild.id)
+    pid = data["feed"]["next_id"]
+    data["feed"]["next_id"] += 1
+    data["feed"]["posts"].append({"id": pid, "author": str(ctx.author), "text": text, "time": datetime.now().strftime("%H:%M")})
+    data["feed"]["reactions"][str(pid)] = {}
+    data["feed"]["comments"][str(pid)] = []
+    save_data(ctx.guild.id, data)
+    await ctx.send(f"📰 Posted #{pid}: {text}")
+
+@feed.command()
+async def view(ctx, pid: int):
+    data = load_data(ctx.guild.id)
+    p = next((p for p in data["feed"]["posts"] if p["id"] == pid), None)
+    if not p:
+        return await ctx.send("❌ Not found.")
+    await ctx.send(f"📰 **#{p['id']}** by {p['author']}\n{p['text']}")
+
+@feed.command()
+async def react(ctx, pid: int, emoji: str):
+    data = load_data(ctx.guild.id)
+    r
