@@ -24,3 +24,79 @@
 Every major folder in this repo now includes a `README.md`.
 
 See [MIND-MAP.md](MIND-MAP.md) · [MIGRATION-STATUS.md](MIGRATION-STATUS.md) · [FOLDER-NUMBERS/STRUCTURE.md](FOLDER-NUMBERS/STRUCTURE.md)
+# desktop
+
+**somekind of desktop**
+
+An experimental desktop environment and interface playground.
+
+This project is part of the larger **doashow** universe — a space for building, testing, and playing with media tools, interfaces, and system ideas.
+
+> For entertainment purposes.  
+> Just for goofing off.  
+> Just for fun.
+
+---
+
+### What is this?
+
+A growing collection of desktop-related experiments and concepts, including:
+
+- Desktop layouts and screens
+- Taskbar, sidebars, and navigation ideas
+- Window management experiments
+- File explorer concepts
+- System UI pieces (Clock, Date, Time, etc.)
+- A detailed **Settings** structure
+- Optional features and configuration
+- Connections to the main **doashow** project
+
+Think of it as a sandbox for exploring what a custom desktop could look and feel like.
+
+---
+
+### Project Structure
+
+| Folder              | Purpose                                      |
+|---------------------|----------------------------------------------|
+| `Desktopscreen`     | Main desktop views                           |
+| `Taskbar`           | Taskbar experiments                          |
+| `Sidebar` / `Sidebars` | Side navigation ideas                     |
+| `Appwindow`         | Window and app container experiments         |
+| `File-Explorer`     | File browser concepts                        |
+| `Settings`          | Core system settings and preferences         |
+| `Options`           | Optional / experimental features             |
+| `os`                | Deeper operating system experiments          |
+| `doashow`           | Link to the main doashow project             |
+| `Clock` / `Date` / `Time` | System UI elements                      |
+| `Media`             | Audio, Photos, Videos                        |
+| `Studio`            | Creative / production related tools          |
+| Others              | Social apps, church section, users, etc.     |
+
+---
+
+### Settings & Options
+
+- **Settings** → Core desktop behavior, system preferences, display, accounts, and more.
+- **Options** → Optional features and experimental toggles that can be turned on or off.
+
+These two areas are meant to grow as the desktop becomes more functional.
+
+---
+
+### Philosophy
+
+Move fast. Break things. Keep the ideas that feel right.
+
+This repo is intentionally experimental. Not everything needs to be finished or perfect. The goal is to explore desktop interfaces, system design, and how they can connect to creative tools.
+
+---
+
+### Related Projects
+
+- [doashow](https://github.com/callmecoffee3/doaashow) – Main creative media project
+- [doashow-desktop](https://github.com/callmecoffee3/doashow-desktop) – More polished desktop slideshow environment
+
+---
+
+Made by **Matt Grosso** ([@callmecoffee3](https://github.com/callmecoffee3))
