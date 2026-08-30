@@ -73,7 +73,48 @@ Think of it as a sandbox for exploring what a custom desktop could look and feel
 | `Studio`            | Creative / production related tools          |
 | Others              | Social apps, church section, users, etc.     |
 
+# doaashow
+
+> something to play with for creating media like movies, tv shows, games and stuff
+
+**This is for entertainment pourposes — I do this just for goofing off just for fun.**
+
+And yes — I originally wanted it to be spelled `doashow` but misspelled it. So now it's `doaashow`. We're rolling with it.
+
+### What's in here?
+
+This repo is my creative junk drawer / lab. No rules, just ideas.
+
+- **(Projects)/Store-Directory/** - A-Z Aisle Directory HTML structure with search
+- **OS-and-apps/** - Matt Grosso Business OS documentation
+- **All apps** - Big catalog of app ideas — Professional, Business, Broadcast, Health, Medical, Law, Home, Entertainment, Library, Life, Law & Government, Exploration
+
+Expect HTML prototypes, docs, random experiments.
+
+### Why does this exist?
+
+1. To have fun
+2. To test ideas for The Matt Grosso Show universe
+3. To build stuff that *could* become a real show, game, or app someday
+
+### How to use it
+
+Clone it and poke around:
+
+git clone https://github.com/callmecoffee3/doaashow.git
+
+Open any `.html` file in your browser. Most things are standalone.
+
+### Disclaimer
+
+Entertainment purposes only. Nothing in here is final, legal advice, or a real product. Just me goofing off.
+
+### Want to contribute?
+
+If you get the joke, you get the repo. PRs welcome for goofy ideas.
+
 ---
+Built by Matt Grosso — callmecoffee3---
 
 ### Settings & Options
 
