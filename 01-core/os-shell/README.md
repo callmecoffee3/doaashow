@@ -2,4 +2,6 @@
 
 DOS-style batch menus and launchers.
 
-Main entry points like `DOASHOW - UPDATED.bat` and menu systems belong here.
+Main entry points like `DOASHOW - UPDATED.bat` belong here (still in root for now).
+
+New shell / menu work should go in this folder.

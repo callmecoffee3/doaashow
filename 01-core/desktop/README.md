@@ -2,4 +2,7 @@
 
 Simulated desktop environment experiments.
 
-Place main desktop HTML/JS/React components here (DesktopContext, window managers, taskbar, icons, etc.).
+## Key files (copied here)
+- `DesktopContext.tsx` — Main React context for the desktop (windows, apps, theme, wallpaper, sticky notes, etc.)
+
+Original still exists in the repo root. This is the new home for desktop-related work.

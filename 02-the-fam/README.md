@@ -9,3 +9,5 @@ Social network simulation — **The Fam**.
 - **feed/** — Feed / post related
 - **messenger/** — Messaging experiments
 - **profiles/** — User / character profiles
+
+Key files are being organized into these folders over time.
