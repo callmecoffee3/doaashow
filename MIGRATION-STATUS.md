@@ -1,23 +1,32 @@
-# Migration Status — ALL PHASES COMPLETE + TRASH
+# Migration Status
 
-## Structure
-- [x] Production / Systems / Legacy / Assets
-- [x] MIND-MAP.md + professional README
-- [x] **Trash/** soft-delete zone added
+## New Clean Structure (Aug 2026)
 
-## Physical copy phases
-- [x] Phase 1–4 (menus, apps, desktop, tools, production docs, indexes)
+- [x] Created numbered top-level folders:
+  - `01-core/` (desktop, os-shell, cloudos)
+  - `02-the-fam/` (terminal, bat, feed, messenger, profiles)
+  - `03-production/` (story-tools, shows, characters, scenes, pre-production)
+  - `04-apps/` (folder-scanner, shopping, games, mall-stores, utilities)
+  - `05-assets/` (images, audio, video, icons)
+  - `06-legacy/` (old-html, old-bat, archives)
+  - `docs/`
+- [x] New comprehensive README.md
+- [x] README.md files in every new folder
 
-## Trash policy
-- [x] `Trash/` created
-- [x] `Trash/INDEX.md` lists safe soft-delete candidates
-- [x] `Trash/from-root/` and `Trash/from-projects/` ready
-- [ ] Optional: physically copy/delete root duplicates into Trash (on request)
+## Existing structure (kept for compatibility)
+- `01-Production/`, `02-Systems/`, `03-Assets/`, `04-Legacy/`, `05-Trash/`
+- `FOLDER-NUMBERS/`, `Production/`, `Systems/`, `Assets/`, `Legacy/`, `Trash/`
+
+## Next steps (on request)
+- [ ] Physically move key files from root into the new numbered folders
+- [ ] Stage remaining root clutter into Trash / 06-legacy
+- [ ] Build a clean main desktop entry point in `01-core/desktop/`
+- [ ] Update FOLDER-NUMBERS docs to match the new layout
 
 ## Rules
-1. New work → Production / Systems / Assets only
-2. Soft-delete → Trash (never hard-delete first)
-3. Long-term archive indexes → Legacy
-4. Root originals stay until you confirm Trash staging
+1. New work → `01-core/`, `02-the-fam/`, `03-production/`, `04-apps/`, `05-assets/`
+2. Soft-delete → `Trash/` or `05-Trash/` (never hard-delete first)
+3. Historical dumps → `06-legacy/`
+4. Root originals stay until explicitly moved
 
-*The personal dump is history. Trash is the safe exit path for leftovers.*
+*The personal dump is history. The new numbered folders are the future.*
