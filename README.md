@@ -6,11 +6,53 @@
 
 Originally meant to be spelled `doashow`, but we're rolling with `doaashow`.
 
+Built by **Matt Grosso** ([@callmecoffee3](https://github.com/callmecoffee3)) — 5 followers on GitHub.
+
+---
+
+## Pages
+
+Quick links to the main areas of the project (like pages in a site):
+
+| Page | What’s there |
+|------|----------------|
+| [**Pre-Production**](03-production/pre-production/) | Ideas, treatments, index cards, writer area, contact sheets, classic writing stages, crew lists (movie / TV / games / podcasts / theatre) |
+| [**Production**](03-production/) | Shows, scenes, characters, story tools |
+| [**Core / Desktop**](01-core/) | Simulated desktop, OS shell, Cloud OS |
+| [**The Fam**](02-the-fam/) | Social network simulation, terminal, feed, messenger |
+| [**Apps & Games**](04-apps/) | Folder scanner, shopping, zombie game, utilities |
+| [**Assets**](05-assets/) | Images, audio, video, icons |
+| [**Docs**](docs/) | Project brief, mind map, how-to-run, folder numbers |
+| [**Legacy**](06-legacy/) | Old experiments kept for history |
+
+---
+
+## Pre-Production (detailed)
+
+Everything you need before cameras (or code) roll lives here:
+
+**Folder:** [03-production/pre-production/](03-production/pre-production/)
+
+| File | Purpose |
+|------|--------|
+| [stages-of-writing-treatments.md](03-production/pre-production/stages-of-writing-treatments.md) | Classic 8 stages: Idea → Logline → Synopsis → Short Treatment → Index Cards → Full Treatment → Revisions → Locked |
+| [treatment-template.md](03-production/pre-production/treatment-template.md) | Classic prose treatment |
+| [index-card-treatment.md](03-production/pre-production/index-card-treatment.md) | Beat-by-beat index cards |
+| [writer-area-treatment.md](03-production/pre-production/writer-area-treatment.md) | Writer workspace & notes |
+| [contact-treatment.md](03-production/pre-production/contact-treatment.md) | Contact sheet for the team |
+| [ideas.md](03-production/pre-production/ideas.md) | Raw ideas dump |
+| [pre-prod-checklist.md](03-production/pre-production/pre-prod-checklist.md) | Pre-production checklist |
+| [crew-movie.md](03-production/pre-production/crew-movie.md) | Movie crew & talent |
+| [crew-tv.md](03-production/pre-production/crew-tv.md) | TV crew & talent |
+| [crew-games.md](03-production/pre-production/crew-games.md) | Games crew & talent |
+| [crew-podcasts.md](03-production/pre-production/crew-podcasts.md) | Podcasts crew & talent |
+| [crew-theatre.md](03-production/pre-production/crew-theatre.md) | Theatre crew & talent |
+
 ---
 
 ## Vision
 
-A creative playground / simulated OS + media production lab built by Matt Grosso (@callmecoffee3).
+A creative playground / simulated OS + media production lab.
 
 Core ideas:
 - Simulated desktop / OS environments
@@ -42,7 +84,7 @@ doaashow/
 │   ├── shows/
 │   ├── characters/
 │   ├── scenes/
-│   └── pre-production/
+│   └── pre-production/      # ← Full treatment & crew kit lives here
 │
 ├── 04-apps/                 # Standalone tools & experiments
 │   ├── folder-scanner/
@@ -99,6 +141,7 @@ doaashow/
    - Desktop experiments → look in `desktop/` or root `*.html` desktop files
    - The Fam → `thefam*.bat` / `thefamterminal*.html`
    - Main launcher → `DOASHOW - UPDATED.bat`
+   - **Pre-production** → [03-production/pre-production/](03-production/pre-production/)
 
 ---
 
@@ -117,6 +160,7 @@ doaashow/
 - [MIND-MAP.md](MIND-MAP.md)
 - [MIGRATION-STATUS.md](MIGRATION-STATUS.md)
 - [FOLDER-NUMBERS.md](FOLDER-NUMBERS.md)
+- [Pre-Production README](03-production/pre-production/README.md)
 
 ---
 
