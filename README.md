@@ -17,6 +17,7 @@ Quick links to the main areas of the project (like pages in a site):
 | Page | What’s there |
 |------|----------------|
 | [**Pre-Production**](03-production/pre-production/) | Ideas, treatments, index cards, writer area, contact sheets, classic writing stages, crew lists (movie / TV / games / podcasts / theatre) |
+| [**Production Treatment**](03-production/production-treatment.md) | Active production document — schedule, scene status, cast/crew, shot lists, daily log |
 | [**Production**](03-production/) | Shows, scenes, characters, story tools |
 | [**Core / Desktop**](01-core/) | Simulated desktop, OS shell, Cloud OS |
 | [**The Fam**](02-the-fam/) | Social network simulation, terminal, feed, messenger |
@@ -50,6 +51,16 @@ Everything you need before cameras (or code) roll lives here:
 
 ---
 
+## Production (active make)
+
+Once pre-production is done, use the **Production Treatment**:
+
+- [production-treatment.md](03-production/production-treatment.md) — schedule, scene/sequence status, cast & crew for the current unit, shot/capture lists, daily production log, and post handoff checklist.
+
+Finished pieces move into `shows/`, `scenes/`, `characters/`, and `story-tools/`.
+
+---
+
 ## Vision
 
 A creative playground / simulated OS + media production lab.
@@ -80,11 +91,12 @@ doaashow/
 │   └── profiles/
 │
 ├── 03-production/           # Media creation tools
+│   ├── production-treatment.md  # ← Active production document
 │   ├── story-tools/         # Story writers, playbill, scene generators
 │   ├── shows/
 │   ├── characters/
 │   ├── scenes/
-│   └── pre-production/      # ← Full treatment & crew kit lives here
+│   └── pre-production/      # Full treatment & crew kit
 │
 ├── 04-apps/                 # Standalone tools & experiments
 │   ├── folder-scanner/
@@ -142,6 +154,7 @@ doaashow/
    - The Fam → `thefam*.bat` / `thefamterminal*.html`
    - Main launcher → `DOASHOW - UPDATED.bat`
    - **Pre-production** → [03-production/pre-production/](03-production/pre-production/)
+   - **Production treatment** → [03-production/production-treatment.md](03-production/production-treatment.md)
 
 ---
 
@@ -161,6 +174,7 @@ doaashow/
 - [MIGRATION-STATUS.md](MIGRATION-STATUS.md)
 - [FOLDER-NUMBERS.md](FOLDER-NUMBERS.md)
 - [Pre-Production README](03-production/pre-production/README.md)
+- [Production Treatment](03-production/production-treatment.md)
 
 ---
 
