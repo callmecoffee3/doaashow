@@ -9,6 +9,22 @@ This folder is the creative launchpad for anything you want to make inside doaas
 
 ---
 
+## Treatment Breakdown (quick map)
+
+| Treatment | File | Purpose |
+|-----------|------|--------|
+| **Idea Treatment** | [idea-treatment.md](idea-treatment.md) | Catch a raw spark |
+| **Classic Stages** | [stages-of-writing-treatments.md](stages-of-writing-treatments.md) | 8-step path idea → locked |
+| **Prose Treatment** | [treatment-template.md](treatment-template.md) | Classic short narrative outline |
+| **Index-Card Treatment** | [index-card-treatment.md](index-card-treatment.md) | Beat-by-beat structure cards |
+| **Writer-Area Treatment** | [writer-area-treatment.md](writer-area-treatment.md) | Living writer workspace |
+| **Contact Treatment** | [contact-treatment.md](contact-treatment.md) | Team contacts by role |
+| **Production Treatment** | [../production-treatment.md](../production-treatment.md) | Active production document |
+
+Full explanation → **[treatment-breakdown.md](treatment-breakdown.md)**
+
+---
+
 ## What belongs here
 
 | File / type | Purpose |
@@ -51,6 +67,7 @@ Key source material also lives in:
 
 | File | Purpose |
 |------|--------|
+| `treatment-breakdown.md` | **Breakdown of all treatments** — map & when to use each |
 | `idea-treatment.md` | **Idea treatment** — catch a raw spark and shape it |
 | `stages-of-writing-treatments.md` | **Classic stages** from idea → locked treatment |
 | `treatment-template.md` | Classic short prose treatment |
@@ -77,6 +94,7 @@ Keep this folder messy and playful. Polish comes later.
 
 ## Starter files in this folder
 
+- `treatment-breakdown.md`
 - `idea-treatment.md`
 - `ideas.md`
 - `stages-of-writing-treatments.md`
