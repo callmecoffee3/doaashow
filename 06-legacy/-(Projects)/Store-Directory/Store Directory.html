@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A-Z Aisle Directory - Detailed Items</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0f0f0f; color: #ddd; margin: 0; padding: 20px; }
+        h1 { text-align: center; color: #ffcc00; margin-bottom: 5px; }
+        .subtitle { text-align: center; color: #888; margin-bottom: 20px; }
+        .tools { max-width: 900px; margin: 0 auto 30px; background: #1a1a1a; padding: 15px 20px; border-radius: 10px; border: 1px solid #333; }
+        .tool-row { display: flex; gap: 10px; flex-wrap: wrap; }
+        button { padding: 10px 18px; background: #222; color: #ffcc00; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; }
+        button:hover { background: #ffcc00; color: #111; }
+        .search-container { max-width: 600px; margin: 0 auto 30px; position: relative; }
+        #searchInput { width: 100%; padding: 14px 50px 14px 20px; font-size: 1.1em; background: #1a1a1a; border: 2px solid #333; border-radius: 8px; color: #fff; }
+        .nav { text-align: center; margin: 20px 0 30px; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
+        .nav a { padding: 6px 12px; background: #222; color: #ffcc00; text-decoration: none; border-radius: 5px; }
+        .nav a:hover { background: #ffcc00; color: #111; }
+        .section { margin: 25px 0; padding: 20px; background: #1a1a1a; border-radius: 10px; border-left: 6px solid #ffcc00; display: none; }
+        .section.show { display: block; }
+        .section h2 { color: #ffcc00; margin: 0 0 15px 0; }
+        .item-list { columns: 2; column-gap: 40px; font-size: 1.02em; }
+        .item { padding: 4px 0; break-inside: avoid; }
+        .footer { text-align: center; margin-top: 60px; padding: 20px; color: #666; font-size: 0.9em; }
+    </style>
+</head>
+<body>
+    <h1>A-Z AISLE DIRECTORY</h1>
+    <p class="subtitle">Fully Classified • Detailed Items List • The Matt Grosso Show</p>
+    <div class="tools">
+        <div class="tool-row">
+            <button onclick="showAll()">Show All</button>
+        </div>
+    </div>
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search any item or section..." autocomplete="off">
+    </div>
+    <div class="nav">
+        <a href="#" onclick="showAll(); return false;">Show All</a>
+        <a href="#A" onclick="jumpTo('A'); return false;">A</a><a href="#B" onclick="jumpTo('B'); return false;">B</a>
+        <a href="#C" onclick="jumpTo('C'); return false;">C</a><a href="#L" onclick="jumpTo('L'); return false;">L</a>
+        <a href="#Z" onclick="jumpTo('Z'); return false;">Z</a>
+    </div>
+    <div id="A" class="section show"><h2>A SECTION - Fresh Produce &amp; Floral</h2><div class="item-list"><div class="item">A1 to A30 - Fresh Produce &amp; Floral</div></div></div>
+    <div id="B" class="section show"><h2>B SECTION - Fast Food Take Out</h2><div class="item-list">
+        <div class="item">B1–B5 - Burgers &amp; Sandwiches</div>
+        <div class="item">B6–B9 - Fried Chicken &amp; Tenders</div>
+        <div class="item">B10–B12 - Tacos &amp; Mexican</div>
+        <div class="item">B13–B14 - Pizza &amp; Pasta</div>
+        <div class="item">B15–B25 - Sides, Breakfast, Salads, Desserts, Drinks</div>
+    </div></div>
+    <div id="C" class="section show"><h2>C SECTION - Pharmacy &amp; Health</h2><div class="item-list"><div class="item">C1 to C15 - Pharmacy &amp; Health</div></div></div>
+    <div id="L" class="section show"><h2>L SECTION - Cloaths</h2><div class="item-list">
+        <div class="item">L1–L8 - Men's Cloaths</div>
+        <div class="item">L9–L16 - Women's Cloaths</div>
+        <div class="item">L17–L20 - Kids Cloaths</div>
+        <div class="item">L21–L25 - Footwear &amp; Accessories</div>
+    </div></div>
+    <div id="Z" class="section show"><h2>Z SECTION - Core Control Center</h2><div class="item-list"><div class="item">Z1 to Z10 - Core Control Center</div></div></div>
+    <div class="footer">GRID STATUS: FULLY CLASSIFIED (A-Z SYSTEM ACTIVE)<br>The Matt Grosso Show • Detailed Aisle Items</div>
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const sections = document.querySelectorAll('.section');
+        function filterSections() {
+            const term = searchInput.value.toLowerCase().trim();
+            sections.forEach(section => {
+                if (term === '' || section.textContent.toLowerCase().includes(term))
+                    section.classList.add('show');
+                else section.classList.remove('show');
+            });
+        }
+        function showAll() { searchInput.value = ''; filterSections(); }
+        function jumpTo(letter) { showAll(); document.getElementById(letter).scrollIntoView({ behavior: 'smooth' }); }
+        searchInput.addEventListener('input', filterSections);
+    </script>
+</body>
+</html>

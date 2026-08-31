@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TMGS : White Noise Radio — 29 Stations</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background: radial-gradient(ellipse at center, #1a1a2e 0%, #0d0d14 70%);
+      color: #e8e8e8;
+      padding: 16px;
+    }
+    .radio {
+      width: min(460px, 96vw);
+      background: linear-gradient(160deg, #2a2a3a 0%, #1a1a28 100%);
+      border: 2px solid #3d3d55;
+      border-radius: 16px;
+      padding: 24px 22px 20px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.08);
+      position: relative;
+    }
+    .brand {
+      text-align: center;
+      margin-bottom: 6px;
+      letter-spacing: 0.12em;
+      font-size: 0.68rem;
+      color: #7a9bb8;
+      text-transform: uppercase;
+    }
+    h1 {
+      text-align: center;
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 2px;
+      color: #f0f4ff;
+    }
+    .subtitle {
+      text-align: center;
+      font-size: 0.75rem;
+      color: #8899aa;
+      margin-bottom: 16px;
+    }
+    .display {
+      background: #0a0a12;
+      border: 1px solid #2a2a40;
+      border-radius: 10px;
+      padding: 14px;
+      margin-bottom: 14px;
+      text-align: center;
+      font-family: "Consolas", "Courier New", monospace;
+    }
+    .station {
+      font-size: 1.05rem;
+      color: #6ec6ff;
+      margin-bottom: 4px;
+      min-height: 1.4em;
+    }
+    .station.break { color: #ffb84d; }
+    .station.ad { color: #ff6b8a; }
+    .status {
+      font-size: 0.72rem;
+      color: #668;
+      min-height: 1.2em;
+    }
+    .status.on { color: #5dca7a; }
+    .status.break { color: #ffb84d; }
+    .status.ad { color: #ff6b8a; }
+    .vu {
+      display: flex;
+      gap: 3px;
+      justify-content: center;
+      margin-top: 8px;
+      height: 16px;
+      align-items: flex-end;
+    }
+    .vu span {
+      width: 5px;
+      background: #2a4a3a;
+      border-radius: 2px;
+      transition: height 0.08s, background 0.08s;
+    }
+    .controls {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    label {
+      font-size: 0.72rem;
+      color: #99a;
+      width: 72px;
+      flex-shrink: 0;
+    }
+    input[type="range"] {
+      flex: 1;
+      accent-color: #5a9fd4;
+      height: 6px;
+    }
+    select {
+      flex: 1;
+      background: #12121c;
+      color: #dde;
+      border: 1px solid #3a3a50;
+      border-radius: 6px;
+      padding: 8px 10px;
+      font-size: 0.8rem;
+    }
+    .btn-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 4px;
+      flex-wrap: wrap;
+    }
+    button {
+      flex: 1;
+      min-width: 90px;
+      padding: 11px 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.1s, background 0.15s;
+    }
+    button:active { transform: scale(0.97); }
+    #playBtn {
+      background: linear-gradient(180deg, #4a9fe0, #2a6fa0);
+      color: #fff;
+    }
+    #playBtn.playing {
+      background: linear-gradient(180deg, #e05a4a, #a02a2a);
+    }
+    #prevBtn, #nextBtn {
+      background: #2a2a3a;
+      color: #ccd;
+      border: 1px solid #3a3a50;
+      flex: 0.6;
+    }
+    #idBtn, #adBtn {
+      background: #2a2a3a;
+      color: #ccd;
+      border: 1px solid #3a3a50;
+      font-size: 0.75rem;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 14px;
+      font-size: 0.62rem;
+      color: #556;
+      letter-spacing: 0.04em;
+    }
+    .hint {
+      text-align: center;
+      font-size: 0.65rem;
+      color: #556;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="radio">
+    <div class="brand">TMGS · The Matt Grosso Show</div>
+    <h1>White Noise Radio</h1>
+    <p class="subtitle">29 stations · Station IDs · Mint Mobile breaks</p>
+
+    <div class="display">
+      <div class="station" id="stationName">01 · STATIC HAVEN — 88.1 FM</div>
+      <div class="status" id="status">Ready</div>
+      <div class="vu" id="vu">
+        <span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
+    </div>
+
+    <div class="controls">
+      <div class="row">
+        <label>Station</label>
+        <select id="stationSelect"></select>
+      </div>
+      <div class="row">
+        <label>Volume</label>
+        <input type="range" id="volume" min="0" max="100" value="40" />
+      </div>
+      <div class="row">
+        <label>Filter</label>
+        <input type="range" id="filter" min="200" max="8000" value="2500" />
+      </div>
+      <div class="btn-row">
+        <button id="prevBtn">◀</button>
+        <button id="playBtn">▶ Play</button>
+        <button id="nextBtn">▶</button>
+      </div>
+      <div class="btn-row">
+        <button id="idBtn">Station ID</button>
+        <button id="adBtn">Mint Mobile Ad</button>
+      </div>
+    </div>
+
+    <p class="hint">Auto ID every ~45s · Mint Mobile break every ~2 min while playing</p>
+    <div class="footer">doaashow · callmecoffee3 · entertainment only</div>
+  </div>
+
+  <script>
+    // ——— 29 Stations ———
+    const STATIONS = [
+      { id: 1,  name: "STATIC HAVEN",     freq: "88.1 FM",  noise: "white" },
+      { id: 2,  name: "PINK DRIFT",       freq: "89.3 FM",  noise: "pink" },
+      { id: 3,  name: "BROWN WAVE",       freq: "90.5 FM",  noise: "brown" },
+      { id: 4,  name: "CLOUD HUM",        freq: "91.7 FM",  noise: "white" },
+      { id: 5,  name: "FOG CHANNEL",      freq: "92.9 FM",  noise: "pink" },
+      { id: 6,  name: "NIGHT STATIC",     freq: "94.1 FM",  noise: "brown" },
+      { id: 7,  name: "SOFT HISS",        freq: "95.3 FM",  noise: "white" },
+      { id: 8,  name: "DEEP RUMBLE",      freq: "96.5 FM",  noise: "brown" },
+      { id: 9,  name: "RAINBED",          freq: "97.7 FM",  noise: "pink" },
+      { id: 10, name: "WHITE NOISE ONE",  freq: "98.7 FM",  noise: "white" },
+      { id: 11, name: "SLEEP FREQ",       freq: "99.9 FM",  noise: "pink" },
+      { id: 12, name: "ZONE OUT",         freq: "101.1 FM", noise: "brown" },
+      { id: 13, name: "MATT'S SIGNAL",    freq: "102.3 FM", noise: "white" },
+      { id: 14, name: "COFFEE STATIC",    freq: "103.5 FM", noise: "pink" },
+      { id: 15, name: "DOAASHOW AIR",     freq: "104.7 FM", noise: "brown" },
+      { id: 16, name: "FAM WAVE",         freq: "105.9 FM", noise: "white" },
+      { id: 17, name: "DESKTOP HUM",      freq: "106.3 FM", noise: "pink" },
+      { id: 18, name: "LEGACY NOISE",     freq: "107.1 FM", noise: "brown" },
+      { id: 19, name: "MICRODRAMA AIR",   freq: "88.7 FM",  noise: "white" },
+      { id: 20, name: "RADIOSHOW ONE",    freq: "89.9 FM",  noise: "pink" },
+      { id: 21, name: "VOID CHANNEL",     freq: "91.1 FM",  noise: "brown" },
+      { id: 22, name: "AMBIENT 22",       freq: "93.3 FM",  noise: "white" },
+      { id: 23, name: "TUNNEL TONE",      freq: "95.5 FM",  noise: "pink" },
+      { id: 24, name: "BLANKET FREQ",     freq: "97.1 FM",  noise: "brown" },
+      { id: 25, name: "HUSH LINE",        freq: "99.3 FM",  noise: "white" },
+      { id: 26, name: "DRIFT 26",         freq: "101.7 FM", noise: "pink" },
+      { id: 27, name: "SOFT EDGE",        freq: "103.1 FM", noise: "brown" },
+      { id: 28, name: "MIDNIGHT HISS",    freq: "105.1 FM", noise: "white" },
+      { id: 29, name: "TMGS FINAL",       freq: "107.9 FM", noise: "pink" }
+    ];
+
+    const MINT_ADS = [
+      "This break is brought to you by Mint Mobile. Premium wireless. Honest price. Switch and save.",
+      "Mint Mobile. Unlimited talk, text, and data on the nation's largest 5G network. Plans start at fifteen dollars a month.",
+      "Tired of overpaying for phone service? Mint Mobile has you covered. Same coverage, better price.",
+      "Mint Mobile. Three, six, or twelve month plans. Cut your wireless bill and keep your phone.",
+      "You're listening to T M G S White Noise Radio. Brought to you in part by Mint Mobile — wireless that makes sense."
+    ];
+
+    let stationIndex = 0;
+    let audioCtx = null;
+    let noiseNode = null;
+    let gainNode = null;
+    let filterNode = null;
+    let playing = false;
+    let inBreak = false;
+    let vuTimer = null;
+    let idTimer = null;
+    let adTimer = null;
+
+    const playBtn = document.getElementById("playBtn");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const idBtn = document.getElementById("idBtn");
+    const adBtn = document.getElementById("adBtn");
+    const volume = document.getElementById("volume");
+    const filter = document.getElementById("filter");
+    const status = document.getElementById("status");
+    const stationName = document.getElementById("stationName");
+    const stationSelect = document.getElementById("stationSelect");
+    const vuBars = [...document.querySelectorAll("#vu span")];
+
+    // Fill station dropdown
+    STATIONS.forEach((s, i) => {
+      const opt = document.createElement("option");
+      opt.value = i;
+      opt.textContent = String(s.id).padStart(2, "0") + " · " + s.name + " — " + s.freq;
+      stationSelect.appendChild(opt);
+    });
+
+    function labelFor(s) {
+      return String(s.id).padStart(2, "0") + " · " + s.name + " — " + s.freq;
+    }
+
+    function updateStationUI() {
+      const s = STATIONS[stationIndex];
+      stationName.textContent = labelFor(s);
+      stationName.className = "station";
+      stationSelect.value = stationIndex;
+    }
+
+    function createNoiseBuffer(ctx, noiseType) {
+      const bufferSize = ctx.sampleRate * 2;
+      const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+      const data = buffer.getChannelData(0);
+
+      if (noiseType === "white") {
+        for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
+      } else if (noiseType === "pink") {
+        let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0;
+        for (let i = 0; i < bufferSize; i++) {
+          const white = Math.random() * 2 - 1;
+          b0 = 0.99886 * b0 + white * 0.0555179;
+          b1 = 0.99332 * b1 + white * 0.0750759;
+          b2 = 0.96900 * b2 + white * 0.1538520;
+          b3 = 0.86650 * b3 + white * 0.3104856;
+          b4 = 0.55000 * b4 + white * 0.5329522;
+          b5 = -0.7616 * b5 - white * 0.0168980;
+          data[i] = (b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362) * 0.11;
+          b6 = white * 0.115926;
+        }
+      } else {
+        let last = 0;
+        for (let i = 0; i < bufferSize; i++) {
+          const white = Math.random() * 2 - 1;
+          last = (last + 0.02 * white) / 1.02;
+          data[i] = last * 3.5;
+        }
+      }
+      return buffer;
+    }
+
+    function startNoise() {
+      if (noiseNode) {
+        try { noiseNode.stop(); } catch (_) {}
+      }
+      if (!audioCtx || audioCtx.state === "closed") {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      const s = STATIONS[stationIndex];
+      const buffer = createNoiseBuffer(audioCtx, s.noise);
+
+      noiseNode = audioCtx.createBufferSource();
+      noiseNode.buffer = buffer;
+      noiseNode.loop = true;
+
+      filterNode = audioCtx.createBiquadFilter();
+      filterNode.type = "lowpass";
+      filterNode.frequency.value = Number(filter.value);
+
+      gainNode = audioCtx.createGain();
+      gainNode.gain.value = Number(volume.value) / 100 * 0.32;
+
+      noiseNode.connect(filterNode);
+      filterNode.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
+      noiseNode.start();
+    }
+
+    function duckNoise(level) {
+      if (gainNode && audioCtx) {
+        gainNode.gain.setTargetAtTime(level, audioCtx.currentTime, 0.05);
+      }
+    }
+
+    function speak(text, onEnd) {
+      if (!window.speechSynthesis) {
+        if (onEnd) onEnd();
+        return;
+      }
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(text);
+      u.rate = 0.95;
+      u.pitch = 1.0;
+      u.volume = 1;
+      u.onend = () => { if (onEnd) onEnd(); };
+      u.onerror = () => { if (onEnd) onEnd(); };
+      window.speechSynthesis.speak(u);
+    }
+
+    function playStationId() {
+      if (!playing || inBreak) return;
+      inBreak = true;
+      const s = STATIONS[stationIndex];
+      stationName.textContent = "ID · " + s.name;
+      stationName.className = "station break";
+      status.textContent = "Station identification";
+      status.className = "status break";
+      duckNoise(0.04);
+
+      const script =
+        "You are listening to " + s.name + ", " + s.freq +
+        ". T M G S, The Matt Grosso Show, White Noise Radio. Entertainment only.";
+
+      speak(script, () => {
+        inBreak = false;
+        updateStationUI();
+        if (playing) {
+          status.textContent = "On air";
+          status.className = "status on";
+          duckNoise(Number(volume.value) / 100 * 0.32);
+        }
+      });
+    }
+
+    function playMintAd() {
+      if (!playing || inBreak) return;
+      inBreak = true;
+      stationName.textContent = "AD · MINT MOBILE";
+      stationName.className = "station ad";
+      status.textContent = "Commercial break — Mint Mobile";
+      status.className = "status ad";
+      duckNoise(0.03);
+
+      const ad = MINT_ADS[Math.floor(Math.random() * MINT_ADS.length)];
+      speak(ad, () => {
+        inBreak = false;
+        updateStationUI();
+        if (playing) {
+          status.textContent = "On air";
+          status.className = "status on";
+          duckNoise(Number(volume.value) / 100 * 0.32);
+        }
+      });
+    }
+
+    function clearBreakTimers() {
+      if (idTimer) clearInterval(idTimer);
+      if (adTimer) clearInterval(adTimer);
+      idTimer = null;
+      adTimer = null;
+    }
+
+    function scheduleBreaks() {
+      clearBreakTimers();
+      // Station ID ~ every 45 seconds
+      idTimer = setInterval(() => {
+        if (playing && !inBreak) playStationId();
+      }, 45000);
+      // Mint Mobile ad ~ every 2 minutes
+      adTimer = setInterval(() => {
+        if (playing && !inBreak) playMintAd();
+      }, 120000);
+    }
+
+    function start() {
+      if (playing) return;
+      startNoise();
+      playing = true;
+      playBtn.textContent = "■ Stop";
+      playBtn.classList.add("playing");
+      status.textContent = "On air";
+      status.className = "status on";
+      startVu();
+      scheduleBreaks();
+      // Quick ID shortly after start
+      setTimeout(() => {
+        if (playing && !inBreak) playStationId();
+      }, 4000);
+    }
+
+    function stop() {
+      if (!playing) return;
+      window.speechSynthesis && window.speechSynthesis.cancel();
+      try { if (noiseNode) noiseNode.stop(); } catch (_) {}
+      try { if (audioCtx) audioCtx.close(); } catch (_) {}
+      noiseNode = null;
+      audioCtx = null;
+      playing = false;
+      inBreak = false;
+      clearBreakTimers();
+      playBtn.textContent = "▶ Play";
+      playBtn.classList.remove("playing");
+      status.textContent = "Ready";
+      status.className = "status";
+      updateStationUI();
+      stopVu();
+    }
+
+    function changeStation(deltaOrIndex, absolute) {
+      if (absolute) stationIndex = deltaOrIndex;
+      else stationIndex = (stationIndex + deltaOrIndex + STATIONS.length) % STATIONS.length;
+      updateStationUI();
+      if (playing && !inBreak) {
+        startNoise();
+        duckNoise(Number(volume.value) / 100 * 0.32);
+      }
+    }
+
+    function startVu() {
+      stopVu();
+      vuTimer = setInterval(() => {
+        vuBars.forEach(bar => {
+          const h = playing ? 3 + Math.random() * (inBreak ? 6 : 14) : 2;
+          bar.style.height = h + "px";
+          bar.style.background = h > 12 ? "#5dca7a" : h > 7 ? "#4a9fe0" : "#2a4a3a";
+        });
+      }, 80);
+    }
+
+    function stopVu() {
+      if (vuTimer) clearInterval(vuTimer);
+      vuTimer = null;
+      vuBars.forEach(bar => {
+        bar.style.height = "3px";
+        bar.style.background = "#2a4a3a";
+      });
+    }
+
+    playBtn.addEventListener("click", () => playing ? stop() : start());
+    prevBtn.addEventListener("click", () => changeStation(-1));
+    nextBtn.addEventListener("click", () => changeStation(1));
+    idBtn.addEventListener("click", () => {
+      if (!playing) start();
+      setTimeout(() => playStationId(), 300);
+    });
+    adBtn.addEventListener("click", () => {
+      if (!playing) start();
+      setTimeout(() => playMintAd(), 300);
+    });
+    stationSelect.addEventListener("change", () => {
+      changeStation(Number(stationSelect.value), true);
+    });
+    volume.addEventListener("input", () => {
+      if (gainNode && !inBreak) {
+        gainNode.gain.value = Number(volume.value) / 100 * 0.32;
+      }
+    });
+    filter.addEventListener("input", () => {
+      if (filterNode) filterNode.frequency.value = Number(filter.value);
+    });
+
+    updateStationUI();
+  </script>
+</body>
+</html>

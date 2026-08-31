@@ -1,0 +1,54 @@
+{
+  "planName": "DoaShow 30-Tab AI Monitoring System",
+  "description": "Open 30 real-time alert tabs in Microsoft Edge and use Microsoft AI (Copilot + Bing) to summarize, prioritize, and surface important changes",
+  "target": {
+    "browser": "Microsoft Edge",
+    "ai": ["Copilot in Edge", "Bing Chat / Copilot", "Azure OpenAI (optional)"]
+  },
+  "options": {
+    "newWindow": true,
+    "profile": "Default",
+    "pinTabs": false,
+    "muteAudio": true,
+    "enableCopilotSidebar": true,
+    "autoSummarizeOnOpen": true
+  },
+  "aiWorkflow": {
+    "onTabOpen": "Ask Copilot to summarize the page in 3 bullet points",
+    "continuousMonitoring": "Every 5 minutes ask Copilot: 'Any critical updates or alerts on this page?'",
+    "priorityAlert": "If Copilot detects keywords like emergency, outbreak, crash, fire, death, market crash → notify user",
+    "dailyDigest": "At end of day generate one combined AI summary of all 30 tabs"
+  },
+  "tabs": [
+    { "id": 1, "title": "Weather", "url": "https://www.bing.com/search?q=current+weather+alerts+radar" },
+    { "id": 2, "title": "Outbreaks", "url": "https://www.bing.com/news/search?q=disease+outbreaks+epidemic" },
+    { "id": 3, "title": "Markets", "url": "https://www.bing.com/finance?q=stock+market+live" },
+    { "id": 4, "title": "Health", "url": "https://www.bing.com/news/search?q=health+news+alerts" },
+    { "id": 5, "title": "Local Drought", "url": "https://www.bing.com/search?q=drought+conditions+map+alerts" },
+    { "id": 6, "title": "Weather Cast", "url": "https://www.bing.com/weather" },
+    { "id": 7, "title": "Forest Fires", "url": "https://www.bing.com/news/search?q=forest+fires+wildfire+map" },
+    { "id": 8, "title": "Wild Fires", "url": "https://firms.modaps.eosdis.nasa.gov/map/" },
+    { "id": 9, "title": "Accident on Roads", "url": "https://www.bing.com/maps?q=traffic+accidents+live" },
+    { "id": 10, "title": "Accident Other Places", "url": "https://www.bing.com/news/search?q=major+accidents+incidents" },
+    { "id": 11, "title": "World", "url": "https://www.bing.com/news" },
+    { "id": 12, "title": "Health Care", "url": "https://www.bing.com/news/search?q=healthcare+news" },
+    { "id": 13, "title": "Market", "url": "https://www.bing.com/finance" },
+    { "id": 14, "title": "Politics", "url": "https://www.bing.com/news/search?q=politics+latest" },
+    { "id": 15, "title": "Crypto", "url": "https://www.bing.com/search?q=cryptocurrency+prices+live" },
+    { "id": 16, "title": "Stocks", "url": "https://www.bing.com/finance?q=stocks" },
+    { "id": 17, "title": "Futures", "url": "https://www.bing.com/finance?q=futures+market" },
+    { "id": 18, "title": "Hospital", "url": "https://www.bing.com/search?q=hospital+status+emergency+alerts" },
+    { "id": 19, "title": "Deaths", "url": "https://www.bing.com/news/search?q=death+toll+casualties+reports" },
+    { "id": 20, "title": "Traffic", "url": "https://www.bing.com/maps/traffic" },
+    { "id": 21, "title": "Updates", "url": "https://www.bing.com/news/search?q=breaking+news+alerts" },
+    { "id": 22, "title": "Internet", "url": "https://downdetector.com/" },
+    { "id": 23, "title": "YouTube", "url": "https://www.youtube.com/feed/trending" },
+    { "id": 24, "title": "Movies", "url": "https://www.bing.com/search?q=new+movies+releases+trailers" },
+    { "id": 25, "title": "TV Shows", "url": "https://www.bing.com/search?q=tv+shows+new+episodes" },
+    { "id": 26, "title": "Theaters", "url": "https://www.bing.com/search?q=movie+theaters+showtimes+near+me" },
+    { "id": 27, "title": "Shorts", "url": "https://www.youtube.com/shorts" },
+    { "id": 28, "title": "Drama", "url": "https://www.bing.com/search?q=drama+series+new+releases" },
+    { "id": 29, "title": "Microdrama", "url": "https://www.bing.com/search?q=micro+drama+short+series" },
+    { "id": 30, "title": "Jobs Producer Writing Director", "url": "https://www.bing.com/jobs/search?q=producer+writer+director+jobs" }
+  ]
+}

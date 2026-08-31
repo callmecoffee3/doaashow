@@ -1,0 +1,24 @@
+{
+  "repo": "callmecoffee3/doaashow",
+  "folder": "-(Projects)",
+  "generated": "2026-08-01",
+  "description": "Complete index of all project folders and key files under -(Projects)",
+  "summary": {
+    "totalTopLevelFolders": 180,
+    "note": "Most folders contain only empty or 1-byte placeholder .txt files. Folders with real content are marked below."
+  },
+  "keyProjectsWithRealContent": [
+    "-(AI-AGENTS)",
+    "-(ARTIFACTS)",
+    "-(DOASHOW)",
+    "-(MICRODRAMA)",
+    "-(RADIOSHOW)",
+    "-(WORKSTATIONS)",
+    "-(TEST)",
+    "Broadcaster",
+    "Store-Directory",
+    "desktop",
+    "SCANNED"
+  ],
+  "note": "Full original tree remains at https://github.com/callmecoffee3/doaashow/tree/main/-(Projects)"
+}

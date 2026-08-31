@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TMGS Groceries</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background: #0f0f0f;
+      color: #ddd;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    h1 { text-align: center; color: #ffcc00; margin-bottom: 4px; }
+    .sub { text-align: center; color: #888; margin-bottom: 20px; font-size: 0.9rem; }
+    .panel {
+      max-width: 640px;
+      margin: 0 auto 20px;
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 12px;
+      padding: 16px;
+    }
+    .row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+    input[type="text"] {
+      flex: 1;
+      min-width: 140px;
+      padding: 10px 12px;
+      background: #111;
+      border: 1px solid #444;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 1rem;
+    }
+    select {
+      padding: 10px;
+      background: #111;
+      border: 1px solid #444;
+      border-radius: 8px;
+      color: #ffcc00;
+    }
+    button {
+      padding: 10px 16px;
+      background: #222;
+      color: #ffcc00;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    button:hover { background: #ffcc00; color: #111; }
+    button.danger { color: #f66; }
+    button.danger:hover { background: #f66; color: #111; }
+    .aisle-title {
+      color: #ffcc00;
+      font-size: 0.85rem;
+      margin: 14px 0 6px;
+      border-bottom: 1px solid #333;
+      padding-bottom: 4px;
+    }
+    .item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 4px;
+      border-bottom: 1px solid #222;
+    }
+    .item.done span { text-decoration: line-through; color: #666; }
+    .item input[type="checkbox"] { width: 18px; height: 18px; accent-color: #ffcc00; }
+    .item span { flex: 1; }
+    .item .aisle-tag { font-size: 0.7rem; color: #888; }
+    .footer { text-align: center; margin-top: 24px; color: #555; font-size: 0.75rem; }
+  </style>
+</head>
+<body>
+  <h1>TMGS Groceries</h1>
+  <p class="sub">Shopping list · Aisle map · The Matt Grosso Show</p>
+
+  <div class="panel">
+    <div class="row">
+      <input type="text" id="itemInput" placeholder="Add item (milk, bread, eggs...)" />
+      <select id="aisleSelect">
+        <option value="Produce">Produce</option>
+        <option value="Dairy">Dairy</option>
+        <option value="Bakery">Bakery</option>
+        <option value="Meat">Meat</option>
+        <option value="Frozen">Frozen</option>
+        <option value="Pantry">Pantry</option>
+        <option value="Snacks">Snacks</option>
+        <option value="Drinks">Drinks</option>
+        <option value="Household">Household</option>
+        <option value="Other">Other</option>
+      </select>
+      <button id="addBtn">Add</button>
+    </div>
+    <div class="row">
+      <button id="clearDone">Clear checked</button>
+      <button id="clearAll" class="danger">Clear all</button>
+    </div>
+    <div id="list"></div>
+  </div>
+
+  <div class="panel">
+    <div class="aisle-title">Store aisles (quick map)</div>
+    <p style="font-size:0.85rem;color:#aaa;line-height:1.6;">
+      <strong>A</strong> Produce &amp; Floral ·
+      <strong>B</strong> Fast Food / Takeout ·
+      <strong>C</strong> Pharmacy ·
+      <strong>D</strong> Beauty ·
+      <strong>L</strong> Clothes ·
+      <strong>Dairy / Bakery / Meat / Frozen</strong> — use list aisles above ·
+      Full A–Z directory: <code>Store-Directory</code> in legacy projects
+    </p>
+  </div>
+
+  <p class="footer">doaashow-clean · 04-apps/shopping · entertainment lab</p>
+
+  <script>
+    const KEY = "tmgs_groceries";
+    let items = JSON.parse(localStorage.getItem(KEY) || "[]");
+
+    const listEl = document.getElementById("list");
+    const itemInput = document.getElementById("itemInput");
+    const aisleSelect = document.getElementById("aisleSelect");
+
+    function save() {
+      localStorage.setItem(KEY, JSON.stringify(items));
+      render();
+    }
+
+    function render() {
+      const byAisle = {};
+      items.forEach((it, i) => {
+        if (!byAisle[it.aisle]) byAisle[it.aisle] = [];
+        byAisle[it.aisle].push({ ...it, i });
+      });
+      listEl.innerHTML = "";
+      Object.keys(byAisle).sort().forEach(aisle => {
+        const h = document.createElement("div");
+        h.className = "aisle-title";
+        h.textContent = aisle;
+        listEl.appendChild(h);
+        byAisle[aisle].forEach(({ name, done, i }) => {
+          const row = document.createElement("div");
+          row.className = "item" + (done ? " done" : "");
+          row.innerHTML =
+            `<input type="checkbox" ${done ? "checked" : ""} data-i="${i}" />` +
+            `<span>${name}</span>` +
+            `<button data-del="${i}" style="padding:4px 8px;font-size:0.75rem;">×</button>`;
+          listEl.appendChild(row);
+        });
+      });
+      if (!items.length) {
+        listEl.innerHTML = "<p style='color:#666;text-align:center;padding:20px;'>List is empty — add something</p>";
+      }
+    }
+
+    document.getElementById("addBtn").onclick = () => {
+      const name = itemInput.value.trim();
+      if (!name) return;
+      items.push({ name, aisle: aisleSelect.value, done: false });
+      itemInput.value = "";
+      save();
+    };
+    itemInput.onkeydown = e => { if (e.key === "Enter") document.getElementById("addBtn").click(); };
+
+    listEl.onclick = e => {
+      const t = e.target;
+      if (t.dataset.i !== undefined) {
+        items[+t.dataset.i].done = t.checked;
+        save();
+      }
+      if (t.dataset.del !== undefined) {
+        items.splice(+t.dataset.del, 1);
+        save();
+      }
+    };
+
+    document.getElementById("clearDone").onclick = () => {
+      items = items.filter(it => !it.done);
+      save();
+    };
+    document.getElementById("clearAll").onclick = () => {
+      if (confirm("Clear entire list?")) { items = []; save(); }
+    };
+
+    render();
+  </script>
+</body>
+</html>
