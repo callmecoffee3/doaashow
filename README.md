@@ -16,7 +16,7 @@ Quick links to the main areas of the project (like pages in a site):
 
 | Page | What’s there |
 |------|----------------|
-| [**Pre-Production**](03-production/pre-production/) | Ideas, treatments, index cards, writer area, contact sheets, classic writing stages, crew lists (movie / TV / games / podcasts / theatre) |
+| [**Pre-Production**](03-production/pre-production/) | Ideas, idea treatment, treatments, index cards, writer area, contact sheets, classic writing stages, crew lists (movie / TV / games / podcasts / theatre) |
 | [**Production Treatment**](03-production/production-treatment.md) | Active production document — schedule, scene status, cast/crew, shot lists, daily log |
 | [**Production**](03-production/) | Shows, scenes, characters, story tools |
 | [**Core / Desktop**](01-core/) | Simulated desktop, OS shell, Cloud OS |
@@ -36,6 +36,7 @@ Everything you need before cameras (or code) roll lives here:
 
 | File | Purpose |
 |------|--------|
+| [idea-treatment.md](03-production/pre-production/idea-treatment.md) | **Idea treatment** — catch a raw spark and shape it |
 | [stages-of-writing-treatments.md](03-production/pre-production/stages-of-writing-treatments.md) | Classic 8 stages: Idea → Logline → Synopsis → Short Treatment → Index Cards → Full Treatment → Revisions → Locked |
 | [treatment-template.md](03-production/pre-production/treatment-template.md) | Classic prose treatment |
 | [index-card-treatment.md](03-production/pre-production/index-card-treatment.md) | Beat-by-beat index cards |
@@ -91,12 +92,12 @@ doaashow/
 │   └── profiles/
 │
 ├── 03-production/           # Media creation tools
-│   ├── production-treatment.md  # ← Active production document
+│   ├── production-treatment.md  # Active production document
 │   ├── story-tools/         # Story writers, playbill, scene generators
 │   ├── shows/
 │   ├── characters/
 │   ├── scenes/
-│   └── pre-production/      # Full treatment & crew kit
+│   └── pre-production/      # Full treatment & crew kit (incl. idea-treatment)
 │
 ├── 04-apps/                 # Standalone tools & experiments
 │   ├── folder-scanner/
@@ -154,6 +155,7 @@ doaashow/
    - The Fam → `thefam*.bat` / `thefamterminal*.html`
    - Main launcher → `DOASHOW - UPDATED.bat`
    - **Pre-production** → [03-production/pre-production/](03-production/pre-production/)
+   - **Idea treatment** → [03-production/pre-production/idea-treatment.md](03-production/pre-production/idea-treatment.md)
    - **Production treatment** → [03-production/production-treatment.md](03-production/production-treatment.md)
 
 ---
@@ -174,6 +176,7 @@ doaashow/
 - [MIGRATION-STATUS.md](MIGRATION-STATUS.md)
 - [FOLDER-NUMBERS.md](FOLDER-NUMBERS.md)
 - [Pre-Production README](03-production/pre-production/README.md)
+- [Idea Treatment](03-production/pre-production/idea-treatment.md)
 - [Production Treatment](03-production/production-treatment.md)
 
 ---

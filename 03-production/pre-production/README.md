@@ -14,6 +14,7 @@ This folder is the creative launchpad for anything you want to make inside doaas
 | File / type | Purpose |
 |-------------|--------|
 | Ideas & brain dumps | Raw concepts, one-liners, "what if" notes |
+| **Idea treatments** | Structured capture of a fresh spark before full development |
 | Treatments / synopses | Short story outlines (1–3 pages) |
 | Index-card treatments | Beat-by-beat cards for structure |
 | Writer-area treatments | Space for the writer to work the story |
@@ -50,6 +51,7 @@ Key source material also lives in:
 
 | File | Purpose |
 |------|--------|
+| `idea-treatment.md` | **Idea treatment** — catch a raw spark and shape it |
 | `stages-of-writing-treatments.md` | **Classic stages** from idea → locked treatment |
 | `treatment-template.md` | Classic short prose treatment |
 | `index-card-treatment.md` | Index-card / beat-card style structure |
@@ -60,13 +62,14 @@ Key source material also lives in:
 
 ## Suggested workflow
 
-1. **Dump ideas** → `ideas.md`
+1. **Catch the spark** → `idea-treatment.md` (or dump into `ideas.md`)
 2. Follow the **classic stages** in `stages-of-writing-treatments.md`
 3. Use the matching templates (index cards, writer area, prose treatment)
 4. **Sketch characters** and the world
 5. **Assign crew & talent** + fill the contact treatment
 6. **Break into scenes** or levels
 7. **Move finished pieces** into `../characters/`, `../scenes/`, `../shows/`, `../story-tools/`
+8. When actively making → use [../production-treatment.md](../production-treatment.md)
 
 Keep this folder messy and playful. Polish comes later.
 
@@ -74,6 +77,7 @@ Keep this folder messy and playful. Polish comes later.
 
 ## Starter files in this folder
 
+- `idea-treatment.md`
 - `ideas.md`
 - `stages-of-writing-treatments.md`
 - `treatment-template.md`
