@@ -14,3 +14,5 @@ public repo unless the owner chooses to add it.
 - `scenes/` — scenes and settings.
 - `sounds/` — audio memories: sound effects, music, voice notes.
 - `videos/` — video memories: clips and recordings.
+- `producers/` — producers and production credits.
+- `writers/` — writers and writing credits.
