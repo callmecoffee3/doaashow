@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Callmecoffee3Desktop</title>
+<style>
+  /* ============ THEMES ============ */
+  body[data-theme="midnight"]{
+    --wall1:#1b2a4a; --wall2:#0b1020;
+    --accent:#4da3ff; --accent2:#7b61ff;
+    --taskbar:rgba(10,14,28,.92); --win:rgba(18,24,44,.97);
+    --text:#eef2ff; --muted:#9aa7c7; --card:rgba(255,255,255,.06);
+    --titlebar:#141b33;
+  }
+  body[data-theme="daybreak"]{
+    --wall1:#aee3ff; --wall2:#f7f3e8;
+    --accent:#0a7cff; --accent2:#7b61ff;
+    --taskbar:rgba(255,255,255,.92); --win:rgba(255,255,255,.98);
+    --text:#1c2333; --muted:#5b6b8c; --card:rgba(10,20,60,.06);
+    --titlebar:#e8eefc;
+  }
+  body[data-theme="sunset"]{
+    --wall1:#ff7e5f; --wall2:#2b1055;
+    --accent:#ffb347; --accent2:#ff5e78;
+    --taskbar:rgba(30,12,40,.92); --win:rgba(43,20,58,.97);
+    --text:#fff3e8; --muted:#e0b8a8; --card:rgba(255,255,255,.07);
+    --titlebar:#3a1a4a;
+  }
+  body[data-theme="matrix"]{
+    --wall1:#02120a; --wall2:#000000;
+    --accent:#00ff88; --accent2:#00d0ff;
+    --taskbar:rgba(0,10,6,.94); --win:rgba(2,18,10,.98);
+    --text:#c8ffd9; --muted:#5f9e78; --card:rgba(0,255,136,.07);
+    --titlebar:#03130a;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  html,body{height:100%;overflow:hidden}
+  body{
+    font-family:"Segoe UI",system-ui,-apple-system,sans-serif;color:var(--text);
+    user-select:none;
+  }
+  /* ============ BOOT ============ */
+  #boot{
+    position:fixed;inset:0;background:#05070d;z-index:9999;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;
+    transition:opacity .6s;
+  }
+  #boot.done{opacity:0;pointer-events:none}
+  #boot .logo{font-size:52px;animation:pulse 1.6s ease-in-out infinite}
+  #boot h1{color:#dfe8ff;letter-spacing:6px;font-weight:200;font-size:22px}
+  #boot .bar{width:220px;height:4px;background:#1a2340;border-radius:4px;overflow:hidden}
+  #boot .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#4da3ff,#7b61ff);animation:load 1.8s ease forwards}
+  @keyframes load{to{width:100%}}
+  @keyframes pulse{0%,100%{transform:scale(1);opacity:.85}50%{transform:scale(1.12);opacity:1}}
+  /* ============ DESKTOP ============ */
+  #desktop{
+    position:fixed;inset:0;
+    background:radial-gradient(120% 100% at 20% 0%,var(--wall1),var(--wall2));
+    overflow:hidden;
+  }
+  #icons{
+    position:absolute;top:14px;left:12px;display:flex;flex-direction:column;gap:6px;z-index:1;
+    max-height:calc(100% - 70px);flex-wrap:wrap;
+  }
+  .dicon{
+    width:86px;padding:10px 4px;display:flex;flex-direction:column;align-items:center;gap:6px;
+    border-radius:10px;cursor:pointer;border:1px solid transparent;font-size:11px;text-align:center;
+    color:var(--text);text-shadow:0 1px 3px rgba(0,0,0,.5);
+  }
+  .dicon:hover{background:var(--card);border-color:rgba(255,255,255,.15)}
+  .dicon .e{font-size:30px}
+  /* ============ WINDOWS ============ */
+  #windows{position:absolute;inset:0 0 48px 0;z-index:5;pointer-events:none}
+  .win{
+    position:absolute;min-width:280px;min-height:200px;pointer-events:auto;
+    background:var(--win);border:1px solid rgba(255,255,255,.14);border-radius:12px;
+    box-shadow:0 18px 60px rgba(0,0,0,.5);display:flex;flex-direction:column;overflow:hidden;
+    backdrop-filter:blur(8px);
+  }
+  .win.focused{border-color:var(--accent)}
+  .win.maxed{left:0!important;top:0!important;width:100%!important;height:100%!important;border-radius:0}
+  .win.min{ display:none }
+  .titlebar{
+    display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--titlebar);
+    cursor:grab;touch-action:none;flex-shrink:0;
+  }
+  .titlebar:active{cursor:grabbing}
+  .wtitle{flex:1;font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .wbtns{display:flex;gap:4px}
+  .wbtns button{
+    width:30px;height:24px;border:0;border-radius:6px;background:transparent;color:var(--text);
+    font-size:13px;cursor:pointer;line-height:1;
+  }
+  .wbtns button:hover{background:var(--card)}
+  .wbtns .x:hover{background:#e81123;color:#fff}
+  .wbody{flex:1;overflow:auto;padding:0;position:relative}
+  /* ============ TASKBAR ============ */
+  #taskbar{
+    position:absolute;left:0;right:0;bottom:0;height:48px;background:var(--taskbar);
+    backdrop-filter:blur(12px);border-top:1px solid rgba(255,255,255,.12);
+    display:flex;align-items:center;gap:8px;padding:0 10px;z-index:100;
+  }
+  #startbtn{
+    display:flex;align-items:center;gap:8px;border:0;border-radius:8px;cursor:pointer;
+    background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;
+    padding:7px 14px;font-size:13px;font-weight:700;
+  }
+  #tsearch{
+    background:var(--card);border:1px solid rgba(255,255,255,.14);border-radius:8px;
+    color:var(--text);padding:7px 10px;font-size:13px;width:150px;outline:none;
+  }
+  #tsearch::placeholder{color:var(--muted)}
+  #taskwins{display:flex;gap:6px;flex:1;overflow-x:auto}
+  .twin{
+    border:1px solid transparent;background:var(--card);color:var(--text);border-radius:8px;
+    padding:6px 10px;font-size:12px;cursor:pointer;white-space:nowrap;max-width:170px;
+    overflow:hidden;text-overflow:ellipsis;
+  }
+  .twin.active{border-color:var(--accent);background:rgba(255,255,255,.12)}
+  #tray{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--muted)}
+  #tray button{background:var(--card);border:0;color:var(--text);border-radius:6px;padding:5px 8px;cursor:pointer;font-size:12px}
+  #footermark{font-size:10px;opacity:.55;white-space:nowrap}
+  /* ============ START MENU ============ */
+  #startmenu{
+    position:absolute;left:10px;bottom:56px;width:min(480px,94vw);max-height:min(560px,72vh);
+    background:var(--win);border:1px solid rgba(255,255,255,.15);border-radius:14px;
+    box-shadow:0 24px 70px rgba(0,0,0,.55);z-index:200;display:none;flex-direction:column;overflow:hidden;
+  }
+  #startmenu.open{display:flex}
+  #sm-head{padding:12px 14px 6px}
+  #sm-search{
+    width:100%;padding:9px 12px;border-radius:9px;border:1px solid rgba(255,255,255,.15);
+    background:var(--card);color:var(--text);font-size:14px;outline:none;
+  }
+  #sm-search::placeholder{color:var(--muted)}
+  #sm-cats{display:flex;gap:6px;padding:10px 14px 4px;flex-wrap:wrap}
+  .smcat{
+    border:1px solid rgba(255,255,255,.14);background:transparent;color:var(--muted);
+    border-radius:20px;padding:5px 12px;font-size:12px;cursor:pointer;
+  }
+  .smcat.on{background:var(--accent);color:#fff;border-color:transparent}
+  #sm-grid{
+    display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px;
+    padding:12px 14px;overflow-y:auto;
+  }
+  .app{
+    display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 6px;border-radius:10px;
+    cursor:pointer;border:1px solid transparent;font-size:11px;text-align:center;color:var(--text);
+  }
+  .app:hover{background:var(--card);border-color:rgba(255,255,255,.12)}
+  .app .e{font-size:28px}
+  #sm-foot{
+    display:flex;gap:8px;padding:10px 14px;border-top:1px solid rgba(255,255,255,.1);
+    font-size:12px;color:var(--muted);align-items:center;
+  }
+  #sm-foot button{background:var(--card);border:0;color:var(--text);border-radius:7px;padding:6px 10px;cursor:pointer;font-size:12px}
+  /* ============ NOTIFICATIONS ============ */
+  #notifs{position:absolute;top:12px;right:12px;z-index:300;display:flex;flex-direction:column;gap:8px;width:min(320px,90vw)}
+  .notif{
+    background:var(--win);border:1px solid rgba(255,255,255,.15);border-left:4px solid var(--accent);
+    border-radius:10px;padding:12px 14px;box-shadow:0 10px 30px rgba(0,0,0,.45);
+    animation:slidein .35s ease;font-size:13px;
+  }
+  .notif b{display:block;margin-bottom:4px}
+  .notif .nx{float:right;cursor:pointer;color:var(--muted);border:0;background:none;font-size:14px}
+  @keyframes slidein{from{transform:translateX(40px);opacity:0}}
+  /* ============ APP SHARED ============ */
+  .pad{padding:14px}
+  .btn{background:var(--accent);color:#fff;border:0;border-radius:8px;padding:8px 14px;cursor:pointer;font-size:13px;font-weight:600}
+  .btn.ghost{background:var(--card);color:var(--text)}
+  .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  input[type=text],textarea,select{
+    background:var(--card);border:1px solid rgba(255,255,255,.15);color:var(--text);
+    border-radius:8px;padding:8px 10px;font-size:13px;outline:none;font-family:inherit;
+  }
+  h3.apptitle{font-size:15px;margin-bottom:10px}
+  .muted{color:var(--muted);font-size:12px}
+  /* terminal */
+  .term{background:#05070d;color:#c8ffd9;font-family:Consolas,monospace;font-size:13px;height:100%;padding:10px;overflow-y:auto}
+  .term .in{color:#00ff88}.term .out{white-space:pre-wrap;word-break:break-word}
+  .termline{display:flex;gap:6px}
+  .terminput{flex:1;background:none;border:0;outline:none;color:#c8ffd9;font:inherit}
+  /* files */
+  .files{display:flex;height:100%;min-height:280px}
+  .fside{width:150px;flex-shrink:0;border-right:1px solid rgba(255,255,255,.1);padding:8px;overflow-y:auto}
+  .fside div{padding:7px 9px;border-radius:7px;cursor:pointer;font-size:12px}
+  .fside div:hover,.fside div.on{background:var(--card)}
+  .fmain{flex:1;padding:10px;overflow-y:auto}
+  .crumb{font-size:12px;color:var(--muted);margin-bottom:10px;cursor:pointer}
+  .frow{display:flex;align-items:center;gap:10px;padding:8px;border-radius:8px;cursor:pointer;font-size:13px}
+  .frow:hover{background:var(--card)}
+  /* fam */
+  .post{background:var(--card);border-radius:10px;padding:12px;margin-bottom:10px}
+  .post .who{font-weight:700;font-size:13px}.post .when{color:var(--muted);font-size:11px;margin-left:6px}
+  .post p{font-size:13px;margin:8px 0}
+  .likebtn{background:none;border:1px solid rgba(255,255,255,.2);color:var(--text);border-radius:16px;padding:4px 12px;font-size:12px;cursor:pointer}
+  /* radio */
+  .station{display:flex;align-items:center;gap:10px;background:var(--card);border-radius:10px;padding:10px 12px;margin-bottom:8px;cursor:pointer;border:1px solid transparent}
+  .station.on{border-color:var(--accent)}
+  .station .e{font-size:22px}
+  /* calc */
+  .calc{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;max-width:260px}
+  .calc button{padding:14px 0;font-size:16px;border-radius:8px;border:1px solid rgba(255,255,255,.12);background:var(--card);color:var(--text);cursor:pointer}
+  .calc button.op{background:var(--accent);color:#fff}
+  #calc-disp{grid-column:1/-1;text-align:right;font-size:26px;padding:12px;background:rgba(0,0,0,.25);border-radius:8px;min-height:56px;word-break:break-all}
+  /* store */
+  .storeitem{display:flex;align-items:center;gap:12px;background:var(--card);border-radius:10px;padding:10px 12px;margin-bottom:8px}
+  .storeitem .e{font-size:26px}.storeitem .nm{flex:1}.storeitem .nm b{display:block;font-size:13px}.storeitem .nm span{font-size:11px;color:var(--muted)}
+  /* settings */
+  .themebox{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 16px}
+  .tswatch{width:64px;height:44px;border-radius:8px;cursor:pointer;border:2px solid transparent}
+  .tswatch.on{border-color:var(--accent)}
+  .setrow{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:13px}
+</style>
+</head>
+<body data-theme="midnight">
+
+<div id="boot">
+  <div class="logo">☕</div>
+  <h1>CALLMECOFFEE3 OS</h1>
+  <div class="bar"><i></i></div>
+</div>
+
+<div id="desktop">
+  <div id="icons"></div>
+  <div id="windows"></div>
+
+  <div id="startmenu">
+    <div id="sm-head"><input id="sm-search" type="text" placeholder="🔍 Search apps..." /></div>
+    <div id="sm-cats"></div>
+    <div id="sm-grid"></div>
+    <div id="sm-foot">
+      <button id="sm-fs">⛶ Full screen</button>
+      <button id="sm-reboot">⟳ Reboot</button>
+      <span style="flex:1"></span>
+      <span>callmecoffee3 simulated desktop</span>
+    </div>
+  </div>
+
+  <div id="taskbar">
+    <button id="startbtn">☰ start</button>
+    <input id="tsearch" type="text" placeholder="Search" />
+    <div id="taskwins"></div>
+    <div id="tray">
+      <span id="footermark">callmecoffee3 simulated desktop</span>
+      <button id="fsbtn" title="Full screen">⛶</button>
+      <span id="clock">--:--</span>
+    </div>
+  </div>
+
+  <div id="notifs"></div>
+</div>
+<script>
+/* =====================================================
+   Callmecoffee3Desktop v0.1 — prototype
+   Single-file simulated desktop. Extend by adding entries
+   to APPS and a render function named render_<id>.
+   ===================================================== */
+
+// ---------- App registry ----------
+const APPS = {
+  terminal:  {name:"Terminal",   icon:"💻", cat:"Core",          desc:"Command line — type 'help'"},
+  files:     {name:"Files",      icon:"📁", cat:"Core",          desc:"Browse the project folders"},
+  thefam:    {name:"The Fam",    icon:"👥", cat:"The Fam",       desc:"Social network simulation"},
+  radio:     {name:"Radio",      icon:"📻", cat:"Entertainment", desc:"White noise stations"},
+  notes:     {name:"Notes",      icon:"📝", cat:"Core",          desc:"Quick notes (auto-saved)"},
+  calc:      {name:"Calculator", icon:"🧮", cat:"Core",          desc:"Pocket calculator"},
+  store:     {name:"App Store",  icon:"🏪", cat:"Core",          desc:"Install & remove apps"},
+  settings:  {name:"Settings",   icon:"⚙️", cat:"Core",          desc:"Themes, display, options"},
+  about:     {name:"About",      icon:"ℹ️", cat:"Core",          desc:"About this desktop"},
+};
+const CATS = ["All","Core","Entertainment","The Fam"];
+
+// ---------- Virtual file system (shared by Files + Terminal) ----------
+const VFS = {name:"home", type:"dir", children:[
+  {name:"Desktop", type:"dir", children:[]},
+  {name:"Documents", type:"dir", children:[{name:"welcome.txt", type:"file"}]},
+  {name:"01-core", type:"dir", children:[
+    {name:"desktop", type:"dir", children:[{name:"index.html", type:"file"}]},
+    {name:"os-shell", type:"dir", children:[]},
+    {name:"cloudos", type:"dir", children:[]},
+  ]},
+  {name:"02-the-fam", type:"dir", children:[
+    {name:"terminal", type:"dir", children:[]},{name:"feed", type:"dir", children:[]},
+    {name:"messenger", type:"dir", children:[]},{name:"profiles", type:"dir", children:[]},
+  ]},
+  {name:"03-production", type:"dir", children:[
+    {name:"story-tools", type:"dir", children:[]},{name:"shows", type:"dir", children:[]},
+    {name:"characters", type:"dir", children:[]},{name:"scenes", type:"dir", children:[]},
+    {name:"pre-production", type:"dir", children:[{name:"treatment-template.md", type:"file"}]},
+  ]},
+  {name:"04-apps", type:"dir", children:[
+    {name:"games", type:"dir", children:[{name:"tmgs-white-noise-radio.html", type:"file"}]},
+    {name:"shopping", type:"dir", children:[{name:"groceries.html", type:"file"}]},
+    {name:"utilities", type:"dir", children:[]},
+  ]},
+  {name:"05-assets", type:"dir", children:[]},
+  {name:"06-legacy", type:"dir", children:[]},
+  {name:"docs", type:"dir", children:[{name:"how-to-run.md", type:"file"}]},
+]};
+function findDir(path){
+  let node = VFS;
+  for(const seg of path){
+    node = node.children.find(c=>c.type==="dir" && c.name===seg);
+    if(!node) return null;
+  }
+  return node;
+}
+
+// ---------- Window manager ----------
+let zTop = 10;
+const wins = {};   // id -> {el, appId, taskBtn, minimized}
+let winSeq = 0;
+
+function openApp(appId){
+  // focus if already open
+  for(const id in wins){ if(wins[id].appId===appId){ focusWin(id); unmin(id); return; } }
+  const app = APPS[appId]; if(!app) return;
+  const id = "w"+(++winSeq);
+  const el = document.createElement("div");
+  el.className = "win focused";
+  const W = Math.min(560, innerWidth-24), H = Math.min(420, innerHeight-120);
+  el.style.left = (40 + (winSeq*36)%160) + "px";
+  el.style.top  = (30 + (winSeq*28)%120) + "px";
+  el.style.width = W+"px"; el.style.height = H+"px";
+  el.style.zIndex = ++zTop;
+  el.innerHTML =
+    '<div class="titlebar"><span>'+app.icon+'</span><span class="wtitle">'+app.name+'</span>'+
+    '<div class="wbtns"><button data-a="min" title="Minimize">_</button>'+
+    '<button data-a="max" title="Maximize">□</button>'+
+    '<button data-a="close" class="x" title="Close">×</button></div></div>'+
+    '<div class="wbody"></div>';
+  document.getElementById("windows").appendChild(el);
+  const body = el.querySelector(".wbody");
+  ({terminal:render_terminal, files:render_files, thefam:render_thefam, radio:render_radio,
+    notes:render_notes, calc:render_calc, store:render_store, settings:render_settings,
+    about:render_about}[appId])(body, id);
+
+  // taskbar button
+  const tb = document.createElement("button");
+  tb.className = "twin active"; tb.textContent = app.icon+" "+app.name;
+  tb.onclick = ()=> wins[id].minimized ? unmin(id) : (el.classList.contains("focused") ? minWin(id) : focusWin(id));
+  document.getElementById("taskwins").appendChild(tb);
+  wins[id] = {el, appId, taskBtn:tb, minimized:false};
+
+  el.querySelector(".titlebar").addEventListener("pointerdown", e=>{
+    if(e.target.closest(".wbtns")) return;
+    focusWin(id); startDrag(e, el);
+  });
+  el.addEventListener("pointerdown", ()=>focusWin(id), true);
+  el.querySelectorAll(".wbtns button").forEach(b=>b.onclick=e=>{
+    e.stopPropagation();
+    const a=b.dataset.a;
+    if(a==="close") closeWin(id); else if(a==="min") minWin(id);
+    else if(a==="max") el.classList.toggle("maxed");
+  });
+  closeStart();
+}
+function focusWin(id){
+  document.querySelectorAll(".win").forEach(w=>w.classList.remove("focused"));
+  document.querySelectorAll(".twin").forEach(t=>t.classList.remove("active"));
+  const w=wins[id]; if(!w) return;
+  w.el.classList.add("focused"); w.el.style.zIndex=++zTop; w.taskBtn.classList.add("active");
+}
+function closeWin(id){
+  const w=wins[id]; if(!w) return;
+  if(w.appId==="radio") stopRadio();
+  w.el.remove(); w.taskBtn.remove(); delete wins[id];
+}
+function minWin(id){ const w=wins[id]; w.el.classList.add("min"); w.minimized=true; w.taskBtn.classList.remove("active"); }
+function unmin(id){ const w=wins[id]; w.el.classList.remove("min"); w.minimized=false; focusWin(id); }
+
+function startDrag(e, el){
+  if(el.classList.contains("maxed")) return;
+  const sx=e.clientX, sy=e.clientY, ox=el.offsetLeft, oy=el.offsetTop;
+  const mv=ev=>{ el.style.left=Math.max(0,ox+ev.clientX-sx)+"px"; el.style.top=Math.max(0,oy+ev.clientY-sy)+"px"; };
+  const up=()=>{ removeEventListener("pointermove",mv); removeEventListener("pointerup",up); };
+  addEventListener("pointermove",mv); addEventListener("pointerup",up);
+}
+
+// ---------- Desktop icons ----------
+let desktopApps = ["terminal","files","thefam","radio","notes"];
+function drawIcons(){
+  const box=document.getElementById("icons"); box.innerHTML="";
+  desktopApps.forEach(id=>{
+    const a=APPS[id]; if(!a) return;
+    const d=document.createElement("div"); d.className="dicon";
+    d.innerHTML='<div class="e">'+a.icon+'</div><div>'+a.name+'</div>';
+    d.ondblclick=()=>openApp(id); d.onclick=()=>{ if(d._t && Date.now()-d._t<350) openApp(id); d._t=Date.now(); };
+    box.appendChild(d);
+  });
+}
+
+// ---------- Start menu ----------
+let smCat="All";
+function toggleStart(force){
+  const sm=document.getElementById("startmenu");
+  const show = force!==undefined ? force : !sm.classList.contains("open");
+  sm.classList.toggle("open", show);
+  if(show){ drawSmCats(); drawSmGrid(""); document.getElementById("sm-search").value=""; document.getElementById("sm-search").focus(); }
+}
+function closeStart(){ document.getElementById("startmenu").classList.remove("open"); }
+function drawSmCats(){
+  const c=document.getElementById("sm-cats"); c.innerHTML="";
+  CATS.forEach(k=>{
+    const b=document.createElement("button"); b.className="smcat"+(k===smCat?" on":"");
+    b.textContent=k; b.onclick=()=>{smCat=k; drawSmCats(); drawSmGrid(document.getElementById("sm-search").value);};
+    c.appendChild(b);
+  });
+}
+function drawSmGrid(q){
+  const g=document.getElementById("sm-grid"); g.innerHTML="";
+  q=q.trim().toLowerCase();
+  Object.keys(APPS).forEach(id=>{
+    const a=APPS[id];
+    if(smCat!=="All" && a.cat!==smCat) return;
+    if(q && !(a.name.toLowerCase().includes(q)||a.desc.toLowerCase().includes(q))) return;
+    const d=document.createElement("div"); d.className="app";
+    d.innerHTML='<div class="e">'+a.icon+'</div><div><b>'+a.name+'</b><br><span class="muted">'+a.desc+'</span></div>';
+    d.onclick=()=>openApp(id);
+    g.appendChild(d);
+  });
+  if(!g.children.length) g.innerHTML='<div class="muted pad">No apps match.</div>';
+}
+
+// ---------- Taskbar search mirrors start menu ----------
+function wireSearch(){
+  const ts=document.getElementById("tsearch");
+  ts.addEventListener("focus",()=>{ toggleStart(true); document.getElementById("sm-search").focus(); });
+}
+
+// ---------- Clock ----------
+function tick(){
+  const d=new Date();
+  let h=d.getHours(), m=String(d.getMinutes()).padStart(2,"0");
+  const ap=h>=12?"PM":"AM"; h=h%12||12;
+  document.getElementById("clock").textContent = h+":"+m+" "+ap+"  "+(d.getMonth()+1)+"/"+d.getDate()+"/"+d.getFullYear();
+}
+setInterval(tick,1000); tick();
+
+// ---------- Notifications ----------
+let notifsOn = true;
+function notify(title, msg){
+  if(!notifsOn) return;
+  const box=document.getElementById("notifs");
+  const n=document.createElement("div"); n.className="notif";
+  n.innerHTML='<button class="nx">×</button><b>'+title+'</b><div>'+msg+'</div>';
+  n.querySelector(".nx").onclick=()=>n.remove();
+  box.appendChild(n);
+  setTimeout(()=>{ if(n.parentNode) n.remove(); }, 7000);
+}
+
+// ---------- Fullscreen / reboot ----------
+function toggleFS(){
+  if(document.fullscreenElement) document.exitFullscreen();
+  else document.documentElement.requestFullscreen().catch(()=>{});
+}
+function reboot(){
+  const b=document.getElementById("boot");
+  b.classList.remove("done");
+  setTimeout(()=>b.classList.add("done"), 1900);
+  closeStart();
+}
+
+// ---------- TERMINAL ----------
+function render_terminal(body){
+  body.innerHTML='<div class="term"><div class="tout"></div>'+
+    '<div class="termline"><span class="in">matt@c3:~$</span><input class="terminput" type="text" /></div></div>';
+  const out=body.querySelector(".tout"), inp=body.querySelector(".terminput");
+  let cwd=[];
+  const print=(t,cls)=>{ const d=document.createElement("div"); d.className="out "+(cls||""); d.textContent=t; out.appendChild(d); body.querySelector(".term").scrollTop=1e6; };
+  print("Callmecoffee3 Terminal — type 'help' for commands.");
+  const cmds={
+    help:()=>print("commands: help, applist, open <app>, close <app>, files, folders, date, echo <text>,\nwhoami, users, newfile <name>, newfolder <name>, theme <midnight|daybreak|sunset|matrix>, clear, reboot"),
+    applist:()=>print(Object.keys(APPS).map(id=>id+" — "+APPS[id].name).join("\n")),
+    date:()=>print(new Date().toString()),
+    whoami:()=>print("matt (callmecoffee3)"),
+    users:()=>print("matt\nthe-fam (simulated)"),
+    clear:()=>{out.innerHTML="";},
+    reboot:()=>reboot(),
+    files:()=>{ const d=findDir(cwd); print(d.children.map(c=>(c.type==="dir"?"📁 ":"📄 ")+c.name).join("\n")||"(empty)"); },
+    folders:()=>{ const d=findDir(cwd); print(d.children.filter(c=>c.type==="dir").map(c=>c.name).join("\n")||"(none)"); },
+  };
+  inp.addEventListener("keydown",e=>{
+    if(e.key!=="Enter") return;
+    const raw=inp.value.trim(); inp.value="";
+    print("matt@c3:~$ "+raw,"in");
+    if(!raw) return;
+    const [c,...rest]=raw.split(/\s+/), arg=rest.join(" ");
+    if(cmds[c]){ cmds[c](); return; }
+    if(c==="echo"){ print(arg); }
+    else if(c==="open"){ arg&&APPS[arg] ? (openApp(arg),print("opening "+APPS[arg].name+"…")) : print("unknown app: "+arg+" (try 'applist')"); }
+    else if(c==="close"){ const id=Object.keys(wins).find(k=>wins[k].appId===arg); id?(closeWin(id),print("closed "+arg)):print("not open: "+arg); }
+    else if(c==="theme"){ ["midnight","daybreak","sunset","matrix"].includes(arg)?(setTheme(arg),print("theme: "+arg)):print("themes: midnight, daybreak, sunset, matrix"); }
+    else if(c==="newfile"){ if(!arg)print("usage: newfile <name>"); else{findDir(cwd).children.push({name:arg,type:"file"});print("created "+arg);} }
+    else if(c==="newfolder"){ if(!arg)print("usage: newfolder <name>"); else{findDir(cwd).children.push({name:arg,type:"dir",children:[]});print("created "+arg+"/");} }
+    else print("unknown command: "+c+" — try 'help'");
+  });
+  setTimeout(()=>inp.focus(),50);
+}
+
+// ---------- FILES ----------
+function render_files(body, id){
+  body.innerHTML='<div class="files"><div class="fside"></div><div class="fmain"></div></div>';
+  const side=body.querySelector(".fside"), main=body.querySelector(".fmain");
+  let path=[];
+  function drawSide(){
+    side.innerHTML="";
+    VFS.children.filter(c=>c.type==="dir").forEach(d=>{
+      const el=document.createElement("div");
+      el.textContent="📁 "+d.name;
+      el.className = path.length===1&&path[0]===d.name ? "on":"";
+      el.onclick=()=>{path=[d.name]; draw();};
+      side.appendChild(el);
+    });
+  }
+  function draw(){
+    drawSide();
+    const dir=findDir(path);
+    main.innerHTML='<div class="crumb">🏠 home'+(path.length? " / "+path.join(" / "):"")+'</div>';
+    if(!dir.children.length) main.innerHTML+='<div class="muted">Empty folder.</div>';
+    dir.children.forEach(c=>{
+      const r=document.createElement("div"); r.className="frow";
+      r.innerHTML='<span>'+(c.type==="dir"?"📁":"📄")+'</span><span>'+c.name+'</span>';
+      if(c.type==="dir") r.ondblclick=()=>{path.push(c.name); draw();};
+      main.appendChild(r);
+    });
+    main.querySelector(".crumb").onclick=()=>{path=[];draw();};
+  }
+  draw();
+}
+
+// ---------- NOTES ----------
+function render_notes(body){
+  body.innerHTML='<div class="pad" style="height:100%;display:flex;flex-direction:column">'+
+    '<h3 class="apptitle">📝 Notes</h3>'+
+    '<textarea id="notesarea" style="flex:1;min-height:220px;resize:none" placeholder="Type here — saves automatically…"></textarea>'+
+    '<div class="muted" style="margin-top:6px">Saved locally in this browser.</div></div>';
+  const ta=body.querySelector("#notesarea");
+  ta.value=localStorage.getItem("c3-notes")||"";
+  ta.addEventListener("input",()=>localStorage.setItem("c3-notes",ta.value));
+}
+
+// ---------- RADIO (WebAudio white-noise stations) ----------
+let radioCtx=null, radioSrc=null, radioGain=null, radioFilter=null, radioStation=null;
+const STATIONS=[
+  {name:"Pure White", icon:"⚪", type:"highpass", freq:400},
+  {name:"Pink Haze",  icon:"🌸", type:"lowpass",  freq:6000},
+  {name:"Brown Deep", icon:"🟤", type:"lowpass",  freq:400},
+  {name:"Rain",       icon:"🌧️", type:"bandpass", freq:1800},
+  {name:"Fan Hum",    icon:"🌀", type:"bandpass", freq:300},
+];
+function render_radio(body){
+  body.innerHTML='<div class="pad"><h3 class="apptitle">📻 White Noise Radio</h3>'+
+    '<div class="row" style="margin-bottom:10px"><button class="btn" id="rplay">▶ Play</button>'+
+    '<input type="range" id="rvol" min="0" max="100" value="40" style="flex:1"></div>'+
+    '<div id="rlist"></div><div class="muted">Generated live with the Web Audio API — no files needed.</div></div>';
+  const list=body.querySelector("#rlist");
+  STATIONS.forEach((s,i)=>{
+    const d=document.createElement("div"); d.className="station"+(i===0?" on":"");
+    d.innerHTML='<span class="e">'+s.icon+'</span><span><b>'+s.name+'</b></span>';
+    d.onclick=()=>{ list.querySelectorAll(".station").forEach(x=>x.classList.remove("on")); d.classList.add("on"); tuneRadio(i); };
+    list.appendChild(d);
+  });
+  body.querySelector("#rplay").onclick=e=>{
+    if(radioSrc){ stopRadio(); e.target.textContent="▶ Play"; }
+    else { startRadio(0); e.target.textContent="⏸ Stop"; }
+  };
+  body.querySelector("#rvol").oninput=e=>{ if(radioGain) radioGain.gain.value=e.target.value/100*0.6; };
+}
+function noiseBuffer(ctx){
+  const len=ctx.sampleRate*2, buf=ctx.createBuffer(1,len,ctx.sampleRate), d=buf.getChannelData(0);
+  let last=0;
+  for(let i=0;i<len;i++){ const w=Math.random()*2-1; last=(last+0.02*w)/1.02; d[i]=(w*0.5+last*3.5)*0.6; }
+  return buf;
+}
+function startRadio(i){
+  stopRadio();
+  radioCtx=radioCtx||new (window.AudioContext||window.webkitAudioContext)();
+  radioCtx.resume();
+  const s=STATIONS[i]; radioStation=i;
+  radioSrc=radioCtx.createBufferSource(); radioSrc.buffer=noiseBuffer(radioCtx); radioSrc.loop=true;
+  radioFilter=radioCtx.createBiquadFilter(); radioFilter.type=s.type; radioFilter.frequency.value=s.freq;
+  radioGain=radioCtx.createGain(); radioGain.gain.value=0.24;
+  radioSrc.connect(radioFilter); radioFilter.connect(radioGain); radioGain.connect(radioCtx.destination);
+  radioSrc.start();
+}
+function tuneRadio(i){
+  radioStation=i;
+  if(!radioSrc) return;
+  const s=STATIONS[i];
+  radioFilter.type=s.type; radioFilter.frequency.value=s.freq;
+}
+function stopRadio(){
+  if(radioSrc){ try{radioSrc.stop();}catch(e){} radioSrc.disconnect(); radioSrc=null; }
+}
+
+// ---------- THE FAM ----------
+let famPosts=[
+  {user:"Matt Grosso", when:"2h", text:"doaashow-clean desktop prototype is booting up for the first time ☕🖥️", likes:12},
+  {user:"The Fam", when:"5h", text:"Welcome to the neighborhood! Drop your latest project below 👇", likes:34},
+  {user:"Studio Bot", when:"1d", text:"Pre-production checklist updated: treatment template is ready in 03-production.", likes:8},
+];
+function render_thefam(body){
+  body.innerHTML='<div class="pad"><h3 class="apptitle">👥 The Fam</h3>'+
+    '<div class="row" style="margin-bottom:10px"><input type="text" id="famin" placeholder="Share something with the Fam…" style="flex:1">'+
+    '<button class="btn" id="fampost">Post</button></div><div id="famfeed"></div></div>';
+  const feed=body.querySelector("#famfeed");
+  function draw(){
+    feed.innerHTML="";
+    famPosts.forEach((p,i)=>{
+      const d=document.createElement("div"); d.className="post";
+      d.innerHTML='<span class="who">'+p.user+'</span><span class="when">'+p.when+'</span><p></p>';
+      d.querySelector("p").textContent=p.text;
+      const b=document.createElement("button"); b.className="likebtn"; b.textContent="❤️ "+p.likes;
+      b.onclick=()=>{p.likes++; draw();};
+      d.appendChild(b); feed.appendChild(d);
+    });
+  }
+  body.querySelector("#fampost").onclick=()=>{
+    const v=body.querySelector("#famin").value.trim(); if(!v) return;
+    famPosts.unshift({user:"Matt Grosso", when:"now", text:v, likes:0});
+    body.querySelector("#famin").value=""; draw();
+  };
+  draw();
+}
+
+// ---------- CALCULATOR ----------
+function render_calc(body){
+  body.innerHTML='<div class="pad"><h3 class="apptitle">🧮 Calculator</h3><div class="calc"><div id="calc-disp">0</div></div></div>';
+  const grid=body.querySelector(".calc"), disp=body.querySelector("#calc-disp");
+  let cur="0", prev=null, op=null, fresh=true;
+  const keys=["C","⌫","%","÷","7","8","9","×","4","5","6","−","1","2","3","+","0",".","±","="];
+  keys.forEach(k=>{
+    const b=document.createElement("button"); b.textContent=k;
+    if("÷×−+=%".includes(k)) b.className="op";
+    b.onclick=()=>{
+      if(/\d/.test(k)||k==="."){ if(fresh){cur=k==="."?"0.":"";fresh=false;} if(!(k==="."&&cur.includes(".")))cur+=k; }
+      else if(k==="C"){cur="0";prev=null;op=null;fresh=true;}
+      else if(k==="⌫"){cur=cur.length>1?cur.slice(0,-1):"0";}
+      else if(k==="±"){cur=String(-parseFloat(cur));}
+      else if(k==="%"){cur=String(parseFloat(cur)/100);}
+      else if(k==="="){ if(op&&prev!==null){cur=String(calc(prev,parseFloat(cur),op));op=null;prev=null;fresh=true;} }
+      else { if(op&&prev!==null&&!fresh){cur=String(calc(prev,parseFloat(cur),op));} prev=parseFloat(cur);op=k;fresh=true; }
+      disp.textContent=cur;
+    };
+    grid.appendChild(b);
+  });
+  function calc(a,b,o){ return o==="+"?a+b:o==="−"?a-b:o==="×"?a*b:b!==0?a/b:0; }
+}
+
+// ---------- APP STORE ----------
+function render_store(body){
+  body.innerHTML='<div class="pad"><h3 class="apptitle">🏪 App Store</h3><div id="storelist"></div></div>';
+  const list=body.querySelector("#storelist");
+  function draw(){
+    list.innerHTML="";
+    Object.keys(APPS).forEach(id=>{
+      if(id==="store") return;
+      const a=APPS[id], installed=desktopApps.includes(id);
+      const d=document.createElement("div"); d.className="storeitem";
+      d.innerHTML='<span class="e">'+a.icon+'</span><span class="nm"><b>'+a.name+'</b><span>'+a.cat+' · '+a.desc+'</span></span>';
+      const b=document.createElement("button"); b.className="btn"+(installed?" ghost":"");
+      b.textContent=installed?"Remove":"Install";
+      b.onclick=()=>{
+        if(installed) desktopApps=desktopApps.filter(x=>x!==id);
+        else { desktopApps.push(id); notify("App installed", a.name+" was added to your desktop."); }
+        drawIcons(); draw();
+      };
+      d.appendChild(b); list.appendChild(d);
+    });
+  }
+  draw();
+}
+
+// ---------- SETTINGS ----------
+function setTheme(t){ document.body.dataset.theme=t; }
+function render_settings(body){
+  body.innerHTML='<div class="pad"><h3 class="apptitle">⚙️ Settings</h3>'+
+    '<div class="muted">Theme</div><div class="themebox" id="themes"></div>'+
+    '<div class="setrow"><span>⛶ Full screen</span><button class="btn ghost" id="setfs">Toggle</button></div>'+
+    '<div class="setrow"><span>🔔 Notifications</span><button class="btn ghost" id="setnotif">'+(notifsOn?"On":"Off")+'</button></div>'+
+    '<div class="setrow"><span>🖥️ Desktop</span><span class="muted">Callmecoffee3Desktop v0.1</span></div></div>';
+  const themes={midnight:"linear-gradient(135deg,#1b2a4a,#0b1020)",daybreak:"linear-gradient(135deg,#aee3ff,#f7f3e8)",
+    sunset:"linear-gradient(135deg,#ff7e5f,#2b1055)",matrix:"linear-gradient(135deg,#02120a,#00ff88)"};
+  const box=body.querySelector("#themes");
+  Object.keys(themes).forEach(t=>{
+    const s=document.createElement("div"); s.className="tswatch"+(document.body.dataset.theme===t?" on":"");
+    s.style.background=themes[t]; s.title=t;
+    s.onclick=()=>{ setTheme(t); box.querySelectorAll(".tswatch").forEach(x=>x.classList.remove("on")); s.classList.add("on"); };
+    box.appendChild(s);
+  });
+  body.querySelector("#setfs").onclick=toggleFS;
+  body.querySelector("#setnotif").onclick=e=>{ notifsOn=!notifsOn; e.target.textContent=notifsOn?"On":"Off"; };
+}
+
+// ---------- ABOUT ----------
+function render_about(body){
+  body.innerHTML='<div class="pad" style="text-align:center">'+
+    '<div style="font-size:52px">☕</div><h3 class="apptitle" style="margin-top:8px">Callmecoffee3Desktop</h3>'+
+    '<p class="muted">v0.1 prototype — a simulated desktop & creative playground.<br><br>'+
+    'Part of <b>doaashow-clean</b> by Matt Grosso (@callmecoffee3).<br>'+
+    'Entertainment purposes only — just for goofing off and having fun.</p>'+
+    '<div class="row" style="justify-content:center;margin-top:14px"><button class="btn" id="aboutfs">⛶ Go full screen</button></div></div>';
+  body.querySelector("#aboutfs").onclick=toggleFS;
+}
+
+// ---------- Wiring ----------
+document.getElementById("startbtn").onclick=e=>{ e.stopPropagation(); toggleStart(); };
+document.getElementById("sm-search").addEventListener("input",e=>drawSmGrid(e.target.value));
+document.getElementById("sm-fs").onclick=()=>{toggleFS();};
+document.getElementById("sm-reboot").onclick=()=>reboot();
+document.getElementById("fsbtn").onclick=toggleFS;
+document.getElementById("desktop").addEventListener("pointerdown",e=>{
+  if(!e.target.closest("#startmenu") && !e.target.closest("#startbtn") && !e.target.closest("#tsearch")) closeStart();
+});
+wireSearch();
+
+// ---------- Boot ----------
+drawIcons();
+setTimeout(()=>{
+  document.getElementById("boot").classList.add("done");
+  setTimeout(()=>notify("👋 Welcome back, Matt","Double-click a desktop icon or hit <b>start</b> to explore. Try the Terminal — type <b>help</b>."), 700);
+},1900);
+</script>
+</body>
+</html>
