@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="light" />
+  <link rel="icon" href="data:," />
+  <title>Photo Sharing App</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap');
+    :root{
+      --ink:#15233b;--muted:#607087;--line:#dce3eb;--paper:#ffffff;--wash:#f3f6f8;
+      --red:#ed534a;--yellow:#f6c453;--blue:#2878ff;--green:#247b63;--shadow:0 14px 42px rgba(30,47,75,.09);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--wash);color:var(--ink);font-family:'DM Sans',sans-serif;min-width:0}
+    button,input,textarea{font:inherit}
+    button{color:inherit}
+    img{display:block;max-width:100%}
+    svg{width:21px;height:21px;stroke:currentColor;stroke-width:1.9;fill:none;stroke-linecap:round;stroke-linejoin:round}
+    .app{width:min(1440px,100%);margin:auto;display:grid;grid-template-columns:228px minmax(0,700px) 300px;gap:26px;padding:22px 24px 90px;align-items:start}
+    .left,.right{position:sticky;top:18px}
+    .nav-card{background:var(--ink);color:#fff;border-radius:24px;padding:14px 12px;box-shadow:var(--shadow)}
+    .profile-mini{display:flex;gap:11px;align-items:center;padding:10px 10px 19px;border-bottom:1px solid rgba(255,255,255,.14);margin-bottom:9px}
+    .avatar{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;color:white;background:var(--red);font-weight:700;flex:0 0 auto}
+    .avatar.small{width:36px;height:36px;font-size:13px}.avatar.blue{background:#2e6ec4}.avatar.green{background:var(--green)}.avatar.gold{background:#b77118}
+    .profile-mini strong{font-size:14px;display:block}.profile-mini span{font-size:12px;color:#b8c3d2}
+    .nav{display:grid;gap:4px}
+    .nav-btn{border:0;background:transparent;color:#bac5d4;text-align:left;border-radius:13px;padding:12px 13px;display:flex;align-items:center;gap:12px;cursor:pointer;font-weight:600}
+    .nav-btn:hover,.nav-btn.active{background:#fff;color:var(--ink)}
+    .nav-btn .dot{margin-left:auto;width:8px;height:8px;background:var(--red);border-radius:50%}
+    .side-note{padding:16px 13px 5px;color:#9dabbc;font-size:11px;line-height:1.5}
+    .main{min-width:0}
+    .main-top{display:flex;justify-content:space-between;align-items:end;margin:4px 2px 20px;gap:16px}
+    .main-top h1{font-family:'Newsreader',serif;font-size:clamp(34px,5vw,52px);line-height:.98;margin:0;letter-spacing:-.035em;font-weight:600}
+    .main-top p{margin:8px 0 0;color:var(--muted);font-size:14px}
+    .icon-btn{width:44px;height:44px;border:1px solid var(--line);border-radius:50%;display:grid;place-items:center;background:#fff;cursor:pointer;position:relative}
+    .icon-btn:hover{border-color:#aab6c4}.badge{position:absolute;right:-1px;top:-2px;background:var(--red);color:white;font-size:10px;font-weight:700;min-width:18px;height:18px;border:3px solid white;border-radius:9px;display:grid;place-items:center}
+    .stories{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px}
+    .story{border:0;padding:0;background:white;border-radius:18px;overflow:hidden;cursor:pointer;min-width:0;box-shadow:0 3px 15px rgba(30,47,75,.05);text-align:left}
+    .story-img{height:126px;position:relative;background:#ccd6e0;overflow:hidden}
+    .story-img img{width:100%;height:100%;object-fit:cover}
+    .story-img::after{content:'';position:absolute;inset:0;background:linear-gradient(transparent 48%,rgba(8,18,36,.65))}
+    .story .story-avatar{position:absolute;z-index:2;left:8px;top:8px;width:29px;height:29px;border:3px solid #fff;border-radius:50%;display:grid;place-items:center;background:var(--red);color:#fff;font-size:9px;font-weight:700}
+    .story span{display:block;font-size:11px;font-weight:700;padding:9px 8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .composer{background:#fff;border:1px solid var(--line);border-radius:19px;padding:14px 16px;margin-bottom:16px;display:flex;gap:11px;align-items:center}
+    .composer-trigger{flex:1;border:0;background:var(--wash);border-radius:14px;padding:13px 15px;text-align:left;color:#68778c;cursor:pointer}
+    .post{background:#fff;border:1px solid var(--line);border-radius:22px;overflow:hidden;margin-bottom:18px;box-shadow:0 6px 24px rgba(30,47,75,.045)}
+    .post-head{display:flex;gap:11px;align-items:center;padding:16px}.post-head .meta{min-width:0}.post-head strong{font-size:14px}.post-head p{font-size:12px;color:var(--muted);margin:3px 0 0}.more{margin-left:auto;border:0;background:transparent;font-size:22px;cursor:pointer;color:var(--muted)}
+    .post-copy{padding:0 16px 14px;margin:0;line-height:1.55;font-size:14px}
+    .post-media{aspect-ratio:16/11;background:#d3dbe5;overflow:hidden}.post-media.tall{aspect-ratio:4/5;max-height:730px}.post-media img{width:100%;height:100%;object-fit:cover}
+    .post-stats{display:flex;justify-content:space-between;padding:12px 16px 9px;font-size:12px;color:var(--muted)}
+    .post-actions{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);padding:5px 8px}
+    .action{border:0;background:transparent;border-radius:11px;padding:10px 8px;display:flex;align-items:center;justify-content:center;gap:7px;cursor:pointer;color:#52637a;font-weight:600;font-size:13px}.action:hover{background:var(--wash)}.action.liked{color:var(--red)}.action.liked svg{fill:currentColor}
+    .right-card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:17px;margin-bottom:15px}
+    .right-card h2{font-family:'Newsreader',serif;font-size:23px;margin:0 0 13px}.right-card .sub{font-size:12px;color:var(--muted);margin:-7px 0 13px}
+    .contact,.event{display:flex;align-items:center;gap:10px;padding:8px 0}.contact+.contact,.event+.event{border-top:1px solid #edf0f3}.contact strong,.event strong{font-size:13px;display:block}.contact span,.event span{font-size:11px;color:var(--muted)}
+    .online{width:8px;height:8px;border-radius:50%;background:#32a46e;margin-left:auto}.datebox{width:43px;height:45px;border-radius:11px;background:#fff0e9;color:#b54f24;display:grid;place-items:center;font-weight:700;line-height:1;font-size:15px}.datebox small{font-size:9px;text-transform:uppercase;letter-spacing:.06em}
+    .panel{display:none}.panel.active{display:block}
+    .section-head{display:flex;justify-content:space-between;align-items:center;margin:5px 2px 18px;gap:12px}.section-head h1{font-family:'Newsreader',serif;font-size:40px;margin:0;letter-spacing:-.025em}.section-head p{color:var(--muted);font-size:13px;margin:4px 0 0}
+    .primary{border:0;background:var(--blue);color:#fff;border-radius:13px;padding:11px 16px;font-weight:700;cursor:pointer}.primary:hover{background:#1768e6}.secondary{border:1px solid var(--line);background:white;border-radius:12px;padding:10px 13px;font-weight:700;cursor:pointer}
+    .market-toolbar{background:#fff;border:1px solid var(--line);padding:10px;border-radius:17px;margin-bottom:16px;display:flex;gap:9px}.market-toolbar input{min-width:0;flex:1;border:0;background:var(--wash);border-radius:11px;padding:11px 13px;outline:0}
+    .market-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.listing{background:white;border:1px solid var(--line);border-radius:18px;overflow:hidden}.listing img{width:100%;aspect-ratio:4/3;object-fit:cover}.listing-body{padding:12px}.listing .price{font-size:18px;font-weight:700}.listing h3{font-size:14px;margin:4px 0}.listing p{font-size:12px;color:var(--muted);margin:0 0 12px}.demo-tag{display:inline-block;background:#edf3ff;color:#235da8;border-radius:7px;padding:4px 7px;font-size:10px;font-weight:700;margin-bottom:9px}
+    .community-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.group-card{background:white;border:1px solid var(--line);border-radius:19px;overflow:hidden}.group-cover{height:116px;background:var(--ink);position:relative;overflow:hidden}.group-cover img{width:100%;height:100%;object-fit:cover;filter:saturate(.78)}.group-body{padding:14px}.group-body h3{margin:0 0 5px;font-family:'Newsreader',serif;font-size:23px}.group-body p{margin:0 0 13px;color:var(--muted);font-size:12px;line-height:1.45}.group-meta{display:flex;align-items:center;justify-content:space-between;font-size:11px;color:var(--muted)}
+    .story-grid,.page-grid,.people-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.story-card,.page-card,.person-card,.note-card,.video-card,.short-card{background:#fff;border:1px solid var(--line);overflow:hidden}.story-card{border-radius:21px;position:relative;min-height:270px;cursor:pointer;padding:0;text-align:left;color:inherit;font:inherit}.story-card img{width:100%;height:270px;object-fit:cover}.story-card::after{content:'';position:absolute;inset:0;background:linear-gradient(transparent 45%,rgba(9,19,36,.82))}.story-card-info{position:absolute;z-index:2;left:16px;right:16px;bottom:15px;color:#fff}.story-card-info strong{display:block;font-family:'Newsreader',serif;font-size:25px}.story-card-info span{font-size:12px;color:#e5ebf2}
+    .video-list{display:grid;gap:16px}.video-card{border-radius:21px}.video-thumb{position:relative;aspect-ratio:16/9;background:#d6dee7}.video-thumb img{width:100%;height:100%;object-fit:cover}.play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:54px;height:54px;border:0;border-radius:50%;background:rgba(255,255,255,.92);display:grid;place-items:center;cursor:pointer;color:var(--ink);box-shadow:0 8px 24px rgba(12,24,44,.22)}.play svg{width:23px;height:23px;fill:currentColor;stroke:none;margin-left:3px}.video-info{padding:14px 16px 16px;display:flex;gap:11px}.video-info h3{font-size:15px;margin:0 0 4px}.video-info p{font-size:12px;color:var(--muted);margin:0}
+    .short-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.short-card{border-radius:20px;position:relative;aspect-ratio:9/14;cursor:pointer;padding:0;text-align:left;color:inherit;font:inherit}.short-card img{width:100%;height:100%;object-fit:cover}.short-card::after{content:'';position:absolute;inset:0;background:linear-gradient(transparent 42%,rgba(8,18,34,.82))}.short-copy{position:absolute;z-index:2;left:12px;right:12px;bottom:12px;color:white}.short-copy strong{font-size:13px;display:block}.short-copy span{font-size:10px;color:#e5eaf0}
+    .reel-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.reel-card{position:relative;aspect-ratio:4/5;border:0;border-radius:22px;overflow:hidden;padding:0;background:#15233b;color:#fff;text-align:left;cursor:pointer}.reel-card img{width:100%;height:100%;object-fit:cover}.reel-card::after{content:'';position:absolute;inset:0;background:linear-gradient(transparent 38%,rgba(8,18,34,.88))}.reel-info{position:absolute;z-index:2;left:15px;right:15px;bottom:15px}.reel-info strong{display:block;font-family:'Newsreader',serif;font-size:24px;line-height:1.05;margin-bottom:5px}.reel-info span{font-size:11px;color:#e6ebf1}.reel-play{position:absolute;z-index:2;top:14px;right:14px;width:39px;height:39px;border-radius:50%;background:rgba(255,255,255,.9);color:var(--ink);display:grid;place-items:center}.reel-play svg{width:18px;height:18px;fill:currentColor;stroke:none;margin-left:2px}
+    .private-intro{background:var(--ink);color:#fff;border-radius:22px;padding:21px;margin-bottom:14px;display:flex;gap:14px;align-items:flex-start}.private-lock{width:46px;height:46px;flex:0 0 auto;border-radius:14px;background:#fff;color:var(--ink);display:grid;place-items:center}.private-intro h2{font-family:'Newsreader',serif;font-size:27px;margin:0 0 5px}.private-intro p{font-size:12px;line-height:1.5;color:#c6d0dd;margin:0}.private-compose{background:#fff;border:1px solid var(--line);border-radius:19px;padding:15px;margin-bottom:14px}.private-compose textarea{width:100%;min-height:100px;resize:vertical;border:0;background:var(--wash);border-radius:13px;padding:13px;outline:0}.private-compose-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:10px}.private-upload{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:12px;font-weight:700;cursor:pointer}.private-upload input{display:none}.private-preview{display:none;width:100%;max-height:300px;object-fit:cover;border-radius:13px;margin-top:10px}.private-list{display:grid;gap:12px}.private-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:15px}.private-card p{margin:0 0 10px;line-height:1.5;font-size:14px}.private-card img{width:100%;max-height:420px;object-fit:cover;border-radius:13px;margin:0 0 10px}.private-meta{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:11px}.private-meta button{border:0;background:transparent;color:#a33c35;font-weight:700;cursor:pointer;padding:5px}
+    .page-card,.person-card{border-radius:19px;padding:15px}.page-cover{height:104px;margin:-15px -15px 14px;overflow:hidden}.page-cover img{width:100%;height:100%;object-fit:cover}.page-card h3,.person-card h3{font-family:'Newsreader',serif;font-size:23px;margin:0 0 4px}.page-card p,.person-card p{font-size:12px;line-height:1.45;color:var(--muted);margin:0 0 13px}.page-meta{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:11px;color:var(--muted)}
+    .note-compose{background:#fff;border:1px solid var(--line);border-radius:19px;padding:15px;margin-bottom:14px}.note-compose textarea{width:100%;min-height:90px;resize:vertical;border:0;background:var(--wash);border-radius:13px;padding:13px;outline:0}.note-compose-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:10px}.notes-list{display:grid;gap:12px}.note-card{border-radius:18px;padding:15px}.note-card p{margin:0 0 10px;line-height:1.5;font-size:14px}.note-card small{color:var(--muted)}
+    .profile-hero{background:var(--ink);color:#fff;border-radius:23px;padding:24px;margin-bottom:14px;display:flex;align-items:center;gap:18px}.profile-hero .avatar{width:74px;height:74px;font-size:20px}.profile-hero h2{font-family:'Newsreader',serif;font-size:32px;margin:0 0 4px}.profile-hero p{color:#c4cfdd;margin:0 0 11px;font-size:13px}.profile-stats{display:flex;gap:18px;font-size:11px;color:#c4cfdd}.profile-stats strong{display:block;color:#fff;font-size:16px}.profile-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:18px}.profile-gallery img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:12px}.person-head{display:flex;align-items:center;gap:11px;margin-bottom:10px}.person-head h3{font-family:'DM Sans',sans-serif;font-size:14px;margin:0}.person-head span{font-size:11px;color:var(--muted)}
+    .business-hero{background:#fff;border:1px solid var(--line);border-radius:22px;padding:19px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;gap:16px}.business-owner{display:flex;align-items:center;gap:12px}.business-owner h2{font-family:'Newsreader',serif;font-size:27px;margin:0 0 3px}.business-owner p{font-size:12px;color:var(--muted);margin:0}.status-chip{background:#e4f4ed;color:#176047;border-radius:999px;padding:7px 10px;font-size:11px;font-weight:700;white-space:nowrap}.business-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:14px}.business-metric{background:var(--ink);color:#fff;border-radius:17px;padding:15px}.business-metric span{font-size:10px;color:#bac6d5;display:block;margin-bottom:8px}.business-metric strong{font-family:'Newsreader',serif;font-size:29px;line-height:1}.business-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:14px}.business-card{background:#fff;border:1px solid var(--line);border-radius:19px;padding:17px}.business-card h2{font-family:'Newsreader',serif;font-size:24px;margin:0 0 4px}.business-card>p{font-size:12px;color:var(--muted);line-height:1.45;margin:0 0 15px}.business-form{display:grid;gap:11px}.business-form label{display:grid;gap:5px;font-size:11px;font-weight:700}.business-form input,.business-form textarea{width:100%;border:1px solid var(--line);border-radius:11px;padding:10px 11px;outline:0;background:#fff}.business-form textarea{min-height:76px;resize:vertical}.business-actions{display:grid;gap:8px}.business-action{border:0;background:var(--wash);border-radius:13px;padding:12px;text-align:left;display:flex;align-items:center;gap:10px;cursor:pointer;font-weight:700}.business-action svg{color:var(--blue)}.business-foot{font-size:11px;color:var(--muted);line-height:1.45;margin-top:13px;padding-top:12px;border-top:1px solid var(--line)}
+    .more-menu{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.more-link{background:#fff;border:1px solid var(--line);border-radius:16px;padding:15px;text-align:left;display:flex;align-items:center;gap:11px;cursor:pointer;font-weight:700}.more-link svg{color:var(--blue)}
+    .empty-note{background:#fff;border:1px dashed #bfc9d5;border-radius:18px;padding:28px;text-align:center;color:var(--muted)}
+    .modal{position:fixed;inset:0;background:rgba(10,21,38,.62);display:none;place-items:center;padding:18px;z-index:20}.modal.open{display:grid}.modal-card{width:min(520px,100%);max-height:90vh;overflow:auto;background:#fff;border-radius:22px;padding:19px;box-shadow:0 28px 80px rgba(10,21,38,.35)}.modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:15px}.modal-head h2{font-family:'Newsreader',serif;font-size:28px;margin:0}.close{border:0;background:var(--wash);width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:20px}.modal textarea{width:100%;min-height:110px;border:1px solid var(--line);border-radius:14px;padding:13px;resize:vertical;outline:0}.upload{margin:12px 0;border:1px dashed #aebaca;background:var(--wash);border-radius:15px;padding:18px;text-align:center;color:var(--muted);font-size:13px;display:block;cursor:pointer}.upload input{display:none}.preview{display:none;width:100%;max-height:280px;object-fit:cover;border-radius:13px;margin-bottom:12px}.modal-actions{display:flex;justify-content:space-between;align-items:center;gap:12px}.session-note{font-size:11px;color:var(--muted);max-width:250px}.toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,20px);background:var(--ink);color:#fff;padding:11px 16px;border-radius:12px;font-size:13px;opacity:0;pointer-events:none;transition:.2s;z-index:30}.toast.show{opacity:1;transform:translate(-50%,0)}
+    .mobile-nav{display:none}
+    @media(max-width:1080px){.app{grid-template-columns:210px minmax(0,1fr)}.right{display:none}}
+    @media(max-width:760px){body{background:#fff}.app{display:block;padding:14px 12px 88px}.left{display:none}.main-top{margin-top:7px}.main-top h1{font-size:38px}.stories{grid-template-columns:repeat(4,1fr);gap:8px}.story:nth-child(5){display:none}.story-img{height:100px}.post,.composer{border-left:0;border-right:0;border-radius:0;margin-left:-12px;margin-right:-12px}.post-head,.post-copy,.post-stats{padding-left:14px;padding-right:14px}.mobile-nav{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;z-index:12;left:8px;right:8px;bottom:max(8px,env(safe-area-inset-bottom));background:var(--ink);color:#aeb9c8;border-radius:19px;padding:7px 5px;box-shadow:0 12px 35px rgba(10,21,38,.3)}.mobile-nav button{border:0;background:transparent;color:inherit;display:grid;place-items:center;gap:2px;padding:5px 2px;border-radius:12px;font-size:9px}.mobile-nav button.active{background:white;color:var(--ink)}.mobile-nav svg{width:20px;height:20px}.section-head h1{font-size:35px}.market-grid,.community-grid,.story-grid,.page-grid,.people-grid,.reel-grid{grid-template-columns:1fr}.short-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.reel-card{aspect-ratio:4/5;max-height:620px}.story-card,.story-card img{min-height:225px;height:225px}.market-toolbar{padding:0;border:0}.listing{display:grid;grid-template-columns:132px 1fr}.listing img{height:100%;aspect-ratio:auto;min-height:150px}.listing-body{align-self:center}.profile-hero{align-items:flex-start;padding:19px}.profile-hero .avatar{width:58px;height:58px}.profile-hero h2{font-size:27px}.profile-stats{gap:12px}.business-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.business-grid{grid-template-columns:1fr}.business-hero{align-items:flex-start}.private-intro{padding:17px}.private-compose-foot{align-items:flex-end}.modal-card{border-radius:20px}}
+    @media(max-width:420px){.stories{grid-template-columns:repeat(3,1fr)}.story:nth-child(4){display:none}.main-top h1{font-size:34px}.listing{grid-template-columns:115px 1fr}.post-actions .action{font-size:12px}.post-media.tall{max-height:580px}}
+    @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="left">
+      <div class="nav-card">
+        <div class="profile-mini"><div class="avatar">YO</div><div><strong>Your space</strong><span>Public demo</span></div></div>
+        <nav class="nav" aria-label="Main navigation">
+          <button class="nav-btn active" data-tab="feed"><svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10H3Z"/><path d="M9 20v-6h6v6"/></svg>Feed</button>
+          <button class="nav-btn" data-tab="storiesPage"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m10 8 6 4-6 4Z"/></svg>Stories</button>
+          <button class="nav-btn" data-tab="videos"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m10 9 5 3-5 3Z"/></svg>Videos</button>
+          <button class="nav-btn" data-tab="reels"><svg viewBox="0 0 24 24"><path d="m8 3 3 5m3-5 3 5M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path d="m10 12 5 3-5 3Z"/></svg>Reels</button>
+          <button class="nav-btn" data-tab="shorts"><svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="m10 9 5 3-5 3Z"/></svg>Shorts</button>
+          <button class="nav-btn" data-tab="private"><svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3"/></svg>Private</button>
+          <button class="nav-btn" data-tab="pages"><svg viewBox="0 0 24 24"><path d="M4 3h13l3 3v15H4Z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>Pages</button>
+          <button class="nav-btn" data-tab="notes"><svg viewBox="0 0 24 24"><path d="M5 3h14v18H5Z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>Notes</button>
+          <button class="nav-btn" data-tab="profiles"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>Profiles</button>
+          <button class="nav-btn" data-tab="business"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 15v2m5-6v6m5-9v9"/></svg>Business</button>
+          <button class="nav-btn" data-tab="market"><svg viewBox="0 0 24 24"><path d="M4 9v11h16V9"/><path d="M3 9 5 4h14l2 5"/><path d="M8 9a2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0M4 9a2 2 0 0 0 4 0"/></svg>Marketplace</button>
+          <button class="nav-btn" data-tab="community"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20v-2a6 6 0 0 1 12 0v2M16 4a3 3 0 0 1 0 6M18 13a5 5 0 0 1 3 5v2"/></svg>Community<span class="dot"></span></button>
+          <button class="nav-btn" data-tab="messages"><svg viewBox="0 0 24 24"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4Z"/></svg>Messages</button>
+        </nav>
+        <div class="side-note">Explore every section. Likes, follows, and new posts or notes last for this session only.</div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <section class="panel active" id="feed">
+        <header class="main-top"><div><h1>Good afternoon.</h1><p>A colorful corner of everyday life.</p></div><button class="icon-btn" aria-label="Notifications" data-toast="You’re all caught up"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg><span class="badge">2</span></button></header>
+
+        <div class="stories" aria-label="Stories">
+          <button class="story" data-story="Maya’s coast ride"><div class="story-img"><img src="assets/img-01-51c56363fea0.jpg" alt="Illustrated coastal bicycle ride"><i class="story-avatar">M</i></div><span>Maya</span></button>
+          <button class="story" data-story="Theo’s bakery morning"><div class="story-img"><img src="assets/img-02-d5cd9aa61d0a.jpg" alt="Illustrated bakery table with coffee and pastries"><i class="story-avatar" style="background:#2e6ec4">T</i></div><span>Theo</span></button>
+          <button class="story" data-story="Ari’s desert hike"><div class="story-img"><img src="assets/img-03-1b17498d365b.jpg" alt="Illustrated hikers in a red-rock canyon"><i class="story-avatar" style="background:#247b63">A</i></div><span>Ari</span></button>
+          <button class="story" data-story="Nora’s studio"><div class="story-img"><img src="assets/img-04-b5ff5fe19174.jpg" alt="Illustrated ceramic studio with mugs and vases"><i class="story-avatar" style="background:#b77118">N</i></div><span>Nora</span></button>
+          <button class="story" data-story="Your story"><div class="story-img"><img src="assets/img-01-51c56363fea0.jpg" alt="Illustrated ocean coast"><i class="story-avatar" style="background:#15233b">+</i></div><span>Your story</span></button>
+        </div>
+
+        <div class="composer"><div class="avatar small">YO</div><button class="composer-trigger" id="openComposer">Share a moment with the community…</button><button class="icon-btn" aria-label="Add photo" id="photoShortcut"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="15" rx="2"/><circle cx="8.5" cy="10" r="1.5"/><path d="m21 15-5-5L5 20"/></svg></button></div>
+        <div id="sessionPosts"></div>
+
+        <article class="post">
+          <div class="post-head"><div class="avatar blue">MR</div><div class="meta"><strong>Maya Rivera</strong><p>Coast Highway · 38 min</p></div><button class="more" aria-label="More options" data-toast="Post options are available in the full app">•••</button></div>
+          <p class="post-copy">Took the long way home and found the sky showing off. Some days are made for a bike, a friend, and nowhere urgent to be.</p>
+          <div class="post-media"><img src="assets/img-01-51c56363fea0.jpg" alt="Cut-paper illustration of friends cycling above the coast at sunset"></div>
+          <div class="post-stats"><span><b class="like-count">128</b> likes</span><span>14 comments · 3 shares</span></div>
+          <div class="post-actions"><button class="action like"><svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z"/></svg>Like</button><button class="action" data-toast="Comments open in the full app"><svg viewBox="0 0 24 24"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4Z"/></svg>Comment</button><button class="action" data-toast="Sharing is handled by the Muse app"><svg viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>Send</button></div>
+        </article>
+
+        <article class="post">
+          <div class="post-head"><div class="avatar gold">TK</div><div class="meta"><strong>Theo Kim</strong><p>Sunroom Bakery · 2 hr</p></div><button class="more" aria-label="More options" data-toast="Post options are available in the full app">•••</button></div>
+          <p class="post-copy">First tray out of the oven. The almond ones didn’t last through the photo.</p>
+          <div class="post-media"><img src="assets/img-02-d5cd9aa61d0a.jpg" alt="Gouache illustration of a bakery table with croissants, coffee, and citrus"></div>
+          <div class="post-stats"><span><b class="like-count">84</b> likes</span><span>9 comments</span></div>
+          <div class="post-actions"><button class="action like"><svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z"/></svg>Like</button><button class="action" data-toast="Comments open in the full app"><svg viewBox="0 0 24 24"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4Z"/></svg>Comment</button><button class="action" data-toast="Sharing is handled by the Muse app"><svg viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>Send</button></div>
+        </article>
+      </section>
+
+      <section class="panel" id="storiesPage">
+        <header class="section-head"><div><h1>Stories</h1><p>Quick glimpses from the community, all in one place.</p></div><button class="primary" data-toast="Story creation is available in the private app">Add story</button></header>
+        <div class="story-grid">
+          <button class="story-card" data-story="Maya’s coast ride"><img src="assets/img-01-51c56363fea0.jpg" alt="Illustrated cyclists riding above the coast"><span class="story-card-info"><strong>Maya’s coast ride</strong><span>Sample story · 4 moments</span></span></button>
+          <button class="story-card" data-story="Theo’s bakery morning"><img src="assets/img-02-d5cd9aa61d0a.jpg" alt="Illustrated bakery table with coffee and pastries"><span class="story-card-info"><strong>Bakery morning</strong><span>Sample story · 6 moments</span></span></button>
+          <button class="story-card" data-story="Ari’s desert hike"><img src="assets/img-03-1b17498d365b.jpg" alt="Illustrated hikers in a red-rock canyon"><span class="story-card-info"><strong>Out past the trailhead</strong><span>Sample story · 3 moments</span></span></button>
+          <button class="story-card" data-story="Nora’s studio"><img src="assets/img-04-b5ff5fe19174.jpg" alt="Illustrated shelves of ceramics in a studio"><span class="story-card-info"><strong>Studio afternoon</strong><span>Sample story · 5 moments</span></span></button>
+        </div>
+      </section>
+
+      <section class="panel" id="videos">
+        <header class="section-head"><div><h1>Videos</h1><p>Longer moments, studio visits, and community guides.</p></div><button class="secondary" data-toast="Video uploads are available in the private app">Upload</button></header>
+        <div class="video-list">
+          <article class="video-card"><div class="video-thumb"><img src="assets/img-01-51c56363fea0.jpg" alt="Illustrated cyclists on a coastal road"><button class="play" aria-label="Play coast ride preview" data-toast="Video preview selected"><svg viewBox="0 0 24 24"><path d="m8 5 11 7-11 7Z"/></svg></button></div><div class="video-info"><div class="avatar small blue">MR</div><div><h3>The golden-hour route we keep coming back to</h3><p>Maya Rivera · Sample video · 4 min</p></div></div></article>
+          <article class="video-card"><div class="video-thumb"><img src="assets/img-04-b5ff5fe19174.jpg" alt="Illustrated ceramic studio and handmade vessels"><button class="play" aria-label="Play studio tour preview" data-toast="Video preview selected"><svg viewBox="0 0 24 24"><path d="m8 5 11 7-11 7Z"/></svg></button></div><div class="video-info"><div class="avatar small gold">NC</div><div><h3>A quiet studio tour: clay, glaze, and a shelf of experiments</h3><p>Nora Chen · Sample video · 7 min</p></div></div></article>
+        </div>
+      </section>
+
+      <section class="panel" id="reels">
+        <header class="section-head"><div><h1>Reels</h1><p>Vertical videos made for quick watching.</p></div><button class="secondary" data-toast="Reel publishing isn’t saved in this public demo">Create reel</button></header>
+        <div class="reel-grid">
+          <button class="reel-card" data-toast="Playing Maya’s sample reel"><img src="assets/img-01-51c56363fea0.jpg" alt="Illustrated cyclists following a coastal road at sunset"><span class="reel-play"><svg viewBox="0 0 24 24"><path d="m8 5 11 7-11 7Z"/></svg></span><span class="reel-info"><strong>Chasing the last light</strong><span>Maya Rivera · Sample reel · 0:24</span></span></button>
+          <button class="reel-card" data-toast="Playing Nora’s sample reel"><img src="assets/img-04-b5ff5fe19174.jpg" alt="Illustrated pottery and tools in a ceramics studio"><span class="reel-play"><svg viewBox="0 0 24 24"><path d="m8 5 11 7-11 7Z"/></svg></span><span class="reel-info"><strong>From clay to cup</strong><span>Nora Chen · Sample reel · 0:38</span></span></button>
+          <button class="reel-card" data-toast="Playing Theo’s sample reel"><img src="assets/img-02-d5cd9aa61d0a.jpg" alt="Illustrated coffee and fresh pastries on a bakery table"><span class="reel-play"><svg viewBox="0 0 24 24"><path d="m8 5 11 7-11 7Z"/></svg></span><span class="reel-info"><strong>Morning bake in 30 seconds</strong><span>Theo Kim · Sample reel · 0:31</span></span></button>
+          <button class="reel-card" data-toast="Playing Ari’s sample reel"><img src="assets/img-03-1b17498d365b.jpg" alt="Illustrated hikers crossing a red-rock canyon"><span class="reel-play"><svg viewBox="0 0 24 24"><path d="m8 5 11 7-11 7Z"/></svg></span><span class="reel-info"><strong>Past the trailhead</strong><span>Ari Novak · Sample reel · 0:42</span></span></button>
+        </div>
+      </section>
+
+      <section class="panel" id="shorts">
+        <header class="section-head"><div><h1>Shorts</h1><p>Fast clips from people and pages you follow.</p></div><button class="secondary" data-toast="Short publishing isn’t saved in this public demo">Create</button></header>
+        <div class="short-grid">
+          <button class="short-card" data-toast="Opening Maya’s sample short"><img src="assets/img-01-51c56363fea0.jpg" alt="Illustrated coastal bicycle ride"><span class="short-copy"><strong>One more hill</strong><span>@maya · Sample short</span></span></button>
+          <button class="short-card" data-toast="Opening Theo’s sample short"><img src="assets/img-02-d5cd9aa61d0a.jpg" alt="Illustrated fresh pastries and coffee"><span class="short-copy"><strong>First tray out</strong><span>@theo · Sample short</span></span></button>
+          <button class="short-card" data-toast="Opening Ari’s sample short"><img src="assets/img-03-1b17498d365b.jpg" alt="Illustrated canyon hiking trail"><span class="short-copy"><strong>Trail check</strong><span>@ari · Sample short</span></span></button>
+          <button class="short-card" data-toast="Opening Nora’s sample short"><img src="assets/img-04-b5ff5fe19174.jpg" alt="Illustrated handmade ceramic cups"><span class="short-copy"><strong>Glaze reveal</strong><span>@nora · Sample short</span></span></button>
+        </div>
+      </section>
+
+      <section class="panel" id="pages">
+        <header class="section-head"><div><h1>Pages</h1><p>Follow creators, places, and community projects.</p></div><button class="primary" data-toast="Page creation is available in the private app">Create page</button></header>
+        <div class="page-grid">
+          <article class="page-card"><div class="page-cover"><img src="assets/img-02-d5cd9aa61d0a.jpg" alt="Illustrated bakery table"></div><h3>Sunroom Bakery</h3><p>Small-batch pastry, good coffee, and notes from the morning bake.</p><div class="page-meta"><span>Sample page · Food</span><button class="secondary follow">Follow</button></div></article>
+          <article class="page-card"><div class="page-cover"><img src="assets/img-04-b5ff5fe19174.jpg" alt="Illustrated ceramics workspace"></div><h3>Open Kiln Studio</h3><p>Clay classes, open studio hours, and work from local makers.</p><div class="page-meta"><span>Sample page · Art</span><button class="secondary follow">Follow</button></div></article>
+          <article class="page-card"><div class="page-cover"><img src="assets/img-01-51c56363fea0.jpg" alt="Illustrated coastal road and bicycles"></div><h3>Coastal Riders</h3><p>Easygoing group rides, route notes, and repair meetups.</p><div class="page-meta"><span>Sample page · Outdoors</span><button class="secondary follow">Follow</button></div></article>
+          <article class="page-card"><div class="page-cover"><img src="assets/img-03-1b17498d365b.jpg" alt="Illustrated hikers in a canyon"></div><h3>Trail Notes</h3><p>Weekend trail ideas and thoughtful tips for getting outside.</p><div class="page-meta"><span>Sample page · Travel</span><button class="secondary follow">Follow</button></div></article>
+        </div>
+      </section>
+
+      <section class="panel" id="notes">
+        <header class="section-head"><div><h1>Notes</h1><p>Short thoughts without the pressure of a full post.</p></div></header>
+        <div class="note-compose"><textarea id="noteText" maxlength="240" placeholder="Write a note for this session…" aria-label="Write a note"></textarea><div class="note-compose-foot"><span class="session-note">Notes disappear when this demo is refreshed.</span><button class="primary" id="addNote">Add note</button></div></div>
+        <div class="notes-list" id="notesList">
+          <article class="note-card"><p>Looking for a calm trail and good shade this weekend. Any favorites?</p><small>Ari · Sample note</small></article>
+          <article class="note-card"><p>The almond pastries are back tomorrow morning.</p><small>Theo · Sample note</small></article>
+        </div>
+      </section>
+
+      <section class="panel" id="private">
+        <header class="section-head"><div><h1>Private</h1><p>A personal space visible only in this browser session.</p></div></header>
+        <div class="private-intro"><span class="private-lock"><svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3"/></svg></span><div><h2>Just for you</h2><p>Anything you add here stays on this screen only. It disappears when you refresh or close the demo.</p></div></div>
+        <div class="private-compose"><textarea id="privateText" maxlength="500" placeholder="Save a private thought for this session…" aria-label="Write a private note"></textarea><img class="private-preview" id="privatePreview" alt="Preview of your private image"><div class="private-compose-foot"><label class="private-upload"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="15" rx="2"/><circle cx="8.5" cy="10" r="1.5"/><path d="m21 15-5-5L5 20"/></svg>Add photo<input type="file" id="privateImage" accept="image/*"></label><button class="primary" id="addPrivate">Add privately</button></div></div>
+        <div class="private-list" id="privateList"><div class="empty-note" id="privateEmpty"><svg viewBox="0 0 24 24" style="width:36px;height:36px;margin:0 auto 12px"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><strong style="display:block;color:var(--ink);margin-bottom:5px">Your private space is empty</strong>Add a thought or photo above. Nothing here is published.</div></div>
+      </section>
+
+      <section class="panel" id="profiles">
+        <header class="section-head"><div><h1>Profile</h1><p>See your posts, interests, and community connections.</p></div><button class="secondary" id="resetProfile">Your profile</button></header>
+        <article class="profile-hero"><div class="avatar" id="profileAvatar">YO</div><div><h2 id="profileName">Your profile</h2><p id="profileBio">Your public demo profile starts fresh for every visitor.</p><div class="profile-stats"><span><strong id="profilePosts">0</strong>posts</span><span><strong id="profileFollowers">0</strong>followers</span><span><strong id="profileFollowing">0</strong>following</span></div></div></article>
+        <div class="profile-gallery" id="profileGallery"><img src="assets/img-01-51c56363fea0.jpg" alt="Illustrated coastal ride"><img src="assets/img-02-d5cd9aa61d0a.jpg" alt="Illustrated bakery morning"><img src="assets/img-04-b5ff5fe19174.jpg" alt="Illustrated ceramics studio"></div>
+        <div class="people-grid">
+          <article class="person-card"><div class="person-head"><div class="avatar small blue">MR</div><div><h3>Maya Rivera</h3><span>Coastal Riders</span></div></div><p>Bike rides, open roads, and the occasional sunset detour.</p><button class="secondary view-profile" data-name="Maya Rivera" data-initials="MR" data-bio="Bike rides, open roads, and the occasional sunset detour." data-posts="42" data-followers="680" data-following="219">View profile</button></article>
+          <article class="person-card"><div class="person-head"><div class="avatar small gold">TK</div><div><h3>Theo Kim</h3><span>Sunroom Bakery</span></div></div><p>Baker, early riser, and enthusiastic keeper of recipe notes.</p><button class="secondary view-profile" data-name="Theo Kim" data-initials="TK" data-bio="Baker, early riser, and enthusiastic keeper of recipe notes." data-posts="31" data-followers="524" data-following="143">View profile</button></article>
+          <article class="person-card"><div class="person-head"><div class="avatar small green">AN</div><div><h3>Ari Novak</h3><span>Weekend Outside</span></div></div><p>Finding the quieter trail and bringing enough snacks for everyone.</p><button class="secondary view-profile" data-name="Ari Novak" data-initials="AN" data-bio="Finding the quieter trail and bringing enough snacks for everyone." data-posts="28" data-followers="390" data-following="188">View profile</button></article>
+          <article class="person-card"><div class="person-head"><div class="avatar small gold">NC</div><div><h3>Nora Chen</h3><span>Open Kiln Studio</span></div></div><p>Ceramics, glaze tests, and small moments from the studio.</p><button class="secondary view-profile" data-name="Nora Chen" data-initials="NC" data-bio="Ceramics, glaze tests, and small moments from the studio." data-posts="54" data-followers="742" data-following="166">View profile</button></article>
+        </div>
+      </section>
+
+      <section class="panel" id="business">
+        <header class="section-head"><div><h1>Business dashboard</h1><p>Manage your profile and see what you’ve done in this session.</p></div><button class="secondary" data-tab="profiles">View profile</button></header>
+        <div class="business-hero"><div class="business-owner"><div class="avatar">YO</div><div><h2 id="businessDisplayName">Your space</h2><p>Creator account · Public demo</p></div></div><span class="status-chip">Session active</span></div>
+        <div class="business-metrics" aria-label="Session activity">
+          <div class="business-metric"><span>POSTS ADDED</span><strong id="businessPosts">0</strong></div>
+          <div class="business-metric"><span>NOTES ADDED</span><strong id="businessNotes">0</strong></div>
+          <div class="business-metric"><span>PAGES FOLLOWED</span><strong id="businessFollows">0</strong></div>
+          <div class="business-metric"><span>PRIVATE ITEMS</span><strong id="businessPrivate">0</strong></div>
+        </div>
+        <div class="business-grid">
+          <section class="business-card"><h2>Profile details</h2><p>Update the name and bio shown on your profile for this session.</p><div class="business-form"><label for="businessName">Display name<input id="businessName" aria-label="Display name" maxlength="40" value="Your profile"></label><label for="businessBio">Bio<textarea id="businessBio" aria-label="Bio" maxlength="160">Your public demo profile starts fresh for every visitor.</textarea></label><button class="primary" id="saveBusinessProfile">Update profile</button></div></section>
+          <section class="business-card"><h2>Content tools</h2><p>Jump straight to the places you use most.</p><div class="business-actions"><button class="business-action" id="businessNewPost"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Create a post</button><button class="business-action" data-tab="notes"><svg viewBox="0 0 24 24"><path d="M5 3h14v18H5Z"/><path d="M8 8h8M8 12h8"/></svg>Write a note</button><button class="business-action" data-tab="videos"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m10 9 5 3-5 3Z"/></svg>Open videos</button><button class="business-action" data-tab="pages"><svg viewBox="0 0 24 24"><path d="M4 3h13l3 3v15H4Z"/><path d="M8 9h8M8 13h8"/></svg>Manage followed pages</button></div><div class="business-foot">Dashboard counts reflect only actions in this demo session. They reset when the page refreshes.</div></section>
+        </div>
+      </section>
+
+      <section class="panel" id="more">
+        <header class="section-head"><div><h1>Explore</h1><p>Jump to every part of the community.</p></div></header>
+        <div class="more-menu">
+          <button class="more-link" data-tab="reels"><svg viewBox="0 0 24 24"><path d="M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path d="m10 10 5 3-5 3Z"/></svg>Reels</button>
+          <button class="more-link" data-tab="videos"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m10 9 5 3-5 3Z"/></svg>Videos</button>
+          <button class="more-link" data-tab="shorts"><svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="m10 9 5 3-5 3Z"/></svg>Shorts</button>
+          <button class="more-link" data-tab="private"><svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>Private</button>
+          <button class="more-link" data-tab="pages"><svg viewBox="0 0 24 24"><path d="M4 3h13l3 3v15H4Z"/><path d="M8 9h8M8 13h8"/></svg>Pages</button>
+          <button class="more-link" data-tab="notes"><svg viewBox="0 0 24 24"><path d="M5 3h14v18H5Z"/><path d="M8 8h8M8 12h8"/></svg>Notes</button>
+          <button class="more-link" data-tab="profiles"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>Profile</button>
+          <button class="more-link" data-tab="business"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 15v2m5-6v6m5-9v9"/></svg>Business dashboard</button>
+          <button class="more-link" data-tab="market"><svg viewBox="0 0 24 24"><path d="M4 9v11h16V9M3 9l2-5h14l2 5"/></svg>Marketplace</button>
+          <button class="more-link" data-tab="community"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20v-2a6 6 0 0 1 12 0v2M16 4a3 3 0 0 1 0 6"/></svg>Community</button>
+          <button class="more-link" data-tab="messages"><svg viewBox="0 0 24 24"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4Z"/></svg>Messages</button>
+        </div>
+      </section>
+
+      <section class="panel" id="market">
+        <header class="section-head"><div><h1>Marketplace</h1><p>Browse community finds in this demo.</p></div><button class="primary" data-toast="Selling is available in the private app">Sell</button></header>
+        <div class="market-toolbar"><input id="marketSearch" type="search" placeholder="Search demo listings" aria-label="Search demo listings"><button class="secondary" data-toast="Filter options open in the full app">Filters</button></div>
+        <div class="market-grid" id="marketGrid">
+          <article class="listing" data-search="handmade speckled mugs ceramics"><img src="assets/img-04-b5ff5fe19174.jpg" alt="Illustrated ceramic studio with handmade mugs"><div class="listing-body"><span class="demo-tag">SAMPLE LISTING</span><div class="price">$28</div><h3>Pair of speckled mugs</h3><p>Handmade · Local pickup</p><button class="secondary" data-toast="Seller messaging is available in the private app">Message seller</button></div></article>
+          <article class="listing" data-search="vintage city bicycle bike blue"><img src="assets/img-01-51c56363fea0.jpg" alt="Illustrated bicycles on a coastal road"><div class="listing-body"><span class="demo-tag">SAMPLE LISTING</span><div class="price">$160</div><h3>Vintage city bicycle</h3><p>Good condition · Local pickup</p><button class="secondary" data-toast="Seller messaging is available in the private app">Message seller</button></div></article>
+          <article class="listing" data-search="baking starter set kitchen bread"><img src="assets/img-02-d5cd9aa61d0a.jpg" alt="Illustrated baking table with pastries"><div class="listing-body"><span class="demo-tag">SAMPLE LISTING</span><div class="price">$35</div><h3>Weekend baking set</h3><p>Six pieces · Like new</p><button class="secondary" data-toast="Seller messaging is available in the private app">Message seller</button></div></article>
+          <article class="listing" data-search="hiking daypack backpack outdoor trail"><img src="assets/img-03-1b17498d365b.jpg" alt="Illustrated hikers on a canyon trail"><div class="listing-body"><span class="demo-tag">SAMPLE LISTING</span><div class="price">$42</div><h3>Trail daypack</h3><p>Lightly used · 18 liter</p><button class="secondary" data-toast="Seller messaging is available in the private app">Message seller</button></div></article>
+        </div>
+      </section>
+
+      <section class="panel" id="community">
+        <header class="section-head"><div><h1>Community</h1><p>Groups and events worth stepping into.</p></div><button class="primary" data-toast="Group creation is available in the private app">Create</button></header>
+        <div class="community-grid">
+          <article class="group-card"><div class="group-cover"><img src="assets/img-04-b5ff5fe19174.jpg" alt="Illustrated pottery workspace"></div><div class="group-body"><h3>Made by Hand</h3><p>A friendly group for ceramics, printmaking, textiles, and works in progress.</p><div class="group-meta"><span>Sample group · 2.4K members</span><button class="secondary join">Join</button></div></div></article>
+          <article class="group-card"><div class="group-cover"><img src="assets/img-03-1b17498d365b.jpg" alt="Illustrated hikers crossing a desert canyon"></div><div class="group-body"><h3>Weekend Outside</h3><p>Trail ideas, casual meetups, and a reason to leave the couch before noon.</p><div class="group-meta"><span>Sample group · 1.1K members</span><button class="secondary join">Join</button></div></div></article>
+          <article class="group-card"><div class="group-cover"><img src="assets/img-02-d5cd9aa61d0a.jpg" alt="Illustrated bakery table"></div><div class="group-body"><h3>Neighborhood Table</h3><p>Recipe swaps, local food finds, and low-key Sunday brunch plans.</p><div class="group-meta"><span>Sample group · 860 members</span><button class="secondary join">Join</button></div></div></article>
+          <article class="group-card"><div class="group-cover"><img src="assets/img-01-51c56363fea0.jpg" alt="Illustrated coastal bicycle ride"></div><div class="group-body"><h3>City on Two Wheels</h3><p>Friendly rides, repair tips, and the best routes to take the long way home.</p><div class="group-meta"><span>Sample group · 3K members</span><button class="secondary join">Join</button></div></div></article>
+        </div>
+      </section>
+
+      <section class="panel" id="messages">
+        <header class="section-head"><div><h1>Messages</h1><p>Your conversations would appear here.</p></div><button class="primary" data-toast="New messaging is available in the private app">New message</button></header>
+        <div class="empty-note"><svg viewBox="0 0 24 24" style="width:38px;height:38px;margin:0 auto 12px"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4Z"/></svg><strong style="display:block;color:var(--ink);margin-bottom:5px">No demo conversations</strong>Messages aren’t shared or saved in the public demo.</div>
+      </section>
+    </main>
+
+    <aside class="right">
+      <section class="right-card"><h2>Online now</h2><p class="sub">People from your circles</p><div class="contact"><div class="avatar small blue">MR</div><div><strong>Maya Rivera</strong><span>Coastal Riders</span></div><i class="online"></i></div><div class="contact"><div class="avatar small gold">TK</div><div><strong>Theo Kim</strong><span>Neighborhood Table</span></div><i class="online"></i></div><div class="contact"><div class="avatar small green">AN</div><div><strong>Ari Novak</strong><span>Weekend Outside</span></div><i class="online"></i></div></section>
+      <section class="right-card"><h2>Coming up</h2><div class="event"><div class="datebox"><small>SEP</small>12</div><div><strong>Sunset social ride</strong><span>6:30 PM · Sample event</span></div></div><div class="event"><div class="datebox" style="background:#eaf2ff;color:#2d65ad"><small>SEP</small>19</div><div><strong>Open studio afternoon</strong><span>1:00 PM · Sample event</span></div></div></section>
+    </aside>
+  </div>
+
+  <nav class="mobile-nav" aria-label="Mobile navigation">
+    <button class="active" data-tab="feed"><svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10H3Z"/><path d="M9 20v-6h6v6"/></svg>Feed</button>
+    <button data-tab="reels"><svg viewBox="0 0 24 24"><path d="M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path d="m10 10 5 3-5 3Z"/></svg>Reels</button>
+    <button data-tab="shorts"><svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="m10 9 5 3-5 3Z"/></svg>Shorts</button>
+    <button data-tab="private"><svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>Private</button>
+    <button data-tab="more"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></svg>More</button>
+  </nav>
+
+  <div class="modal" id="composerModal" role="dialog" aria-modal="true" aria-labelledby="composerTitle">
+    <div class="modal-card"><div class="modal-head"><h2 id="composerTitle">Create a post</h2><button class="close" id="closeComposer" aria-label="Close">×</button></div><textarea id="postText" placeholder="What’s on your mind?"></textarea><label class="upload">Add an image from this device<input type="file" id="postImage" accept="image/*"></label><img class="preview" id="postPreview" alt="Preview of selected upload"><div class="modal-actions"><span class="session-note">This public demo keeps posts only until you close or refresh it.</span><button class="primary" id="publishPost">Add to feed</button></div></div>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script>
+    const panels=[...document.querySelectorAll('.panel')];
+    const tabButtons=[...document.querySelectorAll('[data-tab]')];
+    function openTab(id){
+      panels.forEach(p=>p.classList.toggle('active',p.id===id));
+      tabButtons.forEach(b=>b.classList.toggle('active',b.dataset.tab===id));
+      window.scrollTo({top:0,behavior:'smooth'});
+    }
+    tabButtons.forEach(b=>b.addEventListener('click',()=>openTab(b.dataset.tab)));
+
+    const toast=document.getElementById('toast');let toastTimer;
+    function showToast(text){toast.textContent=text;toast.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>toast.classList.remove('show'),2200)}
+    document.querySelectorAll('[data-toast]').forEach(el=>el.addEventListener('click',()=>showToast(el.dataset.toast)));
+    document.querySelectorAll('[data-story]').forEach(el=>el.addEventListener('click',()=>showToast(`Viewing ${el.dataset.story}`)));
+
+    const dashboardState={posts:0,notes:0,follows:0,privateItems:0};
+    function updateDashboard(){document.getElementById('businessPosts').textContent=dashboardState.posts;document.getElementById('businessNotes').textContent=dashboardState.notes;document.getElementById('businessFollows').textContent=dashboardState.follows;document.getElementById('businessPrivate').textContent=dashboardState.privateItems}
+
+    document.addEventListener('click',e=>{
+      const like=e.target.closest('.like');if(!like)return;
+      const count=like.closest('.post').querySelector('.like-count');const on=like.classList.toggle('liked');
+      count.textContent=Number(count.textContent)+(on?1:-1);like.lastChild.textContent=on?' Liked':' Like';
+    });
+    document.querySelectorAll('.join').forEach(btn=>btn.addEventListener('click',()=>{const joined=btn.textContent==='Joined';btn.textContent=joined?'Join':'Joined';btn.style.color=joined?'':'#247b63';showToast(joined?'Left group':'Joined for this session')}));
+    document.querySelectorAll('.follow').forEach(btn=>btn.addEventListener('click',()=>{const following=btn.textContent==='Following';btn.textContent=following?'Follow':'Following';btn.style.color=following?'':'#247b63';dashboardState.follows+=following?-1:1;updateDashboard();showToast(following?'Unfollowed for this session':'Following for this session')}));
+
+    const noteText=document.getElementById('noteText');
+    document.getElementById('addNote').addEventListener('click',()=>{const copy=noteText.value.trim();if(!copy){showToast('Write a note first');return}const note=document.createElement('article');note.className='note-card';const p=document.createElement('p');p.textContent=copy;const small=document.createElement('small');small.textContent='You · Just now · This session';note.append(p,small);document.getElementById('notesList').prepend(note);noteText.value='';dashboardState.notes+=1;updateDashboard();showToast('Note added for this session')});
+
+    const privateText=document.getElementById('privateText'),privateImage=document.getElementById('privateImage'),privatePreview=document.getElementById('privatePreview');let privateImageData='';
+    privateImage.addEventListener('change',()=>{const chosen=privateImage.files[0];if(!chosen)return;const reader=new FileReader();reader.onload=()=>{privateImageData=reader.result;privatePreview.src=privateImageData;privatePreview.style.display='block'};reader.readAsDataURL(chosen)});
+    document.getElementById('addPrivate').addEventListener('click',()=>{const copy=privateText.value.trim();if(!copy&&!privateImageData){showToast('Add a thought or photo first');return}document.getElementById('privateEmpty')?.remove();const card=document.createElement('article');card.className='private-card';if(copy){const p=document.createElement('p');p.textContent=copy;card.append(p)}if(privateImageData){const img=document.createElement('img');img.src=privateImageData;img.alt='Your private uploaded image';card.append(img)}const meta=document.createElement('div');meta.className='private-meta';meta.innerHTML='<span>Only you · Just now · This session</span><button type="button">Remove</button>';meta.querySelector('button').addEventListener('click',()=>{card.remove();dashboardState.privateItems=Math.max(0,dashboardState.privateItems-1);updateDashboard();if(!document.querySelector('#privateList .private-card')){document.getElementById('privateList').innerHTML='<div class="empty-note" id="privateEmpty"><strong style="display:block;color:var(--ink);margin-bottom:5px">Your private space is empty</strong>Add a thought or photo above. Nothing here is published.</div>'}showToast('Removed from your private space')});card.append(meta);document.getElementById('privateList').prepend(card);dashboardState.privateItems+=1;updateDashboard();privateText.value='';privateImage.value='';privatePreview.style.display='none';privatePreview.removeAttribute('src');privateImageData='';showToast('Added to your private space for this session')});
+
+    const profile={avatar:document.getElementById('profileAvatar'),name:document.getElementById('profileName'),bio:document.getElementById('profileBio'),posts:document.getElementById('profilePosts'),followers:document.getElementById('profileFollowers'),following:document.getElementById('profileFollowing')};
+    function setProfile(data){profile.avatar.textContent=data.initials;profile.name.textContent=data.name;profile.bio.textContent=data.bio;profile.posts.textContent=data.posts;profile.followers.textContent=data.followers;profile.following.textContent=data.following;profile.avatar.style.background=data.initials==='YO'?'':'#2e6ec4';openTab('profiles')}
+    document.querySelectorAll('.view-profile').forEach(btn=>btn.addEventListener('click',()=>setProfile(btn.dataset)));
+    document.getElementById('resetProfile').addEventListener('click',()=>setProfile({initials:'YO',name:document.getElementById('businessName').value.trim()||'Your profile',bio:document.getElementById('businessBio').value.trim()||'Your public demo profile starts fresh for every visitor.',posts:String(dashboardState.posts),followers:'0',following:String(dashboardState.follows)}));
+    document.getElementById('saveBusinessProfile').addEventListener('click',()=>{const name=document.getElementById('businessName').value.trim();const bio=document.getElementById('businessBio').value.trim();if(!name){showToast('Add a display name first');return}document.getElementById('businessDisplayName').textContent=name;document.querySelector('.profile-mini strong').textContent=name;profile.name.textContent=name;profile.bio.textContent=bio||'No bio added yet.';profile.posts.textContent=dashboardState.posts;profile.following.textContent=dashboardState.follows;showToast('Profile updated for this session')});
+
+    const search=document.getElementById('marketSearch');
+    search.addEventListener('input',()=>{const q=search.value.trim().toLowerCase();document.querySelectorAll('.listing').forEach(x=>x.style.display=x.dataset.search.includes(q)?'':'none')});
+
+    const modal=document.getElementById('composerModal'),text=document.getElementById('postText'),file=document.getElementById('postImage'),preview=document.getElementById('postPreview');let imageData='';
+    function openComposer(focusFile=false){modal.classList.add('open');document.body.style.overflow='hidden';setTimeout(()=>focusFile?file.click():text.focus(),60)}
+    function closeComposer(){modal.classList.remove('open');document.body.style.overflow=''}
+    document.getElementById('openComposer').addEventListener('click',()=>openComposer());document.getElementById('photoShortcut').addEventListener('click',()=>openComposer(true));document.getElementById('businessNewPost').addEventListener('click',()=>openComposer());document.getElementById('closeComposer').addEventListener('click',closeComposer);modal.addEventListener('click',e=>{if(e.target===modal)closeComposer()});
+    file.addEventListener('change',()=>{const f=file.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{imageData=r.result;preview.src=imageData;preview.style.display='block'};r.readAsDataURL(f)});
+    document.getElementById('publishPost').addEventListener('click',()=>{const copy=text.value.trim();if(!copy&&!imageData){showToast('Add a note or an image first');return}const article=document.createElement('article');article.className='post';article.innerHTML=`<div class="post-head"><div class="avatar">YO</div><div class="meta"><strong>You</strong><p>Just now · This session</p></div><button class="more" aria-label="More options">•••</button></div>${copy?`<p class="post-copy"></p>`:''}${imageData?`<div class="post-media"><img alt="Your uploaded post image"></div>`:''}<div class="post-stats"><span><b class="like-count">0</b> likes</span><span>New post</span></div><div class="post-actions"><button class="action like"><svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z"/></svg>Like</button><button class="action"><svg viewBox="0 0 24 24"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4Z"/></svg>Comment</button><button class="action"><svg viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>Send</button></div>`;if(copy)article.querySelector('.post-copy').textContent=copy;if(imageData)article.querySelector('.post-media img').src=imageData;document.getElementById('sessionPosts').prepend(article);dashboardState.posts+=1;updateDashboard();profile.posts.textContent=dashboardState.posts;text.value='';file.value='';preview.style.display='none';preview.removeAttribute('src');imageData='';closeComposer();showToast('Added to your feed for this session')});
+  </script>
+</body>
+</html>
