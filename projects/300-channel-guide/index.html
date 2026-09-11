@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#071018" />
+  <link rel="icon" href="data:," />
+  <title>GROSSO 300</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,500;0,600;0,700;0,800;0,900;1,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+    :root{
+      --ink:#071018; --panel:#0c1822; --panel2:#102431; --line:#29404f;
+      --paper:#f5f1e8; --muted:#98a8b3; --cyan:#45d7df; --yellow:#ffd12a;
+      --red:#f2483d; --green:#77d685; --focus:#fff7d6;
+    }
+    *{box-sizing:border-box}
+    html{background:var(--ink);color:var(--paper);font-family:"Barlow Condensed",sans-serif;scroll-behavior:smooth}
+    body{margin:0;min-height:100vh;background:
+      linear-gradient(rgba(69,215,223,.035) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(69,215,223,.035) 1px,transparent 1px),var(--ink);
+      background-size:30px 30px}
+    button,input{font:inherit}
+    button{cursor:pointer}
+    .skip{position:fixed;left:12px;top:-60px;background:var(--yellow);color:#000;padding:10px 14px;z-index:99}.skip:focus{top:12px}
+    .mast{position:relative;padding:28px clamp(18px,5vw,68px) 26px;border-bottom:1px solid var(--line);overflow:hidden;background:#071018}
+    .mast:after{content:"";position:absolute;inset:0 0 0 auto;width:34%;background:repeating-linear-gradient(115deg,transparent 0 14px,rgba(69,215,223,.08) 14px 16px);pointer-events:none}
+    .brand{display:flex;align-items:flex-end;gap:18px;position:relative;z-index:1}
+    .wordmark{margin:0;font-size:clamp(54px,10vw,132px);font-weight:900;font-style:italic;line-height:.78;letter-spacing:-.055em;color:var(--paper);text-shadow:5px 5px 0 var(--red)}
+    .wordmark strong{color:var(--yellow);font-weight:900}
+    .tag{margin:24px 0 0;font-family:"IBM Plex Mono",monospace;font-size:clamp(14px,2vw,21px);color:var(--cyan)}
+    .tag b{color:var(--paper);font-weight:500}
+    .topline{display:flex;align-items:center;justify-content:space-between;gap:20px;position:relative;z-index:1;margin-bottom:22px}
+    .signal{display:flex;gap:8px;align-items:center;font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+    .signal i{width:9px;height:9px;border-radius:50%;background:var(--red);box-shadow:0 0 0 4px rgba(242,72,61,.13)}
+    .clock{font-family:"IBM Plex Mono",monospace;color:var(--paper);font-size:13px}
+    .video-guide{padding:24px clamp(14px,4vw,60px);background:#050b10;border-bottom:1px solid var(--line)}
+    .video-shell{max-width:1400px;margin:auto;display:grid;grid-template-columns:minmax(0,1fr) 250px;background:#020507;border:1px solid #365060;box-shadow:0 18px 42px rgba(0,0,0,.3)}
+    .video-frame{position:relative;min-width:0;background:#000}
+    .video-shell video{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;background:#000}
+    .video-badge{position:absolute;left:14px;top:14px;padding:8px 11px;background:rgba(7,16,24,.9);border-left:4px solid var(--yellow);color:var(--paper);font-family:"IBM Plex Mono",monospace;font-size:12px;font-weight:600;letter-spacing:.06em;pointer-events:none}
+    .video-badge strong{color:var(--yellow)}
+    .video-info{padding:22px 20px;display:flex;flex-direction:column;justify-content:space-between;border-left:1px solid var(--line);background:var(--panel)}
+    .video-kicker{margin:0;font-family:"IBM Plex Mono",monospace;font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--red)}
+    .video-info h2{margin:9px 0 12px;font-size:34px;line-height:.95;letter-spacing:-.02em}
+    .video-info p{margin:0;color:#c3ced4;font-family:"IBM Plex Mono",monospace;font-size:12px;line-height:1.55}
+    .video-note{display:flex;align-items:center;gap:8px;margin-top:18px;color:var(--cyan);font-family:"IBM Plex Mono",monospace;font-size:11px}
+    .video-note i{width:8px;height:8px;border-radius:50%;background:var(--red);box-shadow:0 0 0 4px rgba(242,72,61,.12)}
+    .controls{position:sticky;top:0;z-index:20;background:rgba(7,16,24,.98);border-bottom:1px solid var(--line);padding:14px clamp(14px,4vw,60px)}
+    .control-row{display:grid;grid-template-columns:minmax(190px,1fr) auto;gap:12px;max-width:1400px;margin:auto}
+    .search-wrap{position:relative}
+    .search-wrap svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:19px;color:var(--muted)}
+    #search{width:100%;height:48px;border:1px solid var(--line);border-radius:4px;background:#0b1720;color:var(--paper);padding:0 16px 0 44px;font-family:"IBM Plex Mono",monospace;font-size:14px;outline:none}
+    #search:focus{border-color:var(--cyan);box-shadow:0 0 0 2px rgba(69,215,223,.18)}
+    #favoritesBtn{height:48px;border:1px solid var(--line);border-radius:4px;background:var(--panel2);color:var(--paper);padding:0 18px;font-weight:700;letter-spacing:.03em}
+    #favoritesBtn[aria-pressed="true"]{background:var(--yellow);color:#111;border-color:var(--yellow)}
+    .filters{display:flex;gap:8px;margin:12px auto 0;max-width:1400px;flex-wrap:wrap}
+    .filter{border:1px solid var(--line);background:transparent;color:var(--muted);padding:8px 12px;border-radius:3px;font-weight:700;font-size:14px;letter-spacing:.035em}
+    .filter:hover,.filter:focus-visible{color:var(--paper);border-color:var(--cyan)}
+    .filter[aria-pressed="true"]{background:var(--cyan);color:#041216;border-color:var(--cyan)}
+    main{max-width:1400px;margin:auto;padding:24px clamp(14px,4vw,60px) 80px}
+    .guide-meta{display:flex;justify-content:space-between;align-items:end;gap:16px;margin:0 0 14px}
+    .guide-meta h2{margin:0;font-size:clamp(30px,5vw,52px);line-height:1;font-weight:800;letter-spacing:-.025em}
+    .count{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--muted);white-space:nowrap}
+    .timeline{display:grid;grid-template-columns:96px minmax(130px,1fr) 1.2fr .9fr 44px;gap:0;background:var(--panel2);border:1px solid var(--line);border-bottom:0;color:var(--muted);font-family:"IBM Plex Mono",monospace;font-size:11px;text-transform:uppercase;letter-spacing:.08em}
+    .timeline span{padding:10px 12px;border-right:1px solid var(--line)}
+    .timeline span:last-child{border:0}
+    .channel-list{border:1px solid var(--line)}
+    .channel{display:grid;grid-template-columns:96px minmax(130px,1fr) 1.2fr .9fr 44px;align-items:stretch;min-height:82px;background:#0a151e;border-bottom:1px solid var(--line);transition:background .12s ease}
+    .channel:last-child{border-bottom:0}
+    .channel:hover,.channel:focus-within{background:#10222e}
+    .cell{padding:13px 12px;border-right:1px solid var(--line);min-width:0;display:flex;flex-direction:column;justify-content:center}
+    .number{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:24px;color:var(--yellow)}
+    .band{font-family:"IBM Plex Mono",monospace;font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.12em;margin-top:3px}
+    .channel-name{font-size:22px;line-height:1.05;font-weight:800;letter-spacing:.01em}
+    .genre{color:var(--cyan);font-size:12px;margin-top:5px;font-family:"IBM Plex Mono",monospace}
+    .program-title{font-size:18px;font-weight:700;line-height:1.1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .program-meta{color:var(--muted);font-family:"IBM Plex Mono",monospace;font-size:10px;margin-top:7px}
+    .progress{height:3px;background:#263744;margin-top:9px;overflow:hidden}.progress b{display:block;height:100%;background:var(--red)}
+    .next .program-title{color:#c6d1d7;font-size:16px;font-weight:600}
+    .fav{border:0;background:transparent;color:#6f838e;font-size:25px;display:flex;align-items:center;justify-content:center;padding:0}
+    .fav:hover,.fav:focus-visible,.fav[aria-pressed="true"]{color:var(--yellow);outline:none}
+    .empty{padding:70px 20px;text-align:center;border:1px solid var(--line);background:var(--panel)}
+    .empty h3{font-size:30px;margin:0 0 7px}.empty p{font-family:"IBM Plex Mono",monospace;color:var(--muted);margin:0}
+    .jump{position:fixed;right:18px;bottom:18px;width:46px;height:46px;border:0;border-radius:50%;background:var(--yellow);color:#111;font-size:22px;font-weight:900;box-shadow:0 8px 22px rgba(0,0,0,.3);display:none;z-index:30}
+    footer{border-top:1px solid var(--line);padding:24px clamp(18px,5vw,68px);display:flex;justify-content:space-between;gap:20px;color:var(--muted);font-family:"IBM Plex Mono",monospace;font-size:11px}
+    kbd{border:1px solid #48606f;background:#11222d;color:var(--paper);padding:2px 5px;border-radius:2px;font-family:inherit}
+    .accent-syfy{--row-accent:#45d7df}.accent-diy{--row-accent:#ff9f43}.accent-space{--row-accent:#8fb4ff}.accent-tech{--row-accent:#77d685}.accent-camping{--row-accent:#d6bc72}.accent-survival{--row-accent:#f2483d}.accent-zombie{--row-accent:#b7e451}
+    .channel .number{border-left:4px solid var(--row-accent)}
+    @media(max-width:760px){
+      .mast{padding-top:20px}.topline{margin-bottom:20px}.brand{display:block}.wordmark{font-size:clamp(58px,20vw,90px)}.tag{margin-top:18px}
+      .video-guide{padding:14px 0}.video-shell{display:block;border-left:0;border-right:0}.video-info{border-left:0;border-top:1px solid var(--line);padding:16px 18px}.video-info h2{font-size:28px}.video-note{margin-top:12px}
+      .control-row{grid-template-columns:1fr 48px}#favoritesBtn{font-size:0;padding:0}#favoritesBtn:after{content:"★";font-size:21px}
+      .filters{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));overflow:visible}.filter{min-width:0;padding:8px 6px;font-size:12px;white-space:normal}.filters .filter:first-child{grid-column:1/-1}
+      main{padding-top:20px}.timeline{display:none}
+      .channel{grid-template-columns:84px 1fr 42px;min-height:0;position:relative}
+      .channel>.cell{border-right:1px solid var(--line)}
+      .channel>.cell:nth-child(2){padding-right:9px}
+      .channel>.cell:nth-child(3){grid-column:2/4;border-top:1px solid var(--line);border-right:0;padding-top:12px;padding-bottom:12px}
+      .channel>.cell:nth-child(4){grid-column:2/4;border-top:1px dashed #263b48;border-right:0;padding-top:10px;padding-bottom:10px}
+      .channel>.fav{grid-column:3;grid-row:1;min-height:70px}
+      .number{font-size:20px}.channel-name{font-size:20px}.program-title{white-space:normal}.next .program-title{font-size:15px}
+      footer{display:block;line-height:1.8}footer span:last-child{display:none}
+    }
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.channel{transition:none}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#guide">Skip to guide</a>
+  <header class="mast">
+    <div class="topline"><span class="signal"><i></i> Broadcast lineup</span><time class="clock" id="clock">--:--</time></div>
+    <div class="brand"><h1 class="wordmark">GROSSO <strong>300</strong></h1></div>
+    <p class="tag"><b>300 channels.</b> Seven worlds. <span>SCI-FI / DIY / SPACE / TECH / CAMPING / LONE SURVIVAL / ZOMBIE SURVIVAL GAMES</span></p>
+  </header>
+
+  <section class="video-guide" aria-labelledby="videoGuideTitle">
+    <div class="video-shell">
+      <div class="video-frame">
+        <video autoplay muted loop playsinline controls preload="metadata" aria-label="GROSSO 300 video guide preview">
+          <source src="assets/grosso-300-video-guide.mp4" type="video/mp4">
+          Your browser does not support the GROSSO 300 video guide.
+        </video>
+        <span class="video-badge">GROSSO <strong>300</strong> · VIDEO GUIDE</span>
+      </div>
+      <div class="video-info">
+        <div>
+          <p class="video-kicker">Now playing</p>
+          <h2 id="videoGuideTitle">GROSSO 300 Video Guide</h2>
+          <p>A rolling preview of the GROSSO 300 lineup. Use the controls to pause, replay, or turn on sound.</p>
+        </div>
+        <span class="video-note"><i></i> Playing at the top of the guide</span>
+      </div>
+    </div>
+  </section>
+
+  <nav class="controls" aria-label="Guide controls">
+    <div class="control-row">
+      <label class="search-wrap"><span class="sr-only" hidden>Search channels or shows</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="search" type="search" placeholder="Search channels or shows" autocomplete="off"></label>
+      <button id="favoritesBtn" type="button" aria-pressed="false">★ Favorites</button>
+    </div>
+    <div class="filters" id="filters" aria-label="Channel worlds"></div>
+  </nav>
+
+  <main id="guide">
+    <div class="guide-meta"><h2 id="sectionTitle">All worlds</h2><span class="count" id="count">300 channels</span></div>
+    <div class="timeline" aria-hidden="true"><span>Channel</span><span>Network</span><span id="nowLabel">On now</span><span id="nextLabel">Up next</span><span>Fav</span></div>
+    <section class="channel-list" id="channelList" aria-live="polite" aria-label="Channel lineup"></section>
+  </main>
+  <button class="jump" id="jump" type="button" aria-label="Back to top">↑</button>
+  <footer><span>Fictional entertainment lineup • schedules rotate every 30 minutes</span><span><kbd>/</kbd> search &nbsp; <kbd>↑</kbd><kbd>↓</kbd> browse</span></footer>
+
+<script>
+const worlds = [
+  {id:'syfy',label:'Sci-Fi',range:'001–043',names:['Quantum One','Nebula Nine','The Rift','Tomorrow TV','Alien Signal','Chronos','Cyber Moon','Star Frontier','Parallel','Deep Future','Ion Drive','Red Planet','Void Vision','Time Loop','Android Alley','Galactic','Terraform','After Earth','Cosmic Noir','Event Horizon','Warp Gate','Zero Gravity','First Contact','Singularity','Night Orbit','Dream Circuit','Future Crime','Solaris','Exoplanet','Astro Punk','Moon Colony','Dark Matter','Starlight','The Multiverse','Neon Earth','Space Opera','Robot Republic','Outer Rim','New Worlds','Black Star','Retro Future','Utopia','Dystopia','Mars 24','Europa','Titan','Proxima','The Encounter','Infinite','Last Transmission'],shows:['Echoes of Europa','The Last Starship','Synthetic Dawn','Beyond the Rift','Mars After Midnight','Protocol: Earth','The Quantum Thief','Signal from Kepler','Neon Colony','Orbit Unknown','The Timekeepers','Red Moon Rising']},
+  {id:'diy',label:'DIY',range:'044–086',names:['Build Lab','Fix It Now','Workshop','The Maker','Home Hack','Wood & Wire','Tool Time TV','Restore','Reno Room','Weekend Build','Craft House','Garage Works','Upcycle','Make Better','Backyard Lab','The Carpenter','Paint & Paper','Tile Line','Plumb Smart','Electric Home','Design Build','Tiny Workshop','Repurpose','Hands On','The Fixers','Maker Kids','Concrete','Cabinetry','Outdoor Build','House Rescue','Furniture Lab','Metal Works','Sew Studio','Ceramics','Press Shop','Smart Reno','Salvage','Built Local','Homestead Works','Finish Line','Power Tools','Garden Build','The Shed','Fix Forward','Project 24','Make Space','Budget Build','Old House Lab','DIY Daily','Master Makers'],shows:['Weekend Workbench','Fix It in Five','Room Reset','Built from Scratch','The Salvage Crew','One-Day Upgrade','Measure Twice','Toolbox Challenge','Before & Better','Workshop Stories','The Clever Fix','Make It Last']},
+  {id:'space',label:'Space',range:'087–129',names:['Orbital','Deep Space','Mission Control','Lunar','Rocket TV','Cosmos Live','Mars Base','Satellite','Astronaut','Space Science','Launchpad','Moonshot','Beyond Earth','Telescope','Night Sky','Spacewalk','Discovery Orbit','The Universe','Asteroid','Comet','Solar Watch','ISS View','Planetary','Rocket Lab','Star Map','Space History','Gravity','Mission Mars','Lunar Lab','Sky Survey','Space Weather','Cosmic Field','Launch Archive','Earth from Orbit','The Observers','Deep Sky','Space Engineering','Apollo','Artemis','Voyager','Hubble','Webb','Planet Nine','Exoplanets','Black Holes','Milky Way','Solar System','Universe 24','The Cosmos','Final Frontier'],shows:['Orbit Report','Mission to Mars','Telescope Nights','Rocket Science','Worlds Beyond','Moonbase Diaries','Cosmic Weather','Inside Mission Control','The Astronaut Files','Deep Sky Survey','Planet Hunters','Launch Window']},
+  {id:'tech',label:'Tech',range:'130–172',names:['Circuit','Code TV','Future Tech','The Download','AI Lab','Gadget','Cyber','Maker Tech','Next OS','Digital Life','Cloud Nine','Robot Lab','Startup','Silicon','Open Source','Game Dev','Smart Home','EV World','Drone','3D Forge','Web Works','Data Stream','Machine Mind','Tech Review','Code Camp','The Network','Quantum Tech','Mobile','Creator Tech','Tech History','Repair Byte','Security Desk','UX Studio','Chipset','Automation','Virtual','Augmented','Clean Tech','BioTech','Tech Garage','Invent','Prototype','Hardware','Software','The Algorithm','Signal','Tech Explained','Future Foundry','Digital Frontier','Next Machine'],shows:['Inside the Algorithm','Build the Future','Gadget Breakdown','Code from Zero','Robot Workshop','The Cyber Brief','Tomorrow’s Hardware','Startup Stories','Digital Repair','Machine Learning Lab','Smart Home Clinic','Inventors at Work']},
+  {id:'camping',label:'Camping',range:'173–215',names:['Campfire','Trail TV','Basecamp','Wild Camp','Tent Life','National Parks','Camp Kitchen','Overland','Hiking','Backcountry','RV Road','Cabin','Outdoor Skills','Trail Maps','Canoe','Kayak','Mountain Camp','Forest','Desert Camp','Coastal Camp','Camp Kids','Weekend Wild','Gear Shed','Camp Cook','The Trailhead','Van Camp','Campground','Scenic Route','Out There','Fresh Air','Leave No Trace','Hammock','Bush Camp','Lake Life','Park Ranger','Trail Stories','Wild Places','Firelight','Camp Craft','Road & Camp','Alpine','River Camp','Family Outdoors','Solo Camp','Camp America','Off Grid Camp','The Campsite','Morning Trail','Wild Weekend','Under the Stars'],shows:['Campfire Suppers','Trail Tested','Pitch Perfect','Weekend Basecamp','Miles to Camp','Under Open Skies','The Gear Check','Cabin & Camp','Park by Park','Backcountry Kitchen','Find Your Trail','Night Under Stars']},
+  {id:'survival',label:'Lone Survival',range:'216–258',names:['Alone Wild','Survivor One','Last Out','Wild Solo','Beyond Shelter','The Long Stay','Untamed','No Crew','Survival 24','One Knife','Deep Wilderness','Outlast','The Tracker','Shelter','Fire & Water','Lost Skills','Extreme Solo','Wild North','Desert Alone','Jungle Solo','Island One','Frozen','The Forager','Bare Essentials','Primitive','Endurance','The Long Walk','No Signal','Edge of Wild','Survival Lab','Against Nature','Last Camp','Self Rescue','Wildcraft','Stay Alive','Remote','Lone Trail','Off Map','The Hard Way','Into Nothing','One Pack','Wild Mind','Ten Days','The Elements','No Road','Solo Frontier','The Test','Survival Stories','Beyond Help','Last Light'],shows:['Seven Days Alone','Fire Before Dark','Shelter First','The Long Cold','Waterline','No Trail Home','One Pack Challenge','Wild Food','Night Watch','Against the Storm','Solo Extraction','Last Light Camp']},
+  {id:'zombie',label:'Zombie Survival Games',range:'259–300',names:['Undead Arcade','Last Spawn','Zombie Mode','Dead Run Gaming','Afterlife Play','Horde Control','Respawn Zero','Night Siege','Apocalypse XP','Safehouse Games','No Cure Gaming','Dead Zone Live','Final Survivor','Loot & Escape','Graveyard Shift','Bunker Play','Horror Stream','Infected Worlds','The Last Checkpoint','Survival Save','Zombie Tactics','Red Moon Gaming','Outbreak Arena','Dead City Runs','Horde Night','Scavenge Squad','Permadeath','Rot & Reload','Safe Room TV','Wasteland Players','Undead Strategy','Apocalypse Co-Op','Midnight Respawn','Dead Ahead Games','Shelter & Survive','The Infected Game','No Ammo','Last Life Horror','Escape the Horde','Survival Speedrun','Zombie Boss','Doomed Server','After Dark Gaming','The Quarantine Zone','Fear & Firepower','One More Night','Outbreak Walkthroughs','Dead World Stories','Horde Hunter','Endgame Apocalypse'],shows:['Horde Night Live','Safehouse Strategy','Apocalypse Playthrough','No-Death Run','Zombie Boss Breakdown','Scavenge Route Guide','Midnight Horror Stream','Co-Op Outbreak','Build the Best Base','Escape Route Ranked','Permadeath Challenge','Last Checkpoint']}
+];
+
+const channels=[], worldSizes=[43,43,43,43,43,43,42];
+let channelNumber=1;
+worlds.forEach((w,wi)=>w.names.slice(0,worldSizes[wi]).forEach((name,i)=>{
+  const num=channelNumber++;
+  channels.push({num,name,world:w.id,label:w.label,shows:[w.shows[i%w.shows.length],w.shows[(i*3+4)%w.shows.length],w.shows[(i*5+7)%w.shows.length]]});
+}));
+let active='all', favoritesOnly=false, favorites=new Set(), selectedIndex=-1;
+const $=s=>document.querySelector(s), list=$('#channelList'), search=$('#search');
+function pad(n){return String(n).padStart(3,'0')}
+function slotInfo(){const d=new Date(), mins=d.getHours()*60+d.getMinutes(), start=Math.floor(mins/30)*30, next=start+30;return {progress:(mins-start)/30*100,start:fmt(start),next:fmt(next)}}
+function fmt(total){total%=1440;let h=Math.floor(total/60),m=total%60,ap=h>=12?'PM':'AM';return `${h%12||12}:${String(m).padStart(2,'0')} ${ap}`}
+function setClock(){const d=new Date();$('#clock').textContent=d.toLocaleTimeString([],{hour:'numeric',minute:'2-digit'});const s=slotInfo();$('#nowLabel').textContent=`On now · ${s.start}`;$('#nextLabel').textContent=`Up next · ${s.next}`}
+function createFilters(){const items=[{id:'all',label:`All ${channels.length}`},...worlds];$('#filters').innerHTML=items.map(x=>`<button class="filter" data-id="${x.id}" aria-pressed="${x.id==='all'}">${x.label}${x.id==='all'?'':` · ${x.range}`}</button>`).join('')}
+function visible(){const q=search.value.trim().toLowerCase();return channels.filter(c=>(active==='all'||c.world===active)&&(!favoritesOnly||favorites.has(c.num))&&(!q||`${c.name} ${c.label} ${c.shows.join(' ')} ${pad(c.num)}`.toLowerCase().includes(q)))}
+function render(){const data=visible(),s=slotInfo();$('#count').textContent=`${data.length} channel${data.length===1?'':'s'}`;$('#sectionTitle').textContent=favoritesOnly?'Favorites':active==='all'?'All worlds':worlds.find(w=>w.id===active).label;
+ if(!data.length){list.innerHTML=`<div class="empty"><h3>No signal found</h3><p>Try another search or world.</p></div>`;return}
+ list.innerHTML=data.map((c,idx)=>{const cycle=(Math.floor(Date.now()/1800000)+c.num)%3;const now=c.shows[cycle],next=c.shows[(cycle+1)%3];return `<article class="channel accent-${c.world}" tabindex="0" data-index="${idx}" aria-label="Channel ${pad(c.num)}, ${c.name}. Now showing ${now}">
+ <div class="cell number">${pad(c.num)}<span class="band">${c.label}</span></div>
+ <div class="cell"><span class="channel-name">${c.name}</span><span class="genre">${c.label.toUpperCase()}</span></div>
+ <div class="cell"><span class="program-title">${now}</span><span class="program-meta">${s.start} · 30 MIN</span><span class="progress"><b style="width:${s.progress.toFixed(1)}%"></b></span></div>
+ <div class="cell next"><span class="program-title">${next}</span><span class="program-meta">${s.next}</span></div>
+ <button class="fav" data-num="${c.num}" aria-pressed="${favorites.has(c.num)}" aria-label="${favorites.has(c.num)?'Remove':'Add'} channel ${pad(c.num)} ${c.name} ${favorites.has(c.num)?'from':'to'} favorites">${favorites.has(c.num)?'★':'☆'}</button>
+ </article>`}).join('');
+}
+createFilters();setClock();render();setInterval(()=>{setClock();render()},60000);
+$('#filters').addEventListener('click',e=>{const b=e.target.closest('.filter');if(!b)return;active=b.dataset.id;document.querySelectorAll('.filter').forEach(x=>x.setAttribute('aria-pressed',x===b));render()});
+search.addEventListener('input',render);
+$('#favoritesBtn').addEventListener('click',e=>{favoritesOnly=!favoritesOnly;e.currentTarget.setAttribute('aria-pressed',favoritesOnly);render()});
+list.addEventListener('click',e=>{const b=e.target.closest('.fav');if(!b)return;const n=+b.dataset.num;favorites.has(n)?favorites.delete(n):favorites.add(n);render()});
+document.addEventListener('keydown',e=>{if(e.key==='/'&&document.activeElement!==search){e.preventDefault();search.focus()}if((e.key==='ArrowDown'||e.key==='ArrowUp')&&document.activeElement!==search){const rows=[...document.querySelectorAll('.channel')];if(!rows.length)return;e.preventDefault();selectedIndex=Math.max(0,Math.min(rows.length-1,selectedIndex+(e.key==='ArrowDown'?1:-1)));rows[selectedIndex].focus();rows[selectedIndex].scrollIntoView({block:'nearest'})}});
+const jump=$('#jump');addEventListener('scroll',()=>jump.style.display=scrollY>700?'block':'none',{passive:true});jump.addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}));
+</script>
+</body>
+</html>
