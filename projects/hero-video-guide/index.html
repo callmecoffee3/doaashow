@@ -1,0 +1,1152 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="dark" />
+  <link rel="icon" href="data:," />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <title>Video Channel List Guide</title>
+  <style>
+    :root {
+      --ink: #eef6ff;
+      --muted: #9db0c8;
+      --deep: #060a12;
+      --panel: #0d1522;
+      --panel-2: #111d2e;
+      --line: #26354b;
+      --blue: #1684ff;
+      --blue-2: #5db7ff;
+      --signal: #ffc833;
+      --live: #ef4b58;
+      --shadow: 0 30px 80px rgba(0, 0, 0, .45);
+    }
+
+    * { box-sizing: border-box; }
+    html { background: var(--deep); }
+    body {
+      margin: 0;
+      min-width: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(rgba(255,255,255,.017) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.017) 1px, transparent 1px),
+        radial-gradient(circle at 70% -15%, rgba(22,132,255,.2), transparent 36%),
+        var(--deep);
+      background-size: 32px 32px, 32px 32px, auto, auto;
+      font-family: "IBM Plex Sans", sans-serif;
+      min-height: 100vh;
+    }
+
+    button, input { font: inherit; }
+    button { color: inherit; }
+    button:focus-visible, input:focus-visible { outline: 3px solid var(--blue-2); outline-offset: 3px; }
+
+    .page {
+      width: 100%;
+      margin: 0;
+      padding: 0 0 72px;
+    }
+
+    .stage-shell {
+      position: relative;
+      width: 100%;
+      height: clamp(420px, 68vw, 780px);
+      background: #02050a;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .stage-shell::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 4;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.05), inset 0 -90px 100px rgba(0,0,0,.25);
+    }
+
+    .screen {
+      position: absolute;
+      inset: 0;
+      background: #02050a;
+      overflow: hidden;
+    }
+
+    .screen::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background: linear-gradient(90deg, transparent 48%, rgba(2, 7, 14, .28) 70%, rgba(2, 7, 14, .72) 100%), linear-gradient(0deg, rgba(2, 7, 14, .7), transparent 28%);
+    }
+
+    video {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      background: #02050a;
+    }
+
+    .on-air {
+      position: absolute;
+      z-index: 6;
+      top: clamp(10px, 2vw, 22px);
+      left: clamp(10px, 2vw, 22px);
+      display: flex;
+      align-items: stretch;
+      box-shadow: 0 8px 28px rgba(0,0,0,.35);
+      pointer-events: none;
+    }
+    .live-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--blue);
+      padding: 8px 10px;
+      font-size: 12px;
+      line-height: 1;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+    .live-tag::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      background: #fff;
+      opacity: .8;
+    }
+    .now-tag {
+      max-width: min(58vw, 460px);
+      padding: 7px 12px 8px;
+      background: rgba(5,11,21,.92);
+      border: 1px solid rgba(255,255,255,.15);
+      border-left: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-family: "Barlow Condensed", sans-serif;
+      font-size: clamp(14px, 2vw, 18px);
+      line-height: 1;
+      letter-spacing: .03em;
+    }
+
+    .sound-callout {
+      position: absolute;
+      z-index: 7;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      pointer-events: none;
+      transition: opacity .2s ease;
+    }
+    .sound-callout.is-hidden { opacity: 0; }
+    .sound-button {
+      pointer-events: auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid rgba(255,255,255,.35);
+      background: rgba(5,11,21,.84);
+      color: #fff;
+      padding: 12px 17px;
+      border-radius: 4px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 10px 28px rgba(0,0,0,.3);
+      backdrop-filter: blur(8px);
+    }
+    .sound-button:hover { background: rgba(17,29,46,.96); }
+    .sound-button svg { width: 19px; height: 19px; }
+
+    .controls {
+      position: absolute;
+      z-index: 12;
+      left: 18px;
+      right: 18px;
+      bottom: 48px;
+      display: grid;
+      grid-template-columns: auto auto 1fr auto auto;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 10px;
+      min-height: 50px;
+      background: rgba(7, 14, 24, .92);
+      border: 1px solid rgba(255,255,255,.2);
+      box-shadow: 0 12px 34px rgba(0,0,0,.34);
+      backdrop-filter: blur(10px);
+    }
+    .icon-button {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: 3px;
+      background: transparent;
+      cursor: pointer;
+    }
+    .icon-button:hover { background: rgba(255,255,255,.09); }
+    .icon-button svg { width: 20px; height: 20px; }
+    .time {
+      color: #c8d5e5;
+      font-variant-numeric: tabular-nums;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+    .scrubber {
+      --progress: 0%;
+      width: 100%;
+      height: 22px;
+      margin: 0;
+      appearance: none;
+      background: transparent;
+      cursor: pointer;
+    }
+    .scrubber::-webkit-slider-runnable-track {
+      height: 4px;
+      background: linear-gradient(90deg, var(--blue) var(--progress), #435166 var(--progress));
+      border-radius: 0;
+    }
+    .scrubber::-webkit-slider-thumb {
+      appearance: none;
+      width: 14px;
+      height: 14px;
+      margin-top: -5px;
+      border-radius: 50%;
+      background: #fff;
+      border: 3px solid var(--blue);
+      box-shadow: 0 2px 8px rgba(0,0,0,.4);
+    }
+    .scrubber::-moz-range-track { height: 4px; background: #435166; }
+    .scrubber::-moz-range-progress { height: 4px; background: var(--blue); }
+    .scrubber::-moz-range-thumb { width: 10px; height: 10px; border-radius: 50%; background: white; border: 3px solid var(--blue); }
+
+    .ticker {
+      position: absolute;
+      z-index: 13;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      align-items: center;
+      min-height: 40px;
+      border-top: 1px solid var(--line);
+      background: rgba(7, 14, 24, .96);
+      overflow: hidden;
+    }
+    .ticker-label {
+      align-self: stretch;
+      display: grid;
+      place-items: center;
+      padding: 0 16px;
+      background: var(--signal);
+      color: #111820;
+      font-family: "Barlow Condensed", sans-serif;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .ticker-window { overflow: hidden; }
+    .ticker-track {
+      width: max-content;
+      display: flex;
+      gap: 38px;
+      padding-left: 100%;
+      color: #e8f2ff;
+      font-family: "Barlow Condensed", sans-serif;
+      font-weight: 600;
+      letter-spacing: .045em;
+      text-transform: uppercase;
+      animation: crawl 24s linear infinite;
+    }
+    .ticker-track span { display: inline-flex; align-items: center; gap: 38px; }
+    .ticker-track span::after { content: "◆"; color: var(--signal); font-size: 8px; }
+    @keyframes crawl { to { transform: translateX(-100%); } }
+
+    .content-grid {
+      width: min(1180px, calc(100% - 40px));
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: clamp(22px, 4vw, 48px);
+      margin: clamp(34px, 5vw, 56px) auto 0;
+    }
+    .intro h1 {
+      margin: 0;
+      max-width: 690px;
+      font-family: "Barlow Condensed", sans-serif;
+      font-size: clamp(38px, 6vw, 72px);
+      line-height: .93;
+      letter-spacing: -.025em;
+      text-transform: uppercase;
+    }
+    .intro h1 em { color: var(--blue-2); font-style: normal; }
+    .intro p {
+      margin: 18px 0 0;
+      max-width: 650px;
+      color: #b8c8dc;
+      font-size: clamp(16px, 2vw, 19px);
+      line-height: 1.65;
+    }
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 18px;
+      margin-top: 22px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .meta span { display: inline-flex; align-items: center; gap: 7px; }
+    .meta span::before { content: ""; width: 5px; height: 5px; background: var(--blue); }
+
+    .guide-panel {
+      position: relative;
+      z-index: 2;
+      width: min(1180px, calc(100% - 40px));
+      margin: 24px auto 0;
+      overflow: visible;
+      border-top: 4px solid var(--blue);
+      background: rgba(9, 18, 31, .96);
+      padding: clamp(18px, 3vw, 28px);
+      box-shadow: 0 18px 46px rgba(0,0,0,.32);
+    }
+    .guide-panel h2 {
+      margin: 0 0 6px;
+      font-family: "Barlow Condensed", sans-serif;
+      font-size: 25px;
+      text-transform: uppercase;
+      letter-spacing: .03em;
+    }
+    .guide-panel > p {
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .guide-search {
+      position: relative;
+      margin-bottom: 14px;
+    }
+    .guide-search svg {
+      position: absolute;
+      left: 11px;
+      top: 50%;
+      width: 17px;
+      height: 17px;
+      color: #8fa5bf;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+    .guide-search input {
+      width: 100%;
+      min-height: 42px;
+      padding: 9px 34px 9px 38px;
+      border: 1px solid #344a66;
+      border-radius: 2px;
+      background: #08111e;
+      color: var(--ink);
+    }
+    .guide-search input::placeholder { color: #8095af; }
+    .guide-search input::-webkit-search-cancel-button { filter: invert(1); }
+    .search-status {
+      min-height: 18px;
+      margin: -7px 0 9px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+    .search-status:empty { display: none; }
+    .guide-timebar {
+      display: grid;
+      grid-template-columns: 72px minmax(0, 1fr) 70px;
+      gap: 10px;
+      padding: 0 10px 7px;
+      color: #8fa5bf;
+      font-family: "Barlow Condensed", sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+    .guide-timebar span:last-child { text-align: right; }
+    .chapters {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 4px;
+      padding: 4px;
+      border: 1px solid var(--line);
+      background: #08111e;
+    }
+    .chapter[hidden], .program[hidden] { display: none; }
+    .chapter {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 72px minmax(0, 1fr) 70px;
+      align-items: center;
+      gap: 10px;
+      min-height: 48px;
+      padding: 7px 10px;
+      border: 1px solid transparent;
+      border-radius: 2px;
+      background: #0d1828;
+      text-align: left;
+      cursor: pointer;
+    }
+    .chapter:hover { background: #162238; }
+    .chapter.is-active { background: #152a43; border-color: #2d6ea7; }
+    .channel-number {
+      font-family: "Barlow Condensed", sans-serif;
+      color: var(--signal);
+      font-weight: 700;
+      font-size: 15px;
+    }
+    .chapter-title {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .chapter-time { color: var(--muted); font-size: 11px; font-variant-numeric: tabular-nums; }
+    .chapter svg { width: 14px; height: 14px; color: #7792b4; }
+
+    .facebook-feature {
+      width: min(1180px, calc(100% - 40px));
+      display: grid;
+      grid-template-columns: minmax(0, 1.8fr) minmax(260px, .8fr);
+      gap: clamp(20px, 4vw, 44px);
+      align-items: center;
+      margin: clamp(34px, 5vw, 56px) auto 0;
+      padding-top: 24px;
+      border-top: 1px solid var(--line);
+    }
+    .facebook-video-frame {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      background: #02050a;
+      box-shadow: var(--shadow);
+    }
+    .facebook-video-frame video {
+      position: absolute;
+      inset: 0;
+    }
+    .facebook-feature-copy h2 {
+      margin: 0;
+      font-family: "Barlow Condensed", sans-serif;
+      font-size: clamp(30px, 4vw, 48px);
+      line-height: .95;
+      letter-spacing: -.015em;
+      text-transform: uppercase;
+    }
+    .facebook-feature-copy p {
+      margin: 14px 0 0;
+      color: #b8c8dc;
+      line-height: 1.6;
+    }
+    .feature-label {
+      display: inline-block;
+      margin-bottom: 12px;
+      padding: 5px 8px;
+      background: var(--blue);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .network-showcase {
+      width: min(1180px, calc(100% - 40px));
+      margin: clamp(34px, 5vw, 56px) auto 0;
+      padding-top: 24px;
+      border-top: 1px solid var(--line);
+    }
+    .network-showcase-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 16px;
+    }
+    .network-showcase h2 {
+      margin: 0;
+      font-family: "Barlow Condensed", sans-serif;
+      font-size: clamp(30px, 4vw, 44px);
+      line-height: 1;
+      text-transform: uppercase;
+    }
+    .network-showcase-head p {
+      max-width: 520px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+      text-align: right;
+    }
+    .network-showcase-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.45fr) minmax(300px, .55fr);
+      gap: 14px;
+      align-items: stretch;
+    }
+    .network-reel {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      background: #02050a;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+    .network-reel video {
+      position: absolute;
+      inset: 0;
+    }
+    .network-stills {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+    .network-card {
+      position: relative;
+      min-width: 0;
+      display: grid;
+      grid-template-columns: minmax(0, 132px) minmax(0, 1fr);
+      align-items: center;
+      gap: 12px;
+      padding: 0;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 0;
+      background: var(--panel);
+      color: var(--ink);
+      text-align: left;
+      cursor: pointer;
+    }
+    .network-card:hover { background: var(--panel-2); border-color: #4c6789; }
+    .network-card img {
+      width: 100%;
+      height: 100%;
+      min-height: 88px;
+      object-fit: cover;
+      border-right: 1px solid var(--line);
+    }
+    .network-card-copy { min-width: 0; padding: 10px 12px 10px 0; }
+    .network-name {
+      display: block;
+      color: var(--blue-2);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+    .network-card strong {
+      display: block;
+      margin-top: 5px;
+      font-family: "Barlow Condensed", sans-serif;
+      font-size: 19px;
+      line-height: 1.05;
+      text-transform: uppercase;
+    }
+    .network-card small { display: block; margin-top: 5px; color: var(--muted); font-size: 11px; }
+    .network-card::after {
+      content: "▶";
+      position: absolute;
+      left: 10px;
+      bottom: 8px;
+      display: grid;
+      width: 24px;
+      height: 24px;
+      place-items: center;
+      background: rgba(4, 10, 18, .86);
+      color: #fff;
+      font-size: 9px;
+    }
+
+    .programs {
+      width: min(1180px, calc(100% - 40px));
+      margin: clamp(34px, 5vw, 56px) auto 0;
+      padding-top: 24px;
+      border-top: 1px solid var(--line);
+    }
+    .programs-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 16px;
+    }
+    .programs h2 {
+      margin: 0;
+      font-family: "Barlow Condensed", sans-serif;
+      font-size: clamp(28px, 4vw, 40px);
+      text-transform: uppercase;
+      letter-spacing: -.01em;
+    }
+    .programs-head p { margin: 0; color: var(--muted); font-size: 13px; }
+    .program-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+    }
+    .program {
+      min-height: 140px;
+      padding: 18px;
+      background: var(--panel);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+      border: 0;
+      text-align: left;
+    }
+    .program:hover { background: var(--panel-2); }
+    .program.is-active { box-shadow: inset 0 0 0 2px var(--blue); background: #14253a; }
+    .program-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .program-channel { color: var(--blue-2); font-size: 12px; font-weight: 600; }
+    .program-start { color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
+    .program strong {
+      display: block;
+      margin-top: 22px;
+      font-family: "Barlow Condensed", sans-serif;
+      font-size: 23px;
+      line-height: 1;
+      letter-spacing: .01em;
+      text-transform: uppercase;
+    }
+    .program small { display: block; margin-top: 7px; color: var(--muted); font-size: 12px; }
+
+    .guide-taskbar {
+      position: fixed;
+      z-index: 30;
+      left: 50%;
+      top: 14px;
+      bottom: auto;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      max-width: calc(100vw - 24px);
+      padding: 6px;
+      border: 1px solid #3b4f69;
+      background: rgba(7, 14, 24, .96);
+      box-shadow: 0 14px 42px rgba(0,0,0,.55);
+      transform: translate(-50%, 0);
+      transition: opacity .24s ease, transform .24s ease;
+    }
+    .guide-taskbar.is-hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: translate(-50%, 18px);
+    }
+    .taskbar-mark {
+      padding: 0 9px;
+      color: var(--signal);
+      font-family: "Barlow Condensed", sans-serif;
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .taskbar-button {
+      min-width: 58px;
+      min-height: 40px;
+      display: grid;
+      place-items: center;
+      gap: 2px;
+      padding: 4px 8px;
+      border: 0;
+      border-radius: 2px;
+      background: transparent;
+      color: #c8d8e9;
+      cursor: pointer;
+      font-size: 10px;
+    }
+    .taskbar-button:hover, .taskbar-button:focus-visible { background: #17263a; color: #fff; }
+    .taskbar-button svg { width: 17px; height: 17px; }
+    .taskbar-close { min-width: 38px; color: #8fa5bf; }
+
+    .tip {
+      margin-top: 20px;
+      color: #8195ae;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    @media (max-width: 760px) {
+      .page { padding-inline: 0; padding-top: 0; }
+      .stage-shell { height: max(430px, 64svh); }
+      .screen::after { background: linear-gradient(0deg, rgba(2, 7, 14, .82), transparent 48%); }
+      .controls { left: 8px; right: 8px; bottom: 42px; grid-template-columns: auto 1fr auto; gap: 8px; padding: 8px; }
+      #muteButton { display: none; }
+      #fullscreenButton { display: none; }
+      .time { font-size: 11px; }
+      .ticker { grid-template-columns: 70px minmax(0, 1fr); min-height: 34px; }
+      .ticker-label { padding: 0 8px; font-size: 12px; }
+      .ticker-track { font-size: 12px; }
+      .content-grid { width: calc(100% - 32px); }
+      .guide-panel {
+        width: calc(100% - 32px);
+        margin-top: 18px;
+        padding: 16px;
+      }
+      .chapters { grid-template-columns: 1fr; }
+      .facebook-feature {
+        width: calc(100% - 32px);
+        grid-template-columns: 1fr;
+      }
+      .facebook-feature-copy { grid-row: 1; }
+      .facebook-video-frame { grid-row: 2; }
+      .network-showcase { width: calc(100% - 32px); }
+      .network-showcase-head { align-items: start; flex-direction: column; gap: 7px; }
+      .network-showcase-head p { text-align: left; }
+      .network-showcase-grid { grid-template-columns: 1fr; }
+      .network-stills { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .network-card { grid-template-columns: 1fr; align-content: start; }
+      .network-card img { min-height: 0; aspect-ratio: 16 / 9; border-right: 0; border-bottom: 1px solid var(--line); }
+      .network-card-copy { padding: 10px 11px 12px; }
+      .network-card::after { top: 8px; bottom: auto; }
+      .programs { width: calc(100% - 32px); margin-inline: auto; }
+      .programs-head { align-items: start; flex-direction: column; gap: 5px; }
+      .program-grid { grid-template-columns: 1fr 1fr; }
+      .program { min-height: 126px; padding: 15px; }
+      .on-air { top: 68px; left: 8px; }
+      .live-tag { padding: 6px 8px; font-size: 10px; }
+      .now-tag { padding: 5px 8px 6px; font-size: 13px; }
+      .sound-callout {
+        align-items: end;
+        justify-items: center;
+        padding-bottom: 170px;
+        z-index: 14;
+      }
+      .sound-button { padding: 10px 13px; font-size: 13px; }
+      .guide-taskbar {
+        position: fixed;
+        left: 50%;
+        top: 8px;
+        bottom: auto;
+        width: calc(100% - 16px);
+        margin: 0;
+        justify-content: space-between;
+        transform: translateX(-50%);
+      }
+      .guide-taskbar.is-hidden { opacity: 1; pointer-events: auto; transform: translateX(-50%); }
+      .taskbar-mark { display: none; }
+      .taskbar-button { min-width: 52px; padding-inline: 5px; }
+      .taskbar-close { display: none; }
+      .tip { margin-inline: 16px; }
+    }
+
+    @media (max-width: 430px) {
+      .program-grid, .chapters, .network-stills { grid-template-columns: 1fr; }
+      .network-card { grid-template-columns: minmax(0, 128px) minmax(0, 1fr); }
+      .network-card img { height: 100%; aspect-ratio: auto; border-right: 1px solid var(--line); border-bottom: 0; }
+      .network-card-copy { padding: 10px 10px 10px 0; }
+      .network-card::after { top: auto; bottom: 8px; }
+      .program-grid, .chapters { grid-template-columns: 1fr; }
+      .program { min-height: 106px; }
+      .program strong { margin-top: 16px; }
+      .intro h1 { font-size: 42px; }
+      .guide-taskbar { gap: 0; }
+      .taskbar-button { min-width: 49px; font-size: 9px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .ticker-track { animation: none; transform: none; padding-left: 18px; }
+      .guide-taskbar { transition: none; }
+      * { scroll-behavior: auto !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section aria-label="Matt Grosso Live social video channel guide">
+      <div class="stage-shell" id="playerShell">
+        <div class="screen">
+          <video id="heroVideo" src="assets/hero-guide.mp4" poster="assets/hero-guide-poster.jpg" playsinline muted autoplay loop preload="metadata" aria-label="Animated Facebook-style social channel guide featuring Matt Grosso Live, Facebook groups, Instagram creators, and video highlights"></video>
+          <div class="on-air" aria-hidden="true">
+            <span class="live-tag">Preview</span>
+            <span class="now-tag" id="nowTag">CH 0 · Matt Grosso Live</span>
+          </div>
+          <div class="sound-callout" id="soundCallout">
+            <button class="sound-button" id="soundButton" type="button" aria-label="Play video with sound">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>
+              Play with sound
+            </button>
+          </div>
+        </div>
+        <div class="controls">
+          <button class="icon-button" id="playButton" type="button" aria-label="Pause video">
+            <svg class="pause-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>
+            <svg class="play-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" hidden><path d="m7 4 13 8-13 8V4z"/></svg>
+          </button>
+          <span class="time"><span id="currentTime">0:00</span> / 0:40</span>
+          <input class="scrubber" id="scrubber" type="range" min="0" max="40" step="0.1" value="0" aria-label="Video position" />
+          <button class="icon-button" id="muteButton" type="button" aria-label="Turn sound on">
+            <svg class="muted-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5Z"/><path d="m17 9 5 6M22 9l-5 6"/></svg>
+            <svg class="sound-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" hidden><path d="M11 5 6 9H2v6h4l5 4V5Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>
+          </button>
+          <button class="icon-button" id="fullscreenButton" type="button" aria-label="Enter full screen">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M8 3H3v5M16 3h5v5M8 21H3v-5M21 16v5h-5"/></svg>
+          </button>
+        </div>
+
+      <div class="ticker" aria-label="Channel guide ticker">
+        <span class="ticker-label">Up next</span>
+        <div class="ticker-window"><div class="ticker-track" aria-hidden="true"><span>Matt Grosso Live</span><span>Facebook groups</span><span>Instagram creators</span><span>Drama and entertainment</span><span>Video highlights</span></div></div>
+      </div>
+      </div>
+      <aside class="guide-panel" aria-labelledby="chaptersTitle">
+        <h2 id="chaptersTitle">Channel guide</h2>
+        <p>Channels start at 0. Search the lineup or choose a row to jump to that preview. The video artwork’s 200-series numbers identify its original tour segments.</p>
+        <label class="guide-search" for="guideSearch">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+          <input id="guideSearch" type="search" placeholder="Search channels or programs" autocomplete="off" />
+        </label>
+        <p class="search-status" id="searchStatus" role="status" aria-live="polite"></p>
+        <div class="guide-timebar" aria-hidden="true"><span>Channel</span><span>Preview segment</span><span>Starts</span></div>
+        <div class="chapters" id="chapters" aria-label="Hero video channel guide">
+          <button class="chapter is-active" type="button" data-time="0" data-label="CH 0 · Matt Grosso Live">
+            <span class="channel-number">CH 0</span><span class="chapter-title">Matt Grosso Live</span><span class="chapter-time">0:00</span>
+          </button>
+          <button class="chapter" type="button" data-time="5" data-label="CH 1 · Savvy Shopper HUB">
+            <span class="channel-number">CH 1</span><span class="chapter-title">Savvy Shopper HUB</span><span class="chapter-time">0:05</span>
+          </button>
+          <button class="chapter" type="button" data-time="10" data-label="CH 2 · Into The Dark">
+            <span class="channel-number">CH 2</span><span class="chapter-title">Into The Dark</span><span class="chapter-time">0:10</span>
+          </button>
+          <button class="chapter" type="button" data-time="15" data-label="CH 3 · Film Locations">
+            <span class="channel-number">CH 3</span><span class="chapter-title">Film Locations</span><span class="chapter-time">0:15</span>
+          </button>
+          <button class="chapter" type="button" data-time="20" data-label="CH 4 · FlareFlow Dramas">
+            <span class="channel-number">CH 4</span><span class="chapter-title">FlareFlow Dramas</span><span class="chapter-time">0:20</span>
+          </button>
+          <button class="chapter" type="button" data-time="25" data-label="CH 5 · Paranormal Skouter">
+            <span class="channel-number">CH 5</span><span class="chapter-title">Paranormal Skouter</span><span class="chapter-time">0:25</span>
+          </button>
+          <button class="chapter" type="button" data-time="30" data-label="CH 6 · Meta AI">
+            <span class="channel-number">CH 6</span><span class="chapter-title">Meta AI</span><span class="chapter-time">0:30</span>
+          </button>
+          <button class="chapter" type="button" data-time="35" data-label="CH 7 · Video Highlights">
+            <span class="channel-number">CH 7</span><span class="chapter-title">Video Highlights</span><span class="chapter-time">0:35</span>
+          </button>
+        </div>
+      </aside>
+    </section>
+
+    <div class="content-grid">
+      <section class="intro">
+        <h1>Matt Grosso Live <em>social channel guide.</em></h1>
+        <p>A 40-second tour in the Facebook guide style, with a live preview window, changing channel selection, bright program banners, and a broadcast ticker. It brings Facebook, Instagram, and YouTube into one hero guide.</p>
+        <div class="meta" aria-label="Video details">
+          <span>40 seconds</span>
+          <span>16:9 HD</span>
+          <span>8 channel markers</span>
+          <span>Sound included</span>
+        </div>
+      </section>
+
+
+    </div>
+
+    <section class="network-showcase" id="networkShowcase" aria-labelledby="networkShowcaseTitle">
+      <div class="network-showcase-head">
+        <h2 id="networkShowcaseTitle">YouTube, Facebook &amp; Instagram</h2>
+        <p>Three picture previews are now part of the guide, plus a 48-second video tour that brings the YouTube, Facebook, and Instagram channels together.</p>
+      </div>
+      <div class="network-showcase-grid">
+        <div class="network-reel">
+          <video src="assets/social-channels-tour.mp4" poster="assets/youtube-guide-preview.jpg" controls playsinline preload="metadata" aria-label="48-second video tour of YouTube, Facebook, and Instagram channels with picture previews"></video>
+        </div>
+        <div class="network-stills" aria-label="Network picture previews">
+          <button class="network-card" type="button" data-time="0" data-label="CH 0 · Matt Grosso Live">
+            <img src="assets/youtube-guide-preview.jpg" alt="Matt Grosso Live YouTube channel guide preview" />
+            <span class="network-card-copy"><span class="network-name">YouTube</span><strong>Matt Grosso Live</strong><small>Play from 0:00</small></span>
+          </button>
+          <button class="network-card" type="button" data-time="5" data-label="CH 1 · Savvy Shopper HUB">
+            <img src="assets/facebook-guide-preview.jpg" alt="Facebook groups channel guide preview" />
+            <span class="network-card-copy"><span class="network-name">Facebook</span><strong>Groups &amp; stories</strong><small>Play from 0:05</small></span>
+          </button>
+          <button class="network-card" type="button" data-time="20" data-label="CH 4 · FlareFlow Dramas">
+            <img src="assets/instagram-guide-preview.jpg" alt="Instagram creators channel guide preview" />
+            <span class="network-card-copy"><span class="network-name">Instagram</span><strong>Creator previews</strong><small>Play from 0:20</small></span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="facebook-feature" aria-labelledby="facebookHeroTitle">
+      <div class="facebook-video-frame">
+        <video src="assets/facebook-tv-hero.mp4" poster="assets/facebook-tv-hero-poster.jpg" controls playsinline preload="metadata" aria-label="Facebook TV hero video with channel guide and program previews"></video>
+      </div>
+      <div class="facebook-feature-copy">
+        <span class="feature-label">Facebook hero</span>
+        <h2 id="facebookHeroTitle">Facebook TV opens the guide.</h2>
+        <p>Play the complete Facebook hero video with its logo opener, channel-guide overlay, and featured program preview.</p>
+      </div>
+    </section>
+
+    <section class="programs" aria-labelledby="lineupTitle">
+      <div class="programs-head">
+        <h2 id="lineupTitle">Inside the guide</h2>
+        <p>Tap a program to preview its moment.</p>
+      </div>
+      <div class="program-grid">
+        <button class="program is-active" type="button" data-time="0" data-label="CH 0 · Matt Grosso Live">
+          <span class="program-top"><span class="program-channel">YOUTUBE · CH 0</span><span class="program-start">0:00</span></span>
+          <span><strong>Matt Grosso Live</strong><small>The main video channel</small></span>
+        </button>
+        <button class="program" type="button" data-time="5" data-label="CH 1 · Savvy Shopper HUB">
+          <span class="program-top"><span class="program-channel">FACEBOOK · CH 1</span><span class="program-start">0:05</span></span>
+          <span><strong>Savvy Shopper HUB</strong><small>Deals and shopping finds</small></span>
+        </button>
+        <button class="program" type="button" data-time="10" data-label="CH 2 · Into The Dark">
+          <span class="program-top"><span class="program-channel">FACEBOOK · CH 2</span><span class="program-start">0:10</span></span>
+          <span><strong>Into The Dark</strong><small>Dark stories and discussion</small></span>
+        </button>
+        <button class="program" type="button" data-time="15" data-label="CH 3 · Film Locations">
+          <span class="program-top"><span class="program-channel">FACEBOOK · CH 3</span><span class="program-start">0:15</span></span>
+          <span><strong>Film Locations</strong><small>Then-and-now location discoveries</small></span>
+        </button>
+        <button class="program" type="button" data-time="20" data-label="CH 4 · FlareFlow Dramas">
+          <span class="program-top"><span class="program-channel">INSTAGRAM · CH 4</span><span class="program-start">0:20</span></span>
+          <span><strong>FlareFlow Dramas</strong><small>One-minute drama previews</small></span>
+        </button>
+        <button class="program" type="button" data-time="25" data-label="CH 5 · Paranormal Skouter">
+          <span class="program-top"><span class="program-channel">INSTAGRAM · CH 5</span><span class="program-start">0:25</span></span>
+          <span><strong>Paranormal Skouter</strong><small>Paranormal video discoveries</small></span>
+        </button>
+        <button class="program" type="button" data-time="30" data-label="CH 6 · Meta AI">
+          <span class="program-top"><span class="program-channel">INSTAGRAM · CH 6</span><span class="program-start">0:30</span></span>
+          <span><strong>Meta AI</strong><small>AI news and creative clips</small></span>
+        </button>
+        <button class="program" type="button" data-time="35" data-label="CH 7 · Video Highlights">
+          <span class="program-top"><span class="program-channel">ALL NETWORKS · CH 7</span><span class="program-start">0:35</span></span>
+          <span><strong>Video Highlights</strong><small>Standout clips across the guide</small></span>
+        </button>
+      </div>
+    </section>
+
+    <p class="tip">On desktop, move your pointer to bring back the floating guide menu.</p>
+  </main>
+
+  <nav class="guide-taskbar" id="guideTaskbar" aria-label="Floating guide menu">
+    <span class="taskbar-mark">Guide</span>
+    <button class="taskbar-button" type="button" data-target="playerShell" aria-label="Go to preview">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h16v12H4z"/><path d="m10 9 5 3-5 3z"/></svg>
+      <span>Preview</span>
+    </button>
+    <button class="taskbar-button" id="taskbarSearch" type="button" aria-label="Search the guide">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+      <span>Search</span>
+    </button>
+    <button class="taskbar-button" type="button" data-target="chaptersTitle" aria-label="Go to channel guide">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 5h16M4 12h16M4 19h16"/></svg>
+      <span>Channels</span>
+    </button>
+    <button class="taskbar-button" type="button" data-target="networkShowcase" aria-label="Go to network pictures and video">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="5" width="18" height="14"/><circle cx="8" cy="10" r="1.5"/><path d="m5 17 5-5 3 3 2-2 4 4"/></svg>
+      <span>Networks</span>
+    </button>
+    <button class="taskbar-button" type="button" data-target="lineupTitle" aria-label="Go to program lineup">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="4" y="4" width="6" height="6"/><rect x="14" y="4" width="6" height="6"/><rect x="4" y="14" width="6" height="6"/><rect x="14" y="14" width="6" height="6"/></svg>
+      <span>Lineup</span>
+    </button>
+    <button class="taskbar-button taskbar-close" id="taskbarClose" type="button" aria-label="Hide guide menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
+      <span>Hide</span>
+    </button>
+  </nav>
+
+  <script>
+    (() => {
+      const video = document.getElementById('heroVideo');
+      const playButton = document.getElementById('playButton');
+      const muteButton = document.getElementById('muteButton');
+      const soundButton = document.getElementById('soundButton');
+      const soundCallout = document.getElementById('soundCallout');
+      const fullscreenButton = document.getElementById('fullscreenButton');
+      const playerShell = document.getElementById('playerShell');
+      const scrubber = document.getElementById('scrubber');
+      const currentTime = document.getElementById('currentTime');
+      const nowTag = document.getElementById('nowTag');
+      const chapters = [...document.querySelectorAll('.chapter')];
+      const programs = [...document.querySelectorAll('.program')];
+      const networkCards = [...document.querySelectorAll('.network-card')];
+      const allCues = [...chapters, ...programs, ...networkCards];
+      const guidePanel = document.querySelector('.guide-panel');
+      const guideSearch = document.getElementById('guideSearch');
+      const searchStatus = document.getElementById('searchStatus');
+      const guideTaskbar = document.getElementById('guideTaskbar');
+      const taskbarSearch = document.getElementById('taskbarSearch');
+      const taskbarClose = document.getElementById('taskbarClose');
+      const taskbarButtons = [...guideTaskbar.querySelectorAll('[data-target]')];
+      let taskbarTimer;
+
+      const formatTime = (seconds) => {
+        const safe = Number.isFinite(seconds) ? Math.max(0, seconds) : 0;
+        return `${Math.floor(safe / 60)}:${String(Math.floor(safe % 60)).padStart(2, '0')}`;
+      };
+
+      const syncPlayState = () => {
+        const paused = video.paused;
+        playButton.querySelector('.play-icon').hidden = !paused;
+        playButton.querySelector('.pause-icon').hidden = paused;
+        playButton.setAttribute('aria-label', paused ? 'Play video' : 'Pause video');
+      };
+
+      const syncMuteState = () => {
+        const muted = video.muted;
+        muteButton.querySelector('.muted-icon').hidden = !muted;
+        muteButton.querySelector('.sound-icon').hidden = muted;
+        muteButton.setAttribute('aria-label', muted ? 'Turn sound on' : 'Mute video');
+        soundCallout.classList.toggle('is-hidden', !muted);
+      };
+
+      const timeline = [
+        { time: 0, marker: 0, label: 'CH 0 · Matt Grosso Live' },
+        { time: 5, marker: 5, label: 'CH 1 · Savvy Shopper HUB' },
+        { time: 10, marker: 10, label: 'CH 2 · Into The Dark' },
+        { time: 15, marker: 15, label: 'CH 3 · Film Locations' },
+        { time: 20, marker: 20, label: 'CH 4 · FlareFlow Dramas' },
+        { time: 25, marker: 25, label: 'CH 5 · Paranormal Skouter' },
+        { time: 30, marker: 30, label: 'CH 6 · Meta AI' },
+        { time: 35, marker: 35, label: 'CH 7 · Video Highlights' }
+      ];
+
+      const activeCue = (time) => {
+        let active = timeline[0];
+        timeline.forEach((cue) => { if (time >= cue.time) active = cue; });
+        const key = String(active.marker);
+        chapters.forEach((cue) => cue.classList.toggle('is-active', cue.dataset.time === key));
+        programs.forEach((cue) => cue.classList.toggle('is-active', cue.dataset.time === key));
+        nowTag.textContent = active.label;
+      };
+
+      const playAt = (element) => {
+        video.currentTime = Number(element.dataset.time);
+        nowTag.textContent = element.dataset.label;
+        video.play().catch(() => {});
+        syncPlayState();
+        playerShell.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+      };
+
+      playButton.addEventListener('click', () => {
+        if (video.paused) video.play().catch(() => {});
+        else video.pause();
+      });
+      muteButton.addEventListener('click', () => {
+        video.muted = !video.muted;
+        if (!video.paused) video.play().catch(() => {});
+        syncMuteState();
+      });
+      soundButton.addEventListener('click', () => {
+        video.muted = false;
+        video.play().catch(() => {});
+        syncMuteState();
+      });
+      scrubber.addEventListener('input', () => {
+        video.currentTime = Number(scrubber.value);
+      });
+      allCues.forEach((cue) => cue.addEventListener('click', () => playAt(cue)));
+
+      const filterGuide = () => {
+        const query = guideSearch.value.trim().toLowerCase();
+        const matches = (item) => !query || `${item.textContent} ${item.dataset.label || ''}`.toLowerCase().includes(query);
+        chapters.forEach((item) => { item.hidden = !matches(item); });
+        programs.forEach((item) => { item.hidden = !matches(item); });
+        if (!query) {
+          searchStatus.textContent = '';
+          return;
+        }
+        const count = chapters.filter((item) => !item.hidden).length;
+        searchStatus.textContent = count ? `${count} channel${count === 1 ? '' : 's'} found` : 'No channels found. Try another search.';
+      };
+      guideSearch.addEventListener('input', filterGuide);
+      guideSearch.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+          guideSearch.value = '';
+          filterGuide();
+          guideSearch.blur();
+        }
+        if (event.key === 'Enter') {
+          const firstMatch = chapters.find((item) => !item.hidden);
+          if (firstMatch) playAt(firstMatch);
+        }
+      });
+
+      const scheduleTaskbarHide = () => {
+        clearTimeout(taskbarTimer);
+        taskbarTimer = setTimeout(() => {
+          if (!guideTaskbar.matches(':hover') && !guideTaskbar.contains(document.activeElement)) {
+            guideTaskbar.classList.add('is-hidden');
+          }
+        }, 3200);
+      };
+      const showTaskbar = () => {
+        guideTaskbar.classList.remove('is-hidden');
+        scheduleTaskbarHide();
+      };
+      taskbarButtons.forEach((button) => button.addEventListener('click', () => {
+        const target = document.getElementById(button.dataset.target);
+        const behavior = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+        target?.scrollIntoView({ behavior, block: 'start' });
+        scheduleTaskbarHide();
+      }));
+      taskbarSearch.addEventListener('click', () => {
+        const behavior = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+        guidePanel.scrollIntoView({ behavior, block: 'start' });
+        window.setTimeout(() => guideSearch.focus(), 120);
+      });
+      taskbarClose.addEventListener('click', () => {
+        clearTimeout(taskbarTimer);
+        guideTaskbar.classList.add('is-hidden');
+      });
+      guideTaskbar.addEventListener('mouseenter', () => clearTimeout(taskbarTimer));
+      guideTaskbar.addEventListener('mouseleave', scheduleTaskbarHide);
+      ['pointermove', 'pointerdown', 'touchstart'].forEach((eventName) => document.addEventListener(eventName, showTaskbar, { passive: true }));
+
+      fullscreenButton.addEventListener('click', () => {
+        if (document.fullscreenElement) document.exitFullscreen?.();
+        else playerShell.requestFullscreen?.();
+      });
+
+      video.addEventListener('timeupdate', () => {
+        const duration = Number.isFinite(video.duration) ? video.duration : 40;
+        scrubber.max = duration;
+        scrubber.value = video.currentTime;
+        scrubber.style.setProperty('--progress', `${(video.currentTime / duration) * 100}%`);
+        currentTime.textContent = formatTime(video.currentTime);
+        activeCue(video.currentTime);
+      });
+      video.addEventListener('play', syncPlayState);
+      video.addEventListener('pause', syncPlayState);
+      video.addEventListener('volumechange', syncMuteState);
+      video.addEventListener('click', () => {
+        if (video.paused) video.play().catch(() => {}); else video.pause();
+      });
+
+      document.addEventListener('keydown', (event) => {
+        showTaskbar();
+        if (event.code === 'Space' && !['INPUT', 'BUTTON', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) {
+          event.preventDefault();
+          if (video.paused) video.play().catch(() => {}); else video.pause();
+        }
+      });
+
+      syncPlayState();
+      syncMuteState();
+      scheduleTaskbarHide();
+    })();
+  </script>
+</body>
+</html>

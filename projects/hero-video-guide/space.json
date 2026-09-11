@@ -1,0 +1,8 @@
+{
+  "runtime": "static",
+  "platformVersion": 15,
+  "entry": "index.html",
+  "name": "Hero Video Guide",
+  "slug": "hero-video-guide",
+  "managedCronJobs": []
+}
