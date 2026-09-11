@@ -1,0 +1,8 @@
+{
+  "runtime": "static",
+  "platformVersion": 15,
+  "entry": "index.html",
+  "name": "Facebook Channel Guide",
+  "slug": "facebook-channel-guide",
+  "managedCronJobs": []
+}
