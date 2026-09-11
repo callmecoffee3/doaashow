@@ -1,0 +1,8 @@
+{
+  "runtime": "static",
+  "platformVersion": 15,
+  "entry": "index.html",
+  "name": "ReelWave Clone",
+  "slug": "reelwave-clone",
+  "managedCronJobs": []
+}
