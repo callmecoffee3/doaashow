@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="dark" />
+  <link rel="icon" href="data:," />
+  <title>Channel Guide</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;600;700&display=swap');
+    :root{
+      --ink:#070a0f; --panel:#0f141d; --panel2:#151c27; --line:#2a3342;
+      --text:#f6f7fb; --muted:#aeb7c5; --blue:#1877f2; --red:#ff334f;
+      --coral:#ff6b4a; --yellow:#f7d554; --radius:18px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--ink);color:var(--text);font-family:"DM Sans",sans-serif;min-width:0}
+    button,input{font:inherit}
+    button{color:inherit}
+    .hero{position:relative;min-height:680px;display:grid;align-items:end;overflow:hidden;border-bottom:1px solid var(--line);background:#090d14}
+    .hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.58}
+    .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(7,10,15,.97) 0%,rgba(7,10,15,.76) 44%,rgba(7,10,15,.18) 76%),linear-gradient(0deg,#070a0f 0%,transparent 46%)}
+    .hero-inner{position:relative;z-index:1;width:min(1180px,calc(100% - 40px));margin:0 auto;padding:96px 0 64px;display:grid;grid-template-columns:minmax(0,660px) 1fr;gap:40px;align-items:end}
+    .signal{display:inline-flex;align-items:center;gap:9px;width:max-content;padding:7px 10px 7px 8px;border:1px solid rgba(255,255,255,.25);border-radius:999px;background:rgba(7,10,15,.6);font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+    .signal-dot{width:10px;height:10px;border-radius:50%;background:var(--red);box-shadow:0 0 0 5px rgba(255,51,79,.18);animation:pulse 1.8s infinite}
+    @keyframes pulse{50%{box-shadow:0 0 0 9px rgba(255,51,79,0)}}
+    h1{font-family:"Archivo Black",sans-serif;font-size:clamp(50px,8.2vw,102px);line-height:.88;letter-spacing:-.055em;margin:24px 0 22px;text-transform:uppercase;max-width:760px}
+    .lede{font-size:clamp(18px,2vw,23px);line-height:1.45;color:#e5e9ef;max-width:620px;margin:0 0 28px}
+    .hero-actions{display:flex;gap:12px;flex-wrap:wrap}
+    .primary,.secondary{border:0;border-radius:10px;padding:13px 18px;font-weight:750;cursor:pointer;transition:background .2s,transform .2s}
+    .primary{background:var(--text);color:#070a0f}.primary:hover{background:var(--yellow)}
+    .secondary{background:rgba(15,20,29,.78);border:1px solid rgba(255,255,255,.3)}.secondary:hover{background:#1a2230}
+    .hero-card{justify-self:end;width:min(100%,310px);background:rgba(9,13,20,.82);border:1px solid rgba(255,255,255,.2);border-radius:14px;padding:20px;backdrop-filter:blur(12px)}
+    .hero-card strong{font-family:"Archivo Black";font-size:34px;display:block;letter-spacing:-.03em}
+    .hero-card span{color:var(--muted);display:block;margin-top:4px}
+    .platform-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:18px}
+    .platform-mini{padding:12px 9px;border-radius:9px;background:#111824;border:1px solid #293140;text-align:center}
+    .platform-mini b{display:block;font-size:18px}.platform-mini small{color:var(--muted)}
+    .main{width:min(1180px,calc(100% - 40px));margin:0 auto;padding:58px 0 80px}
+    .feature{display:grid;grid-template-columns:1.32fr .68fr;gap:28px;align-items:center;margin-bottom:54px}
+    .player{position:relative;aspect-ratio:16/9;background:#000;border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 28px 70px rgba(0,0,0,.34)}
+    .player video{width:100%;height:100%;display:block;object-fit:cover}
+    .video-tag{position:absolute;top:14px;left:14px;padding:7px 10px;background:rgba(7,10,15,.84);border:1px solid rgba(255,255,255,.24);border-radius:7px;font-weight:750;font-size:12px;letter-spacing:.08em}
+    .sound{position:absolute;right:14px;bottom:14px;border:1px solid rgba(255,255,255,.35);background:rgba(7,10,15,.85);padding:10px 12px;border-radius:9px;cursor:pointer}
+    .feature-copy h2{font-family:"Archivo Black";font-size:clamp(34px,5vw,56px);line-height:.98;letter-spacing:-.045em;margin:0 0 16px;text-transform:uppercase}
+    .feature-copy p{color:var(--muted);font-size:17px;line-height:1.6;margin:0}
+    .info-row{display:flex;gap:18px;flex-wrap:wrap;margin-top:24px;padding-top:20px;border-top:1px solid var(--line)}
+    .info-row div{min-width:100px}.info-row b{display:block;font-size:20px}.info-row span{color:var(--muted);font-size:13px}
+    .guide-head{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:22px}
+    .guide-head h2{font-family:"Archivo Black";font-size:clamp(34px,5vw,58px);line-height:1;margin:0;text-transform:uppercase;letter-spacing:-.045em}
+    .guide-head p{color:var(--muted);max-width:460px;margin:0;line-height:1.5}
+    .toolbar{position:sticky;top:10px;z-index:4;display:grid;grid-template-columns:minmax(220px,1fr) auto;gap:12px;padding:12px;background:rgba(15,20,29,.92);border:1px solid var(--line);border-radius:14px;backdrop-filter:blur(12px);margin-bottom:16px}
+    .search{width:100%;background:#080c12;border:1px solid #303b4c;color:var(--text);border-radius:9px;padding:13px 14px;outline:none}.search:focus{border-color:#7daef7}
+    .filters{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}
+    .filter{border:1px solid #303b4c;background:#111824;padding:10px 12px;border-radius:9px;cursor:pointer;font-weight:700}
+    .filter[aria-pressed="true"]{background:#f6f7fb;color:#080b10;border-color:#f6f7fb}
+    .guide-meta{display:flex;justify-content:space-between;gap:15px;color:var(--muted);font-size:13px;margin:0 4px 14px}
+    .channel-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+    .channel{display:grid;grid-template-columns:74px 44px minmax(0,1fr) auto;gap:14px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:13px 14px;min-width:0;transition:border-color .18s,background .18s}
+    .channel:hover{background:var(--panel2);border-color:#46536a}
+    .ch-num{font-family:"Archivo Black";font-size:22px;color:#d8dee9;letter-spacing:-.03em}
+    .network{width:42px;height:42px;display:grid;place-items:center;border-radius:10px;font-family:"Archivo Black";font-size:17px;background:#273141}
+    .channel[data-platform="facebook"] .network{background:var(--blue)}
+    .channel[data-platform="instagram"] .network{background:linear-gradient(135deg,#ff3c72,#ff7a3d)}
+    .channel[data-platform="youtube"] .network{background:#f22}
+    .ch-copy{min-width:0}.ch-copy b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:15px}.ch-copy small{display:block;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:3px}
+    .badge{padding:6px 8px;border-radius:7px;background:#19212d;color:#c7d0dc;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.05em}
+    a.channel{text-decoration:none;color:inherit}
+    .empty{grid-column:1/-1;border:1px dashed #3a4659;border-radius:14px;padding:46px 20px;text-align:center;color:var(--muted)}
+    .load-more{display:block;margin:22px auto 0;border:1px solid #3b4657;background:#121923;padding:12px 18px;border-radius:9px;cursor:pointer;font-weight:800}
+    .load-more[hidden]{display:none!important}
+    .load-more:hover{background:#1c2633}
+    .countbar{margin-top:54px;padding:24px 0;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:18px;color:var(--muted)}
+    .countbar strong{color:var(--text)}
+    @media(max-width:860px){
+      .hero{min-height:620px}.hero-inner{grid-template-columns:1fr}.hero-card{justify-self:start;width:100%}.feature{grid-template-columns:1fr}.feature-copy{order:-1}.guide-head{display:block}.guide-head p{margin-top:12px}.channel-list{grid-template-columns:1fr}
+    }
+    @media(max-width:620px){
+      .hero{min-height:690px}.hero::after{background:linear-gradient(0deg,#070a0f 0%,rgba(7,10,15,.68) 70%,rgba(7,10,15,.28))}.hero-inner,.main{width:min(100% - 24px,1180px)}.hero-inner{padding:70px 0 36px;gap:22px}h1{font-size:50px}.lede{font-size:17px}.main{padding-top:42px}.feature{gap:20px;margin-bottom:44px}.toolbar{position:static;grid-template-columns:1fr}.filters{justify-content:flex-start}.filter{flex:1 1 auto}.guide-meta{align-items:flex-start}.channel{grid-template-columns:56px 40px minmax(0,1fr);gap:10px;padding:12px}.channel .badge{display:none}.ch-num{font-size:18px}.network{width:38px;height:38px}.countbar{align-items:flex-start;flex-direction:column}}
+    @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto}.signal-dot{animation:none}}
+  </style>
+</head>
+<body>
+  <section class="hero">
+    <video class="hero-video" src="assets/channel-guide-preview.mp4" autoplay muted loop playsinline aria-hidden="true"></video>
+    <div class="hero-inner">
+      <div>
+        <div class="signal"><span class="signal-dot"></span> Unified lineup</div>
+        <h1>One guide.<br>Three feeds.</h1>
+        <p class="lede">Your Facebook groups, Instagram follows, and Matt Grosso Live come together in one bold, searchable channel lineup.</p>
+        <div class="hero-actions">
+          <button class="primary" id="browseBtn">Browse channels</button>
+          <button class="secondary" id="playBtn">Play hero preview</button>
+        </div>
+      </div>
+      <aside class="hero-card" aria-label="Channel count summary">
+        <span>All-access lineup</span>
+        <strong>397 channels</strong>
+        <div class="platform-strip">
+          <div class="platform-mini"><b>25</b><small>Facebook</small></div>
+          <div class="platform-mini"><b>371</b><small>Instagram</small></div>
+          <div class="platform-mini"><b>1</b><small>YouTube</small></div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <main class="main">
+    <section class="feature" aria-labelledby="premiereTitle">
+      <div class="player">
+        <video id="guideVideo" src="assets/channel-guide-preview.mp4" controls muted loop playsinline preload="metadata"></video>
+        <div class="video-tag">CHANNEL GUIDE PREMIERE</div>
+        <button class="sound" id="soundBtn" aria-label="Turn sound on">Sound on</button>
+      </div>
+      <div class="feature-copy">
+        <h2 id="premiereTitle">The hero preview</h2>
+        <p>A full-screen TV-style opener for the guide, with an animated lineup, channel switches, and a broadcast ticker. Press play, then jump straight into your merged subscriptions below.</p>
+        <div class="info-row">
+          <div><b>16:9</b><span>Hero format</span></div>
+          <div><b>40 sec</b><span>Preview length</span></div>
+          <div><b>3 feeds</b><span>One guide</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="guide" aria-labelledby="guideTitle">
+      <div class="guide-head">
+        <h2 id="guideTitle">Channel lineup</h2>
+        <p>Search by name or handle, then narrow the guide by network. Facebook group names link to their original pages.</p>
+      </div>
+      <div class="toolbar">
+        <input id="search" class="search" type="search" placeholder="Search channels or handles" aria-label="Search channels or handles" />
+        <div class="filters" aria-label="Filter by network">
+          <button class="filter" data-filter="all" aria-pressed="true">All</button>
+          <button class="filter" data-filter="facebook" aria-pressed="false">Facebook</button>
+          <button class="filter" data-filter="instagram" aria-pressed="false">Instagram</button>
+          <button class="filter" data-filter="youtube" aria-pressed="false">YouTube</button>
+        </div>
+      </div>
+      <div class="guide-meta"><span id="resultText">Showing channels</span><span>Channel numbers group each network</span></div>
+      <div id="channelList" class="channel-list"></div>
+      <button id="loadMore" class="load-more" hidden>Show more channels</button>
+    </section>
+
+    <div class="countbar"><strong>397 channels in the merged lineup</strong><span>Facebook 100s · YouTube 200s · Instagram 300s</span></div>
+  </main>
+
+  <script>
+    const source = {"facebook_groups":[{"name":"The Savvy Shopper's HUB: Daily Deals, Discounts, Clearance & 90% Off Finds","members":153000,"url":"https://facebook.com/groups/6027493147336764/"},{"name":"Into The Dark","members":120000,"url":"https://facebook.com/groups/4676389745704428/"},{"name":"YouTube Video Post","members":6,"url":"https://facebook.com/groups/3760052454295066/"},{"name":"The Shopping Mall","members":4,"url":"https://facebook.com/groups/3631531396906026/"},{"name":"Official After Sales Group","members":59000,"url":"https://facebook.com/groups/3393105800906036/"},{"name":"Cheap cars for sale","members":1000,"url":"https://facebook.com/groups/3324291577711480/"},{"name":"Film Locations - Then and Now","members":1352000,"url":"https://facebook.com/groups/3164534807204454/"},{"name":"ItsAboutRadio","members":2,"url":"https://facebook.com/groups/3073146229369584/"},{"name":"workshop section","members":2,"url":"https://facebook.com/groups/3045840725483033/"},{"name":"Looking for a car to buy trade auction","members":26,"url":"https://facebook.com/groups/3035063243424825/"},{"name":"PARANORMAL CAUGHT ON CAMERA FANS","members":42000,"url":"https://facebook.com/groups/2836968829654412/"},{"name":"Private Luxury Jet ✈🌍","members":145000,"url":"https://facebook.com/groups/2825250244429369/"},{"name":"I Want A show","members":1,"url":"https://facebook.com/groups/2780242365407982/"},{"name":"Coding with Elias","members":244000,"url":"https://facebook.com/groups/2749929895122316/"},{"name":"Creative Home Makeovers","members":34000,"url":"https://facebook.com/groups/2736198589736956/"},{"name":"the co host section","members":3,"url":"https://facebook.com/groups/2706739559410284/"},{"name":"The Shopping Mall","members":33000,"url":"https://facebook.com/groups/2674170269527664/"},{"name":"SLAPPED HAM FANS (YOUTUBE)","members":7000,"url":"https://facebook.com/groups/2616147841960167/"},{"name":"Global Disease Outbreaks (International News)","members":817,"url":"https://facebook.com/groups/2613556245531517/"},{"name":"The House Of Podcasting","members":12000,"url":"https://facebook.com/groups/2592702967644739/"},{"name":"Exploring the Afterlife Spiritual Journey Topic Talk Group","members":1000,"url":"https://facebook.com/groups/2578155348890660/"},{"name":"MoeMar fan club for Moe Sargi and OmarGosh fans","members":14000,"url":"https://facebook.com/groups/2559314387421580/"},{"name":"i want a show","members":2,"url":"https://facebook.com/groups/2549489271986998/"},{"name":"MAVRK Network","members":514,"url":"https://facebook.com/groups/2548998395195743/"},{"name":"Woodworking DIY Plans & Projects","members":664000,"url":"https://facebook.com/groups/2545589622421077/"}],"instagram_following":[{"u":"brotherbenx","n":"Brother Ben X | Youtube"},{"u":"originalmanstudios","n":"Original Man Studios"},{"u":"vyzual.ai","n":"Vyzual AI"},{"u":"hannah784145","n":"Hannah Collins"},{"u":"graygraygo","n":"Gray Clara Mchiggins"},{"u":"ambercooperxoxo","n":"Amber Cooper"},{"u":"taylorjwells","n":"Taylor Wells"},{"u":"sofia.montoyas","n":"Sofia Montoyas"},{"u":"zoeevaal","n":"Zoe"},{"u":"joel.jackson.worship","n":"Joel Jackson Worship"},{"u":"_asya_land_","n":"Asya Morante"},{"u":"flareflowapp","n":"FlareFlow 1-Minute Dramas"},{"u":"hilton","n":"Hilton"},{"u":"the.range.is.hot","n":"Range is Hot"},{"u":"bloopymia","n":"Mia Carter"},{"u":"diana.bbyxx","n":"Diana lucia bennett"},{"u":"isavavega","n":"Ava Vega"},{"u":"story_of_the_day199","n":"ANIMATION STORY DAY"},{"u":"cairo_ia","n":"Cairo_Ia"},{"u":"lauramedinarb","n":"🌸 LAURA MEDINA 🌸"},{"u":"carlybigcherrys","n":"Carly"},{"u":"itslaralumiere","n":"lara"},{"u":"milaalunee","n":"Mila Lune"},{"u":"paparazzi","n":"Paparazzi 🤳"},{"u":"its_alikii","n":"Αλίκη Αλεξίου"},{"u":"jenniee_brookss","n":"Jennie🌸"},{"u":"gjeebs","n":"Gjeebs"},{"u":"milo.o0508","n":"Milo"},{"u":"thegospeloflove","n":"Therismos Foundation | Christian Faith"},{"u":"millicentsedra","n":"Millicent Sedra"},{"u":"gospelmetrics","n":"Gospelmetrics"},{"u":"reformedbychrist","n":"Marnus & Jacques Stadler"},{"u":"faithironandoil","n":"Hannah"},{"u":"jasondchen","n":"Jason Chen 陳以桐"},{"u":"evanrosenman","n":"Evan Era"},{"u":"yurii_yeltsov","n":"Yurii Yeltsov"},{"u":"ai_yeltsov","n":"Yurii Yeltsov"},{"u":"linoxeditz","n":""},{"u":"michaelminelli","n":"MICHAEL MINELLI 🎙"},{"u":"levitoddmusic","n":"Levi Todd"},{"u":"brianpruitt3439","n":"Camille Bailey"},{"u":"itsjuliencohen","n":"Julien Cohen"},{"u":"marcusorion163","n":"Marcus Orion"},{"u":"biblecastr","n":"BibleCastr"},{"u":"ryanserhant","n":"Ryan Serhant"},{"u":"dednahype","n":"DEDNAHYPE Family| Funny | Social videos"},{"u":"fuel_fever","n":"Fuel Fever ™️ Est. 2007 ® (Main Page)"},{"u":"askflipman","n":"'Ty Taylor"},{"u":"greator","n":"Greator - IT'S IN YOU!"},{"u":"tonyrobbins_europe","n":"Tony Robbins Europe"},{"u":"noelleleyva","n":"Noelle Leyva"},{"u":"linkme","n":"Linkme"},{"u":"modelmiacarter","n":"Mia Carter"},{"u":"gui.cassiri","n":"Gui Cassiri"},{"u":"jeffscandyshop","n":"Jeff’s Candy Shop"},{"u":"nolwenn_mlle","n":"Nolwenn"},{"u":"noemy_p2ds","n":"Noemy"},{"u":"sooshimango","n":"Sooshi Mango"},{"u":"snazzycarlos","n":"Snazzy"},{"u":"zoe_mrtinez","n":"Zoe Martinez"},{"u":"cowgirl.jess05","n":"Jess 💞"},{"u":"micah_jeub","n":"Micahjeub"},{"u":"lexi_hart_2026","n":"Lexi Hart"},{"u":"itsashleyybby","n":"Ashley 💕"},{"u":"gracie.bestie_","n":"gracie 💫"},{"u":"kirpichnikova_official","n":"Юлия Кирпичникова"},{"u":"masha.noire","n":"maría"},{"u":"ellarayblond","n":"Ella Ray"},{"u":"margovayne.me","n":"Margo Vayne"},{"u":"aheadmindai","n":"AHEAD MIND AI"},{"u":"7ftanna","n":"anna park"},{"u":"the_wealth_tribe","n":"The Wealth Tribe"},{"u":"silas.ancestral","n":"Silas Ridge I Ancestral Remedies"},{"u":"larissaxwan","n":"Larissa"},{"u":"sarahberryrose","n":"sarah 🤍"},{"u":"sam_sharma","n":"Sam Sharma"},{"u":"fantasyfunofficial","n":"Fantasy Fun"},{"u":"siennahayesw","n":"Sienna"},{"u":"bella_luccini","n":""},{"u":"earnon_mkt","n":"EarnOn_MKT"},{"u":"laem.official_","n":""},{"u":"itzemmygoth","n":"Emmy"},{"u":"walgil0072025","n":"andres"},{"u":"ashley.82596","n":"Ashley"},{"u":"sasha_lindsey_joy","n":"Sasha Lindsey Joy"},{"u":"momycarterx","n":"Ashley Carter"},{"u":"javigeek","n":"JaviGeek"},{"u":"xoxo.kiraqueen","n":"xoxokira"},{"u":"ivanaavolkov","n":"Ivana 💖"},{"u":"diywithhazel","n":"DIY with Hazel"},{"u":"weluvgigix","n":"Gigi"},{"u":"neakissed","n":"Nea🤍"},{"u":"shopify","n":"Shopify"},{"u":"100m_lion","n":"ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ"},{"u":"zoeskylarxo","n":"Zoe Skylar"},{"u":"aibyaditi","n":"Aditi Vispute"},{"u":"guiillbrr","n":"Guiillbrr"},{"u":"ijasminecarter","n":"Jasmine Carter"},{"u":"virginioterapia","n":"Ariaci Virginio"},{"u":"thealexkay","n":"Alexandra Svensson"},{"u":"carina","n":"CARINA ZAVLINE"},{"u":"sofa.wuu","n":"SophiaWu"},{"u":"ivana.volkov","n":"Ivana ♬⋆.˚"},{"u":"dream_aliceshaw","n":"Alice Shaw"},{"u":"awayspink","n":"Sofia"},{"u":"leksa_baby_","n":"Leksa"},{"u":"itskellyguzman","n":"Sonia Ferreira"},{"u":"majrikafitko","n":"Artmaľba Mária Rosová"},{"u":"ponyliiiii","n":"Lia Carter"},{"u":"sofiaromano8045","n":"Sofia Romano"},{"u":"drinkmagna","n":"Magna"},{"u":"dreamina_evo","n":"Dreamina_Evo"},{"u":"builtinseconds_inst","n":"BuiltInSeconds"},{"u":"ev1elxngxo","n":"E💞"},{"u":"christi.walks","n":"Christi W"},{"u":"camara0123","n":""},{"u":"lissy.tbh","n":"Lissy🤍"},{"u":"vanessa827620","n":"Vanessa Carrillo"},{"u":"babylexi8399","n":"Babylexi"},{"u":"aurora16238","n":"Aurora Brooke"},{"u":"dreamina_lumi1","n":"Dreamina_Lumi"},{"u":"newsbreak.app","n":"NewsBreak"},{"u":"viktoriiathequeen","n":"Viktoriia Tytarenko"},{"u":"trechofandom","n":"Trecho Fandom"},{"u":"ellie_luxi","n":"Ellie"},{"u":"sienna_blake.us","n":"Sienna Blake"},{"u":"_s0fia_brown_","n":"Sofia"},{"u":"sandyradhitya","n":"Sandi Supriatna, S.M"},{"u":"lunahvaliente","n":"Lunah Valiente"},{"u":"alvaya_norelle","n":"Alvaya Norelle 💕💎👑"},{"u":"moreau_lilu","n":"Ilia renzhin"},{"u":"mixiwagner","n":"Mixi"},{"u":"briellemonroeofficial","n":"Brielle Monroe"},{"u":"sofielindholm1","n":"Sofie Lindholm"},{"u":"jordyn.blondie","n":"Jordz"},{"u":"susan.iswet","n":"Susan Spits"},{"u":"xneleah","n":"ₙₑₗₑₐₕ"},{"u":"minki_minna_","n":"Minki Minna"},{"u":"claramonroeheart","n":"Clara Monroe | Relationship Hard Truths"},{"u":"sofiatucs","n":"Sofia Tucs"},{"u":"lilyy.sunshines","n":"Lily"},{"u":"its.evamoreno","n":"Eva Moreno | Model"},{"u":"oflysyl","n":"leyla"},{"u":"juliahmolinari","n":"jumo"},{"u":"vvvalentinasol","n":"Valentina Sol"},{"u":"diana.serovaa","n":"Diana Serova 💕"},{"u":"michellewhitewellness","n":"Michelle White"},{"u":"kyleexxfit","n":"Kylee"},{"u":"sofi.zeen","n":"Sofi | My hair was Blue"},{"u":"blondie_annelii","n":"Anneli"},{"u":"bwazydaisy","n":"Daisy Harper"},{"u":"aryyaaxoxo","n":"Arya 🏳️‍⚧️"},{"u":"ultimatenostalgia71","n":"Ultimate Nostalgia"},{"u":"jessinorsa","n":"Jessi Norsa"},{"u":"blonde_bambola_x","n":"Kirsty"},{"u":"angelasflights","n":"White 🤍"},{"u":"bananasplit_club","n":"bananasplit_club"},{"u":"bellaveyrr","n":"bella veyra"},{"u":"avassecrets","n":"Ava"},{"u":"abbie.madi","n":"Abbie Madisson"},{"u":"_asshleyjade__","n":"Ashley Jade 🍒"},{"u":"cheyenneswenson_","n":"Cheyenne Swenson"},{"u":"thomas_bennett_us","n":"Thomas Bennett"},{"u":"sarahcutewhite","n":"Sarah White"},{"u":"imjustnicolex","n":"Nicole🎀"},{"u":"carlymasonxx","n":"Carly Mason"},{"u":"alinameowww","n":"ali"},{"u":"itsbubblesxxo","n":"Bubbles 🫧"},{"u":"brunettebarbie.444","n":"Chloe"},{"u":"trixieblonde","n":"Trixie"},{"u":"internetgentleman","n":"Alex Carlson"},{"u":"wokedev444","n":"Devin Ford"},{"u":"cade.garmon","n":"Cade Garmon"},{"u":"dreamfall.art","n":"Maria Rubtsova"},{"u":"syllabus_explained","n":"Syllabus explained"},{"u":"az_ibrahim18","n":"Arzetha Ibrahim Official"},{"u":"nastasia.still","n":"NASTASIA STILL 𝔨𝔬𝔃𝔩𝔬𝔳𝔞"},{"u":"realzoeanderson","n":"Zoe Anderson"},{"u":"scarlettjohanssonangelic","n":"Scarlett Johansson"},{"u":"travelwithnoon","n":"Noon Travel"},{"u":"detox.with.danica","n":"Danica Walker"},{"u":"zara_davis_","n":"Zara Davis"},{"u":"onmiw_ai","n":"Gert"},{"u":"smar.tbuilds","n":"Smart Builds"},{"u":"jitsuaya","n":"Aya Liu"},{"u":"meganonduty_","n":"Megan Carter"},{"u":"melaniatrumpstyle","n":"MelaniaTrumpStyle"},{"u":"moneyce0","n":"Money CEO"},{"u":"abiresag","n":"Abir El Saghir عبير الصغير"},{"u":"emmav.luv","n":"Emma Voss"},{"u":"lostcivilizations_","n":"Lost Civilizations 👁️"},{"u":"yitzchakhorowitz5","n":"Yitzchak Horowitz"},{"u":"siennaareal","n":"Si"},{"u":"tiffanyy__clark","n":"Tiffany Clark"},{"u":"cnbctv","n":"CNBC TV"},{"u":"jennifercardss","n":"Jenifer Caffrey | Manifestation Mentor"},{"u":"its.rachelwoods","n":"Rachel"},{"u":"parrotplanet5","n":"Nauman Zakariya"},{"u":"jpbeatbox069","n":"Jean-Pierre /JP Beatbox"},{"u":"brontefall","n":"Brontë Fall"},{"u":"eva_kroshka_161","n":"Eva"},{"u":"eleonora_petrovich","n":"Eleonora"},{"u":"savannahxxorae","n":"Savannah Rae"},{"u":"arianawix.cutiee","n":"A🤍"},{"u":"sydneyxfreeweights","n":"Sydney Freeman"},{"u":"lucy.brks","n":"Lucy Brookes"},{"u":"april.carter.official","n":"April Carter | Nurse Life"},{"u":"ivanovskaya_anastasia_official","n":"Анастасия Ивановская"},{"u":"michellediaz_x","n":"Jineth Garcia"},{"u":"bebahunny","n":"Bebahan"},{"u":"kayla_kkmarie","n":"kayla"},{"u":"nadiaskhar","n":"NADIA KHAR"},{"u":"mcpicksters","n":"💎Elite Sports Picks💎"},{"u":"tjyellow7","n":"Tim Jones"},{"u":"yoyo.awada","n":"Youssef Awada"},{"u":"moesgroup","n":"Moe’s Group"},{"u":"soloviova.ksusha","n":"Ksu"},{"u":"tilds.search","n":"Tilds Search"},{"u":"rw3talents","n":"Raymond Wetterlund III"},{"u":"brittanyperilleee","n":"Women’s Health Coach | Pre & Postpartum Trainer"},{"u":"demeo.avery","n":"Avery Demeo"},{"u":"siennaxbk","n":"Sienna K."},{"u":"canaria.fitness","n":"Cristina gilabert benito"},{"u":"theparanormalskouteroffical","n":"The Paranormal Skouter"},{"u":"fantasia_en_paris","n":"Fantasia En Paris"},{"u":"laraleatrump","n":"Lara Trump"},{"u":"charlparkesx","n":"Charlotte Parkes"},{"u":"babyslow_official","n":"王宸尔Babyslow"},{"u":"josephandcurtis","n":"Curt Dahl"},{"u":"metroscreenworks","n":"Metro Screenworks Inc"},{"u":"isabelamazingxo","n":"Isabel amazing"},{"u":"jessica_haller","n":"J e s s i c a  H a l l e r"},{"u":"welcometomellyland","n":"MELLYLAND"},{"u":"seraphinaawithmore","n":"Seraphina Whitmore"},{"u":"officialchrismann","n":"Chris Mann"},{"u":"real_estate_rambo","n":"Joseph Dejesus"},{"u":"graciebooom","n":"Gracy Clara Higgins"},{"u":"messhallpodcast","n":"Major's Mess Hall Podcast"},{"u":"mattgrosso8","n":"Matt Grosso"},{"u":"theoceancleanup","n":"The Ocean Cleanup"},{"u":"bittyyuna","n":"itty-bitty Yuna"},{"u":"jonathanymusic","n":"Jonathan Young Music"},{"u":"emilyrosehastings","n":"Emily Hastings"},{"u":"livemusicfever","n":"Live music | Festivals | Concerts"},{"u":"imsethdrums","n":"Seth Davis"},{"u":"jessicacakes2","n":"jessicakes 🍰"},{"u":"elviraxla","n":"LA ELVÍRA"},{"u":"maverickmother","n":"Emily"},{"u":"synergycustomfitness","n":"SYNERGY CUSTOM FITNESS"},{"u":"verzatv","n":"VERZATV"},{"u":"klaudia_jaworskaa","n":"Klaudia Jaworska"},{"u":"henny_the_granny","n":"Henny the Granny"},{"u":"northwest_florida_beaches","n":"Northwest Florida Beaches"},{"u":"regal_lc","n":"Regal Landscaping&Construction"},{"u":"imlucy.red","n":"Lucy Red ❤️"},{"u":"msdirndl","n":"Amber Bexley"},{"u":"drjoshredd","n":"Joshua Redd"},{"u":"crazyauntieann","n":"Ann Chambers"},{"u":"doctorjohnrink","n":"Dr. John Rink"},{"u":"tightendssportsbarandgrill","n":"Tight Ends Sports Bar & Grill"},{"u":"pranksgoingtoofar","n":"Pranks Going Too Far"},{"u":"pfehaqremi1964","n":"Charlotte"},{"u":"itssnicolex","n":"Nicole💫"},{"u":"loveofthemagic","n":"Jamie Rumph | Luxury Travel Agent"},{"u":"golfwithmichele","n":"Golfer Girl Michele Uemoto🏌🏻‍♀️"},{"u":"kristababyallen","n":"KristaBaby🎀"},{"u":"luxury.rab","n":"💎luxury Inspiration💎"},{"u":"aldosworld007","n":"Aldo Hafez"},{"u":"romanatwood","n":"Roman Atwood"},{"u":"alielsarjitattoos","n":"Ali El-Sarji Tattoos"},{"u":"ceo.sami","n":"Sami Abboud | Lead Generation Expert"},{"u":"ddoggvlogs","n":"ddogg vlogs"},{"u":"justus_domenic","n":"Justus Delgado"},{"u":"superwog_","n":"Superwog"},{"u":"chrisparanormalexplorer","n":"Chris Sanders"},{"u":"angbonatv","n":"Angelo Bonaccorso"},{"u":"urbex_ontario_","n":"Urbex Ontario"},{"u":"officialsargifamily","n":""},{"u":"mammothmachineryinc","n":"Mammoth Machinery Inc."},{"u":"whistlindiesel","n":"WHISTLINDIESEL"},{"u":"repossessedtv","n":"Repossessed Show"},{"u":"lawyers_puns_and_money","n":"Jake Powers"},{"u":"denisedreyer.brandambassador","n":"Denise Dreyer"},{"u":"buildludo","n":"Ludo"},{"u":"deemariedi","n":"Dee"},{"u":"propmasterpicks","n":"The Prop Master"},{"u":"dicafilme","n":"DicaFilme | Filmes e Séries"},{"u":"naihporfirio_","n":"Naih Porfirio"},{"u":"theoriesbible","n":"👁️Theories | Conspiracy | Scary 👁️"},{"u":"qualityflooringbyfrankmilea","n":"Quality Flooring By FrankMilea"},{"u":"catherine_bateyy","n":"Catherine Batey"},{"u":"cozyfurniture_jacksonville","n":""},{"u":"katisha_official","n":"Saxophonist Dubai"},{"u":"csmodeling_arizona","n":"Cheyenne Swenson"},{"u":"ihowlandiwhine","n":"William Fletcher"},{"u":"turnerhomefl","n":"Turner Home - Jacksonville Beach & St. Augustine"},{"u":"greatestperformances","n":"Greatest Performances / Music"},{"u":"sophielollipop","n":"SOPHIE (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧"},{"u":"glamfitbikinis","n":"Glamfit Competition Bikinis"},{"u":"vickyladyy","n":"Viktoria Johansson"},{"u":"thehollywoodfix","n":"🌴TheHollywoodFix🌴"},{"u":"katy_ann_xo","n":"Katy Ann"},{"u":"ssunshinessmiless","n":"Sunshine"},{"u":"kaitlynjaynne.verified","n":"Kaitlyn Jaynne"},{"u":"camiroller_","n":"𝐂𝐀𝐌𝐈𝐋𝐀 𝐋Ó𝐏𝐄𝐙"},{"u":"siennaxhalls_","n":"Sienna Mae"},{"u":"piercebrosnanofficial","n":"Pierce Brosnan"},{"u":"aylaaluv","n":"Ayla Taylor"},{"u":"happyyyeli","n":"eli"},{"u":"lejla.secic","n":"Leyla Šečić  IFBB PRO Coach • DJ Dubai"},{"u":"minynaranja","n":"Myrna Ortega"},{"u":"oracleamberreading","n":"Amber Summer"},{"u":"karinkapetro","n":"Karina Petrova"},{"u":"lotfiabdelli","n":"Je suis bien chez vous"},{"u":"ohkaybunny","n":"Kay Marie"},{"u":"go__mandy","n":"G. Oliveira  “MANDY”"},{"u":"polishmariamagdalena","n":"Maria Magdalena Suska"},{"u":"richbabeera_","n":"Lemie Craft"},{"u":"alpineairlv","n":"Las Vegas Air Conditioning & Heating"},{"u":"juliannamassonn","n":"♥️LARA FOX♥️"},{"u":"itslauramorante","n":"Laura Morante"},{"u":"le__stella_offiziell","n":"le_Kathalea🖇️"},{"u":"allegracoleworld","n":"Allegra Cole"},{"u":"rachelkeren","n":"Rachel Keren"},{"u":"kell_doll_x","n":"Kell Doll X"},{"u":"ayluxurydesigns","n":"AY Luxury Designs"},{"u":"carolinacasiraghireal","n":"Carolina Cristina Casiraghi"},{"u":"kaylabossdollx","n":"Kayla Serenna"},{"u":"sofia_cyrel","n":"Sofia_Cyrel"},{"u":"kaeangelll","n":"Kaelan Rae Barrick"},{"u":"amber_lynnmiller","n":"Amber Lynn Miller"},{"u":"yourscottishgirlfriend","n":"Donna matheson"},{"u":"kianajardot","n":"Kiana Jardot"},{"u":"jackblack","n":"Jack Black"},{"u":"heyitsderekberry","n":"Derek Berry"},{"u":"nunchakusdragon","n":"Scott Whitehead"},{"u":"yourlogan","n":"Logan Micke"},{"u":"shannonelizabeth","n":"SHANNON ELIZABETH"},{"u":"grammys","n":"GRAMMYS"},{"u":"robertedwardgrant","n":"Robert Edward Grant"},{"u":"tigeraphics","n":"Emre Kaplan"},{"u":"rachelchaleff","n":"rachel / keet"},{"u":"alexxisxxj","n":"Аlexis ХJ"},{"u":"wristwearadventures","n":"Wrist Wear Adventures ⌚️🌟🚀"},{"u":"urbanrrasoi_","n":"Urban Rrasoi | Cutler Bay"},{"u":"alex.ia3516","n":""},{"u":"mango.saurus77","n":"gwen mceachern"},{"u":"mikeyzarb","n":"Mikey Zarb"},{"u":"thebrijordan","n":"Bri Jordan 🫶🏻"},{"u":"alyakosukhina_pianist","n":"Alya"},{"u":"meta.ai","n":"Meta AI"},{"u":"leofuicaperso","n":"Leonardo Fuica/Leo Zola"},{"u":"zizowireless","n":"ZIZO Wireless"},{"u":"elisa_albrich","n":"Elisa Albrich"},{"u":"inessa_gragovskaya","n":"Inessa Gragovskaya | Musician, Travel Influencer | Worldwide"},{"u":"zulyvilladiaz","n":"Suly Villa"},{"u":"pasmagic","n":"Pete A Sciarrino"},{"u":"antoinemmartel","n":"Antoine Martel"},{"u":"any_time_construction","n":"Anytime Construction Inc"},{"u":"milalouson","n":"Leksa Sukhneva"},{"u":"lauranataliacpa","n":"Laura Castellanos"},{"u":"thecreditcardking","n":"Hrach Hairapetian"},{"u":"mayashistory","n":"Maya’s History"},{"u":"pasqualepisana","n":"Pasquale Pisana"},{"u":"silserene","n":"Silita Amiri"},{"u":"oliviaholmx","n":"Olivia Holmgrem"},{"u":"itsemmawho","n":"emma who ?"},{"u":"alona__kravchenko","n":"Alena Kravchenko"},{"u":"taleofanoldsoul","n":"Tales of an OldSoul"},{"u":"chloe.vs.history","n":"Chloe VS History"},{"u":"lukemillionmusic","n":"Luke Million"}],"youtube_channels":[{"name":"Matt Grosso Live"}]};
+    const channels = [
+      ...source.facebook_groups.map((x,i)=>({platform:'facebook',number:100+i,name:x.name,detail:`${Number(x.members||0).toLocaleString()} members`,url:x.url||null,mark:'f'})),
+      ...source.youtube_channels.map((x,i)=>({platform:'youtube',number:200+i,name:x.name,detail:'YouTube channel',url:null,mark:'YT'})),
+      ...source.instagram_following.map((x,i)=>({platform:'instagram',number:300+i,name:x.n||`@${x.u}`,detail:`@${x.u}`,url:null,mark:'IG'}))
+    ];
+    const list = document.getElementById('channelList');
+    const search = document.getElementById('search');
+    const resultText = document.getElementById('resultText');
+    const loadMore = document.getElementById('loadMore');
+    let filter = 'all';
+    let limit = 48;
+
+    function filtered(){
+      const q = search.value.trim().toLowerCase();
+      return channels.filter(c => (filter==='all'||c.platform===filter) && (!q || `${c.name} ${c.detail}`.toLowerCase().includes(q)));
+    }
+    function card(c){
+      const el = document.createElement(c.url ? 'a':'article');
+      el.className = 'channel';
+      el.dataset.platform = c.platform;
+      if(c.url){el.href=c.url;el.target='_blank';el.rel='noopener noreferrer';el.setAttribute('aria-label',`${c.name} — open Facebook group`)}
+      const label=c.platform[0].toUpperCase()+c.platform.slice(1);
+      el.innerHTML=`<span class="ch-num">${c.number}</span><span class="network">${c.mark}</span><span class="ch-copy"><b></b><small></small></span><span class="badge">${label}</span>`;
+      el.querySelector('b').textContent=c.name;
+      el.querySelector('small').textContent=c.detail;
+      return el;
+    }
+    function render(){
+      const items=filtered();
+      const shown=items.slice(0,limit);
+      list.replaceChildren(...shown.map(card));
+      if(!items.length){const empty=document.createElement('div');empty.className='empty';empty.textContent='No channels match that search.';list.append(empty)}
+      resultText.textContent=`Showing ${shown.length} of ${items.length} channels`;
+      loadMore.hidden=shown.length>=items.length;
+    }
+    document.querySelectorAll('.filter').forEach(btn=>btn.addEventListener('click',()=>{
+      filter=btn.dataset.filter; limit=48;
+      document.querySelectorAll('.filter').forEach(x=>x.setAttribute('aria-pressed',x===btn?'true':'false'));
+      render();
+    }));
+    search.addEventListener('input',()=>{limit=48;render()});
+    loadMore.addEventListener('click',()=>{limit+=48;render()});
+    document.getElementById('browseBtn').addEventListener('click',()=>document.getElementById('guide').scrollIntoView({behavior:'smooth'}));
+    const video=document.getElementById('guideVideo');
+    document.getElementById('playBtn').addEventListener('click',()=>{document.querySelector('.feature').scrollIntoView({behavior:'smooth'});video.play()});
+    document.getElementById('soundBtn').addEventListener('click',e=>{video.muted=!video.muted;e.currentTarget.textContent=video.muted?'Sound on':'Sound off';e.currentTarget.setAttribute('aria-label',video.muted?'Turn sound on':'Turn sound off');if(video.paused)video.play()});
+    render();
+  </script>
+</body>
+</html>
