@@ -1,0 +1,8 @@
+{
+  "runtime": "static",
+  "platformVersion": 15,
+  "entry": "index.html",
+  "name": "Desktop HTML Prototype",
+  "slug": "desktop-html-prototype",
+  "managedCronJobs": []
+}
