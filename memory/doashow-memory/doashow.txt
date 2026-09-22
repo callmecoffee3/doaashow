@@ -1,0 +1,89 @@
+{
+  "project": {
+    "name": "DoaShow",
+    "branch": "clean",
+    "purpose": "Unified memory system for scenes, clips, characters, artifacts, and app logic."
+  },
+
+  "directories": {
+    "root": "/doaashow",
+    "memory_folder": "/doaashow/memory",
+    "notes": [],
+    "txt_files": [],
+    "md_files": []
+  },
+
+  "scene_format": {
+    "meta": {
+      "scene_name": "",
+      "theme": "",
+      "page": "",
+      "act": "",
+      "location": ["INT", "EXT"],
+      "character_entry": "IN"
+    },
+    "beats": {
+      "beat": "",
+      "response": "",
+      "turn": "",
+      "out": "",
+      "emo": "",
+      "activities": "",
+      "shot": ["WIDE", "TWO_SHOT", "CU", "ECU", "INSERT"]
+    }
+  },
+
+  "audio_visual": {
+    "ambient": [],
+    "vfx": [],
+    "sfx": [],
+    "mp3_cues": [],
+    "sci_fi_elements": [],
+    "characters": []
+  },
+
+  "app_requirements": {
+    "ui": {
+      "character_blocks": true,
+      "memory_section": true,
+      "price_quote_section": true,
+      "html_preview": true,
+      "text_preview": true,
+      "artifact_preview": true
+    },
+    "systems": {
+      "roll_system": "A–F",
+      "matrix_slots": true,
+      "project_name_save_load": true,
+      "cards_per_project": 100,
+      "portfolio_pages": true,
+      "user_pages": true
+    },
+    "video_generation": {
+      "use_shot": true,
+      "use_vfx": true,
+      "use_sfx": true
+    }
+  },
+
+  "artifacts": {
+    "latest": "",
+    "history": []
+  },
+
+  "workflow": {
+    "mode": "storyboard_studio",
+    "rules": [
+      "Allow adding/editing project names",
+      "Ensure artifact generation and rendering",
+      "Keep HTML simple and professional"
+    ]
+  },
+
+  "memory_log": [
+    {
+      "date": "2026-09-22",
+      "entry": "DoaShow clean branch memory initialized."
+    }
+  ]
+}
