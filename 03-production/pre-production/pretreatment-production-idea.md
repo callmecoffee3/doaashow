@@ -27,26 +27,30 @@ Short prose version of the story (1–3 paragraphs).
 ---
 
 ## Characters
-## Heros
-## Enimuies
-## Friends
-## Family
-## Business
-## Personal
-## Details
-## Profesional
-## Close
-## Appart
-## Single
-## Maried
-## Devorcied
-## Reconciled Deferances
-## Drama
-## Parent
-## Unwed
-## Scenes in
-## Scenes Steped in
-## Scenes Stepped out
+
+Heros
+Enemies
+Friends
+Family
+Business
+Personal
+Details
+Profesional
+Close
+Appart
+Single
+Maried
+Devorcied
+Reconciled Deferances
+Drama
+Parent
+Unwed
+
+## Scenes 
+
+Scenes in
+Scenes Steped in
+Scenes Stepped out
 ---
 
 ## Main characters
