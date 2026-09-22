@@ -132,7 +132,7 @@ Raw concepts for doaashow-clean. Add anything. No judgment.
 - clowns
 - adventures
 - paranormal
-- reliogion
+- religion
 - Story
 - Tunnels
 - Vlogs
@@ -153,7 +153,13 @@ Raw concepts for doaashow-clean. Add anything. No judgment.
 - Law
 - Building
 - Contracts
-  
+- 24 hours 
+- Challenges
+- Games
+- Outing
+- Fun
+- Tutorials
+- Unboxing 
   
   
 ---
