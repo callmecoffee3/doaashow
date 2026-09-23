@@ -1,0 +1,59 @@
+{
+  "user_id": "usr_alex_01",
+  "session_id": "sess_alex_99",
+  "metadata": {
+    "created_at": "2026-06-05T10:00:00Z",
+    "last_active": "2026-09-23T18:35:00Z",
+    "platform": "web"
+  },
+  "user_profile": {
+    "name": "Alex",
+    "preferences": {
+      "format": "index cards",
+      "style": "micro drama",
+      "drawing_mode": "plain text"
+    },
+    "custom_variables": {
+      "stash": 3365
+    }
+  },
+  "long_term_memory": {
+    "core_rules": [
+      "Write for micro drama scenes",
+      "Use the index card rule",
+      "Draw index cards and scenes in plain text"
+    ],
+    "archived_projects": [
+      {
+        "project_name": "Micro Drama Index Card Workflow",
+        "description": "12-line structural constraint system for script mapping and scene indexing."
+      }
+    ]
+  },
+  "conversation_history": [
+    {
+      "role": "user",
+      "content": "I want you to write for micro drama scene and use the index card rule and draw in plain text.",
+      "timestamp": "2026-06-05T10:05:00Z"
+    },
+    {
+      "role": "assistant",
+      "content": "+--------------------------------------------------+\n| INDEX CARD #1: THE HOOK                          |\n| ------------------------------------------------ |\n| Line 1: The garage door rattles in the storm.    |\n| Line 2: Mark drops his keys in the dark puddle.  |\n| Line 3: A single headlight cuts through the rain.|\n| Line 4: He freezes, recognizing the plate.       |\n| Line 5: \"You're early,\" he whispers to himself.  |\n| Line 6: The car door clicks open slowly.         |\n| Line 7: Footsteps crunch on the wet gravel.      |\n| Line 8: A silhouette steps into the porch light.   |\n| Line 9: \"Did you think I wouldn't check?\"         |\n| Line 10: The front lock turns from the inside.   |\n| Line 11: Mark reaches behind his back.           |\n| Line 12: Cut to black before the flash.           |\n+--------------------------------------------------+",
+      "timestamp": "2026-06-05T10:05:30Z"
+    },
+    {
+      "role": "user",
+      "content": "Can you check my current stash?",
+      "timestamp": "2026-09-23T18:30:10Z"
+    },
+    {
+      "role": "assistant",
+      "content": "Your current stash is 3,365.",
+      "timestamp": "2026-09-23T18:30:15Z"
+    }
+  ],
+  "short_term_memory": {
+    "current_topic": "micro drama drafting",
+    "pending_action": "format next scene using index card constraints"
+  }
+}
