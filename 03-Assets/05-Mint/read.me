@@ -1,0 +1,65 @@
+{
+  "token": {
+    "name": "YOUR_TOKEN_NAME",
+    "symbol": "YOUR_SYMBOL",
+    "totalSupply": 2700000,
+    "decimals": 6,
+    "chain": "Solana (Recommended) / Base / Ethereum",
+    "mintAuthority": "Disabled after mint (immutable)",
+    "freezeAuthority": "Disabled",
+    "totalMicroUnits": "2700000000000"
+  },
+  "purpose": "1-Year Sustainable Token - Designed to last exactly 365 days",
+  "emissionSchedule": {
+    "totalDurationDays": 365,
+    "dailyEmission": 7397,
+    "weeklyEmission": 51780,
+    "monthlyEmission": 225000,
+    "calculation": "2700000 / 365 = 7397.26 per day"
+  },
+  "allocation": {
+    "day1Liquidity": {
+      "amount": 500000,
+      "percent": "18.5%",
+      "note": "Put in DEX (Raydium/Uniswap) with $500-$1000 SOL/ETH to start trading"
+    },
+    "dailyRewardsLocked": {
+      "amount": 2200000,
+      "percent": "81.5%",
+      "releaseRate": "7397 per day",
+      "duration": "365 days",
+      "locker": "Team.Finance / Streamflow / Sablier",
+      "note": "This is what makes it last 1 year - cannot be withdrawn early"
+    }
+  },
+  "valuation": {
+    "at_0_001": "$2,700 Market Cap",
+    "at_0_01": "$27,000 Market Cap",
+    "at_0_10": "$270,000 Market Cap",
+    "at_1_00": "$2,700,000 Market Cap",
+    "at_10_00": "$27,000,000 Market Cap"
+  },
+  "oneDayHold": {
+    "tokens": 7397,
+    "percentOfSupply": "0.274%",
+    "at_0_01": "$73.97",
+    "at_0_10": "$739.70",
+    "at_1_00": "$7397.00"
+  },
+  "inSatsComparison": {
+    "if_1_token_equals_1_sat": {
+      "totalSupplySats": 2700000,
+      "btc": 0.027,
+      "usd_at_84320_btc": "$2,276.64"
+    }
+  },
+  "mintSteps": [
+    "1. Create token on Solana via pump.fun / Smithii / Solana Token Creator",
+    "2. Supply: 2,700,000 | Decimals: 6 | Symbol: YOUR_SYMBOL",
+    "3. Disable mint authority",
+    "4. Create liquidity pool with 500k tokens + $500 SOL",
+    "5. Lock remaining 2.2M tokens in Streamflow with 7397/day unlock",
+    "6. Publish lock link for trust"
+  ],
+  "creator": "Matt Grosso - 2.7M Token Plan",
+  "created": "2026-05-13"
