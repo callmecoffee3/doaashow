@@ -24,7 +24,14 @@ Built by **Matt Grosso** ([@callmecoffee3](https://github.com/callmecoffee3)) â€
 * ADD PEVOUS SEARCH HISTORY
 * ADD TABS
 * ADD EXTENTIONS
-
+* ADD CLOCK
+* ADD CALENDER
+* ADD MADE BY CALLMECOFFEE3 MATT GROSSO IN MAIN SCREEN
+* ADD SETTINGS
+* ADD OPTION
+* ADD NOTES
+* REMEBER WHAT YOU BUILDING
+* PING AI WHEN NEW UPDATES COME
 ## Pages
 
 Quick links to the main areas of the project (like pages in a site):
