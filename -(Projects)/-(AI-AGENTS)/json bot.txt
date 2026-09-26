@@ -1,0 +1,377 @@
+{
+  "settings": {
+    "bot_name": "JSON Memory Bot",
+    "version": "4.7",
+    "theme": "dark",
+    "auto_save": true,
+    "max_history": 100,
+    "require_login": true,
+    "send_text_enabled": true,
+    "allow_user_bots": true,
+    "max_bots_per_user": 20,
+    "allow_add_users": true
+  },
+  "about": {
+    "name": "JSON Memory Bot",
+    "version": "4.7",
+    "description": "A persistent memory chatbot that stores conversation history, projects, messages, and user-created bots entirely in JSON. Built for Matt Grosso / doaashow lab.",
+    "author": "Matt Grosso",
+    "created": "2026-05-13",
+    "last_updated": "2026-09-26",
+    "features": [
+      "Persistent JSON memory per user",
+      "User-created bots with names and IDs",
+      "Send messages as bots",
+      "Click / select bots",
+      "Projects, docs, media tracking",
+      "Inbox / outbox / drafts / templates",
+      "Command system",
+      "Make Bots section",
+      "Run Bot command",
+      "Notes section",
+      "Add Users system"
+    ],
+    "license": "Personal / Lab use"
+  },
+  "help": {
+    "title": "JSON Memory Bot – Help",
+    "description": "Type any command or just chat. Everything is saved in the JSON.",
+    "commands": {
+      "status": "Show current state (user, settings, selected bot)",
+      "memory": "Show full chat history for current user",
+      "projects": "List all projects",
+      "send": "Open message tools (inbox, outbox, drafts, bot messages)",
+      "bots": "List all bots (system + user)",
+      "makebot": "Create a new bot (name required)",
+      "clickbot": "Select a bot by id or name",
+      "runbot": "Start / restart the bot interface",
+      "help": "Show this help section",
+      "about": "Show bot information",
+      "notes": "Show saved notes",
+      "users": "List all users",
+      "adduser": "Add a new user"
+    },
+    "examples": [
+      "makebot MyCoolBot",
+      "clickbot bot_002",
+      "runbot",
+      "adduser Jane editor_jane",
+      "users",
+      "status",
+      "memory",
+      "notes"
+    ],
+    "tips": [
+      "You can create up to 20 bots.",
+      "Select a bot with clickbot before sending as that bot.",
+      "Type 'runbot' or 'run bot' to start the interface.",
+      "Use 'adduser <display_name> <username>' to create users.",
+      "All changes are auto-saved to the JSON.",
+      "Use natural language too — the bot remembers everything."
+    ]
+  },
+  "make_bots": {
+    "enabled": true,
+    "max_per_user": 20,
+    "required_fields": ["name"],
+    "optional_fields": ["description", "avatar", "type"],
+    "default_type": "user",
+    "default_status": "active",
+    "default_clickable": true,
+    "id_prefix": "bot_",
+    "next_id": 3,
+    "creation_rules": [
+      "Name must be unique for the owner",
+      "Owner is automatically set to current_user",
+      "Bot becomes selectable immediately after creation",
+      "Created bots appear in user_bots list"
+    ],
+    "template": {
+      "id": "bot_XXX",
+      "name": "",
+      "owner": "",
+      "type": "user",
+      "avatar": "/pictures/avatars/default_bot.png",
+      "description": "",
+      "created_at": "",
+      "status": "active",
+      "clickable": true
+    }
+  },
+  "notes": {
+    "title": "JSON Memory Bot – Full State Notes",
+    "last_saved": "2026-09-26T15:47:00Z",
+    "content": "Full current JSON structure saved here for quick reference. Includes settings, about, help, make_bots, commands, accounts, bots, projects, docs, video, pictures, memory, and send_text. Version 4.7 now includes Add Users system.",
+    "full_json_snapshot": "See main JSON object – this notes section holds a reference to the complete state as of version 4.7"
+  },
+  "add_users": {
+    "enabled": true,
+    "next_id": 3,
+    "id_prefix": "user_",
+    "default_role": "viewer",
+    "default_permissions": ["read"],
+    "available_roles": ["admin", "editor", "viewer"],
+    "available_permissions": ["read", "write", "delete", "manage_users", "manage_projects", "create_bots", "send_as_bot"],
+    "required_fields": ["username", "display_name"],
+    "optional_fields": ["email", "role", "avatar", "permissions", "facts"],
+    "template": {
+      "id": "user_XXX",
+      "username": "",
+      "email": "",
+      "display_name": "",
+      "role": "viewer",
+      "avatar": "/pictures/avatars/default.png",
+      "permissions": ["read"],
+      "facts": {}
+    }
+  },
+  "commands": {
+    "status": "show current state",
+    "memory": "show chat history",
+    "projects": "list projects",
+    "send": "open message tools",
+    "help": "full commands",
+    "about": "show about info",
+    "bots": "list / create / select bots",
+    "makebot": "create a new bot",
+    "clickbot": "select a bot by id or name",
+    "runbot": "start / restart the bot interface",
+    "notes": "show saved notes",
+    "users": "list all users",
+    "adduser": "add a new user"
+  },
+  "accounts": {
+    "current_user": "mattgrosso8",
+    "users": [
+      {
+        "id": "user_001",
+        "username": "mattgrosso8",
+        "email": "matt@example.com",
+        "display_name": "Matt Grosso",
+        "role": "admin",
+        "avatar": "/pictures/avatars/matt.png",
+        "permissions": [
+          "read",
+          "write",
+          "delete",
+          "manage_users",
+          "manage_projects",
+          "create_bots",
+          "send_as_bot"
+        ],
+        "facts": {
+          "favorite_color": "blue",
+          "location": "Florida"
+        }
+      },
+      {
+        "id": "user_002",
+        "username": "guest_user",
+        "display_name": "Guest",
+        "role": "viewer",
+        "permissions": ["read"]
+      }
+    ]
+  },
+  "bots": {
+    "system_bots": [
+      {
+        "id": "bot_001",
+        "name": "JSON Memory Bot",
+        "owner": "system",
+        "type": "system",
+        "avatar": "/pictures/bot_avatar.png",
+        "description": "Main memory bot",
+        "created_at": "2026-05-13T09:00:00Z",
+        "status": "active"
+      }
+    ],
+    "user_bots": [
+      {
+        "id": "bot_002",
+        "name": "MattBot",
+        "owner": "mattgrosso8",
+        "type": "user",
+        "avatar": "/pictures/avatars/matt.png",
+        "description": "Matt's personal bot",
+        "created_at": "2026-09-26T15:30:00Z",
+        "status": "active",
+        "clickable": true
+      }
+    ],
+    "selected_bot": "bot_001"
+  },
+  "projects": [
+    {
+      "id": "proj_01",
+      "owner": "mattgrosso8",
+      "name": "Chatbot with JSON Memory",
+      "status": "in_progress"
+    },
+    {
+      "id": "proj_02",
+      "owner": "mattgrosso8",
+      "name": "Personal Website",
+      "status": "planned"
+    }
+  ],
+  "docs": [
+    {
+      "id": "doc_01",
+      "title": "bot_instructions.txt",
+      "path": "/docs/bot_instructions.txt",
+      "type": "text"
+    },
+    {
+      "id": "doc_02",
+      "title": "memory_spec.pdf",
+      "path": "/docs/memory_spec.pdf",
+      "type": "pdf"
+    }
+  ],
+  "video": [
+    {
+      "id": "vid_01",
+      "title": "How JSON Memory Works",
+      "url": "/video/memory-explained.mp4",
+      "thumbnail": "/pictures/thumb_video_01.jpg"
+    }
+  ],
+  "pictures": [
+    {
+      "id": "pic_01",
+      "title": "Bot Avatar",
+      "url": "/pictures/bot_avatar.png"
+    },
+    {
+      "id": "pic_02",
+      "title": "Memory Diagram",
+      "url": "/pictures/memory_diagram.jpg"
+    }
+  ],
+  "memory": {
+    "by_user": {
+      "mattgrosso8": [
+        { "role": "user", "text": "hi" },
+        { "role": "bot", "text": "Hey Matt!", "bot_id": "bot_001" },
+        { "role": "user", "text": "run the bot" },
+        { "role": "bot", "text": "JSON Memory Bot v4.1 — running", "bot_id": "bot_001" },
+        { "role": "user", "text": "run bot" },
+        { "role": "bot", "text": "JSON Memory Bot v4.1 — running", "bot_id": "bot_001" },
+        { "role": "user", "text": "in the json let user send bot messages click on bots add bots names let users make bots let users send bot messages add id add to the whole code" },
+        { "role": "bot", "text": "Bots system added. Users can now create, name, select, and send as bots.", "bot_id": "bot_001" },
+        { "role": "user", "text": "add help section and about" },
+        { "role": "bot", "text": "Help and About sections added.", "bot_id": "bot_001" },
+        { "role": "user", "text": "rember this about the json bot" },
+        { "role": "bot", "text": "Remembered the full JSON Memory Bot state.", "bot_id": "bot_001" },
+        { "role": "user", "text": "run bot" },
+        { "role": "bot", "text": "JSON Memory Bot v4.3 — running", "bot_id": "bot_001" },
+        { "role": "user", "text": "add section make bots" },
+        { "role": "bot", "text": "make_bots section added.", "bot_id": "bot_001" },
+        { "role": "user", "text": "run bot" },
+        { "role": "bot", "text": "JSON Memory Bot v4.4 — running", "bot_id": "bot_001" },
+        { "role": "user", "text": "add run bot command" },
+        { "role": "bot", "text": "runbot command added.", "bot_id": "bot_001" },
+        { "role": "user", "text": "runbot" },
+        { "role": "bot", "text": "JSON Memory Bot v4.5 — running", "bot_id": "bot_001" },
+        { "role": "user", "text": "bots" },
+        { "role": "bot", "text": "Listed system and user bots.", "bot_id": "bot_001" },
+        { "role": "user", "text": "put json in notes" },
+        { "role": "bot", "text": "Full JSON saved to notes section.", "bot_id": "bot_001" },
+        { "role": "user", "text": "run bot" },
+        { "role": "bot", "text": "JSON Memory Bot v4.6 — running", "bot_id": "bot_001" },
+        { "role": "user", "text": "about" },
+        { "role": "bot", "text": "Displayed about section.", "bot_id": "bot_001" },
+        { "role": "user", "text": "add users" },
+        { "role": "bot", "text": "Add Users system added.", "bot_id": "bot_001" }
+      ]
+    }
+  },
+  "send_text": {
+    "enabled": true,
+    "allow_bot_messages": true,
+    "outbox": [
+      {
+        "id": "msg_001",
+        "from": "mattgrosso8",
+        "to": "editor_jane",
+        "text": "Hey Jane, check the new chatbot memory",
+        "timestamp": "2026-05-13T10:05:00Z",
+        "status": "sent",
+        "type": "text"
+      }
+    ],
+    "inbox": [
+      {
+        "id": "msg_002",
+        "from": "editor_jane",
+        "to": "mattgrosso8",
+        "text": "Looks good! I added the docs.",
+        "timestamp": "2026-05-13T10:06:00Z",
+        "status": "unread",
+        "type": "text"
+      }
+    ],
+    "drafts": [
+      {
+        "id": "draft_001",
+        "owner": "mattgrosso8",
+        "to": "guest_user",
+        "text": "Welcome to the bot! Let me know if you need help.",
+        "created_at": "2026-05-13T10:10:00Z",
+        "updated_at": "2026-05-13T10:10:00Z",
+        "type": "text",
+        "status": "draft"
+      },
+      {
+        "id": "draft_002",
+        "owner": "mattgrosso8",
+        "to": "editor_jane",
+        "text": "Draft: Project update for Chatbot with JSON Memory - 80% complete",
+        "created_at": "2026-05-13T10:12:00Z",
+        "updated_at": "2026-05-13T10:15:00Z",
+        "type": "text",
+        "status": "draft",
+        "attachments": ["doc_01", "pic_02"]
+      },
+      {
+        "id": "draft_003",
+        "owner": "mattgrosso8",
+        "to": "",
+        "text": "",
+        "created_at": "2026-05-13T10:20:00Z",
+        "type": "empty",
+        "status": "draft"
+      }
+    ],
+    "bot_messages": [
+      {
+        "id": "bmsg_001",
+        "from_bot": "bot_001",
+        "from_user": "mattgrosso8",
+        "to": "guest_user",
+        "text": "Hello from JSON Memory Bot!",
+        "timestamp": "2026-09-26T15:35:00Z",
+        "status": "draft",
+        "type": "bot_message"
+      }
+    ],
+    "templates": [
+      {
+        "id": "tpl_01",
+        "name": "Welcome",
+        "text": "Hi {name}, welcome to {bot_name}!"
+      },
+      {
+        "id": "tpl_02",
+        "name": "Project Update",
+        "text": "Project {project_name} is now {status}"
+      },
+      {
+        "id": "tpl_03",
+        "name": "Bot Message",
+        "text": "Message from {bot_name}: {text}"
+      }
+    ]
+  }
+}
