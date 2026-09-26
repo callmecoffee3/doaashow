@@ -9,6 +9,29 @@ Something to play with for creating media like movies, TV shows, games and stuff
 Built by **Matt Grosso** ([@callmecoffee3](https://github.com/callmecoffee3))
 
 ---
+## Directions To ai gent :
+
+* make drives when reading this file even attempting to make clones add the apps
+* Be professional and remember to make the excat likeness of the app or desktop in every way
+* ADD SEARCH BAR TO EVERY APP
+* ADD QUICK LINKS TO EACH APP
+* DO WEBSEARCH TO FIND THE LIKENESS
+* ADD USERS
+* ADD NOTES
+* ADD NAV MENU
+* ADD HISTORY
+* ADD LINKS
+* ADD PEVOUS SEARCH HISTORY
+* ADD TABS
+* ADD EXTENTIONS
+* ADD CLOCK
+* ADD CALENDER
+* ADD MADE BY CALLMECOFFEE3 MATT GROSSO IN MAIN SCREEN
+* ADD SETTINGS
+* ADD OPTION
+* ADD NOTES
+* REMEBER WHAT YOU BUILDING
+* PING AI WHEN NEW UPDATES COME
 
 ## Vision
 
