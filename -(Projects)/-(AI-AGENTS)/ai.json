@@ -1,0 +1,460 @@
+{
+  "agents": [
+    {
+      "id": "agent_001",
+      "name": "Memory Agent",
+      "category": "Core",
+      "description": "Stores and retrieves conversation memory."
+    },
+    {
+      "id": "agent_002",
+      "name": "Chat Agent",
+      "category": "Core",
+      "description": "Handles user conversations."
+    },
+    {
+      "id": "agent_003",
+      "name": "Bot Manager Agent",
+      "category": "Core",
+      "description": "Manages user and system bots."
+    },
+    {
+      "id": "agent_004",
+      "name": "User Manager Agent",
+      "category": "Core",
+      "description": "Manages user accounts."
+    },
+    {
+      "id": "agent_005",
+      "name": "Project Agent",
+      "category": "Core",
+      "description": "Tracks projects and milestones."
+    },
+    {
+      "id": "agent_006",
+      "name": "Document Agent",
+      "category": "Core",
+      "description": "Manages documents and files."
+    },
+    {
+      "id": "agent_007",
+      "name": "Message Agent",
+      "category": "Core",
+      "description": "Manages inbox, outbox, and drafts."
+    },
+    {
+      "id": "agent_008",
+      "name": "Template Agent",
+      "category": "Core",
+      "description": "Creates reusable templates."
+    },
+    {
+      "id": "agent_009",
+      "name": "Media Agent",
+      "category": "Core",
+      "description": "Tracks videos, images, and media."
+    },
+    {
+      "id": "agent_010",
+      "name": "Command Agent",
+      "category": "Core",
+      "description": "Processes system commands."
+    },
+
+    {
+      "id": "agent_011",
+      "name": "Admin Agent",
+      "category": "Administration",
+      "description": "System administration."
+    },
+    {
+      "id": "agent_012",
+      "name": "Security Agent",
+      "category": "Administration",
+      "description": "Oversees security."
+    },
+    {
+      "id": "agent_013",
+      "name": "Permissions Agent",
+      "category": "Administration",
+      "description": "Manages user permissions."
+    },
+    {
+      "id": "agent_014",
+      "name": "Backup Agent",
+      "category": "Administration",
+      "description": "Creates backups."
+    },
+    {
+      "id": "agent_015",
+      "name": "Restore Agent",
+      "category": "Administration",
+      "description": "Restores backups."
+    },
+    {
+      "id": "agent_016",
+      "name": "Analytics Agent",
+      "category": "Administration",
+      "description": "Generates statistics."
+    },
+    {
+      "id": "agent_017",
+      "name": "Search Agent",
+      "category": "Administration",
+      "description": "Searches system data."
+    },
+    {
+      "id": "agent_018",
+      "name": "Index Agent",
+      "category": "Administration",
+      "description": "Indexes records."
+    },
+    {
+      "id": "agent_019",
+      "name": "Archive Agent",
+      "category": "Administration",
+      "description": "Archives records."
+    },
+    {
+      "id": "agent_020",
+      "name": "Notification Agent",
+      "category": "Administration",
+      "description": "Handles notifications."
+    },
+
+    {
+      "id": "agent_021",
+      "name": "Email Agent"
+    },
+    {
+      "id": "agent_022",
+      "name": "SMS Agent"
+    },
+    {
+      "id": "agent_023",
+      "name": "Calendar Agent"
+    },
+    {
+      "id": "agent_024",
+      "name": "Schedule Agent"
+    },
+    {
+      "id": "agent_025",
+      "name": "Task Agent"
+    },
+    {
+      "id": "agent_026",
+      "name": "Reminder Agent"
+    },
+    {
+      "id": "agent_027",
+      "name": "Events Agent"
+    },
+    {
+      "id": "agent_028",
+      "name": "Contacts Agent"
+    },
+    {
+      "id": "agent_029",
+      "name": "Forms Agent"
+    },
+    {
+      "id": "agent_030",
+      "name": "Reports Agent"
+    },
+
+    {
+      "id": "agent_031",
+      "name": "Website Agent"
+    },
+    {
+      "id": "agent_032",
+      "name": "HTML Agent"
+    },
+    {
+      "id": "agent_033",
+      "name": "CSS Agent"
+    },
+    {
+      "id": "agent_034",
+      "name": "JavaScript Agent"
+    },
+    {
+      "id": "agent_035",
+      "name": "API Agent"
+    },
+    {
+      "id": "agent_036",
+      "name": "Database Agent"
+    },
+    {
+      "id": "agent_037",
+      "name": "AI Agent"
+    },
+    {
+      "id": "agent_038",
+      "name": "Prompt Agent"
+    },
+    {
+      "id": "agent_039",
+      "name": "Automation Agent"
+    },
+    {
+      "id": "agent_040",
+      "name": "Workflow Agent"
+    },
+
+    {
+      "id": "agent_041",
+      "name": "Support Agent"
+    },
+    {
+      "id": "agent_042",
+      "name": "Help Agent"
+    },
+    {
+      "id": "agent_043",
+      "name": "Training Agent"
+    },
+    {
+      "id": "agent_044",
+      "name": "Knowledge Agent"
+    },
+    {
+      "id": "agent_045",
+      "name": "Research Agent"
+    },
+    {
+      "id": "agent_046",
+      "name": "Testing Agent"
+    },
+    {
+      "id": "agent_047",
+      "name": "Debug Agent"
+    },
+    {
+      "id": "agent_048",
+      "name": "Monitoring Agent"
+    },
+    {
+      "id": "agent_049",
+      "name": "System Agent"
+    },
+    {
+      "id": "agent_050",
+      "name": "Master Agent"
+    },
+
+    {
+      "id": "agent_051",
+      "name": "App Agent"
+    },
+    {
+      "id": "agent_052",
+      "name": "Church Agent"
+    },
+    {
+      "id": "agent_053",
+      "name": "Content Agent"
+    },
+    {
+      "id": "agent_054",
+      "name": "Restaurant Agent"
+    },
+    {
+      "id": "agent_055",
+      "name": "Mall Agent"
+    },
+    {
+      "id": "agent_056",
+      "name": "Business Agent"
+    },
+
+    {
+      "id": "agent_057",
+      "name": "Retail Agent"
+    },
+    {
+      "id": "agent_058",
+      "name": "Real Estate Agent"
+    },
+    {
+      "id": "agent_059",
+      "name": "Hotel Agent"
+    },
+    {
+      "id": "agent_060",
+      "name": "Travel Agent"
+    },
+    {
+      "id": "agent_061",
+      "name": "Healthcare Agent"
+    },
+    {
+      "id": "agent_062",
+      "name": "Pharmacy Agent"
+    },
+    {
+      "id": "agent_063",
+      "name": "Education Agent"
+    },
+    {
+      "id": "agent_064",
+      "name": "Teacher Agent"
+    },
+    {
+      "id": "agent_065",
+      "name": "Student Agent"
+    },
+    {
+      "id": "agent_066",
+      "name": "Library Agent"
+    },
+
+    {
+      "id": "agent_067",
+      "name": "Podcast Agent"
+    },
+    {
+      "id": "agent_068",
+      "name": "YouTube Agent"
+    },
+    {
+      "id": "agent_069",
+      "name": "Streaming Agent"
+    },
+    {
+      "id": "agent_070",
+      "name": "Social Media Agent"
+    },
+    {
+      "id": "agent_071",
+      "name": "Graphic Design Agent"
+    },
+    {
+      "id": "agent_072",
+      "name": "Video Editing Agent"
+    },
+    {
+      "id": "agent_073",
+      "name": "Photography Agent"
+    },
+    {
+      "id": "agent_074",
+      "name": "News Agent"
+    },
+    {
+      "id": "agent_075",
+      "name": "Marketing Agent"
+    },
+    {
+      "id": "agent_076",
+      "name": "Branding Agent"
+    },
+
+    {
+      "id": "agent_077",
+      "name": "Finance Agent"
+    },
+    {
+      "id": "agent_078",
+      "name": "Accounting Agent"
+    },
+    {
+      "id": "agent_079",
+      "name": "Invoice Agent"
+    },
+    {
+      "id": "agent_080",
+      "name": "Payroll Agent"
+    },
+    {
+      "id": "agent_081",
+      "name": "Tax Agent"
+    },
+    {
+      "id": "agent_082",
+      "name": "Investment Agent"
+    },
+    {
+      "id": "agent_083",
+      "name": "Banking Agent"
+    },
+    {
+      "id": "agent_084",
+      "name": "Donations Agent"
+    },
+    {
+      "id": "agent_085",
+      "name": "Grant Agent"
+    },
+    {
+      "id": "agent_086",
+      "name": "Budget Agent"
+    },
+
+    {
+      "id": "agent_087",
+      "name": "Broadcast Agent"
+    },
+    {
+      "id": "agent_088",
+      "name": "Radio Agent"
+    },
+    {
+      "id": "agent_089",
+      "name": "AI Studio Agent"
+    },
+    {
+      "id": "agent_090",
+      "name": "Website Builder Agent"
+    },
+    {
+      "id": "agent_091",
+      "name": "Domain Agent"
+    },
+    {
+      "id": "agent_092",
+      "name": "Hosting Agent"
+    },
+    {
+      "id": "agent_093",
+      "name": "App Store Agent"
+    },
+    {
+      "id": "agent_094",
+      "name": "VR Agent"
+    },
+    {
+      "id": "agent_095",
+      "name": "AR Agent"
+    },
+    {
+      "id": "agent_096",
+      "name": "Innovation Agent"
+    },
+
+    {
+      "id": "agent_097",
+      "name": "Strategy Agent"
+    },
+    {
+      "id": "agent_098",
+      "name": "Operations Agent"
+    },
+    {
+      "id": "agent_099",
+      "name": "Executive Assistant Agent"
+    },
+    {
+      "id": "agent_100",
+      "name": "Enterprise Agent"
+    }
+  ],
+  "settings": {
+    "total_agents": 100,
+    "master_agent": "agent_050",
+    "enterprise_agent": "agent_100",
+    "next_id": "agent_101"
+  }
+}
