@@ -17,9 +17,12 @@ Add featureas to the desktop  Add these pages to my site:
 ⦁	File Explorer : add ability to add sub folders
 Add to current parent folder let folders be uploaded with sub folders. Categoize fiolders, alphebiticalis foldes, show foldersasecnding, desendinfg,
 ⦁	Icon list in file explorer add: to seclect - small icon list, medum icon lis and large icon list
-* nav buttons
-* searchbar feature
-* history
+*  nav buttons
+*  searchbar feature
+*  history
+*  floating and docking task bar
+*  file explorer : users can add files and folders and subfolders
+*  users can view files, folders andothers
    
 Keep in mind the main features:
 
