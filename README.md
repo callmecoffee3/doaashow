@@ -4,7 +4,11 @@
 > wich let user makes production
 > if yers go to studio os and begin building
 > if no just dont build studo os
+> also make sure you show user the html live preview
+> add a download version
+
 versoions of desktops
+
 > Keep these in mind...
 Here are the **main colors** from the app’s CSS (shadcn/ui-style HSL tokens), shown as text you can copy.
 
