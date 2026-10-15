@@ -1,5 +1,28 @@
 # doaashow
+> Keep these in mind
+Studio OS; 
+Add featureas to the desktop  Add these pages to my site:
+⦁	Financial Reports (/financial-reports): Add a dedicated financial reports page that uses charts to display revenue trends, project budget utilization, and deal pipeline performance.
+⦁	Production Calendar (/calendar): Create a calendar view that pulls in all task due dates and project milestones to help the team track production schedules effectively.
+⦁	Notifications (/notifications): Build a notification center where users can see updates on their tasks, incoming messages, and alerts from the video sharing platform.
+⦁	Studio Inventory (/inventory): Add an inventory management page to track physical assets, studio gear, and hardware across different production lots.
+⦁	 User Directory (/team): Add a user directory page that lists all staff and collaborators, allowing team members to view profiles and quickly initiate a message.
+⦁	File Explorer : add ability to add sub folders
+Add to current parent folder let folders be uploaded with sub folders. Categoize fiolders, alphebiticalis foldes, show foldersasecnding, desendinfg,
+⦁	Icon list in file explorer add: to seclect - small icon list, medum icon lis and large icon list
+ 
+Keep in mind the main features:
 
+⦁	Main desktop view: add main view for desktop
+⦁	Main task bar
+⦁	Main start
+⦁	Main clock menu
+⦁	Its name Studio os
+⦁	Made by matt grosso callmecoffee3
+⦁	Main side bar
+⦁	Main setings
+⦁	Youtube looking platform
+⦁	Main desktop screen
 > Something to play with for creating media like movies, TV shows, games and stuff.
 
 **Entertainment purposes only — just for goofing off and having fun.**
