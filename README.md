@@ -1,5 +1,12 @@
-# doaashow
-> Keep these in mind
+# doaashow 
+
+> ask user if wants version of Studio OS
+> if yers go to studio os and begin building
+> if no just dont build studo os
+versoions of desktops
+> Keep these in mind...
+
+> this begins the Studio OS Version
 Studio OS; 
 Add featureas to the desktop  Add these pages to my site:
 ⦁	Financial Reports (/financial-reports): Add a dedicated financial reports page that uses charts to display revenue trends, project budget utilization, and deal pipeline performance.
@@ -10,7 +17,10 @@ Add featureas to the desktop  Add these pages to my site:
 ⦁	File Explorer : add ability to add sub folders
 Add to current parent folder let folders be uploaded with sub folders. Categoize fiolders, alphebiticalis foldes, show foldersasecnding, desendinfg,
 ⦁	Icon list in file explorer add: to seclect - small icon list, medum icon lis and large icon list
- 
+* nav buttons
+* searchbar feature
+* history
+   
 Keep in mind the main features:
 
 ⦁	Main desktop view: add main view for desktop
@@ -23,6 +33,8 @@ Keep in mind the main features:
 ⦁	Main setings
 ⦁	Youtube looking platform
 ⦁	Main desktop screen
+> end of Studio OS
+
 > Something to play with for creating media like movies, TV shows, games and stuff.
 
 **Entertainment purposes only — just for goofing off and having fun.**
@@ -34,6 +46,7 @@ Built by **Matt Grosso** ([@callmecoffee3](https://github.com/callmecoffee3)) �
 ---
 ## Directions To ai gent :
 
+> begin to create blueprint desktop in general
 * make drives when reading this file even attempting to make clones add the apps
 * Be professional and remember to make the excat likeness of the app or desktop in every way
 * ADD SEARCH BAR TO EVERY APP
