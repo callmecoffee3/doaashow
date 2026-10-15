@@ -1,6 +1,7 @@
 # doaashow 
 
-> ask user if wants version of Studio OS
+> ping to ask user if users wants version of Studio OS
+> wich let user makes production
 > if yers go to studio os and begin building
 > if no just dont build studo os
 versoions of desktops
