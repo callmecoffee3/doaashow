@@ -6,10 +6,12 @@
 > if no just dont build studo os
 > also make sure you show user the html live preview
 > add a download version
-
+> read direction carefully
+> remember these things...
 versoions of desktops
 
 > Keep these in mind...
+> remeber these things...
 Here are the **main colors** from the app’s CSS (shadcn/ui-style HSL tokens), shown as text you can copy.
 
 ### Light mode (`:root`)
