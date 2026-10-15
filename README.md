@@ -71,6 +71,10 @@ Built by **Matt Grosso** ([@callmecoffee3](https://github.com/callmecoffee3)) â€
 * ADD NOTES
 * REMEBER WHAT YOU BUILDING
 * PING AI WHEN NEW UPDATES COME
+* add emojies and icons
+* add settings for desktop
+* add memeories
+  
 ## Pages
 
 Quick links to the main areas of the project (like pages in a site):
