@@ -1,5 +1,9 @@
 # doaashow 
 
+"/": "Studio OS",
+"/contacts", "/dashboard", "/deals-and-money", "/lot-management", "/online-store", "/profile", "/projects", "/roles", "/file-explorer", "/media", "/documents", "/aicontentgenerator", "/video-studio", "/settings", "/feed", "/messenger", "/pages", "/groups", "/desktop",
+"/financial-reports", "/calendar", "/notifications", "/inventory", "/team"
+
 > ping to ask user if users wants version of Studio OS
 > wich let user makes production
 > if yers go to studio os and begin building
