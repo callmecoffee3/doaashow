@@ -1,5 +1,6 @@
 # doaashow 
 
+for the desktop os 
 "/": "Studio OS",
 "/contacts", "/dashboard", "/deals-and-money", "/lot-management", "/online-store", "/profile", "/projects", "/roles", "/file-explorer", "/media", "/documents", "/aicontentgenerator", "/video-studio", "/settings", "/feed", "/messenger", "/pages", "/groups", "/desktop",
 "/financial-reports", "/calendar", "/notifications", "/inventory", "/team"
