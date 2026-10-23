@@ -51,6 +51,13 @@ This list controls browser tab titles:
 "/pages" = Pages | Studio OS
 "/groups" = Groups | Studio OS
 "/desktop" = Studio OS
+*/icon and emojis" = Sdio OS  
+*/start menu" = Studio Os
+*/Clock" = Studio OS 
+*/Sidebar Mneu" =Studios
+*/Settings"
+*/Photos"
+
 
 HOW THE TITLE ROUTER WORKS:
 1. dashed() - Turns FileExplorer into file-explorer (splits on capital letters)
