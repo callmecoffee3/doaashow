@@ -51,12 +51,12 @@ This list controls browser tab titles:
 "/pages" = Pages | Studio OS
 "/groups" = Groups | Studio OS
 "/desktop" = Studio OS
-*/icon and emojis" = Sdio OS  
-*/start menu" = Studio Os
+"/icon and emojis" = Sdio OS  
+"/start menu" = Studio Os
 */Clock" = Studio OS 
-*/Sidebar Mneu" =Studios
-*/Settings"
-*/Photos"
+"/Sidebar Menu" = Studio OS
+"/Settings" = Studio OS
+"/Photos" = Studio OS
 
 
 HOW THE TITLE ROUTER WORKS:
